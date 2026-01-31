@@ -1,0 +1,132 @@
+﻿@inherits LayoutComponentBase
+@inject ThemeService ThemeService
+
+<div class="layout">
+    <header class="header">
+        <div class="header-container">
+            <a href="/" class="logo">
+                <svg class="logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 4H28V28H4V4Z" fill="url(#sharpforge-gradient)"/>
+                    <path d="M8 22V24H24V22H8ZM8 8L12 12L8 16L9.5 17.5L15 12L9.5 6.5L8 8Z" fill="white"/>
+                    <defs>
+                        <linearGradient id="sharpforge-gradient" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stop-color="#7B68EE"/>
+                            <stop offset="1" stop-color="#9945FF"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span class="logo-text">SharpForge</span>
+            </a>
+            
+            <nav class="nav-main">
+                <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">Home</NavLink>
+                <NavLink class="nav-link" href="/training">Training</NavLink>
+                <NavLink class="nav-link" href="/blog">Blog</NavLink>
+                <NavLink class="nav-link" href="/projects">Projects</NavLink>
+            </nav>
+            
+            <div class="header-actions">
+                <ThemeToggle />
+                <a href="https://github.com" target="_blank" class="github-link" title="View on GitHub">
+                    <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                </a>
+            </div>
+            
+            <button class="mobile-menu-toggle" @onclick="ToggleMobileMenu">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    @if (_mobileMenuOpen)
+                    {
+                        <path d="M6 18L18 6M6 6l12 12"/>
+                    }
+                    else
+                    {
+                        <path d="M4 6h16M4 12h16M4 18h16"/>
+                    }
+                </svg>
+            </button>
+        </div>
+        
+        @if (_mobileMenuOpen)
+        {
+            <div class="mobile-menu">
+                <NavLink class="mobile-nav-link" href="/" Match="NavLinkMatch.All" @onclick="CloseMobileMenu">Home</NavLink>
+                <NavLink class="mobile-nav-link" href="/training" @onclick="CloseMobileMenu">Training</NavLink>
+                <NavLink class="mobile-nav-link" href="/blog" @onclick="CloseMobileMenu">Blog</NavLink>
+                <NavLink class="mobile-nav-link" href="/projects" @onclick="CloseMobileMenu">Projects</NavLink>
+            </div>
+        }
+    </header>
+
+    <main class="main-content">
+        @Body
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <svg class="logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 4H28V28H4V4Z" fill="url(#sharpforge-gradient-footer)"/>
+                        <path d="M8 22V24H24V22H8ZM8 8L12 12L8 16L9.5 17.5L15 12L9.5 6.5L8 8Z" fill="white"/>
+                        <defs>
+                            <linearGradient id="sharpforge-gradient-footer" x1="4" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+                                <stop offset="0" stop-color="#7B68EE"/>
+                                <stop offset="1" stop-color="#9945FF"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span>SharpForge</span>
+                </div>
+                <p class="footer-tagline">Learn C# the right way</p>
+            </div>
+            
+            <div class="footer-links">
+                <div class="footer-section">
+                    <h4>Learn</h4>
+                    <a href="/training">Training</a>
+                    <a href="/blog">Blog</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Explore</h4>
+                    <a href="/projects">Projects</a>
+                    <a href="https://github.com" target="_blank">GitHub</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; @DateTime.Now.Year SharpForge. Built with Blazor WebAssembly.</p>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<div id="blazor-error-ui" data-nosnippet>
+    An unhandled error has occurred.
+    <a href="." class="reload">Reload</a>
+    <span class="dismiss">🗙</span>
+</div>
+
+@code {
+    private bool _mobileMenuOpen;
+    
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await ThemeService.InitializeAsync();
+            StateHasChanged();
+        }
+    }
+
+    private void ToggleMobileMenu()
+    {
+        _mobileMenuOpen = !_mobileMenuOpen;
+    }
+
+    private void CloseMobileMenu()
+    {
+        _mobileMenuOpen = false;
+    }
+}

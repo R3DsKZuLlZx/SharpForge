@@ -1,0 +1,175 @@
+﻿@page "/blog"
+
+<PageTitle>Blog - SharpForge</PageTitle>
+
+<section class="page-hero">
+    <div class="container">
+        <span class="tag mb-3">Blog</span>
+        <h1>Articles & Insights</h1>
+        <p class="page-description">Stay up to date with the latest C# and .NET development trends</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="blog-layout">
+            <main class="blog-main">
+                <!-- Featured Post -->
+                <article class="post-card featured">
+                    <div class="post-image">
+                        <div class="post-image-placeholder">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                <circle cx="8.5" cy="8.5" r="1.5"/>
+                                <polyline points="21 15 16 10 5 21"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-category">Featured</span>
+                            <span class="post-date">January 28, 2026</span>
+                        </div>
+                        <h2>What's New in .NET 10: A Complete Overview</h2>
+                        <p>Explore the latest features and improvements in .NET 10, including performance enhancements, new APIs, and language features that will change how you write C# code.</p>
+                        <a href="#" class="btn btn-primary">Read Article</a>
+                    </div>
+                </article>
+
+                <!-- Regular Posts -->
+                <div class="posts-grid">
+                    <article class="post-card">
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span class="post-category">Blazor</span>
+                                <span class="post-date">January 22, 2026</span>
+                            </div>
+                            <h3>Building Real-Time Apps with Blazor and SignalR</h3>
+                            <p>Learn how to create interactive real-time applications using Blazor WebAssembly and SignalR for seamless client-server communication.</p>
+                            <a href="#" class="post-link">Read More →</a>
+                        </div>
+                    </article>
+
+                    <article class="post-card">
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span class="post-category">Best Practices</span>
+                                <span class="post-date">January 15, 2026</span>
+                            </div>
+                            <h3>Async/Await Best Practices in C# 13</h3>
+                            <p>Master asynchronous programming with these essential tips, patterns, and common pitfalls to avoid in modern C# development.</p>
+                            <a href="#" class="post-link">Read More →</a>
+                        </div>
+                    </article>
+
+                    <article class="post-card">
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span class="post-category">Architecture</span>
+                                <span class="post-date">January 8, 2026</span>
+                            </div>
+                            <h3>Clean Architecture with ASP.NET Core</h3>
+                            <p>A practical guide to implementing clean architecture in your ASP.NET Core applications for better maintainability and testability.</p>
+                            <a href="#" class="post-link">Read More →</a>
+                        </div>
+                    </article>
+
+                    <article class="post-card">
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span class="post-category">Performance</span>
+                                <span class="post-date">January 2, 2026</span>
+                            </div>
+                            <h3>Memory Management in .NET: A Deep Dive</h3>
+                            <p>Understanding garbage collection, memory allocation, and optimization techniques for high-performance .NET applications.</p>
+                            <a href="#" class="post-link">Read More →</a>
+                        </div>
+                    </article>
+
+                    <article class="post-card">
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span class="post-category">Testing</span>
+                                <span class="post-date">December 28, 2025</span>
+                            </div>
+                            <h3>Unit Testing with xUnit and Moq</h3>
+                            <p>Complete guide to writing effective unit tests in C# using xUnit and Moq, including best practices and real-world examples.</p>
+                            <a href="#" class="post-link">Read More →</a>
+                        </div>
+                    </article>
+
+                    <article class="post-card">
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span class="post-category">DevOps</span>
+                                <span class="post-date">December 20, 2025</span>
+                            </div>
+                            <h3>CI/CD for .NET with GitHub Actions</h3>
+                            <p>Set up a complete CI/CD pipeline for your .NET applications using GitHub Actions, including testing, building, and deployment.</p>
+                            <a href="#" class="post-link">Read More →</a>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <button class="pagination-btn" disabled>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="15 18 9 12 15 6"/>
+                        </svg>
+                        Previous
+                    </button>
+                    <div class="pagination-pages">
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                    </div>
+                    <button class="pagination-btn">
+                        Next
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"/>
+                        </svg>
+                    </button>
+                </div>
+            </main>
+
+            <aside class="blog-sidebar">
+                <div class="sidebar-section">
+                    <h4>Categories</h4>
+                    <ul class="category-list">
+                        <li><a href="#">All Posts <span>24</span></a></li>
+                        <li><a href="#">Blazor <span>6</span></a></li>
+                        <li><a href="#">ASP.NET Core <span>8</span></a></li>
+                        <li><a href="#">Best Practices <span>5</span></a></li>
+                        <li><a href="#">Performance <span>3</span></a></li>
+                        <li><a href="#">Testing <span>2</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <h4>Popular Tags</h4>
+                    <div class="tags-cloud">
+                        <a href="#" class="tag-link">C#</a>
+                        <a href="#" class="tag-link">.NET</a>
+                        <a href="#" class="tag-link">Blazor</a>
+                        <a href="#" class="tag-link">ASP.NET Core</a>
+                        <a href="#" class="tag-link">Entity Framework</a>
+                        <a href="#" class="tag-link">LINQ</a>
+                        <a href="#" class="tag-link">async/await</a>
+                        <a href="#" class="tag-link">Design Patterns</a>
+                    </div>
+                </div>
+
+                <div class="sidebar-section newsletter">
+                    <h4>Stay Updated</h4>
+                    <p>Get the latest articles delivered to your inbox.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Enter your email" class="form-control">
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+
