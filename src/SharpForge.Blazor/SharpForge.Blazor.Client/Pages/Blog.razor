@@ -14,117 +14,68 @@
     <div class="container">
         <div class="blog-layout">
             <main class="blog-main">
-                <!-- Featured Post -->
-                <article class="post-card featured">
-                    <div class="post-image">
-                        <div class="post-image-placeholder">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                                <circle cx="8.5" cy="8.5" r="1.5"/>
-                                <polyline points="21 15 16 10 5 21"/>
-                            </svg>
+                @if (CurrentPage == 1)
+                {
+                    <!-- Featured Post (only on page 1) -->
+                    <article class="post-card featured">
+                        <div class="post-image">
+                            <div class="post-image-placeholder">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                                    <polyline points="21 15 16 10 5 21"/>
+                                </svg>
+                            </div>
                         </div>
-                    </div>
-                    <div class="post-content">
-                        <div class="post-meta">
-                            <span class="post-category">Featured</span>
-                            <span class="post-date">January 28, 2026</span>
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span class="post-category">Featured</span>
+                                <span class="post-date">@FeaturedPost.Date</span>
+                            </div>
+                            <h2>@FeaturedPost.Title</h2>
+                            <p>@FeaturedPost.Excerpt</p>
+                            <a href="@FeaturedPost.Url" class="btn btn-primary">Read Article</a>
                         </div>
-                        <h2>What's New in .NET 10: A Complete Overview</h2>
-                        <p>Explore the latest features and improvements in .NET 10, including performance enhancements, new APIs, and language features that will change how you write C# code.</p>
-                        <a href="/blog/whats-new-in-dotnet-10" class="btn btn-primary">Read Article</a>
-                    </div>
-                </article>
+                    </article>
+                }
 
                 <!-- Regular Posts -->
                 <div class="posts-grid">
-                    <article class="post-card">
-                        <div class="post-content">
-                            <div class="post-meta">
-                                <span class="post-category">Blazor</span>
-                                <span class="post-date">January 22, 2026</span>
+                    @foreach (var post in CurrentPagePosts)
+                    {
+                        <article class="post-card">
+                            <div class="post-content">
+                                <div class="post-meta">
+                                    <span class="post-category">@post.Category</span>
+                                    <span class="post-date">@post.Date</span>
+                                </div>
+                                <h3>@post.Title</h3>
+                                <p>@post.Excerpt</p>
+                                <a href="@post.Url" class="post-link">Read More →</a>
                             </div>
-                            <h3>Building Real-Time Apps with Blazor and SignalR</h3>
-                            <p>Learn how to create interactive real-time applications using Blazor WebAssembly and SignalR for seamless client-server communication.</p>
-                            <a href="/blog/blazor-signalr-realtime" class="post-link">Read More →</a>
-                        </div>
-                    </article>
-
-                    <article class="post-card">
-                        <div class="post-content">
-                            <div class="post-meta">
-                                <span class="post-category">Best Practices</span>
-                                <span class="post-date">January 15, 2026</span>
-                            </div>
-                            <h3>Async/Await Best Practices in C# 13</h3>
-                            <p>Master asynchronous programming with these essential tips, patterns, and common pitfalls to avoid in modern C# development.</p>
-                            <a href="/blog/async-await-best-practices" class="post-link">Read More →</a>
-                        </div>
-                    </article>
-
-                    <article class="post-card">
-                        <div class="post-content">
-                            <div class="post-meta">
-                                <span class="post-category">Architecture</span>
-                                <span class="post-date">January 8, 2026</span>
-                            </div>
-                            <h3>Clean Architecture with ASP.NET Core</h3>
-                            <p>A practical guide to implementing clean architecture in your ASP.NET Core applications for better maintainability and testability.</p>
-                            <a href="#" class="post-link">Read More →</a>
-                        </div>
-                    </article>
-
-                    <article class="post-card">
-                        <div class="post-content">
-                            <div class="post-meta">
-                                <span class="post-category">Performance</span>
-                                <span class="post-date">January 2, 2026</span>
-                            </div>
-                            <h3>Memory Management in .NET: A Deep Dive</h3>
-                            <p>Understanding garbage collection, memory allocation, and optimization techniques for high-performance .NET applications.</p>
-                            <a href="#" class="post-link">Read More →</a>
-                        </div>
-                    </article>
-
-                    <article class="post-card">
-                        <div class="post-content">
-                            <div class="post-meta">
-                                <span class="post-category">Testing</span>
-                                <span class="post-date">December 28, 2025</span>
-                            </div>
-                            <h3>Unit Testing with xUnit and Moq</h3>
-                            <p>Complete guide to writing effective unit tests in C# using xUnit and Moq, including best practices and real-world examples.</p>
-                            <a href="#" class="post-link">Read More →</a>
-                        </div>
-                    </article>
-
-                    <article class="post-card">
-                        <div class="post-content">
-                            <div class="post-meta">
-                                <span class="post-category">DevOps</span>
-                                <span class="post-date">December 20, 2025</span>
-                            </div>
-                            <h3>CI/CD for .NET with GitHub Actions</h3>
-                            <p>Set up a complete CI/CD pipeline for your .NET applications using GitHub Actions, including testing, building, and deployment.</p>
-                            <a href="#" class="post-link">Read More →</a>
-                        </div>
-                    </article>
+                        </article>
+                    }
                 </div>
 
                 <!-- Pagination -->
                 <div class="pagination">
-                    <button class="pagination-btn" disabled>
+                    <button class="pagination-btn" disabled="@(CurrentPage == 1)" @onclick="PreviousPage">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="15 18 9 12 15 6"/>
                         </svg>
                         Previous
                     </button>
                     <div class="pagination-pages">
-                        <button class="page-btn active">1</button>
-                        <button class="page-btn">2</button>
-                        <button class="page-btn">3</button>
+                        @for (int i = 1; i <= TotalPages; i++)
+                        {
+                            var pageNumber = i;
+                            <button class="page-btn @(CurrentPage == pageNumber ? "active" : "")" 
+                                    @onclick="@(() => GoToPage(pageNumber))">
+                                @pageNumber
+                            </button>
+                        }
                     </div>
-                    <button class="pagination-btn">
+                    <button class="pagination-btn" disabled="@(CurrentPage == TotalPages)" @onclick="NextPage">
                         Next
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="9 18 15 12 9 6"/>
@@ -137,12 +88,11 @@
                 <div class="sidebar-section">
                     <h4>Categories</h4>
                     <ul class="category-list">
-                        <li><a href="#">All Posts <span>24</span></a></li>
-                        <li><a href="#">Blazor <span>6</span></a></li>
-                        <li><a href="#">ASP.NET Core <span>8</span></a></li>
-                        <li><a href="#">Best Practices <span>5</span></a></li>
-                        <li><a href="#">Performance <span>3</span></a></li>
-                        <li><a href="#">Testing <span>2</span></a></li>
+                        <li><a href="#">All Posts <span>@(AllPosts.Count + 1)</span></a></li>
+                        @foreach (var category in Categories)
+                        {
+                            <li><a href="#">@category.Key <span>@category.Value</span></a></li>
+                        }
                     </ul>
                 </div>
 
@@ -173,3 +123,80 @@
     </div>
 </section>
 
+@code {
+    private int CurrentPage { get; set; } = 1;
+    private int PageSize { get; set; } = 6;
+    
+    private BlogPost FeaturedPost { get; } = new()
+    {
+        Title = "What's New in .NET 10: A Complete Overview",
+        Excerpt = "Explore the latest features and improvements in .NET 10, including performance enhancements, new APIs, and language features that will change how you write C# code.",
+        Date = "January 28, 2026",
+        Category = "Featured",
+        Url = "/blog/whats-new-in-dotnet-10"
+    };
+
+    private List<BlogPost> AllPosts { get; } = new()
+    {
+        new() { Title = "Building Real-Time Apps with Blazor and SignalR", Excerpt = "Learn how to create interactive real-time applications using Blazor WebAssembly and SignalR for seamless client-server communication.", Date = "January 22, 2026", Category = "Blazor", Url = "/blog/blazor-signalr-realtime" },
+        new() { Title = "Async/Await Best Practices in C# 13", Excerpt = "Master asynchronous programming with these essential tips, patterns, and common pitfalls to avoid in modern C# development.", Date = "January 15, 2026", Category = "Best Practices", Url = "/blog/async-await-best-practices" },
+        new() { Title = "Clean Architecture with ASP.NET Core", Excerpt = "A practical guide to implementing clean architecture in your ASP.NET Core applications for better maintainability and testability.", Date = "January 8, 2026", Category = "Architecture", Url = "#" },
+        new() { Title = "Memory Management in .NET: A Deep Dive", Excerpt = "Understanding garbage collection, memory allocation, and optimization techniques for high-performance .NET applications.", Date = "January 2, 2026", Category = "Performance", Url = "#" },
+        new() { Title = "Unit Testing with xUnit and Moq", Excerpt = "Complete guide to writing effective unit tests in C# using xUnit and Moq, including best practices and real-world examples.", Date = "December 28, 2025", Category = "Testing", Url = "#" },
+        new() { Title = "CI/CD for .NET with GitHub Actions", Excerpt = "Set up a complete CI/CD pipeline for your .NET applications using GitHub Actions, including testing, building, and deployment.", Date = "December 20, 2025", Category = "DevOps", Url = "#" },
+        // Page 2 posts
+        new() { Title = "Dependency Injection Deep Dive", Excerpt = "Understanding the built-in dependency injection container in ASP.NET Core and advanced patterns for complex scenarios.", Date = "December 15, 2025", Category = "ASP.NET Core", Url = "#" },
+        new() { Title = "Working with JSON in .NET", Excerpt = "Master System.Text.Json and learn when to use Newtonsoft.Json. Covers serialization, deserialization, and custom converters.", Date = "December 10, 2025", Category = "Best Practices", Url = "#" },
+        new() { Title = "Blazor Component Lifecycle", Excerpt = "Deep dive into Blazor component lifecycle methods and how to use them effectively in your applications.", Date = "December 5, 2025", Category = "Blazor", Url = "#" },
+        new() { Title = "LINQ Performance Tips", Excerpt = "Optimize your LINQ queries with these practical tips. Learn about deferred execution, materialization, and common pitfalls.", Date = "December 1, 2025", Category = "Performance", Url = "#" },
+        new() { Title = "Securing ASP.NET Core APIs", Excerpt = "Implement authentication and authorization in your APIs using JWT tokens, OAuth 2.0, and ASP.NET Core Identity.", Date = "November 25, 2025", Category = "ASP.NET Core", Url = "#" },
+        new() { Title = "Entity Framework Core Migrations", Excerpt = "Master database migrations in EF Core. Learn about migration strategies, seeding data, and handling production deployments.", Date = "November 20, 2025", Category = "Entity Framework", Url = "#" },
+        // Page 3 posts
+        new() { Title = "Creating Custom Middleware", Excerpt = "Build custom middleware components for ASP.NET Core to handle cross-cutting concerns like logging, caching, and error handling.", Date = "November 15, 2025", Category = "ASP.NET Core", Url = "#" },
+        new() { Title = "Blazor State Management", Excerpt = "Explore different approaches to state management in Blazor applications, from simple patterns to Flux-like architectures.", Date = "November 10, 2025", Category = "Blazor", Url = "#" },
+        new() { Title = "C# Pattern Matching", Excerpt = "Master pattern matching in C# with practical examples. Covers switch expressions, property patterns, and positional patterns.", Date = "November 5, 2025", Category = "C#", Url = "#" },
+        new() { Title = "Docker for .NET Developers", Excerpt = "Containerize your .NET applications with Docker. Learn about multi-stage builds, optimization, and Docker Compose.", Date = "November 1, 2025", Category = "DevOps", Url = "#" },
+        new() { Title = "gRPC Services in .NET", Excerpt = "Build high-performance microservices with gRPC. Covers protobuf, streaming, and integration with ASP.NET Core.", Date = "October 25, 2025", Category = "ASP.NET Core", Url = "#" },
+        new() { Title = "Minimal APIs in .NET", Excerpt = "Build lightweight APIs with minimal code using .NET Minimal APIs. Perfect for microservices and simple endpoints.", Date = "October 20, 2025", Category = "ASP.NET Core", Url = "#" }
+    };
+
+    private int TotalPages => (int)Math.Ceiling((double)AllPosts.Count / PageSize);
+
+    private IEnumerable<BlogPost> CurrentPagePosts => AllPosts
+        .Skip((CurrentPage - 1) * PageSize)
+        .Take(PageSize);
+
+    private Dictionary<string, int> Categories => AllPosts
+        .GroupBy(p => p.Category)
+        .ToDictionary(g => g.Key, g => g.Count());
+
+    private void GoToPage(int page)
+    {
+        CurrentPage = page;
+    }
+
+    private void NextPage()
+    {
+        if (CurrentPage < TotalPages)
+        {
+            CurrentPage++;
+        }
+    }
+
+    private void PreviousPage()
+    {
+        if (CurrentPage > 1)
+        {
+            CurrentPage--;
+        }
+    }
+
+    private class BlogPost
+    {
+        public string Title { get; set; } = "";
+        public string Excerpt { get; set; } = "";
+        public string Date { get; set; } = "";
+        public string Category { get; set; } = "";
+        public string Url { get; set; } = "#";
+    }
+}
