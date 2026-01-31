@@ -223,6 +223,7 @@
 /* Contribute CTA */
 .contribute-cta {
     background: var(--gradient-hero);
+    border: 1px solid var(--border-color);
     border-radius: 1.5rem;
     padding: 3rem;
     text-align: center;
