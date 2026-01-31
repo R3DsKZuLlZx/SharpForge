@@ -1,4 +1,4 @@
-﻿@page "/blog/dependency-injection-deep-dive"
+@page "/blog/dependency-injection-deep-dive"
 
 <PageTitle>Dependency Injection Deep Dive - SharpForge</PageTitle>
 <CodeHighlighter />
@@ -27,7 +27,7 @@
             <div class="post-body">
                 <p>Dependency Injection (DI) is a fundamental pattern in ASP.NET Core. This deep dive explores the built-in container and advanced techniques for real-world applications.</p>
 
-                <h2>Service Lifetimes</h2>
+                <h2 id="service-lifetimes">Service Lifetimes</h2>
                 <p>Understanding lifetimes is crucial for correct DI usage:</p>
 
                 <pre><code>// Transient - new instance every time
@@ -47,7 +47,7 @@ builder.Host.UseDefaultServiceProvider(options =&gt;
     options.ValidateOnBuild = true;
 });</code></pre>
 
-                <h2>Registration Patterns</h2>
+                <h2 id="registration-patterns">Registration Patterns</h2>
                 <h3>Multiple Implementations</h3>
                 <pre><code>// Register multiple implementations
 builder.Services.AddTransient&lt;INotificationService, EmailNotification&gt;();
@@ -99,7 +99,7 @@ public class CheckoutService
     return new OrderService(logger, connectionString);
 });</code></pre>
 
-                <h2>Advanced Patterns</h2>
+                <h2 id="advanced-patterns">Advanced Patterns</h2>
                 <h3>Decorator Pattern</h3>
                 <pre><code>// Original service
 builder.Services.AddScoped&lt;IProductRepository, ProductRepository&gt;();
@@ -157,7 +157,7 @@ builder.Services.Replace(
 // Remove a registration
 builder.Services.RemoveAll&lt;IUserService&gt;();</code></pre>
 
-                <h2>Options Pattern</h2>
+                <h2 id="options-pattern">Options Pattern</h2>
                 <pre><code>// Configuration class
 public class EmailSettings
 {
@@ -184,15 +184,15 @@ public class EmailService
 // Use IOptionsSnapshot for scoped (reloads on change)
 // Use IOptionsMonitor for singleton (notifies on change)</code></pre>
 
-                <h2>Avoiding Common Pitfalls</h2>
+                <h2 id="avoiding-pitfalls">Avoiding Common Pitfalls</h2>
                 <h3>Captive Dependencies</h3>
-                <pre><code>// ❌ BAD: Singleton captures Scoped service
+                <pre><code>// ? BAD: Singleton captures Scoped service
 public class SingletonService
 {
     private readonly IScopedService _scoped; // Will cause issues!
 }
 
-// ✅ GOOD: Use IServiceScopeFactory
+// ? GOOD: Use IServiceScopeFactory
 public class SingletonService
 {
     private readonly IServiceScopeFactory _scopeFactory;
@@ -212,7 +212,7 @@ public class SingletonService
 }</code></pre>
 
                 <h3>Service Locator Anti-Pattern</h3>
-                <pre><code>// ❌ BAD: Service Locator
+                <pre><code>// ? BAD: Service Locator
 public class BadService
 {
     private readonly IServiceProvider _provider;
@@ -223,7 +223,7 @@ public class BadService
     }
 }
 
-// ✅ GOOD: Constructor Injection
+// ? GOOD: Constructor Injection
 public class GoodService
 {
     private readonly IMyService _service;

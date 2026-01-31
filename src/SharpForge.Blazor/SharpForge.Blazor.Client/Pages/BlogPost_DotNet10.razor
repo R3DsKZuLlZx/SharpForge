@@ -27,7 +27,7 @@
             <div class="post-body">
                 <p>.NET 10 has arrived, and it brings a wealth of new features, performance improvements, and developer experience enhancements. In this comprehensive overview, we'll explore everything you need to know about the latest version of the .NET platform.</p>
 
-                <h2>Performance Improvements</h2>
+                <h2 id="performance-improvements">Performance Improvements</h2>
                 <p>.NET 10 continues the tradition of delivering significant performance gains with each release. The JIT compiler has been further optimized, resulting in faster startup times and improved throughput for web applications.</p>
 
                 <h3>Native AOT Enhancements</h3>
@@ -45,7 +45,7 @@ dotnet publish -c Release -r win-x64 /p:PublishAot=true
                 <h3>Garbage Collection Improvements</h3>
                 <p>The garbage collector has been enhanced with better memory management for server workloads. The new "Dynamic Adaptation to Application Sizes" (DATAS) feature automatically adjusts GC behavior based on your application's memory patterns.</p>
 
-                <h2>C# 13 Language Features</h2>
+                <h2 id="c-13-language-features">C# 13 Language Features</h2>
                 <p>.NET 10 ships with C# 13, which introduces several new language features designed to make your code more expressive and maintainable.</p>
 
                 <h3>Primary Constructors for All Types</h3>
@@ -69,7 +69,7 @@ Dictionary&lt;string, int&gt; scores = ["Alice": 95, "Bob": 87, "Charlie": 92];
 // Spread operator with dictionaries
 var allScores = [..scores, "David": 88];</code></pre>
 
-                <h2>ASP.NET Core 10</h2>
+                <h2 id="aspnet-core-10">ASP.NET Core 10</h2>
                 <p>ASP.NET Core 10 brings significant improvements to web development, particularly in the areas of performance and developer productivity.</p>
 
                 <h3>Blazor Improvements</h3>
@@ -102,7 +102,7 @@ app.MapGet("/users/{id}", async (int id, IUserService service) =&gt;
     return operation;
 });</code></pre>
 
-                <h2>Entity Framework Core 10</h2>
+                <h2 id="entity-framework-core-10">Entity Framework Core 10</h2>
                 <p>EF Core 10 brings performance improvements and new features for working with databases:</p>
 
                 <ul>
@@ -112,7 +112,7 @@ app.MapGet("/users/{id}", async (int id, IUserService service) =&gt;
                     <li><strong>Improved Migrations</strong> - Smarter migration generation and better diff detection</li>
                 </ul>
 
-                <h2>Getting Started</h2>
+                <h2 id="getting-started">Getting Started</h2>
                 <p>Ready to try .NET 10? Here's how to get started:</p>
 
                 <pre><code># Install .NET 10 SDK
@@ -125,7 +125,7 @@ dotnet new web -n MyDotNet10App
 cd MyDotNet10App
 dotnet run</code></pre>
 
-                <h2>Conclusion</h2>
+                <h2 id="conclusion">Conclusion</h2>
                 <p>.NET 10 represents another significant step forward for the platform. With its performance improvements, new language features, and enhanced developer experience, it's an excellent choice for building modern applications.</p>
 
                 <p>Whether you're building web APIs, desktop applications, or cloud-native microservices, .NET 10 has something to offer. We encourage you to try it out and explore the new features for yourself.</p>

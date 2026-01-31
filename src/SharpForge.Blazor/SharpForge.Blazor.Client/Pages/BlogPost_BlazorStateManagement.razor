@@ -1,4 +1,4 @@
-﻿@page "/blog/blazor-state-management"
+@page "/blog/blazor-state-management"
 
 <PageTitle>Blazor State Management - SharpForge</PageTitle>
 <CodeHighlighter />
@@ -27,7 +27,7 @@
             <div class="post-body">
                 <p>As Blazor applications grow, managing state becomes increasingly important. This guide covers various state management approaches from simple to complex.</p>
 
-                <h2>Component State</h2>
+                <h2 id="component-state">Component State</h2>
                 <p>The simplest form - state lives in the component:</p>
 
                 <pre><code>@@code {
@@ -43,7 +43,7 @@
     }
 }</code></pre>
 
-                <h2>Cascading Values</h2>
+                <h2 id="cascading-values">Cascading Values</h2>
                 <p>Share state down the component tree:</p>
 
                 <pre><code>&lt;!-- Parent component --&gt;
@@ -227,7 +227,7 @@ public static class CounterReducers
     private void Increment() =&gt; Dispatcher.Dispatch(new IncrementCounterAction());
 }</code></pre>
 
-                <h2>Browser Storage</h2>
+                <h2 id="browser-storage">Browser Storage</h2>
                 <pre><code>// Persist state to localStorage
 @@inject IJSRuntime JS
 

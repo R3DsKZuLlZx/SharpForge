@@ -1,4 +1,4 @@
-﻿@page "/blog/cicd-dotnet-github-actions"
+@page "/blog/cicd-dotnet-github-actions"
 
 <PageTitle>CI/CD for .NET with GitHub Actions - SharpForge</PageTitle>
 <CodeHighlighter />
@@ -59,7 +59,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --configuration Release --verbosity normal</code></pre>
 
-                <h2>Adding Code Coverage</h2>
+                <h2 id="code-coverage">Adding Code Coverage</h2>
                 <pre><code>    - name: Test with Coverage
       run: |
         dotnet test --no-build --configuration Release \
@@ -72,7 +72,7 @@ jobs:
         directory: ./coverage
         fail_ci_if_error: true</code></pre>
 
-                <h2>Multi-Platform Testing</h2>
+                <h2 id="multi-platform">Multi-Platform Testing</h2>
                 <pre><code>jobs:
   build:
     runs-on: ${{ matrix.os }}
@@ -127,7 +127,7 @@ jobs:
           --source https://api.nuget.org/v3/index.json \
           --skip-duplicate</code></pre>
 
-                <h2>Docker Build and Push</h2>
+                <h2 id="docker">Docker Build and Push</h2>
                 <pre><code>name: Docker Build
 
 on:

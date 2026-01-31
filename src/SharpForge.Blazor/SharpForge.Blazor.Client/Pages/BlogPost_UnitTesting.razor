@@ -1,4 +1,4 @@
-﻿@page "/blog/unit-testing-xunit-moq"
+@page "/blog/unit-testing-xunit-moq"
 
 <PageTitle>Unit Testing with xUnit and Moq - SharpForge</PageTitle>
 <CodeHighlighter />
@@ -27,7 +27,7 @@
             <div class="post-body">
                 <p>Unit testing is essential for maintaining code quality and catching bugs early. This guide covers xUnit, the most popular testing framework for .NET, along with Moq for mocking dependencies.</p>
 
-                <h2>Getting Started with xUnit</h2>
+                <h2 id="getting-started">Getting Started with xUnit</h2>
                 <p>First, add the required packages to your test project:</p>
 
                 <pre><code>dotnet add package xunit
@@ -35,7 +35,7 @@ dotnet add package xunit.runner.visualstudio
 dotnet add package Microsoft.NET.Test.Sdk
 dotnet add package Moq</code></pre>
 
-                <h2>Writing Your First Test</h2>
+                <h2 id="writing-your-first-test">Writing Your First Test</h2>
                 <pre><code>public class CalculatorTests
 {
     [Fact]
@@ -112,7 +112,7 @@ public void CreateOrder_WithEmptyCart_ThrowsValidationException()</code></pre>
     }
 }</code></pre>
 
-                <h2>Mocking with Moq</h2>
+                <h2 id="mocking-with-moq">Mocking with Moq</h2>
                 <h3>Basic Mocking</h3>
                 <pre><code>// Setup a mock
 var userRepoMock = new Mock&lt;IUserRepository&gt;();
@@ -157,7 +157,7 @@ await service.CreateUserAsync(new User { Name = "Jane" });
 
 Assert.Equal("Jane", capturedUser?.Name);</code></pre>
 
-                <h2>Testing Async Code</h2>
+                <h2 id="testing-async-code">Testing Async Code</h2>
                 <pre><code>[Fact]
 public async Task GetUser_ExistingUser_ReturnsUser()
 {
@@ -236,7 +236,7 @@ public class DatabaseFixture : IDisposable
     public void Dispose() =&gt; Connection.Dispose();
 }</code></pre>
 
-                <h2>Best Practices</h2>
+                <h2 id="best-practices">Best Practices</h2>
                 <ul>
                     <li><strong>One assertion focus</strong> - Each test should verify one behavior</li>
                     <li><strong>Arrange-Act-Assert</strong> - Structure tests clearly</li>

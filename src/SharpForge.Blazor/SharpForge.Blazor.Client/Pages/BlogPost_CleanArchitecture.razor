@@ -1,4 +1,4 @@
-﻿@page "/blog/clean-architecture-aspnet-core"
+@page "/blog/clean-architecture-aspnet-core"
 
 <PageTitle>Clean Architecture with ASP.NET Core - SharpForge</PageTitle>
 <CodeHighlighter />
@@ -27,7 +27,7 @@
             <div class="post-body">
                 <p>Clean Architecture, popularized by Robert C. Martin (Uncle Bob), is an architectural pattern that emphasizes separation of concerns and independence from frameworks, databases, and external agencies. In this guide, we'll implement Clean Architecture in an ASP.NET Core application.</p>
 
-                <h2>What is Clean Architecture?</h2>
+                <h2 id="what-is-clean-architecture">What is Clean Architecture?</h2>
                 <p>Clean Architecture organizes code into concentric layers, with dependencies pointing inward. The innermost layers contain business logic, while outer layers handle infrastructure concerns.</p>
 
                 <h3>The Layers</h3>
@@ -38,34 +38,34 @@
                     <li><strong>Presentation</strong> - UI and API controllers</li>
                 </ul>
 
-                <h2>Project Structure</h2>
+                <h2 id="project-structure">Project Structure</h2>
                 <p>Let's create a solution with proper project separation:</p>
 
                 <pre><code>MyApp/
-├── src/
-│   ├── MyApp.Domain/
-│   │   ├── Entities/
-│   │   ├── ValueObjects/
-│   │   ├── Enums/
-│   │   └── Exceptions/
-│   ├── MyApp.Application/
-│   │   ├── Common/
-│   │   ├── Features/
-│   │   └── Interfaces/
-│   ├── MyApp.Infrastructure/
-│   │   ├── Persistence/
-│   │   ├── Services/
-│   │   └── Identity/
-│   └── MyApp.WebApi/
-│       ├── Controllers/
-│       ├── Middleware/
-│       └── Program.cs
-└── tests/
-    ├── MyApp.Domain.Tests/
-    ├── MyApp.Application.Tests/
-    └── MyApp.Integration.Tests/</code></pre>
++-- src/
+�   +-- MyApp.Domain/
+�   �   +-- Entities/
+�   �   +-- ValueObjects/
+�   �   +-- Enums/
+�   �   +-- Exceptions/
+�   +-- MyApp.Application/
+�   �   +-- Common/
+�   �   +-- Features/
+�   �   +-- Interfaces/
+�   +-- MyApp.Infrastructure/
+�   �   +-- Persistence/
+�   �   +-- Services/
+�   �   +-- Identity/
+�   +-- MyApp.WebApi/
+�       +-- Controllers/
+�       +-- Middleware/
+�       +-- Program.cs
++-- tests/
+    +-- MyApp.Domain.Tests/
+    +-- MyApp.Application.Tests/
+    +-- MyApp.Integration.Tests/</code></pre>
 
-                <h2>Domain Layer</h2>
+                <h2 id="domain-layer">Domain Layer</h2>
                 <p>The Domain layer contains enterprise-wide business rules. It has no dependencies on other layers.</p>
 
                 <pre><code>// Domain/Entities/Product.cs
@@ -114,7 +114,7 @@ public record Money(decimal Amount, string Currency)
     }
 }</code></pre>
 
-                <h2>Application Layer</h2>
+                <h2 id="application-layer">Application Layer</h2>
                 <p>The Application layer contains use cases and orchestrates the flow of data. We'll use CQRS with MediatR:</p>
 
                 <pre><code>// Application/Features/Products/Commands/CreateProduct.cs
@@ -174,7 +174,7 @@ public class GetProductHandler
     }
 }</code></pre>
 
-                <h2>Infrastructure Layer</h2>
+                <h2 id="infrastructure-layer">Infrastructure Layer</h2>
                 <p>The Infrastructure layer implements interfaces defined in the Application layer:</p>
 
                 <pre><code>// Infrastructure/Persistence/ProductRepository.cs
@@ -216,7 +216,7 @@ public class AppDbContext : DbContext, IUnitOfWork
     }
 }</code></pre>
 
-                <h2>Presentation Layer</h2>
+                <h2 id="presentation-layer">Presentation Layer</h2>
                 <p>The API controllers are thin and delegate to MediatR:</p>
 
                 <pre><code>// WebApi/Controllers/ProductsController.cs
@@ -247,7 +247,7 @@ public class ProductsController : ControllerBase
     }
 }</code></pre>
 
-                <h2>Benefits of Clean Architecture</h2>
+                <h2 id="benefits">Benefits of Clean Architecture</h2>
                 <ul>
                     <li><strong>Testability</strong> - Business logic can be tested without UI, database, or external services</li>
                     <li><strong>Flexibility</strong> - Easy to swap implementations (e.g., change database)</li>

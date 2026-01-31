@@ -1,4 +1,4 @@
-﻿@page "/blog/minimal-apis-dotnet"
+@page "/blog/minimal-apis-dotnet"
 
 <PageTitle>Minimal APIs in .NET - SharpForge</PageTitle>
 <CodeHighlighter />
@@ -27,7 +27,7 @@
             <div class="post-body">
                 <p>Minimal APIs provide a streamlined way to build HTTP APIs with minimal ceremony. They're perfect for microservices, small projects, or when you want less boilerplate.</p>
 
-                <h2>Hello World</h2>
+                <h2 id="hello-world">Hello World</h2>
                 <pre><code>var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
@@ -35,7 +35,7 @@ app.MapGet("/", () =&gt; "Hello, World!");
 
 app.Run();</code></pre>
 
-                <h2>Route Handlers</h2>
+                <h2 id="route-handlers">Route Handlers</h2>
                 <pre><code>// GET with route parameter
 app.MapGet("/users/{id}", (int id) =&gt; $"User {id}");
 
@@ -54,7 +54,7 @@ app.MapDelete("/users/{id}", (int id) =&gt; Results.NoContent());
 // Multiple HTTP methods
 app.MapMethods("/resource", new[] { "GET", "POST" }, () =&gt; "GET or POST");</code></pre>
 
-                <h2>Parameter Binding</h2>
+                <h2 id="parameter-binding">Parameter Binding</h2>
                 <pre><code>// Route, query, header, body - all automatic
 app.MapGet("/products/{id}", (
     int id,                           // From route
@@ -104,7 +104,7 @@ Results.Redirect("/other");
 Results.Problem("Error details");
 Results.ValidationProblem(errors);</code></pre>
 
-                <h2>Route Groups</h2>
+                <h2 id="route-groups">Route Groups</h2>
                 <pre><code>var api = app.MapGroup("/api");
 var v1 = api.MapGroup("/v1");
 
@@ -150,7 +150,7 @@ app.MapPost("/users", async (
 app.MapPost("/products", CreateProduct)
     .AddEndpointFilter&lt;ValidationFilter&lt;Product&gt;&gt;();</code></pre>
 
-                <h2>Endpoint Filters</h2>
+                <h2 id="filters">Endpoint Filters</h2>
                 <pre><code>// Inline filter
 app.MapGet("/protected", () =&gt; "Secret data")
     .AddEndpointFilter(async (context, next) =&gt;

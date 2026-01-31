@@ -1,4 +1,4 @@
-﻿@page "/blog/memory-management-dotnet"
+@page "/blog/memory-management-dotnet"
 
 <PageTitle>Memory Management in .NET: A Deep Dive - SharpForge</PageTitle>
 <CodeHighlighter />
@@ -27,7 +27,7 @@
             <div class="post-body">
                 <p>Memory management is crucial for building high-performance .NET applications. Understanding how the garbage collector works and how to optimize memory usage can significantly improve your application's performance.</p>
 
-                <h2>The .NET Memory Model</h2>
+                <h2 id="the-net-memory-model">The .NET Memory Model</h2>
                 <p>.NET uses a managed heap for dynamic memory allocation. The runtime automatically handles memory allocation and deallocation through garbage collection.</p>
 
                 <h3>Stack vs Heap</h3>
@@ -44,7 +44,7 @@ DateTime date = DateTime.Now;
 string name = "SharpForge";
 var list = new List&lt;int&gt;();</code></pre>
 
-                <h2>Garbage Collection Generations</h2>
+                <h2 id="garbage-collection-generations">Garbage Collection Generations</h2>
                 <p>The .NET GC uses a generational approach with three generations:</p>
 
                 <ul>
@@ -62,7 +62,7 @@ Console.WriteLine($"Generation: {generation}"); // 0
 GC.Collect();
 GC.WaitForPendingFinalizers();</code></pre>
 
-                <h2>Large Object Heap (LOH)</h2>
+                <h2 id="large-object-heap">Large Object Heap (LOH)</h2>
                 <p>Objects larger than 85,000 bytes are allocated on the Large Object Heap. The LOH is collected with Generation 2 but is not compacted by default.</p>
 
                 <pre><code>// This goes to LOH (array of 85,000+ bytes)
@@ -72,17 +72,17 @@ var largeArray = new byte[100_000];
 GCSettings.LargeObjectHeapCompactionMode = 
     GCLargeObjectHeapCompactionMode.CompactOnce;</code></pre>
 
-                <h2>Memory Optimization Techniques</h2>
+                <h2 id="memory-optimization">Memory Optimization Techniques</h2>
 
                 <h3>1. Use Structs for Small Data</h3>
-                <pre><code>// ❌ Class - heap allocation
+                <pre><code>// ? Class - heap allocation
 public class PointClass
 {
     public int X { get; set; }
     public int Y { get; set; }
 }
 
-// ✅ Struct - stack allocation
+// ? Struct - stack allocation
 public struct PointStruct
 {
     public int X { get; set; }
@@ -150,7 +150,7 @@ string result = sb.ToString();
 // String interning for frequently used strings
 string interned = string.Intern(someString);</code></pre>
 
-                <h2>Detecting Memory Issues</h2>
+                <h2 id="detecting-memory-issues">Detecting Memory Issues</h2>
 
                 <h3>Using dotnet-counters</h3>
                 <pre><code># Install the tool

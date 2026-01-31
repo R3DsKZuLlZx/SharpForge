@@ -1,4 +1,4 @@
-﻿@page "/blog/blazor-component-lifecycle"
+@page "/blog/blazor-component-lifecycle"
 
 <PageTitle>Blazor Component Lifecycle - SharpForge</PageTitle>
 <CodeHighlighter />
@@ -27,7 +27,7 @@
             <div class="post-body">
                 <p>Understanding the Blazor component lifecycle is essential for building efficient and responsive applications. This guide covers each lifecycle method and when to use them.</p>
 
-                <h2>Lifecycle Overview</h2>
+                <h2 id="lifecycle-overview">Lifecycle Overview</h2>
                 <p>Blazor components go through a series of lifecycle events from creation to disposal:</p>
 
                 <ol>
@@ -132,7 +132,7 @@
                     <li>Use for one-time initialization</li>
                 </ul>
 
-                <h2>ShouldRender</h2>
+                <h2 id="shouldrender">ShouldRender</h2>
                 <p>Controls whether the component should re-render. Useful for performance optimization.</p>
 
                 <pre><code>@@code {
@@ -213,30 +213,30 @@
 
                 <h2>Lifecycle Diagram</h2>
                 <pre><code>Component Created
-       ↓
+       ?
 SetParametersAsync
-       ↓
-OnInitialized(Async)  ← First time only
-       ↓
-OnParametersSet(Async) ← Every parameter update
-       ↓
+       ?
+OnInitialized(Async)  ? First time only
+       ?
+OnParametersSet(Async) ? Every parameter update
+       ?
   BuildRenderTree
-       ↓
+       ?
 OnAfterRender(Async)
-       ↓
+       ?
   [User Interaction]
-       ↓
+       ?
   StateHasChanged
-       ↓
+       ?
    ShouldRender?
-    ↓ Yes    ↓ No
+    ? Yes    ? No
 BuildRenderTree  Stop
-       ↓
+       ?
 OnAfterRender(Async)
        .
        .
-       ↓
-  Dispose(Async)  ← Component removed</code></pre>
+       ?
+  Dispose(Async)  ? Component removed</code></pre>
 
                 <h2>Best Practices</h2>
                 <ul>

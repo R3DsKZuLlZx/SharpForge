@@ -1,4 +1,4 @@
-﻿@page "/blog/ef-core-migrations"
+@page "/blog/ef-core-migrations"
 
 <PageTitle>Entity Framework Core Migrations - SharpForge</PageTitle>
 <CodeHighlighter />
@@ -27,7 +27,7 @@
             <div class="post-body">
                 <p>Migrations are EF Core's way of keeping your database schema in sync with your model. This guide covers everything from basic migrations to production deployment strategies.</p>
 
-                <h2>Getting Started</h2>
+                <h2 id="getting-started">Getting Started</h2>
                 <pre><code># Install EF Core tools
 dotnet tool install --global dotnet-ef
 
@@ -54,9 +54,9 @@ dotnet ef migrations list</code></pre>
                 <p>Each migration creates three files:</p>
 
                 <pre><code>Migrations/
-├── 20251120_InitialCreate.cs          // Up/Down methods
-├── 20251120_InitialCreate.Designer.cs  // Snapshot metadata
-└── AppDbContextModelSnapshot.cs        // Current model state</code></pre>
++-- 20251120_InitialCreate.cs          // Up/Down methods
++-- 20251120_InitialCreate.Designer.cs  // Snapshot metadata
++-- AppDbContextModelSnapshot.cs        // Current model state</code></pre>
 
                 <h3>Migration Code</h3>
                 <pre><code>public partial class InitialCreate : Migration
@@ -125,7 +125,7 @@ dotnet ef migrations list</code></pre>
         oldNullable: true);
 }</code></pre>
 
-                <h2>Data Seeding</h2>
+                <h2 id="data-seeding">Data Seeding</h2>
                 <h3>In OnModelCreating</h3>
                 <pre><code>protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
@@ -204,7 +204,7 @@ dotnet ef database update 0
 # Then remove the migration files
 dotnet ef migrations remove</code></pre>
 
-                <h2>Best Practices</h2>
+                <h2 id="best-practices">Best Practices</h2>
                 <ul>
                     <li>Always review generated migration code</li>
                     <li>Test migrations on a copy of production data</li>

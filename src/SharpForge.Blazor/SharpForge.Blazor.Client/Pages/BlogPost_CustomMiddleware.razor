@@ -1,4 +1,4 @@
-﻿@page "/blog/custom-middleware-aspnet-core"
+@page "/blog/custom-middleware-aspnet-core"
 
 <PageTitle>Creating Custom Middleware - SharpForge</PageTitle>
 <CodeHighlighter />
@@ -27,7 +27,7 @@
             <div class="post-body">
                 <p>Middleware in ASP.NET Core forms the request pipeline. Each middleware component can process requests, modify responses, or short-circuit the pipeline.</p>
 
-                <h2>Middleware Basics</h2>
+                <h2 id="basics">Middleware Basics</h2>
                 <pre><code>// Inline middleware
 app.Use(async (context, next) =&gt;
 {
@@ -46,7 +46,7 @@ app.Run(async context =&gt;
     await context.Response.WriteAsync("Hello, World!");
 });</code></pre>
 
-                <h2>Convention-Based Middleware</h2>
+                <h2 id="convention-based">Convention-Based Middleware</h2>
                 <pre><code>public class RequestLoggingMiddleware
 {
     private readonly RequestDelegate _next;
@@ -94,7 +94,7 @@ public static class RequestLoggingMiddlewareExtensions
 // Usage
 app.UseRequestLogging();</code></pre>
 
-                <h2>Exception Handling Middleware</h2>
+                <h2 id="exception-handling">Exception Handling Middleware</h2>
                 <pre><code>public class GlobalExceptionMiddleware
 {
     private readonly RequestDelegate _next;
@@ -145,7 +145,7 @@ app.UseRequestLogging();</code></pre>
     }
 }</code></pre>
 
-                <h2>Response Caching Middleware</h2>
+                <h2 id="caching">Response Caching Middleware</h2>
                 <pre><code>public class SimpleCacheMiddleware
 {
     private readonly RequestDelegate _next;
@@ -222,7 +222,7 @@ app.UseRequestLogging();</code></pre>
     }
 }</code></pre>
 
-                <h2>Factory-Based Middleware</h2>
+                <h2 id="factory-based">Factory-Based Middleware</h2>
                 <pre><code>public class FactoryMiddleware : IMiddleware
 {
     private readonly IUserService _userService;

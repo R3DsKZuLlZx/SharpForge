@@ -1,4 +1,4 @@
-﻿@page "/blog/docker-for-dotnet-developers"
+@page "/blog/docker-for-dotnet-developers"
 
 <PageTitle>Docker for .NET Developers - SharpForge</PageTitle>
 <CodeHighlighter />
@@ -27,7 +27,7 @@
             <div class="post-body">
                 <p>Docker enables consistent deployment across environments. This guide covers containerizing .NET applications effectively.</p>
 
-                <h2>Basic Dockerfile</h2>
+                <h2 id="basic-dockerfile">Basic Dockerfile</h2>
                 <pre><code>FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
 WORKDIR /app
 EXPOSE 8080
@@ -115,7 +115,7 @@ ENTRYPOINT ["./MyApp"]</code></pre>
 **/*.user
 **/*.sln.docstates</code></pre>
 
-                <h2>Docker Compose</h2>
+                <h2 id="docker-compose">Docker Compose</h2>
                 <pre><code># docker-compose.yml
 version: '3.8'
 
@@ -176,7 +176,7 @@ services:
       - DOTNET_USE_POLLING_FILE_WATCHER=1
     command: dotnet watch run --project src/MyApp.Api</code></pre>
 
-                <h2>Health Checks</h2>
+                <h2 id="health-checks">Health Checks</h2>
                 <pre><code>FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 WORKDIR /app
 
@@ -243,7 +243,7 @@ mcr.microsoft.com/dotnet/aspnet:10.0-alpine  ~110MB
 Native AOT + alpine                          ~30-50MB
 Native AOT + scratch                         ~15-30MB</code></pre>
 
-                <h2>Best Practices</h2>
+                <h2 id="best-practices">Best Practices</h2>
                 <ul>
                     <li>Use specific image tags, not <code>latest</code></li>
                     <li>Run as non-root user</li>

@@ -1,4 +1,4 @@
-﻿@page "/blog/working-with-json-dotnet"
+@page "/blog/working-with-json-dotnet"
 
 <PageTitle>Working with JSON in .NET - SharpForge</PageTitle>
 <CodeHighlighter />
@@ -27,7 +27,7 @@
             <div class="post-body">
                 <p>JSON is the universal data format for web APIs. .NET provides two main libraries for JSON handling: the built-in System.Text.Json and the popular Newtonsoft.Json.</p>
 
-                <h2>System.Text.Json Basics</h2>
+                <h2 id="basics">System.Text.Json Basics</h2>
                 <pre><code>using System.Text.Json;
 
 // Serialize
@@ -85,7 +85,7 @@ builder.Services.AddControllers()
     public decimal Price { get; set; }
 }</code></pre>
 
-                <h2>Custom Converters</h2>
+                <h2 id="converters">Custom Converters</h2>
                 <pre><code>public class DateOnlyConverter : JsonConverter&lt;DateOnly&gt;
 {
     private const string Format = "yyyy-MM-dd";
@@ -113,7 +113,7 @@ var options = new JsonSerializerOptions
     Converters = { new DateOnlyConverter() }
 };</code></pre>
 
-                <h2>Polymorphic Serialization</h2>
+                <h2 id="polymorphic">Polymorphic Serialization</h2>
                 <pre><code>[JsonDerivedType(typeof(Cat), "cat")]
 [JsonDerivedType(typeof(Dog), "dog")]
 public abstract class Animal
@@ -156,7 +156,7 @@ if (root.TryGetProperty("optional", out var optional))
     // Use optional
 }</code></pre>
 
-                <h2>JsonNode for Dynamic JSON</h2>
+                <h2 id="jsonnode">JsonNode for Dynamic JSON</h2>
                 <pre><code>// Mutable JSON manipulation
 var node = JsonNode.Parse(json);
 
@@ -187,7 +187,7 @@ public partial class AppJsonContext : JsonSerializerContext { }
 var json = JsonSerializer.Serialize(user, AppJsonContext.Default.User);
 var user = JsonSerializer.Deserialize(json, AppJsonContext.Default.User);</code></pre>
 
-                <h2>When to Use Newtonsoft.Json</h2>
+                <h2 id="newtonsoft">When to Use Newtonsoft.Json</h2>
                 <p>Consider Newtonsoft.Json when you need:</p>
                 <ul>
                     <li>JSON Path queries</li>

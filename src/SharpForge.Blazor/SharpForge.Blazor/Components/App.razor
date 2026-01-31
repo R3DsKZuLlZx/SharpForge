@@ -63,6 +63,47 @@
     };
 </script>
 <script src="@Assets["_framework/blazor.web.js"]"></script>
+<script>
+    // Handle anchor link scrolling for TOC
+    window.scrollToElement = function(elementId) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            const headerOffset = 100; // Account for fixed navbar
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+            
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+    };
+    
+    // Intercept anchor clicks
+    document.addEventListener('click', function(e) {
+        const target = e.target.closest('a');
+        if (target && target.getAttribute('href')) {
+            const href = target.getAttribute('href');
+            if (href.startsWith('#')) {
+                e.preventDefault();
+                const elementId = href.substring(1);
+                window.scrollToElement(elementId);
+                // Update URL without navigation
+                history.pushState(null, null, href);
+            }
+        }
+    });
+    
+    // Handle initial page load with hash
+    window.addEventListener('load', function() {
+        if (window.location.hash) {
+            setTimeout(function() {
+                const elementId = window.location.hash.substring(1);
+                window.scrollToElement(elementId);
+            }, 100);
+        }
+    });
+</script>
 </body>
 
 </html>

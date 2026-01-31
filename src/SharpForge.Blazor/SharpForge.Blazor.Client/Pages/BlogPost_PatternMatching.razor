@@ -1,4 +1,4 @@
-﻿@page "/blog/csharp-pattern-matching"
+@page "/blog/csharp-pattern-matching"
 
 <PageTitle>C# Pattern Matching - SharpForge</PageTitle>
 <CodeHighlighter />
@@ -27,7 +27,7 @@
             <div class="post-body">
                 <p>Pattern matching is one of C#'s most powerful features, enabling expressive and concise code for complex conditional logic.</p>
 
-                <h2>Type Patterns</h2>
+                <h2 id="type-patterns">Type Patterns</h2>
                 <pre><code>object obj = "Hello";
 
 // is expression
@@ -45,7 +45,7 @@ string result = obj switch
     _ =&gt; "Unknown type"
 };</code></pre>
 
-                <h2>Property Patterns</h2>
+                <h2 id="property-patterns">Property Patterns</h2>
                 <pre><code>public record Person(string Name, int Age, Address Address);
 public record Address(string City, string Country);
 
@@ -67,7 +67,7 @@ string GetLocation(Person person) =&gt; person switch
     _ =&gt; "Unknown"
 };</code></pre>
 
-                <h2>Relational Patterns</h2>
+                <h2 id="relational-patterns">Relational Patterns</h2>
                 <pre><code>string GetTemperatureDescription(int temp) =&gt; temp switch
 {
     &lt; 0 =&gt; "Freezing",
@@ -104,7 +104,7 @@ string Classify(int number) =&gt; number switch
     _ =&gt; "Large number"
 };</code></pre>
 
-                <h2>Positional Patterns</h2>
+                <h2 id="positional-patterns">Positional Patterns</h2>
                 <pre><code>public record Point(int X, int Y);
 
 string GetQuadrant(Point point) =&gt; point switch
@@ -139,7 +139,7 @@ string DescribeShape(Rectangle rect) =&gt; rect switch
     _ =&gt; "Portrait"
 };</code></pre>
 
-                <h2>List Patterns (C# 11+)</h2>
+                <h2 id="list-patterns">List Patterns (C# 11+)</h2>
                 <pre><code>int[] numbers = { 1, 2, 3, 4, 5 };
 
 string DescribeArray(int[] arr) =&gt; arr switch
@@ -190,7 +190,7 @@ bool EndsWithZero(int[] arr) =&gt; arr is [.., 0];</code></pre>
     }
 }</code></pre>
 
-                <h2>When Guards</h2>
+                <h2 id="when-guards">When Guards</h2>
                 <pre><code>string GetShippingCost(Order order) =&gt; order switch
 {
     { Total: &gt;= 100 } =&gt; "Free",

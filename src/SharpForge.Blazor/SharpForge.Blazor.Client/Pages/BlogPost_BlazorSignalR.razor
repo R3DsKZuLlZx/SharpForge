@@ -1,4 +1,4 @@
-﻿@page "/blog/blazor-signalr-realtime"
+@page "/blog/blazor-signalr-realtime"
 
 <PageTitle>Building Real-Time Apps with Blazor and SignalR - SharpForge</PageTitle>
 <CodeHighlighter />
@@ -27,10 +27,10 @@
             <div class="post-body">
                 <p>Real-time functionality has become a staple of modern web applications. From chat applications to live dashboards, users expect instant updates without refreshing the page. In this tutorial, we'll explore how to build real-time features using Blazor WebAssembly and SignalR.</p>
 
-                <h2>What is SignalR?</h2>
+                <h2 id="what-is-signalr">What is SignalR?</h2>
                 <p>SignalR is a library that simplifies adding real-time web functionality to applications. It enables server-side code to push content to connected clients instantly. SignalR handles connection management automatically and can scale to thousands of simultaneous connections.</p>
 
-                <h2>Setting Up the Project</h2>
+                <h2 id="setting-up-the-project">Setting Up the Project</h2>
                 <p>Let's start by creating a new Blazor WebAssembly project with a SignalR hub.</p>
 
                 <h3>1. Create the Solution</h3>
@@ -76,7 +76,7 @@ public class ChatHub : Hub
     }
 }</code></pre>
 
-                <h2>Building the Client</h2>
+                <h2 id="building-the-client">Building the Client</h2>
                 <p>Now let's create a Blazor component that connects to our SignalR hub.</p>
 
                 <h3>Install the Client Package</h3>
@@ -155,7 +155,7 @@ dotnet add package Microsoft.AspNetCore.SignalR.Client</code></pre>
     private record ChatMessage(string User, string Text);
 }</code></pre>
 
-                <h2>Advanced Features</h2>
+                <h2 id="advanced-features">Advanced Features</h2>
 
                 <h3>Strongly-Typed Hubs</h3>
                 <p>For better type safety, you can create strongly-typed hubs:</p>
@@ -201,7 +201,7 @@ hubConnection.Closed += error =&gt;
     return Task.CompletedTask;
 };</code></pre>
 
-                <h2>Best Practices</h2>
+                <h2 id="best-practices">Best Practices</h2>
                 <ul>
                     <li><strong>Always use automatic reconnection</strong> - Network issues are common, and SignalR's built-in reconnection handles them gracefully</li>
                     <li><strong>Dispose connections properly</strong> - Implement IAsyncDisposable and clean up hub connections</li>
@@ -210,7 +210,7 @@ hubConnection.Closed += error =&gt;
                     <li><strong>Handle disconnections</strong> - Users may lose connection; always provide feedback about connection state</li>
                 </ul>
 
-                <h2>Conclusion</h2>
+                <h2 id="conclusion">Conclusion</h2>
                 <p>Blazor and SignalR make an excellent combination for building real-time web applications. With minimal setup, you can create interactive experiences that update instantly across all connected clients. Whether you're building a chat application, a live dashboard, or a collaborative tool, these technologies provide the foundation you need.</p>
 
                 <div class="post-tags">
