@@ -1,0 +1,103 @@
+﻿@page "/training/async-concurrency/lesson/10"
+<PageTitle>PLINQ - Parallel LINQ - Async/Await & Concurrency - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <aside class="lesson-sidebar">
+        <div class="sidebar-header"><a href="/training/async-concurrency" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Course Overview</a><h3>Async/Await & Concurrency</h3></div>
+        <nav class="lesson-nav"><a href="/training/async-concurrency/lesson/1" class="lesson-nav-item"><span class="lesson-num">1</span><span>Introduction</span></a><a href="/training/async-concurrency/lesson/2" class="lesson-nav-item"><span class="lesson-num">2</span><span>Tasks</span></a><a href="/training/async-concurrency/lesson/3" class="lesson-nav-item"><span class="lesson-num">3</span><span>Async/Await</span></a><a href="/training/async-concurrency/lesson/4" class="lesson-nav-item"><span class="lesson-num">4</span><span>ValueTask</span></a><a href="/training/async-concurrency/lesson/5" class="lesson-nav-item"><span class="lesson-num">5</span><span>Combinators</span></a><a href="/training/async-concurrency/lesson/6" class="lesson-nav-item"><span class="lesson-num">6</span><span>Cancellation</span></a><a href="/training/async-concurrency/lesson/7" class="lesson-nav-item"><span class="lesson-num">7</span><span>Progress</span></a><a href="/training/async-concurrency/lesson/8" class="lesson-nav-item"><span class="lesson-num">8</span><span>Exceptions</span></a><a href="/training/async-concurrency/lesson/9" class="lesson-nav-item"><span class="lesson-num">9</span><span>Parallel.For</span></a><a href="/training/async-concurrency/lesson/10" class="lesson-nav-item active"><span class="lesson-num">10</span><span>PLINQ</span></a><a href="/training/async-concurrency/lesson/11" class="lesson-nav-item"><span class="lesson-num">11</span><span>Dataflow</span></a><a href="/training/async-concurrency/lesson/12" class="lesson-nav-item"><span class="lesson-num">12</span><span>Sync</span></a><a href="/training/async-concurrency/lesson/13" class="lesson-nav-item"><span class="lesson-num">13</span><span>Collections</span></a><a href="/training/async-concurrency/lesson/14" class="lesson-nav-item"><span class="lesson-num">14</span><span>Channels</span></a><a href="/training/async-concurrency/lesson/15" class="lesson-nav-item"><span class="lesson-num">15</span><span>Pitfalls</span></a><a href="/training/async-concurrency/lesson/16" class="lesson-nav-item"><span class="lesson-num">16</span><span>Debugging</span></a></nav>
+    </aside>
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <header class="lesson-header"><span class="lesson-number">Lesson 10</span><h1>PLINQ - Parallel LINQ</h1><div class="lesson-meta"><span class="lesson-duration"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>30 min</span><span class="lesson-level intermediate">Intermediate</span></div></header>
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>AsParallel()</h2>
+                    <pre><code class="language-csharp">// Sequential LINQ
+var results = numbers
+    .Where(n =&gt; n % 2 == 0)
+    .Select(n =&gt; ExpensiveCalculation(n))
+    .ToList();
+
+// Parallel LINQ - just add AsParallel()!
+var results = numbers
+    .AsParallel()
+    .Where(n =&gt; n % 2 == 0)
+    .Select(n =&gt; ExpensiveCalculation(n))
+    .ToList();</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Controlling Parallelism</h2>
+                    <pre><code class="language-csharp">var results = data
+    .AsParallel()
+    .WithDegreeOfParallelism(4)  // Max 4 threads
+    .WithCancellation(cancellationToken)
+    .WithExecutionMode(ParallelExecutionMode.ForceParallelism)
+    .Select(x =&gt; Process(x))
+    .ToList();</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Preserving Order</h2>
+                    <pre><code class="language-csharp">// Order NOT preserved by default (faster)
+var unordered = data.AsParallel().Select(Process).ToList();
+
+// Preserve order (slower)
+var ordered = data
+    .AsParallel()
+    .AsOrdered()  // Maintain input order
+    .Select(Process)
+    .ToList();</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>ForAll for Side Effects</h2>
+                    <pre><code class="language-csharp">// Don't use ToList() just for side effects
+data
+    .AsParallel()
+    .Where(x =&gt; x.IsActive)
+    .ForAll(x =&gt;
+    {
+        // Process each in parallel (no results returned)
+        ProcessItem(x);
+    });</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>When PLINQ Helps</h2>
+                    <div class="comparison-grid">
+                        <div class="comparison-card">
+                            <h4>Good for PLINQ</h4>
+                            <ul>
+                                <li>CPU-intensive transforms</li>
+                                <li>Large datasets</li>
+                                <li>Independent operations</li>
+                            </ul>
+                        </div>
+                        <div class="comparison-card">
+                            <h4>Avoid PLINQ</h4>
+                            <ul>
+                                <li>I/O operations</li>
+                                <li>Small datasets</li>
+                                <li>Operations with shared state</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Key Takeaways</h2>
+                    <div class="key-takeaways">
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>AsParallel() converts LINQ to parallel.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Use AsOrdered() to preserve order.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>ForAll() for parallel side effects.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Only use for CPU-bound, large datasets.</span></div>
+                    </div>
+                </section>
+            </div>
+            <nav class="lesson-navigation"><a href="/training/async-concurrency/lesson/9" class="btn btn-secondary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Previous</a><a href="/training/async-concurrency/lesson/11" class="btn btn-primary">Next: Dataflow<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a></nav>
+        </article>
+    </main>
+</div>
+

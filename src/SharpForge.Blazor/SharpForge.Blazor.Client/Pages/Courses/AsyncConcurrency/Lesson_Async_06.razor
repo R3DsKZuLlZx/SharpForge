@@ -1,0 +1,99 @@
+﻿@page "/training/async-concurrency/lesson/6"
+<PageTitle>Cancellation Tokens - Async/Await & Concurrency - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <aside class="lesson-sidebar">
+        <div class="sidebar-header"><a href="/training/async-concurrency" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Course Overview</a><h3>Async/Await & Concurrency</h3></div>
+        <nav class="lesson-nav"><a href="/training/async-concurrency/lesson/1" class="lesson-nav-item"><span class="lesson-num">1</span><span>Introduction</span></a><a href="/training/async-concurrency/lesson/2" class="lesson-nav-item"><span class="lesson-num">2</span><span>Tasks</span></a><a href="/training/async-concurrency/lesson/3" class="lesson-nav-item"><span class="lesson-num">3</span><span>Async/Await</span></a><a href="/training/async-concurrency/lesson/4" class="lesson-nav-item"><span class="lesson-num">4</span><span>ValueTask</span></a><a href="/training/async-concurrency/lesson/5" class="lesson-nav-item"><span class="lesson-num">5</span><span>Combinators</span></a><a href="/training/async-concurrency/lesson/6" class="lesson-nav-item active"><span class="lesson-num">6</span><span>Cancellation</span></a><a href="/training/async-concurrency/lesson/7" class="lesson-nav-item"><span class="lesson-num">7</span><span>Progress</span></a><a href="/training/async-concurrency/lesson/8" class="lesson-nav-item"><span class="lesson-num">8</span><span>Exceptions</span></a><a href="/training/async-concurrency/lesson/9" class="lesson-nav-item"><span class="lesson-num">9</span><span>Parallel.For</span></a><a href="/training/async-concurrency/lesson/10" class="lesson-nav-item"><span class="lesson-num">10</span><span>PLINQ</span></a><a href="/training/async-concurrency/lesson/11" class="lesson-nav-item"><span class="lesson-num">11</span><span>Dataflow</span></a><a href="/training/async-concurrency/lesson/12" class="lesson-nav-item"><span class="lesson-num">12</span><span>Sync</span></a><a href="/training/async-concurrency/lesson/13" class="lesson-nav-item"><span class="lesson-num">13</span><span>Collections</span></a><a href="/training/async-concurrency/lesson/14" class="lesson-nav-item"><span class="lesson-num">14</span><span>Channels</span></a><a href="/training/async-concurrency/lesson/15" class="lesson-nav-item"><span class="lesson-num">15</span><span>Pitfalls</span></a><a href="/training/async-concurrency/lesson/16" class="lesson-nav-item"><span class="lesson-num">16</span><span>Debugging</span></a></nav>
+    </aside>
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <header class="lesson-header"><span class="lesson-number">Lesson 6</span><h1>Cancellation Tokens</h1><div class="lesson-meta"><span class="lesson-duration"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>30 min</span><span class="lesson-level intermediate">Intermediate</span></div></header>
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Cooperative Cancellation</h2>
+                    <p>CancellationToken enables cooperative cancellation—operations must check for cancellation and stop gracefully.</p>
+                    <pre><code class="language-csharp">// Create a cancellation token source
+using var cts = new CancellationTokenSource();
+
+// Cancel after 5 seconds
+cts.CancelAfter(TimeSpan.FromSeconds(5));
+
+// Or cancel manually
+cts.Cancel();
+
+// Pass token to async methods
+await DoWorkAsync(cts.Token);</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Responding to Cancellation</h2>
+                    <pre><code class="language-csharp">public async Task ProcessAsync(CancellationToken cancellationToken)
+{
+    foreach (var item in items)
+    {
+        // Check for cancellation
+        cancellationToken.ThrowIfCancellationRequested();
+        
+        // Or check without throwing
+        if (cancellationToken.IsCancellationRequested)
+        {
+            // Cleanup and exit gracefully
+            break;
+        }
+        
+        // Pass token to nested operations
+        await ProcessItemAsync(item, cancellationToken);
+    }
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Timeout Pattern</h2>
+                    <pre><code class="language-csharp">public async Task&lt;Data&gt; GetWithTimeoutAsync(TimeSpan timeout)
+{
+    using var cts = new CancellationTokenSource(timeout);
+    
+    try
+    {
+        return await GetDataAsync(cts.Token);
+    }
+    catch (OperationCanceledException) when (cts.IsCancellationRequested)
+    {
+        throw new TimeoutException($"Operation timed out after {timeout}");
+    }
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Linked Cancellation</h2>
+                    <pre><code class="language-csharp">// Combine multiple cancellation sources
+public async Task ProcessAsync(CancellationToken externalToken)
+{
+    using var timeoutCts = new CancellationTokenSource(TimeSpan.FromMinutes(5));
+    
+    // Cancel if either external OR timeout occurs
+    using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(
+        externalToken, 
+        timeoutCts.Token);
+    
+    await DoWorkAsync(linkedCts.Token);
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Key Takeaways</h2>
+                    <div class="key-takeaways">
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Cancellation is cooperative—check the token!</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Use CancelAfter for timeouts.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Always pass tokens through async call chains.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Link tokens to combine cancellation sources.</span></div>
+                    </div>
+                </section>
+            </div>
+            <nav class="lesson-navigation"><a href="/training/async-concurrency/lesson/5" class="btn btn-secondary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Previous</a><a href="/training/async-concurrency/lesson/7" class="btn btn-primary">Next: Progress<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a></nav>
+        </article>
+    </main>
+</div>
+
