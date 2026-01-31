@@ -190,18 +190,22 @@
 }
 
 .training-card {
+    display: block;
     padding: 1.5rem;
     background: var(--card-bg);
     border-radius: 1rem;
     border: 1px solid var(--border-color);
     transition: all 0.3s ease;
     cursor: pointer;
+    text-decoration: none;
+    color: inherit;
 }
 
 .training-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
     border-color: var(--accent-color);
+    color: inherit;
 }
 
 .training-level {
