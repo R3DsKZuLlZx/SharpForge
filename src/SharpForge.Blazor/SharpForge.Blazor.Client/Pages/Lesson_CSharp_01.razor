@@ -1,0 +1,369 @@
+﻿@page "/training/csharp-fundamentals/lesson/1"
+
+<PageTitle>Introduction to C# and .NET - C# Fundamentals - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <aside class="lesson-sidebar">
+        <div class="sidebar-header">
+            <a href="/training/csharp-fundamentals" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"/>
+                </svg>
+                Course Overview
+            </a>
+            <h3>C# Fundamentals</h3>
+        </div>
+        <nav class="lesson-nav">
+            <a href="/training/csharp-fundamentals/lesson/1" class="lesson-nav-item active">
+                <span class="lesson-num">1</span>
+                <span>Introduction to C# and .NET</span>
+            </a>
+            <a href="/training/csharp-fundamentals/lesson/2" class="lesson-nav-item">
+                <span class="lesson-num">2</span>
+                <span>Your First C# Program</span>
+            </a>
+            <a href="/training/csharp-fundamentals/lesson/3" class="lesson-nav-item">
+                <span class="lesson-num">3</span>
+                <span>Variables and Data Types</span>
+            </a>
+            <a href="/training/csharp-fundamentals/lesson/4" class="lesson-nav-item">
+                <span class="lesson-num">4</span>
+                <span>Operators and Expressions</span>
+            </a>
+            <a href="/training/csharp-fundamentals/lesson/5" class="lesson-nav-item">
+                <span class="lesson-num">5</span>
+                <span>Control Flow: Conditionals</span>
+            </a>
+            <a href="/training/csharp-fundamentals/lesson/6" class="lesson-nav-item">
+                <span class="lesson-num">6</span>
+                <span>Control Flow: Loops</span>
+            </a>
+            <a href="/training/csharp-fundamentals/lesson/7" class="lesson-nav-item">
+                <span class="lesson-num">7</span>
+                <span>Methods and Parameters</span>
+            </a>
+            <a href="/training/csharp-fundamentals/lesson/8" class="lesson-nav-item">
+                <span class="lesson-num">8</span>
+                <span>Arrays and Collections</span>
+            </a>
+            <a href="/training/csharp-fundamentals/lesson/9" class="lesson-nav-item">
+                <span class="lesson-num">9</span>
+                <span>Introduction to OOP: Classes</span>
+            </a>
+            <a href="/training/csharp-fundamentals/lesson/10" class="lesson-nav-item">
+                <span class="lesson-num">10</span>
+                <span>OOP: Inheritance and Polymorphism</span>
+            </a>
+            <a href="/training/csharp-fundamentals/lesson/11" class="lesson-nav-item">
+                <span class="lesson-num">11</span>
+                <span>Exception Handling</span>
+            </a>
+            <a href="/training/csharp-fundamentals/lesson/12" class="lesson-nav-item">
+                <span class="lesson-num">12</span>
+                <span>LINQ Basics</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <header class="lesson-header">
+                <span class="lesson-number">Lesson 1</span>
+                <h1>Introduction to C# and .NET</h1>
+                <div class="lesson-meta">
+                    <span class="lesson-duration">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        25 min
+                    </span>
+                    <span class="lesson-level beginner">Beginner</span>
+                </div>
+            </header>
+
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Welcome to C#!</h2>
+                    <p>Welcome to your journey into C# programming! Whether you're completely new to programming or coming from another language, this course will give you a solid foundation in one of the most versatile and powerful programming languages in use today.</p>
+                    
+                    <p>In this first lesson, we'll explore what C# is, understand the .NET ecosystem, and get your development environment set up so you're ready to start coding.</p>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>What is C#?</h2>
+                    <p>C# (pronounced "C-sharp") is a modern, object-oriented programming language developed by Microsoft. It was created by Anders Hejlsberg and first released in 2000 as part of Microsoft's .NET initiative.</p>
+
+                    <div class="info-box">
+                        <div class="info-box-header">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="16" x2="12" y2="12"/>
+                                <line x1="12" y1="8" x2="12.01" y2="8"/>
+                            </svg>
+                            <span>Fun Fact</span>
+                        </div>
+                        <p>The name "C#" was inspired by musical notation. In music, a sharp (♯) raises a note by a semitone, suggesting that C# is an enhancement of the C language family.</p>
+                    </div>
+
+                    <h3>Key Characteristics of C#</h3>
+                    <ul>
+                        <li><strong>Object-Oriented:</strong> Everything in C# revolves around objects and classes, making it easy to model real-world concepts in code.</li>
+                        <li><strong>Type-Safe:</strong> C# catches many errors at compile time, before your code even runs, helping you write more reliable software.</li>
+                        <li><strong>Modern:</strong> The language is continuously updated with new features that make coding more efficient and expressive.</li>
+                        <li><strong>Cross-Platform:</strong> With .NET, your C# code can run on Windows, macOS, Linux, and even mobile devices.</li>
+                        <li><strong>Versatile:</strong> Build web applications, desktop apps, mobile apps, games, cloud services, and more.</li>
+                    </ul>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>What is .NET?</h2>
+                    <p>.NET (pronounced "dot net") is a free, open-source development platform created by Microsoft. Think of it as the foundation that powers your C# applications.</p>
+
+                    <h3>The .NET Ecosystem</h3>
+                    <p>.NET provides everything you need to build applications:</p>
+
+                    <div class="concept-cards">
+                        <div class="concept-card">
+                            <h4>Runtime (CLR)</h4>
+                            <p>The Common Language Runtime executes your code, manages memory, and handles security.</p>
+                        </div>
+                        <div class="concept-card">
+                            <h4>Base Class Library</h4>
+                            <p>A huge collection of pre-built code for common tasks like file I/O, networking, and data structures.</p>
+                        </div>
+                        <div class="concept-card">
+                            <h4>Frameworks</h4>
+                            <p>Specialized libraries for building specific types of applications (web, desktop, mobile).</p>
+                        </div>
+                        <div class="concept-card">
+                            <h4>Tools</h4>
+                            <p>The SDK, CLI tools, and IDE support for developing, testing, and deploying applications.</p>
+                        </div>
+                    </div>
+
+                    <h3>.NET Versions</h3>
+                    <p>You might hear about different versions of .NET:</p>
+                    <ul>
+                        <li><strong>.NET Framework:</strong> The original Windows-only version (legacy).</li>
+                        <li><strong>.NET Core:</strong> The cross-platform rewrite (versions 1.0-3.1).</li>
+                        <li><strong>.NET 5+:</strong> The unified platform going forward. We use .NET 10 in this course.</li>
+                    </ul>
+
+                    <div class="info-box success">
+                        <div class="info-box-header">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Recommendation</span>
+                        </div>
+                        <p>Always use the latest .NET version for new projects. As of this course, that's .NET 10, which includes C# 13 with all the latest language features.</p>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>What Can You Build with C#?</h2>
+                    <p>One of the best things about learning C# is its versatility. Here's what you can create:</p>
+
+                    <div class="use-cases">
+                        <div class="use-case">
+                            <div class="use-case-icon">🌐</div>
+                            <h4>Web Applications</h4>
+                            <p>Build modern web apps with ASP.NET Core, Blazor, and web APIs.</p>
+                        </div>
+                        <div class="use-case">
+                            <div class="use-case-icon">🖥️</div>
+                            <h4>Desktop Applications</h4>
+                            <p>Create Windows apps with WPF, WinForms, or cross-platform apps with MAUI.</p>
+                        </div>
+                        <div class="use-case">
+                            <div class="use-case-icon">📱</div>
+                            <h4>Mobile Apps</h4>
+                            <p>Build iOS and Android apps with .NET MAUI or Xamarin.</p>
+                        </div>
+                        <div class="use-case">
+                            <div class="use-case-icon">🎮</div>
+                            <h4>Games</h4>
+                            <p>Create games with Unity, the world's most popular game engine.</p>
+                        </div>
+                        <div class="use-case">
+                            <div class="use-case-icon">☁️</div>
+                            <h4>Cloud Services</h4>
+                            <p>Build microservices, serverless functions, and cloud-native applications.</p>
+                        </div>
+                        <div class="use-case">
+                            <div class="use-case-icon">🤖</div>
+                            <h4>AI & Machine Learning</h4>
+                            <p>Integrate ML models with ML.NET and work with AI services.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Setting Up Your Development Environment</h2>
+                    <p>Before we can start coding, we need to set up our development environment. You'll need two things:</p>
+
+                    <h3>1. Install the .NET SDK</h3>
+                    <p>The .NET SDK (Software Development Kit) includes everything you need to build and run C# applications.</p>
+
+                    <ol class="steps-list">
+                        <li>
+                            <strong>Download .NET SDK:</strong>
+                            <p>Visit <a href="https://dotnet.microsoft.com/download" target="_blank">dotnet.microsoft.com/download</a> and download the latest .NET SDK for your operating system.</p>
+                        </li>
+                        <li>
+                            <strong>Run the installer:</strong>
+                            <p>Follow the installation wizard. The default options are fine for most users.</p>
+                        </li>
+                        <li>
+                            <strong>Verify installation:</strong>
+                            <p>Open a terminal or command prompt and run:</p>
+                            <pre><code class="language-bash">dotnet --version</code></pre>
+                            <p>You should see the version number (e.g., <code>10.0.100</code>).</p>
+                        </li>
+                    </ol>
+
+                    <h3>2. Choose an IDE or Code Editor</h3>
+                    <p>An IDE (Integrated Development Environment) makes writing code much easier with features like syntax highlighting, code completion, and debugging.</p>
+
+                    <div class="tool-options">
+                        <div class="tool-option recommended">
+                            <div class="tool-badge">Recommended</div>
+                            <h4>Visual Studio Code</h4>
+                            <p>Free, lightweight, and cross-platform. Perfect for beginners.</p>
+                            <ul>
+                                <li>Download from <a href="https://code.visualstudio.com" target="_blank">code.visualstudio.com</a></li>
+                                <li>Install the "C# Dev Kit" extension</li>
+                            </ul>
+                        </div>
+                        <div class="tool-option">
+                            <h4>Visual Studio</h4>
+                            <p>Full-featured IDE for Windows (Community edition is free).</p>
+                            <ul>
+                                <li>Best debugging experience</li>
+                                <li>Great for larger projects</li>
+                            </ul>
+                        </div>
+                        <div class="tool-option">
+                            <h4>JetBrains Rider</h4>
+                            <p>Powerful cross-platform IDE (paid, with free trial).</p>
+                            <ul>
+                                <li>Excellent refactoring tools</li>
+                                <li>Great performance</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Your First Look at C# Code</h2>
+                    <p>Let's take a sneak peek at what C# code looks like. Don't worry about understanding everything yet – we'll cover each concept in detail in upcoming lessons.</p>
+
+                    <pre><code class="language-csharp">// This is a simple C# program
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Print a greeting to the console
+        Console.WriteLine("Hello, future C# developer!");
+        
+        // Ask for the user's name
+        Console.Write("What's your name? ");
+        string name = Console.ReadLine();
+        
+        // Greet the user
+        Console.WriteLine($"Nice to meet you, {name}!");
+    }
+}</code></pre>
+
+                    <p>Let's briefly look at what's happening:</p>
+                    <ul>
+                        <li><code>using System;</code> – Imports functionality we need</li>
+                        <li><code>class Program</code> – Defines a container for our code</li>
+                        <li><code>static void Main()</code> – The entry point where our program starts</li>
+                        <li><code>Console.WriteLine()</code> – Displays text on the screen</li>
+                        <li><code>string name</code> – Creates a variable to store text</li>
+                        <li><code>$"..."</code> – String interpolation (inserting variables into text)</li>
+                    </ul>
+
+                    <div class="info-box">
+                        <div class="info-box-header">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="16" x2="12" y2="12"/>
+                                <line x1="12" y1="8" x2="12.01" y2="8"/>
+                            </svg>
+                            <span>Note</span>
+                        </div>
+                        <p>In modern .NET (6+), you can write simpler "top-level" programs without all the ceremony. We'll explore both styles in the next lesson.</p>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Key Takeaways</h2>
+                    <div class="takeaways">
+                        <div class="takeaway">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>C# is a modern, type-safe, object-oriented language developed by Microsoft.</span>
+                        </div>
+                        <div class="takeaway">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>.NET is the platform that runs C# applications and provides libraries and tools.</span>
+                        </div>
+                        <div class="takeaway">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>C# can be used to build web, desktop, mobile, game, and cloud applications.</span>
+                        </div>
+                        <div class="takeaway">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>You need the .NET SDK and a code editor to start developing.</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Practice Exercise</h2>
+                    <div class="exercise-box">
+                        <h4>Exercise 1.1: Set Up Your Environment</h4>
+                        <ol>
+                            <li>Download and install the .NET SDK from the official website.</li>
+                            <li>Install Visual Studio Code and the C# Dev Kit extension.</li>
+                            <li>Open a terminal and run <code>dotnet --version</code> to verify installation.</li>
+                            <li>Run <code>dotnet --list-sdks</code> to see all installed SDK versions.</li>
+                        </ol>
+                        <p><strong>Bonus:</strong> Run <code>dotnet --help</code> to explore available commands.</p>
+                    </div>
+                </section>
+            </div>
+
+            <footer class="lesson-footer">
+                <div class="lesson-nav-buttons">
+                    <a href="/training/csharp-fundamentals" class="btn btn-secondary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="15 18 9 12 15 6"/>
+                        </svg>
+                        Course Overview
+                    </a>
+                    <a href="/training/csharp-fundamentals/lesson/2" class="btn btn-primary">
+                        Next Lesson
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"/>
+                        </svg>
+                    </a>
+                </div>
+            </footer>
+        </article>
+    </main>
+</div>
+

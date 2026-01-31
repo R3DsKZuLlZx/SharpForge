@@ -41,7 +41,7 @@
                             <span>•</span>
                             <span>@course.Exercises Exercises</span>
                         </div>
-                        <a href="#" class="btn btn-primary">Start Course</a>
+                        <a href="@course.Url" class="btn btn-primary">Start Course</a>
                     </div>
                 </article>
             }
@@ -67,10 +67,11 @@
             Title = "C# Fundamentals",
             Description = "Start your C# journey with the basics. Learn about variables, data types, control flow, methods, and object-oriented programming concepts.",
             Level = "Beginner",
-            Duration = "4 Hours",
+            Duration = "6 Hours",
             Lessons = 12,
             Exercises = 6,
-            Topics = ["Variables", "Control Flow", "Methods", "Classes"]
+            Topics = ["Variables", "Control Flow", "Methods", "Classes"],
+            Url = "/training/csharp-fundamentals"
         },
         new Course
         {
@@ -164,5 +165,6 @@
         public int Lessons { get; set; }
         public int Exercises { get; set; }
         public string[] Topics { get; set; } = [];
+        public string Url { get; set; } = "#";
     }
 }

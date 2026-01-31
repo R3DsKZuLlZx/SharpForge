@@ -1,0 +1,215 @@
+﻿@page "/training/csharp-fundamentals"
+
+<PageTitle>C# Fundamentals - SharpForge</PageTitle>
+
+<section class="course-hero">
+    <div class="container">
+        <a href="/training" class="back-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"/>
+            </svg>
+            Back to Training
+        </a>
+        <div class="course-hero-content">
+            <div class="course-hero-text">
+                <span class="course-level beginner">Beginner</span>
+                <h1>C# Fundamentals</h1>
+                <p class="course-description">Master the fundamentals of C# programming. Learn syntax, data types, control flow, object-oriented programming, and build your first applications.</p>
+                <div class="course-meta">
+                    <div class="meta-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 20V10M18 20V4M6 20v-4"/>
+                        </svg>
+                        <span>12 Lessons</span>
+                    </div>
+                    <div class="meta-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        <span>6 Hours</span>
+                    </div>
+                    <div class="meta-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        <span>2,847 Students</span>
+                    </div>
+                </div>
+                <a href="/training/csharp-fundamentals/lesson/1" class="btn btn-primary btn-lg">Start Learning</a>
+            </div>
+            <div class="course-hero-image">
+                <div class="course-icon">
+                    <svg viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="64" cy="64" r="60" fill="url(#csharp-gradient)"/>
+                        <text x="64" y="78" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="40" font-weight="700" fill="white">C#</text>
+                        <defs>
+                            <linearGradient id="csharp-gradient" x1="0" y1="0" x2="128" y2="128" gradientUnits="userSpaceOnUse">
+                                <stop offset="0" stop-color="#68217A"/>
+                                <stop offset="1" stop-color="#9B4DCA"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section course-content">
+    <div class="container">
+        <div class="course-layout">
+            <main class="course-main">
+                <div class="course-section">
+                    <h2>What You'll Learn</h2>
+                    <div class="learning-outcomes">
+                        <div class="outcome-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Understand C# syntax and programming concepts</span>
+                        </div>
+                        <div class="outcome-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Work with variables, data types, and operators</span>
+                        </div>
+                        <div class="outcome-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Use control flow statements (if, switch, loops)</span>
+                        </div>
+                        <div class="outcome-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Create and use methods effectively</span>
+                        </div>
+                        <div class="outcome-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Master object-oriented programming principles</span>
+                        </div>
+                        <div class="outcome-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Work with collections and LINQ basics</span>
+                        </div>
+                        <div class="outcome-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Handle exceptions and errors properly</span>
+                        </div>
+                        <div class="outcome-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Build your first console applications</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="course-section">
+                    <h2>Course Curriculum</h2>
+                    <div class="lessons-list">
+                        @foreach (var lesson in Lessons)
+                        {
+                            <a href="/training/csharp-fundamentals/lesson/@lesson.Number" class="lesson-card">
+                                <div class="lesson-number">@lesson.Number</div>
+                                <div class="lesson-info">
+                                    <h3>@lesson.Title</h3>
+                                    <p>@lesson.Description</p>
+                                </div>
+                                <div class="lesson-duration">@lesson.Duration</div>
+                            </a>
+                        }
+                    </div>
+                </div>
+
+                <div class="course-section">
+                    <h2>Prerequisites</h2>
+                    <ul class="prerequisites-list">
+                        <li>No prior programming experience required</li>
+                        <li>Basic computer skills</li>
+                        <li>A computer with Windows, macOS, or Linux</li>
+                        <li>Enthusiasm to learn!</li>
+                    </ul>
+                </div>
+            </main>
+
+            <aside class="course-sidebar">
+                <div class="sidebar-card">
+                    <h4>Course Progress</h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <p class="progress-text">0 of 12 lessons completed</p>
+                    <a href="/training/csharp-fundamentals/lesson/1" class="btn btn-primary">Start Course</a>
+                </div>
+
+                <div class="sidebar-card">
+                    <h4>Course Includes</h4>
+                    <ul class="includes-list">
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="23 7 16 12 23 17 23 7"/>
+                                <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+                            </svg>
+                            6 hours of content
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                            </svg>
+                            12 lessons
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="16 18 22 12 16 6"/>
+                                <polyline points="8 6 2 12 8 18"/>
+                            </svg>
+                            Hands-on exercises
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="8" x2="12" y2="12"/>
+                                <line x1="12" y1="16" x2="12.01" y2="16"/>
+                            </svg>
+                            Lifetime access
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+
+@code {
+    private List<LessonInfo> Lessons { get; } = new()
+    {
+        new(1, "Introduction to C# and .NET", "Learn what C# is, its history, and how to set up your development environment.", "25 min"),
+        new(2, "Your First C# Program", "Write your first 'Hello World' program and understand the basic structure of C# code.", "30 min"),
+        new(3, "Variables and Data Types", "Explore built-in data types, declare variables, and understand type safety.", "35 min"),
+        new(4, "Operators and Expressions", "Master arithmetic, comparison, logical, and assignment operators.", "30 min"),
+        new(5, "Control Flow: Conditionals", "Learn if statements, else clauses, switch expressions, and ternary operators.", "35 min"),
+        new(6, "Control Flow: Loops", "Master for, while, do-while, and foreach loops for repetitive tasks.", "30 min"),
+        new(7, "Methods and Parameters", "Create reusable code with methods, parameters, return values, and overloading.", "40 min"),
+        new(8, "Arrays and Collections", "Work with arrays, lists, dictionaries, and other collection types.", "35 min"),
+        new(9, "Introduction to OOP: Classes", "Understand classes, objects, fields, properties, and constructors.", "40 min"),
+        new(10, "OOP: Inheritance and Polymorphism", "Learn inheritance, virtual methods, overriding, and polymorphic behavior.", "35 min"),
+        new(11, "Exception Handling", "Handle errors gracefully with try-catch-finally and custom exceptions.", "30 min"),
+        new(12, "LINQ Basics", "Query collections efficiently with Language Integrated Query.", "35 min")
+    };
+
+    private record LessonInfo(int Number, string Title, string Description, string Duration);
+}
+
