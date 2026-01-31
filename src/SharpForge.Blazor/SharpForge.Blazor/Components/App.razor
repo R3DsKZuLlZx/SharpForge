@@ -88,21 +88,33 @@
                 e.preventDefault();
                 const elementId = href.substring(1);
                 window.scrollToElement(elementId);
-                // Update URL without navigation
-                history.pushState(null, null, href);
+                // Update URL hash while preserving the full path
+                const newUrl = window.location.pathname + window.location.search + href;
+                history.pushState(null, null, newUrl);
             }
         }
     });
     
-    // Handle initial page load with hash
-    window.addEventListener('load', function() {
+    // Handle initial page load with hash - prevent default and scroll with offset
+    (function() {
         if (window.location.hash) {
-            setTimeout(function() {
-                const elementId = window.location.hash.substring(1);
-                window.scrollToElement(elementId);
-            }, 100);
+            // Prevent default browser scroll restoration
+            if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'manual';
+            }
         }
-    });
+        
+        // Single scroll after Blazor has fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.location.hash) {
+                // Wait for Blazor to render content
+                setTimeout(function() {
+                    const elementId = window.location.hash.substring(1);
+                    window.scrollToElement(elementId);
+                }, 800);
+            }
+        });
+    })();
 </script>
 </body>
 
