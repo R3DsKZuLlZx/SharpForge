@@ -141,17 +141,21 @@
 }
 
 .feature-card {
+    display: block;
     padding: 2rem;
     background: var(--card-bg);
     border-radius: 1rem;
     border: 1px solid var(--border-color);
     transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
 }
 
 .feature-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
     border-color: var(--accent-color);
+    color: inherit;
 }
 
 .feature-icon {
