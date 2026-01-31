@@ -553,6 +553,9 @@ input, textarea, select {
 .blog-post .author-avatar {
     width: 3rem;
     height: 3rem;
+    min-width: 3rem;
+    min-height: 3rem;
+    flex-shrink: 0;
     border-radius: 50%;
     background: var(--gradient-primary);
     color: white;
