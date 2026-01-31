@@ -1,0 +1,85 @@
+﻿@page "/training/microservices/lesson/12"
+<PageTitle>Database per Service Pattern - Microservices with .NET - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <aside class="lesson-sidebar">
+        <div class="sidebar-header"><a href="/training/microservices" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Course Overview</a><h3>Microservices with .NET</h3></div>
+        <nav class="lesson-nav"><a href="/training/microservices/lesson/1" class="lesson-nav-item"><span class="lesson-num">1</span><span>Intro</span></a><a href="/training/microservices/lesson/2" class="lesson-nav-item"><span class="lesson-num">2</span><span>Migration</span></a><a href="/training/microservices/lesson/3" class="lesson-nav-item"><span class="lesson-num">3</span><span>DDD</span></a><a href="/training/microservices/lesson/4" class="lesson-nav-item"><span class="lesson-num">4</span><span>Docker</span></a><a href="/training/microservices/lesson/5" class="lesson-nav-item"><span class="lesson-num">5</span><span>Dockerizing</span></a><a href="/training/microservices/lesson/6" class="lesson-nav-item"><span class="lesson-num">6</span><span>Compose</span></a><a href="/training/microservices/lesson/7" class="lesson-nav-item"><span class="lesson-num">7</span><span>HTTP</span></a><a href="/training/microservices/lesson/8" class="lesson-nav-item"><span class="lesson-num">8</span><span>gRPC</span></a><a href="/training/microservices/lesson/9" class="lesson-nav-item"><span class="lesson-num">9</span><span>Messaging</span></a><a href="/training/microservices/lesson/10" class="lesson-nav-item"><span class="lesson-num">10</span><span>RabbitMQ</span></a><a href="/training/microservices/lesson/11" class="lesson-nav-item"><span class="lesson-num">11</span><span>Events</span></a><a href="/training/microservices/lesson/12" class="lesson-nav-item active"><span class="lesson-num">12</span><span>DB</span></a><a href="/training/microservices/lesson/13" class="lesson-nav-item"><span class="lesson-num">13</span><span>Saga</span></a><a href="/training/microservices/lesson/14" class="lesson-nav-item"><span class="lesson-num">14</span><span>Outbox</span></a><a href="/training/microservices/lesson/15" class="lesson-nav-item"><span class="lesson-num">15</span><span>Gateway</span></a><a href="/training/microservices/lesson/16" class="lesson-nav-item"><span class="lesson-num">16</span><span>YARP</span></a><a href="/training/microservices/lesson/17" class="lesson-nav-item"><span class="lesson-num">17</span><span>Auth</span></a><a href="/training/microservices/lesson/18" class="lesson-nav-item"><span class="lesson-num">18</span><span>K8s</span></a><a href="/training/microservices/lesson/19" class="lesson-nav-item"><span class="lesson-num">19</span><span>Deploy</span></a><a href="/training/microservices/lesson/20" class="lesson-nav-item"><span class="lesson-num">20</span><span>Config</span></a><a href="/training/microservices/lesson/21" class="lesson-nav-item"><span class="lesson-num">21</span><span>Health</span></a><a href="/training/microservices/lesson/22" class="lesson-nav-item"><span class="lesson-num">22</span><span>Scale</span></a><a href="/training/microservices/lesson/23" class="lesson-nav-item"><span class="lesson-num">23</span><span>Logs</span></a><a href="/training/microservices/lesson/24" class="lesson-nav-item"><span class="lesson-num">24</span><span>Trace</span></a><a href="/training/microservices/lesson/25" class="lesson-nav-item"><span class="lesson-num">25</span><span>Metrics</span></a><a href="/training/microservices/lesson/26" class="lesson-nav-item"><span class="lesson-num">26</span><span>Resilience</span></a><a href="/training/microservices/lesson/27" class="lesson-nav-item"><span class="lesson-num">27</span><span>Polly</span></a><a href="/training/microservices/lesson/28" class="lesson-nav-item"><span class="lesson-num">28</span><span>Complete</span></a></nav>
+    </aside>
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <header class="lesson-header"><span class="lesson-number">Lesson 12</span><h1>Database per Service Pattern</h1><div class="lesson-meta"><span class="lesson-duration"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>25 min</span><span class="lesson-level advanced">Advanced</span></div></header>
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Why Database per Service?</h2>
+                    <ul>
+                        <li>Loose coupling - services can evolve independently</li>
+                        <li>Right tool for the job - SQL, NoSQL, Graph per service</li>
+                        <li>Independent scaling</li>
+                        <li>Failure isolation</li>
+                    </ul>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Data Ownership</h2>
+                    <pre><code class="language-text">Order Service        Inventory Service      Customer Service
+┌──────────────┐    ┌──────────────┐       ┌──────────────┐
+│   Orders     │    │   Products   │       │  Customers   │
+│   OrderItems │    │    Stock     │       │  Addresses   │
+└──────┬───────┘    └──────┬───────┘       └──────┬───────┘
+       │                   │                      │
+       ▼                   ▼                      ▼
+  ┌─────────┐         ┌─────────┐           ┌─────────┐
+  │ SQL DB  │         │ Redis   │           │ SQL DB  │
+  └─────────┘         └─────────┘           └─────────┘</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Cross-Service Queries</h2>
+                    <pre><code class="language-csharp">// ❌ NO: Direct database access
+var customer = _otherServiceDbContext.Customers.Find(id);
+
+// ✅ YES: API call
+var customer = await _customerClient.GetCustomerAsync(id);
+
+// ✅ YES: Keep local cache (eventual consistency)
+var customer = await _localCache.GetOrAddAsync(
+    $"customer:{id}",
+    () =&gt; _customerClient.GetCustomerAsync(id));</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Data Synchronization</h2>
+                    <pre><code class="language-csharp">// Subscribe to events to keep local copies
+public class CustomerUpdatedConsumer : IConsumer&lt;CustomerUpdated&gt;
+{
+    public async Task Consume(ConsumeContext&lt;CustomerUpdated&gt; context)
+    {
+        var msg = context.Message;
+        
+        // Update local read-only copy
+        await _localCustomerCache.UpdateAsync(new CustomerInfo
+        {
+            Id = msg.CustomerId,
+            Name = msg.Name,
+            Email = msg.Email
+        });
+    }
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Key Takeaways</h2>
+                    <div class="key-takeaways">
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Each service owns its data exclusively.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>No direct database sharing between services.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Use events to sync data across services.</span></div>
+                    </div>
+                </section>
+            </div>
+            <nav class="lesson-navigation"><a href="/training/microservices/lesson/11" class="btn btn-secondary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Previous</a><a href="/training/microservices/lesson/13" class="btn btn-primary">Next: Saga Pattern<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a></nav>
+        </article>
+    </main>
+</div>
+

@@ -1,0 +1,89 @@
+﻿@page "/training/microservices/lesson/4"
+<PageTitle>Docker Fundamentals - Microservices with .NET - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <aside class="lesson-sidebar">
+        <div class="sidebar-header"><a href="/training/microservices" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Course Overview</a><h3>Microservices with .NET</h3></div>
+        <nav class="lesson-nav"><a href="/training/microservices/lesson/1" class="lesson-nav-item"><span class="lesson-num">1</span><span>Intro</span></a><a href="/training/microservices/lesson/2" class="lesson-nav-item"><span class="lesson-num">2</span><span>Migration</span></a><a href="/training/microservices/lesson/3" class="lesson-nav-item"><span class="lesson-num">3</span><span>DDD</span></a><a href="/training/microservices/lesson/4" class="lesson-nav-item active"><span class="lesson-num">4</span><span>Docker</span></a><a href="/training/microservices/lesson/5" class="lesson-nav-item"><span class="lesson-num">5</span><span>Dockerizing</span></a><a href="/training/microservices/lesson/6" class="lesson-nav-item"><span class="lesson-num">6</span><span>Compose</span></a><a href="/training/microservices/lesson/7" class="lesson-nav-item"><span class="lesson-num">7</span><span>HTTP</span></a><a href="/training/microservices/lesson/8" class="lesson-nav-item"><span class="lesson-num">8</span><span>gRPC</span></a><a href="/training/microservices/lesson/9" class="lesson-nav-item"><span class="lesson-num">9</span><span>Messaging</span></a><a href="/training/microservices/lesson/10" class="lesson-nav-item"><span class="lesson-num">10</span><span>RabbitMQ</span></a><a href="/training/microservices/lesson/11" class="lesson-nav-item"><span class="lesson-num">11</span><span>Events</span></a><a href="/training/microservices/lesson/12" class="lesson-nav-item"><span class="lesson-num">12</span><span>DB</span></a><a href="/training/microservices/lesson/13" class="lesson-nav-item"><span class="lesson-num">13</span><span>Saga</span></a><a href="/training/microservices/lesson/14" class="lesson-nav-item"><span class="lesson-num">14</span><span>Outbox</span></a><a href="/training/microservices/lesson/15" class="lesson-nav-item"><span class="lesson-num">15</span><span>Gateway</span></a><a href="/training/microservices/lesson/16" class="lesson-nav-item"><span class="lesson-num">16</span><span>YARP</span></a><a href="/training/microservices/lesson/17" class="lesson-nav-item"><span class="lesson-num">17</span><span>Auth</span></a><a href="/training/microservices/lesson/18" class="lesson-nav-item"><span class="lesson-num">18</span><span>K8s</span></a><a href="/training/microservices/lesson/19" class="lesson-nav-item"><span class="lesson-num">19</span><span>Deploy</span></a><a href="/training/microservices/lesson/20" class="lesson-nav-item"><span class="lesson-num">20</span><span>Config</span></a><a href="/training/microservices/lesson/21" class="lesson-nav-item"><span class="lesson-num">21</span><span>Health</span></a><a href="/training/microservices/lesson/22" class="lesson-nav-item"><span class="lesson-num">22</span><span>Scale</span></a><a href="/training/microservices/lesson/23" class="lesson-nav-item"><span class="lesson-num">23</span><span>Logs</span></a><a href="/training/microservices/lesson/24" class="lesson-nav-item"><span class="lesson-num">24</span><span>Trace</span></a><a href="/training/microservices/lesson/25" class="lesson-nav-item"><span class="lesson-num">25</span><span>Metrics</span></a><a href="/training/microservices/lesson/26" class="lesson-nav-item"><span class="lesson-num">26</span><span>Resilience</span></a><a href="/training/microservices/lesson/27" class="lesson-nav-item"><span class="lesson-num">27</span><span>Polly</span></a><a href="/training/microservices/lesson/28" class="lesson-nav-item"><span class="lesson-num">28</span><span>Complete</span></a></nav>
+    </aside>
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <header class="lesson-header"><span class="lesson-number">Lesson 4</span><h1>Docker Fundamentals</h1><div class="lesson-meta"><span class="lesson-duration"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>30 min</span><span class="lesson-level advanced">Advanced</span></div></header>
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Core Concepts</h2>
+                    <ul>
+                        <li><strong>Image:</strong> Read-only template with OS, runtime, app code</li>
+                        <li><strong>Container:</strong> Running instance of an image</li>
+                        <li><strong>Registry:</strong> Storage for images (Docker Hub, ACR, ECR)</li>
+                        <li><strong>Dockerfile:</strong> Script to build an image</li>
+                    </ul>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Essential Commands</h2>
+                    <pre><code class="language-bash"># Pull an image
+docker pull mcr.microsoft.com/dotnet/aspnet:8.0
+
+# Run a container
+docker run -d -p 8080:80 --name myapp myimage
+
+# List containers
+docker ps        # running
+docker ps -a     # all
+
+# Stop and remove
+docker stop myapp
+docker rm myapp
+
+# Build an image
+docker build -t myapp:1.0 .
+
+# View logs
+docker logs myapp -f</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Volumes</h2>
+                    <pre><code class="language-bash"># Named volume (Docker managed)
+docker run -v mydata:/app/data myimage
+
+# Bind mount (host directory)
+docker run -v /host/path:/container/path myimage
+
+# Volume for SQL Server
+docker run -v sqldata:/var/opt/mssql \
+    -e 'ACCEPT_EULA=Y' \
+    -e 'SA_PASSWORD=YourPassword123!' \
+    -p 1433:1433 \
+    mcr.microsoft.com/mssql/server:2022-latest</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Networks</h2>
+                    <pre><code class="language-bash"># Create network
+docker network create mynetwork
+
+# Run containers on same network
+docker run -d --network mynetwork --name db postgres
+docker run -d --network mynetwork --name api myapi
+
+# Containers can reach each other by name
+# api can connect to "db:5432"</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Key Takeaways</h2>
+                    <div class="key-takeaways">
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Images are templates; containers are running instances.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Use volumes for persistent data.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Networks enable container-to-container communication.</span></div>
+                    </div>
+                </section>
+            </div>
+            <nav class="lesson-navigation"><a href="/training/microservices/lesson/3" class="btn btn-secondary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Previous</a><a href="/training/microservices/lesson/5" class="btn btn-primary">Next: Dockerizing .NET<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a></nav>
+        </article>
+    </main>
+</div>
+

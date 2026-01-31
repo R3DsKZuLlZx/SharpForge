@@ -1,0 +1,118 @@
+﻿@page "/training/microservices/lesson/28"
+<PageTitle>Building a Complete Microservices System - Microservices with .NET - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <aside class="lesson-sidebar">
+        <div class="sidebar-header"><a href="/training/microservices" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Course Overview</a><h3>Microservices with .NET</h3></div>
+        <nav class="lesson-nav"><a href="/training/microservices/lesson/1" class="lesson-nav-item"><span class="lesson-num">1</span><span>Intro</span></a><a href="/training/microservices/lesson/2" class="lesson-nav-item"><span class="lesson-num">2</span><span>Migration</span></a><a href="/training/microservices/lesson/3" class="lesson-nav-item"><span class="lesson-num">3</span><span>DDD</span></a><a href="/training/microservices/lesson/4" class="lesson-nav-item"><span class="lesson-num">4</span><span>Docker</span></a><a href="/training/microservices/lesson/5" class="lesson-nav-item"><span class="lesson-num">5</span><span>Dockerizing</span></a><a href="/training/microservices/lesson/6" class="lesson-nav-item"><span class="lesson-num">6</span><span>Compose</span></a><a href="/training/microservices/lesson/7" class="lesson-nav-item"><span class="lesson-num">7</span><span>HTTP</span></a><a href="/training/microservices/lesson/8" class="lesson-nav-item"><span class="lesson-num">8</span><span>gRPC</span></a><a href="/training/microservices/lesson/9" class="lesson-nav-item"><span class="lesson-num">9</span><span>Messaging</span></a><a href="/training/microservices/lesson/10" class="lesson-nav-item"><span class="lesson-num">10</span><span>RabbitMQ</span></a><a href="/training/microservices/lesson/11" class="lesson-nav-item"><span class="lesson-num">11</span><span>Events</span></a><a href="/training/microservices/lesson/12" class="lesson-nav-item"><span class="lesson-num">12</span><span>DB</span></a><a href="/training/microservices/lesson/13" class="lesson-nav-item"><span class="lesson-num">13</span><span>Saga</span></a><a href="/training/microservices/lesson/14" class="lesson-nav-item"><span class="lesson-num">14</span><span>Outbox</span></a><a href="/training/microservices/lesson/15" class="lesson-nav-item"><span class="lesson-num">15</span><span>Gateway</span></a><a href="/training/microservices/lesson/16" class="lesson-nav-item"><span class="lesson-num">16</span><span>YARP</span></a><a href="/training/microservices/lesson/17" class="lesson-nav-item"><span class="lesson-num">17</span><span>Auth</span></a><a href="/training/microservices/lesson/18" class="lesson-nav-item"><span class="lesson-num">18</span><span>K8s</span></a><a href="/training/microservices/lesson/19" class="lesson-nav-item"><span class="lesson-num">19</span><span>Deploy</span></a><a href="/training/microservices/lesson/20" class="lesson-nav-item"><span class="lesson-num">20</span><span>Config</span></a><a href="/training/microservices/lesson/21" class="lesson-nav-item"><span class="lesson-num">21</span><span>Health</span></a><a href="/training/microservices/lesson/22" class="lesson-nav-item"><span class="lesson-num">22</span><span>Scale</span></a><a href="/training/microservices/lesson/23" class="lesson-nav-item"><span class="lesson-num">23</span><span>Logs</span></a><a href="/training/microservices/lesson/24" class="lesson-nav-item"><span class="lesson-num">24</span><span>Trace</span></a><a href="/training/microservices/lesson/25" class="lesson-nav-item"><span class="lesson-num">25</span><span>Metrics</span></a><a href="/training/microservices/lesson/26" class="lesson-nav-item"><span class="lesson-num">26</span><span>Resilience</span></a><a href="/training/microservices/lesson/27" class="lesson-nav-item"><span class="lesson-num">27</span><span>Polly</span></a><a href="/training/microservices/lesson/28" class="lesson-nav-item active"><span class="lesson-num">28</span><span>Complete</span></a></nav>
+    </aside>
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <header class="lesson-header"><span class="lesson-number">Lesson 28</span><h1>Building a Complete Microservices System</h1><div class="lesson-meta"><span class="lesson-duration"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>45 min</span><span class="lesson-level advanced">Advanced</span></div></header>
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>E-Commerce System Architecture</h2>
+                    <pre><code class="language-text">┌─────────────────────────────────────────────────────────────────────────┐
+│                              Clients                                     │
+│                    (Web, Mobile, Third-Party)                           │
+└───────────────────────────────┬─────────────────────────────────────────┘
+                                │
+                    ┌───────────▼───────────┐
+                    │     API Gateway       │
+                    │       (YARP)          │
+                    └───────────┬───────────┘
+                                │
+        ┌───────────────────────┼───────────────────────┐
+        │                       │                       │
+┌───────▼───────┐   ┌───────────▼───────────┐  ┌───────▼───────┐
+│    Order      │   │      Inventory        │  │   Payment     │
+│   Service     │   │       Service         │  │   Service     │
+└───────┬───────┘   └───────────┬───────────┘  └───────┬───────┘
+        │                       │                       │
+        │           ┌───────────▼───────────┐          │
+        └──────────►│      RabbitMQ         │◄─────────┘
+                    │   (Message Broker)    │
+                    └───────────────────────┘</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Services Overview</h2>
+                    <ul>
+                        <li><strong>API Gateway (YARP):</strong> Routing, auth, rate limiting</li>
+                        <li><strong>Order Service:</strong> Order management, saga orchestration</li>
+                        <li><strong>Inventory Service:</strong> Stock management (gRPC)</li>
+                        <li><strong>Payment Service:</strong> Payment processing</li>
+                        <li><strong>Notification Service:</strong> Email/SMS (event-driven)</li>
+                        <li><strong>Identity Service:</strong> Authentication (Duende IdentityServer)</li>
+                    </ul>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Order Flow (Saga)</h2>
+                    <pre><code class="language-text">1. OrderSubmitted
+   └─► ReserveInventory (gRPC)
+       ├─► InventoryReserved
+       │   └─► ProcessPayment
+       │       ├─► PaymentSucceeded
+       │       │   └─► CompleteOrder → SendNotification
+       │       └─► PaymentFailed
+       │           └─► ReleaseInventory (compensate)
+       └─► InventoryInsufficient
+           └─► RejectOrder</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Infrastructure Stack</h2>
+                    <pre><code class="language-yaml"># docker-compose.yml
+services:
+  api-gateway:         # YARP
+  order-service:       # .NET 8
+  inventory-service:   # .NET 8 + gRPC
+  payment-service:     # .NET 8
+  notification-service: # .NET 8 Worker
+  
+  # Infrastructure
+  rabbitmq:            # Messaging
+  postgres:            # Databases
+  redis:               # Caching
+  seq:                 # Logging
+  jaeger:              # Tracing
+  prometheus:          # Metrics
+  grafana:             # Dashboards</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Key Takeaways</h2>
+                    <div class="key-takeaways">
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Start with clear service boundaries (DDD).</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Use events for loose coupling between services.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Implement observability from day one.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Use sagas for distributed transactions.</span></div>
+                    </div>
+                </section>
+
+                <section class="lesson-section congratulations">
+                    <div class="congrats-box">
+                        <h2>🎉 Congratulations!</h2>
+                        <p>You've completed the "Microservices with .NET" course! You now have comprehensive knowledge of:</p>
+                        <ul>
+                            <li>Microservices architecture and DDD</li>
+                            <li>Docker and container orchestration</li>
+                            <li>Service communication (HTTP, gRPC, messaging)</li>
+                            <li>Data management and saga patterns</li>
+                            <li>API Gateway with YARP</li>
+                            <li>Kubernetes deployment and scaling</li>
+                            <li>Observability (logging, tracing, metrics)</li>
+                            <li>Resilience patterns with Polly</li>
+                        </ul>
+                        <p>You're now ready to design and build production-ready distributed systems!</p>
+                        <a href="/training" class="btn btn-primary">Explore More Courses</a>
+                    </div>
+                </section>
+            </div>
+            <nav class="lesson-navigation"><a href="/training/microservices/lesson/27" class="btn btn-secondary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Previous: Polly</a><a href="/training" class="btn btn-primary">Back to Courses<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a></nav>
+        </article>
+    </main>
+</div>
+
