@@ -224,18 +224,143 @@ code {
 }
 
 pre {
-    background: var(--code-bg);
+    background: var(--code-bg) !important;
     border: 1px solid var(--code-border);
     border-radius: 0.75rem;
-    padding: 1.5rem;
+    padding: 1.5rem !important;
     overflow-x: auto;
-    margin: 1rem 0;
+    margin: 1rem 0 !important;
 }
 
 pre code {
-    background: none;
+    background: none !important;
     border: none;
     padding: 0;
+    font-size: 0.875rem;
+    line-height: 1.6;
+}
+
+/* Prism.js Overrides */
+pre[class*="language-"],
+code[class*="language-"] {
+    font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace !important;
+    text-shadow: none !important;
+}
+
+pre[class*="language-"] {
+    background: var(--code-bg) !important;
+    border: 1px solid var(--code-border);
+    border-radius: 0.75rem;
+}
+
+:not(pre) > code[class*="language-"] {
+    background: var(--code-bg) !important;
+    padding: 0.2em 0.4em;
+    border-radius: 0.25rem;
+}
+
+/* Prism Token Colors - Dark Theme */
+[data-theme="dark"] .token.comment,
+[data-theme="dark"] .token.prolog,
+[data-theme="dark"] .token.doctype,
+[data-theme="dark"] .token.cdata {
+    color: #6a9955;
+}
+
+[data-theme="dark"] .token.punctuation {
+    color: #d4d4d4;
+}
+
+[data-theme="dark"] .token.property,
+[data-theme="dark"] .token.tag,
+[data-theme="dark"] .token.boolean,
+[data-theme="dark"] .token.number,
+[data-theme="dark"] .token.constant,
+[data-theme="dark"] .token.symbol {
+    color: #b5cea8;
+}
+
+[data-theme="dark"] .token.selector,
+[data-theme="dark"] .token.attr-name,
+[data-theme="dark"] .token.string,
+[data-theme="dark"] .token.char,
+[data-theme="dark"] .token.builtin {
+    color: #ce9178;
+}
+
+[data-theme="dark"] .token.operator,
+[data-theme="dark"] .token.entity,
+[data-theme="dark"] .token.url,
+[data-theme="dark"] .token.variable {
+    color: #d4d4d4;
+}
+
+[data-theme="dark"] .token.atrule,
+[data-theme="dark"] .token.attr-value,
+[data-theme="dark"] .token.function,
+[data-theme="dark"] .token.class-name {
+    color: #dcdcaa;
+}
+
+[data-theme="dark"] .token.keyword {
+    color: #569cd6;
+}
+
+[data-theme="dark"] .token.regex,
+[data-theme="dark"] .token.important {
+    color: #d16969;
+}
+
+/* Prism Token Colors - Light Theme */
+[data-theme="light"] .token.comment,
+[data-theme="light"] .token.prolog,
+[data-theme="light"] .token.doctype,
+[data-theme="light"] .token.cdata {
+    color: #008000;
+}
+
+[data-theme="light"] .token.punctuation {
+    color: #393a34;
+}
+
+[data-theme="light"] .token.property,
+[data-theme="light"] .token.tag,
+[data-theme="light"] .token.boolean,
+[data-theme="light"] .token.number,
+[data-theme="light"] .token.constant,
+[data-theme="light"] .token.symbol {
+    color: #36acaa;
+}
+
+[data-theme="light"] .token.selector,
+[data-theme="light"] .token.attr-name,
+[data-theme="light"] .token.string,
+[data-theme="light"] .token.char,
+[data-theme="light"] .token.builtin {
+    color: #9a050f;
+}
+
+[data-theme="light"] .token.operator,
+[data-theme="light"] .token.entity,
+[data-theme="light"] .token.url,
+[data-theme="light"] .token.variable {
+    color: #393a34;
+}
+
+[data-theme="light"] .token.atrule,
+[data-theme="light"] .token.attr-value,
+[data-theme="light"] .token.function,
+[data-theme="light"] .token.class-name {
+    color: #795e26;
+}
+
+[data-theme="light"] .token.keyword {
+    color: #0000ff;
+}
+
+[data-theme="light"] .token.regex,
+[data-theme="light"] .token.important {
+    color: #ee0000;
 }
 
 /* Tags & Badges */

@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"/>
     <link rel="stylesheet" href="@Assets["app.css"]"/>
     <link rel="stylesheet" href="@Assets["SharpForge.Blazor.styles.css"]"/>
     <ImportMap/>
@@ -19,6 +20,48 @@
 
 <body>
 <Routes @rendermode="InteractiveWebAssembly"/>
+<script>window.Prism = window.Prism || {}; window.Prism.manual = true;</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-docker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-protobuf.min.js"></script>
+<script>
+    window.highlightCode = function() {
+        if (typeof Prism !== 'undefined') {
+            // Auto-detect language for code blocks without a language class
+            document.querySelectorAll('pre code:not([class*="language-"])').forEach(function(block) {
+                var code = block.textContent;
+                var lang = 'csharp'; // default to C#
+
+                // Simple detection based on content
+                if (code.includes('FROM ') && code.includes('RUN ')) {
+                    lang = 'docker';
+                } else if (code.includes('dotnet ') || code.includes('# ')) {
+                    if (code.includes('apt-get') || code.includes('#!/')) {
+                        lang = 'bash';
+                    } else if (!code.includes('class ') && !code.includes('public ') && !code.includes('private ')) {
+                        lang = 'bash';
+                    }
+                } else if (code.includes('name:') && code.includes('runs-on:')) {
+                    lang = 'yaml';
+                } else if (code.trim().startsWith('{') || code.trim().startsWith('[')) {
+                    lang = 'json';
+                } else if (code.includes('syntax = "proto') || code.includes('message ') && code.includes('rpc ')) {
+                    lang = 'protobuf';
+                }
+
+                block.classList.add('language-' + lang);
+                block.parentElement.classList.add('language-' + lang);
+            });
+
+            Prism.highlightAll();
+        }
+    };
+</script>
 <script src="@Assets["_framework/blazor.web.js"]"></script>
 </body>
 

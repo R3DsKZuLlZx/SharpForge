@@ -1,0 +1,16 @@
+﻿@inject IJSRuntime JS
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        try
+        {
+            await Task.Delay(100); // Delay to ensure DOM and scripts are ready
+            await JS.InvokeVoidAsync("highlightCode");
+        }
+        catch
+        {
+            // Ignore JS interop errors during prerendering
+        }
+    }
+}
