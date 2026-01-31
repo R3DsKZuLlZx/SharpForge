@@ -1,0 +1,320 @@
+﻿@page "/blog/blazor-state-management"
+
+<PageTitle>Blazor State Management - SharpForge</PageTitle>
+
+<article class="blog-post">
+    <header class="post-header">
+        <div class="container">
+            <a href="/blog" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"/>
+                </svg>
+                Back to Blog
+            </a>
+            <div class="post-meta">
+                <span class="post-category">Blazor</span>
+                <span class="post-date">November 10, 2025</span>
+                <span class="post-read-time">10 min read</span>
+            </div>
+            <h1>Blazor State Management</h1>
+            <p class="post-excerpt">Explore different approaches to state management in Blazor applications, from simple patterns to Flux-like architectures.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="post-content-wrapper">
+            <div class="post-body">
+                <p>As Blazor applications grow, managing state becomes increasingly important. This guide covers various state management approaches from simple to complex.</p>
+
+                <h2>Component State</h2>
+                <p>The simplest form - state lives in the component:</p>
+
+                <pre><code>@@code {
+    private int count = 0;
+    private List&lt;Item&gt; items = new();
+
+    private void Increment() =&gt; count++;
+
+    private void AddItem(Item item)
+    {
+        items.Add(item);
+        // Component automatically re-renders
+    }
+}</code></pre>
+
+                <h2>Cascading Values</h2>
+                <p>Share state down the component tree:</p>
+
+                <pre><code>&lt;!-- Parent component --&gt;
+&lt;CascadingValue Value="@@currentUser"&gt;
+    &lt;CascadingValue Value="@@theme"&gt;
+        @@ChildContent
+    &lt;/CascadingValue&gt;
+&lt;/CascadingValue&gt;
+
+@@code {
+    private User currentUser = new();
+    private Theme theme = Theme.Dark;
+}
+
+&lt;!-- Child component --&gt;
+@@code {
+    [CascadingParameter]
+    public User? CurrentUser { get; set; }
+
+    [CascadingParameter]
+    public Theme Theme { get; set; }
+}</code></pre>
+
+                <h2>State Container Service</h2>
+                <p>A service that holds and notifies about state changes:</p>
+
+                <pre><code>public class AppState
+{
+    private int _count;
+    public int Count =&gt; _count;
+
+    public event Action? OnChange;
+
+    public void IncrementCount()
+    {
+        _count++;
+        NotifyStateChanged();
+    }
+
+    public void SetCount(int value)
+    {
+        _count = value;
+        NotifyStateChanged();
+    }
+
+    private void NotifyStateChanged() =&gt; OnChange?.Invoke();
+}
+
+// Register as singleton or scoped
+builder.Services.AddScoped&lt;AppState&gt;();</code></pre>
+
+                <h3>Using the State Container</h3>
+                <pre><code>@@inject AppState State
+@@implements IDisposable
+
+&lt;p&gt;Count: @@State.Count&lt;/p&gt;
+&lt;button @@onclick="State.IncrementCount"&gt;Increment&lt;/button&gt;
+
+@@code {
+    protected override void OnInitialized()
+    {
+        State.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        State.OnChange -= StateHasChanged;
+    }
+}</code></pre>
+
+                <h2>Generic State Container</h2>
+                <pre><code>public class StateContainer&lt;T&gt; where T : class, new()
+{
+    private T _state = new();
+    public T State =&gt; _state;
+
+    public event Action? OnChange;
+
+    public void SetState(Action&lt;T&gt; updateAction)
+    {
+        updateAction(_state);
+        NotifyStateChanged();
+    }
+
+    public void SetState(T newState)
+    {
+        _state = newState;
+        NotifyStateChanged();
+    }
+
+    private void NotifyStateChanged() =&gt; OnChange?.Invoke();
+}
+
+// Usage
+public class CartState
+{
+    public List&lt;CartItem&gt; Items { get; set; } = new();
+    public decimal Total =&gt; Items.Sum(i =&gt; i.Price * i.Quantity);
+}
+
+builder.Services.AddScoped&lt;StateContainer&lt;CartState&gt;&gt;();</code></pre>
+
+                <h2>Flux/Redux Pattern</h2>
+                <p>For complex applications, use a unidirectional data flow:</p>
+
+                <pre><code>// State
+public record AppState(int Count, List&lt;Todo&gt; Todos);
+
+// Actions
+public abstract record AppAction;
+public record IncrementAction : AppAction;
+public record AddTodoAction(Todo Todo) : AppAction;
+public record RemoveTodoAction(Guid Id) : AppAction;
+
+// Reducer
+public static class Reducers
+{
+    public static AppState Reduce(AppState state, AppAction action)
+    {
+        return action switch
+        {
+            IncrementAction =&gt; state with { Count = state.Count + 1 },
+            AddTodoAction a =&gt; state with 
+            { 
+                Todos = state.Todos.Append(a.Todo).ToList() 
+            },
+            RemoveTodoAction a =&gt; state with 
+            { 
+                Todos = state.Todos.Where(t =&gt; t.Id != a.Id).ToList() 
+            },
+            _ =&gt; state
+        };
+    }
+}
+
+// Store
+public class Store
+{
+    private AppState _state = new(0, new List&lt;Todo&gt;());
+    public AppState State =&gt; _state;
+    public event Action? OnChange;
+
+    public void Dispatch(AppAction action)
+    {
+        _state = Reducers.Reduce(_state, action);
+        OnChange?.Invoke();
+    }
+}</code></pre>
+
+                <h3>Using Fluxor Library</h3>
+                <pre><code>// Install Fluxor
+dotnet add package Fluxor.Blazor.Web
+
+// State
+[FeatureState]
+public record CounterState(int Count)
+{
+    public CounterState() : this(0) { }
+}
+
+// Actions
+public record IncrementCounterAction;
+
+// Reducers
+public static class CounterReducers
+{
+    [ReducerMethod]
+    public static CounterState Reduce(CounterState state, IncrementCounterAction action)
+        =&gt; state with { Count = state.Count + 1 };
+}
+
+// Component
+@@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@@inject IState&lt;CounterState&gt; CounterState
+@@inject IDispatcher Dispatcher
+
+&lt;p&gt;Count: @@CounterState.Value.Count&lt;/p&gt;
+&lt;button @@onclick="Increment"&gt;Increment&lt;/button&gt;
+
+@@code {
+    private void Increment() =&gt; Dispatcher.Dispatch(new IncrementCounterAction());
+}</code></pre>
+
+                <h2>Browser Storage</h2>
+                <pre><code>// Persist state to localStorage
+@@inject IJSRuntime JS
+
+@@code {
+    private async Task SaveStateAsync&lt;T&gt;(string key, T state)
+    {
+        var json = JsonSerializer.Serialize(state);
+        await JS.InvokeVoidAsync("localStorage.setItem", key, json);
+    }
+
+    private async Task&lt;T?&gt; LoadStateAsync&lt;T&gt;(string key)
+    {
+        var json = await JS.InvokeAsync&lt;string?&gt;("localStorage.getItem", key);
+        return json is null ? default : JsonSerializer.Deserialize&lt;T&gt;(json);
+    }
+}
+
+// Or use a library like Blazored.LocalStorage
+builder.Services.AddBlazoredLocalStorage();</code></pre>
+
+                <h2>Choosing the Right Approach</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Approach</th>
+                            <th>Use When</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Component State</td>
+                            <td>State is local to one component</td>
+                        </tr>
+                        <tr>
+                            <td>Cascading Values</td>
+                            <td>Parent-child state sharing</td>
+                        </tr>
+                        <tr>
+                            <td>State Container</td>
+                            <td>Shared state across unrelated components</td>
+                        </tr>
+                        <tr>
+                            <td>Flux/Redux</td>
+                            <td>Complex state with predictable updates</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>Best Practices</h2>
+                <ul>
+                    <li>Start simple, add complexity as needed</li>
+                    <li>Always unsubscribe from events in Dispose</li>
+                    <li>Use immutable state where possible</li>
+                    <li>Consider using records for state objects</li>
+                    <li>Persist important state to browser storage</li>
+                </ul>
+
+                <div class="post-tags">
+                    <span class="tag">Blazor</span>
+                    <span class="tag">State Management</span>
+                    <span class="tag">Fluxor</span>
+                </div>
+            </div>
+
+            <aside class="post-sidebar">
+                <div class="sidebar-section toc">
+                    <h4>Table of Contents</h4>
+                    <ul>
+                        <li><a href="#component-state">Component State</a></li>
+                        <li><a href="#cascading-values">Cascading Values</a></li>
+                        <li><a href="#state-container">State Container</a></li>
+                        <li><a href="#flux-redux">Flux/Redux</a></li>
+                        <li><a href="#browser-storage">Browser Storage</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section author">
+                    <h4>About the Author</h4>
+                    <div class="author-info">
+                        <div class="author-avatar">SF</div>
+                        <div>
+                            <strong>SharpForge Team</strong>
+                            <p>Passionate about C# and .NET development</p>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</article>
+

@@ -1,0 +1,269 @@
+﻿@page "/blog/csharp-pattern-matching"
+
+<PageTitle>C# Pattern Matching - SharpForge</PageTitle>
+
+<article class="blog-post">
+    <header class="post-header">
+        <div class="container">
+            <a href="/blog" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"/>
+                </svg>
+                Back to Blog
+            </a>
+            <div class="post-meta">
+                <span class="post-category">C#</span>
+                <span class="post-date">November 5, 2025</span>
+                <span class="post-read-time">8 min read</span>
+            </div>
+            <h1>C# Pattern Matching</h1>
+            <p class="post-excerpt">Master pattern matching in C# with practical examples. Covers switch expressions, property patterns, and positional patterns.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="post-content-wrapper">
+            <div class="post-body">
+                <p>Pattern matching is one of C#'s most powerful features, enabling expressive and concise code for complex conditional logic.</p>
+
+                <h2>Type Patterns</h2>
+                <pre><code>object obj = "Hello";
+
+// is expression
+if (obj is string s)
+{
+    Console.WriteLine(s.ToUpper());
+}
+
+// switch expression
+string result = obj switch
+{
+    string str =&gt; $"String: {str}",
+    int num =&gt; $"Integer: {num}",
+    null =&gt; "Null value",
+    _ =&gt; "Unknown type"
+};</code></pre>
+
+                <h2>Property Patterns</h2>
+                <pre><code>public record Person(string Name, int Age, Address Address);
+public record Address(string City, string Country);
+
+string GetGreeting(Person person) =&gt; person switch
+{
+    { Age: &lt; 18 } =&gt; "Hey there!",
+    { Age: &gt;= 65 } =&gt; "Good day!",
+    { Name: "Admin" } =&gt; "Welcome back, Admin",
+    { Address.Country: "USA" } =&gt; "Hello from the US!",
+    _ =&gt; "Hello!"
+};
+
+// Nested property patterns
+string GetLocation(Person person) =&gt; person switch
+{
+    { Address: { City: "New York", Country: "USA" } } =&gt; "NYC",
+    { Address: { Country: "UK" } } =&gt; "United Kingdom",
+    { Address.City: var city } =&gt; city,
+    _ =&gt; "Unknown"
+};</code></pre>
+
+                <h2>Relational Patterns</h2>
+                <pre><code>string GetTemperatureDescription(int temp) =&gt; temp switch
+{
+    &lt; 0 =&gt; "Freezing",
+    &gt;= 0 and &lt; 10 =&gt; "Cold",
+    &gt;= 10 and &lt; 20 =&gt; "Mild",
+    &gt;= 20 and &lt; 30 =&gt; "Warm",
+    &gt;= 30 =&gt; "Hot"
+};
+
+// With variables
+decimal GetDiscount(int quantity) =&gt; quantity switch
+{
+    &lt; 10 =&gt; 0m,
+    &gt;= 10 and &lt; 50 =&gt; 0.05m,
+    &gt;= 50 and &lt; 100 =&gt; 0.10m,
+    &gt;= 100 =&gt; 0.15m
+};</code></pre>
+
+                <h2>Logical Patterns</h2>
+                <pre><code>// and, or, not
+bool IsValidAge(int age) =&gt; age is &gt;= 0 and &lt;= 120;
+
+bool IsWeekend(DayOfWeek day) =&gt; day is DayOfWeek.Saturday or DayOfWeek.Sunday;
+
+bool IsNotNull(object? obj) =&gt; obj is not null;
+
+// Complex combinations
+string Classify(int number) =&gt; number switch
+{
+    &lt; 0 =&gt; "Negative",
+    0 =&gt; "Zero",
+    &gt; 0 and &lt; 10 =&gt; "Single digit",
+    &gt;= 10 and &lt; 100 =&gt; "Double digit",
+    _ =&gt; "Large number"
+};</code></pre>
+
+                <h2>Positional Patterns</h2>
+                <pre><code>public record Point(int X, int Y);
+
+string GetQuadrant(Point point) =&gt; point switch
+{
+    (0, 0) =&gt; "Origin",
+    ( &gt; 0, &gt; 0) =&gt; "Quadrant 1",
+    ( &lt; 0, &gt; 0) =&gt; "Quadrant 2",
+    ( &lt; 0, &lt; 0) =&gt; "Quadrant 3",
+    ( &gt; 0, &lt; 0) =&gt; "Quadrant 4",
+    (_, 0) =&gt; "On X-axis",
+    (0, _) =&gt; "On Y-axis"
+};
+
+// Deconstruction with any type
+public class Rectangle
+{
+    public int Width { get; set; }
+    public int Height { get; set; }
+    
+    public void Deconstruct(out int width, out int height)
+    {
+        width = Width;
+        height = Height;
+    }
+}
+
+string DescribeShape(Rectangle rect) =&gt; rect switch
+{
+    (0, _) or (_, 0) =&gt; "Invalid",
+    (var w, var h) when w == h =&gt; "Square",
+    (var w, var h) when w &gt; h =&gt; "Landscape",
+    _ =&gt; "Portrait"
+};</code></pre>
+
+                <h2>List Patterns (C# 11+)</h2>
+                <pre><code>int[] numbers = { 1, 2, 3, 4, 5 };
+
+string DescribeArray(int[] arr) =&gt; arr switch
+{
+    [] =&gt; "Empty",
+    [var single] =&gt; $"Single element: {single}",
+    [var first, var second] =&gt; $"Two elements: {first}, {second}",
+    [var first, .., var last] =&gt; $"From {first} to {last}",
+    [1, 2, 3, ..] =&gt; "Starts with 1, 2, 3",
+    [.., 4, 5] =&gt; "Ends with 4, 5"
+};
+
+// Slice pattern
+bool StartsWithZero(int[] arr) =&gt; arr is [0, ..];
+bool EndsWithZero(int[] arr) =&gt; arr is [.., 0];</code></pre>
+
+                <h2>Switch Statement Patterns</h2>
+                <pre><code>void ProcessShape(Shape shape)
+{
+    switch (shape)
+    {
+        case Circle { Radius: 0 }:
+            Console.WriteLine("Invalid circle");
+            break;
+            
+        case Circle { Radius: var r } when r &gt; 100:
+            Console.WriteLine($"Large circle: {r}");
+            break;
+            
+        case Circle c:
+            Console.WriteLine($"Circle: {c.Radius}");
+            break;
+            
+        case Rectangle { Width: var w, Height: var h } when w == h:
+            Console.WriteLine($"Square: {w}");
+            break;
+            
+        case Rectangle r:
+            Console.WriteLine($"Rectangle: {r.Width}x{r.Height}");
+            break;
+            
+        case null:
+            throw new ArgumentNullException(nameof(shape));
+            
+        default:
+            Console.WriteLine("Unknown shape");
+            break;
+    }
+}</code></pre>
+
+                <h2>When Guards</h2>
+                <pre><code>string GetShippingCost(Order order) =&gt; order switch
+{
+    { Total: &gt;= 100 } =&gt; "Free",
+    { IsExpress: true } when order.Total &lt; 50 =&gt; "$10.00",
+    { IsExpress: true } =&gt; "$5.00",
+    { Weight: &lt;= 1 } =&gt; "$3.00",
+    { Weight: &lt;= 5 } =&gt; "$7.00",
+    _ =&gt; "$12.00"
+};</code></pre>
+
+                <h2>Practical Examples</h2>
+                <h3>HTTP Status Handling</h3>
+                <pre><code>string HandleResponse(HttpResponseMessage response) =&gt; response.StatusCode switch
+{
+    HttpStatusCode.OK =&gt; "Success",
+    HttpStatusCode.Created =&gt; "Resource created",
+    HttpStatusCode.NoContent =&gt; "No content",
+    &gt;= HttpStatusCode.BadRequest and &lt; HttpStatusCode.InternalServerError 
+        =&gt; $"Client error: {response.StatusCode}",
+    &gt;= HttpStatusCode.InternalServerError 
+        =&gt; $"Server error: {response.StatusCode}",
+    _ =&gt; "Unknown status"
+};</code></pre>
+
+                <h3>Command Processing</h3>
+                <pre><code>async Task ProcessCommand(Command cmd) =&gt; _ = cmd switch
+{
+    CreateUserCommand c =&gt; await CreateUserAsync(c),
+    UpdateUserCommand c =&gt; await UpdateUserAsync(c),
+    DeleteUserCommand { Id: var id } =&gt; await DeleteUserAsync(id),
+    _ =&gt; throw new NotSupportedException()
+};</code></pre>
+
+                <h2>Best Practices</h2>
+                <ul>
+                    <li>Use switch expressions for simple mappings</li>
+                    <li>Prefer patterns over multiple if-else chains</li>
+                    <li>Always include a default case (discard pattern)</li>
+                    <li>Use when guards for complex conditions</li>
+                    <li>Combine patterns for expressive code</li>
+                </ul>
+
+                <div class="post-tags">
+                    <span class="tag">C#</span>
+                    <span class="tag">Pattern Matching</span>
+                    <span class="tag">Switch Expressions</span>
+                </div>
+            </div>
+
+            <aside class="post-sidebar">
+                <div class="sidebar-section toc">
+                    <h4>Table of Contents</h4>
+                    <ul>
+                        <li><a href="#type-patterns">Type Patterns</a></li>
+                        <li><a href="#property-patterns">Property Patterns</a></li>
+                        <li><a href="#relational-patterns">Relational Patterns</a></li>
+                        <li><a href="#positional-patterns">Positional Patterns</a></li>
+                        <li><a href="#list-patterns">List Patterns</a></li>
+                        <li><a href="#when-guards">When Guards</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section author">
+                    <h4>About the Author</h4>
+                    <div class="author-info">
+                        <div class="author-avatar">SF</div>
+                        <div>
+                            <strong>SharpForge Team</strong>
+                            <p>Passionate about C# and .NET development</p>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</article>
+

@@ -1,0 +1,286 @@
+﻿@page "/blog/unit-testing-xunit-moq"
+
+<PageTitle>Unit Testing with xUnit and Moq - SharpForge</PageTitle>
+
+<article class="blog-post">
+    <header class="post-header">
+        <div class="container">
+            <a href="/blog" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"/>
+                </svg>
+                Back to Blog
+            </a>
+            <div class="post-meta">
+                <span class="post-category">Testing</span>
+                <span class="post-date">December 28, 2025</span>
+                <span class="post-read-time">10 min read</span>
+            </div>
+            <h1>Unit Testing with xUnit and Moq</h1>
+            <p class="post-excerpt">Complete guide to writing effective unit tests in C# using xUnit and Moq, including best practices and real-world examples.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="post-content-wrapper">
+            <div class="post-body">
+                <p>Unit testing is essential for maintaining code quality and catching bugs early. This guide covers xUnit, the most popular testing framework for .NET, along with Moq for mocking dependencies.</p>
+
+                <h2>Getting Started with xUnit</h2>
+                <p>First, add the required packages to your test project:</p>
+
+                <pre><code>dotnet add package xunit
+dotnet add package xunit.runner.visualstudio
+dotnet add package Microsoft.NET.Test.Sdk
+dotnet add package Moq</code></pre>
+
+                <h2>Writing Your First Test</h2>
+                <pre><code>public class CalculatorTests
+{
+    [Fact]
+    public void Add_TwoNumbers_ReturnsSum()
+    {
+        // Arrange
+        var calculator = new Calculator();
+
+        // Act
+        int result = calculator.Add(2, 3);
+
+        // Assert
+        Assert.Equal(5, result);
+    }
+
+    [Theory]
+    [InlineData(1, 1, 2)]
+    [InlineData(5, 3, 8)]
+    [InlineData(-1, 1, 0)]
+    [InlineData(0, 0, 0)]
+    public void Add_MultipleInputs_ReturnsCorrectSum(
+        int a, int b, int expected)
+    {
+        var calculator = new Calculator();
+        
+        int result = calculator.Add(a, b);
+        
+        Assert.Equal(expected, result);
+    }
+}</code></pre>
+
+                <h2>Test Organization</h2>
+                <h3>Naming Conventions</h3>
+                <p>Use descriptive names that explain what's being tested:</p>
+                <pre><code>// Pattern: MethodName_Scenario_ExpectedBehavior
+public void GetUser_WithValidId_ReturnsUser()
+public void GetUser_WithInvalidId_ThrowsNotFoundException()
+public void CreateOrder_WithEmptyCart_ThrowsValidationException()</code></pre>
+
+                <h3>Test Class Organization</h3>
+                <pre><code>public class OrderServiceTests
+{
+    private readonly Mock&lt;IOrderRepository&gt; _repositoryMock;
+    private readonly Mock&lt;IEmailService&gt; _emailMock;
+    private readonly OrderService _sut; // System Under Test
+
+    public OrderServiceTests()
+    {
+        _repositoryMock = new Mock&lt;IOrderRepository&gt;();
+        _emailMock = new Mock&lt;IEmailService&gt;();
+        _sut = new OrderService(
+            _repositoryMock.Object, 
+            _emailMock.Object);
+    }
+
+    [Fact]
+    public async Task CreateOrder_ValidOrder_SavesAndSendsEmail()
+    {
+        // Arrange
+        var order = new Order { Id = 1, CustomerId = 100 };
+        _repositoryMock
+            .Setup(r =&gt; r.SaveAsync(It.IsAny&lt;Order&gt;()))
+            .ReturnsAsync(order);
+
+        // Act
+        var result = await _sut.CreateOrderAsync(order);
+
+        // Assert
+        Assert.NotNull(result);
+        _repositoryMock.Verify(
+            r =&gt; r.SaveAsync(order), Times.Once);
+        _emailMock.Verify(
+            e =&gt; e.SendOrderConfirmationAsync(order), Times.Once);
+    }
+}</code></pre>
+
+                <h2>Mocking with Moq</h2>
+                <h3>Basic Mocking</h3>
+                <pre><code>// Setup a mock
+var userRepoMock = new Mock&lt;IUserRepository&gt;();
+
+// Configure return value
+userRepoMock
+    .Setup(r =&gt; r.GetByIdAsync(1))
+    .ReturnsAsync(new User { Id = 1, Name = "John" });
+
+// Configure for any input
+userRepoMock
+    .Setup(r =&gt; r.GetByIdAsync(It.IsAny&lt;int&gt;()))
+    .ReturnsAsync((int id) =&gt; new User { Id = id });
+
+// Configure to throw
+userRepoMock
+    .Setup(r =&gt; r.GetByIdAsync(-1))
+    .ThrowsAsync(new NotFoundException());</code></pre>
+
+                <h3>Verifying Calls</h3>
+                <pre><code>// Verify method was called
+mock.Verify(m =&gt; m.SaveAsync(It.IsAny&lt;User&gt;()), Times.Once);
+
+// Verify with specific arguments
+mock.Verify(m =&gt; m.SaveAsync(
+    It.Is&lt;User&gt;(u =&gt; u.Name == "John")), Times.Once);
+
+// Verify never called
+mock.Verify(m =&gt; m.DeleteAsync(It.IsAny&lt;int&gt;()), Times.Never);
+
+// Verify call count
+mock.Verify(m =&gt; m.GetAllAsync(), Times.Exactly(2));</code></pre>
+
+                <h3>Callback and Capture</h3>
+                <pre><code>User? capturedUser = null;
+
+mock.Setup(r =&gt; r.SaveAsync(It.IsAny&lt;User&gt;()))
+    .Callback&lt;User&gt;(u =&gt; capturedUser = u)
+    .ReturnsAsync((User u) =&gt; u);
+
+await service.CreateUserAsync(new User { Name = "Jane" });
+
+Assert.Equal("Jane", capturedUser?.Name);</code></pre>
+
+                <h2>Testing Async Code</h2>
+                <pre><code>[Fact]
+public async Task GetUser_ExistingUser_ReturnsUser()
+{
+    // Arrange
+    var expectedUser = new User { Id = 1, Name = "John" };
+    _repoMock
+        .Setup(r =&gt; r.GetByIdAsync(1))
+        .ReturnsAsync(expectedUser);
+
+    // Act
+    var result = await _sut.GetUserAsync(1);
+
+    // Assert
+    Assert.Equal(expectedUser.Name, result.Name);
+}
+
+[Fact]
+public async Task GetUser_NonExistent_ThrowsException()
+{
+    _repoMock
+        .Setup(r =&gt; r.GetByIdAsync(999))
+        .ReturnsAsync((User?)null);
+
+    await Assert.ThrowsAsync&lt;NotFoundException&gt;(
+        () =&gt; _sut.GetUserAsync(999));
+}</code></pre>
+
+                <h2>Testing Collections</h2>
+                <pre><code>[Fact]
+public void GetActiveUsers_ReturnsOnlyActiveUsers()
+{
+    var users = new List&lt;User&gt;
+    {
+        new() { Id = 1, IsActive = true },
+        new() { Id = 2, IsActive = false },
+        new() { Id = 3, IsActive = true }
+    };
+
+    var result = _sut.GetActiveUsers(users);
+
+    Assert.Equal(2, result.Count());
+    Assert.All(result, u =&gt; Assert.True(u.IsActive));
+    Assert.Contains(result, u =&gt; u.Id == 1);
+    Assert.DoesNotContain(result, u =&gt; u.Id == 2);
+}</code></pre>
+
+                <h2>Fixtures and Shared Context</h2>
+                <pre><code>// Shared setup across tests in a class
+public class DatabaseTests : IClassFixture&lt;DatabaseFixture&gt;
+{
+    private readonly DatabaseFixture _fixture;
+
+    public DatabaseTests(DatabaseFixture fixture)
+    {
+        _fixture = fixture;
+    }
+
+    [Fact]
+    public void CanQueryDatabase()
+    {
+        var result = _fixture.Connection.Query("SELECT 1");
+        Assert.NotEmpty(result);
+    }
+}
+
+public class DatabaseFixture : IDisposable
+{
+    public IDbConnection Connection { get; }
+
+    public DatabaseFixture()
+    {
+        Connection = new SqlConnection("...");
+        Connection.Open();
+    }
+
+    public void Dispose() =&gt; Connection.Dispose();
+}</code></pre>
+
+                <h2>Best Practices</h2>
+                <ul>
+                    <li><strong>One assertion focus</strong> - Each test should verify one behavior</li>
+                    <li><strong>Arrange-Act-Assert</strong> - Structure tests clearly</li>
+                    <li><strong>Don't test implementation</strong> - Test behavior, not internal details</li>
+                    <li><strong>Use meaningful names</strong> - Tests are documentation</li>
+                    <li><strong>Keep tests fast</strong> - Mock external dependencies</li>
+                    <li><strong>Test edge cases</strong> - Null, empty, boundary conditions</li>
+                </ul>
+
+                <h2>Conclusion</h2>
+                <p>Unit testing with xUnit and Moq provides a powerful foundation for ensuring code quality. Start with simple tests and gradually build a comprehensive test suite that gives you confidence in your code.</p>
+
+                <div class="post-tags">
+                    <span class="tag">xUnit</span>
+                    <span class="tag">Moq</span>
+                    <span class="tag">Unit Testing</span>
+                    <span class="tag">C#</span>
+                </div>
+            </div>
+
+            <aside class="post-sidebar">
+                <div class="sidebar-section toc">
+                    <h4>Table of Contents</h4>
+                    <ul>
+                        <li><a href="#getting-started">Getting Started</a></li>
+                        <li><a href="#writing-your-first-test">First Test</a></li>
+                        <li><a href="#mocking-with-moq">Mocking with Moq</a></li>
+                        <li><a href="#testing-async-code">Async Testing</a></li>
+                        <li><a href="#fixtures">Fixtures</a></li>
+                        <li><a href="#best-practices">Best Practices</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section author">
+                    <h4>About the Author</h4>
+                    <div class="author-info">
+                        <div class="author-avatar">SF</div>
+                        <div>
+                            <strong>SharpForge Team</strong>
+                            <p>Passionate about C# and .NET development</p>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</article>
+

@@ -1,0 +1,332 @@
+﻿@page "/blog/cicd-dotnet-github-actions"
+
+<PageTitle>CI/CD for .NET with GitHub Actions - SharpForge</PageTitle>
+
+<article class="blog-post">
+    <header class="post-header">
+        <div class="container">
+            <a href="/blog" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"/>
+                </svg>
+                Back to Blog
+            </a>
+            <div class="post-meta">
+                <span class="post-category">DevOps</span>
+                <span class="post-date">December 20, 2025</span>
+                <span class="post-read-time">10 min read</span>
+            </div>
+            <h1>CI/CD for .NET with GitHub Actions</h1>
+            <p class="post-excerpt">Set up a complete CI/CD pipeline for your .NET applications using GitHub Actions, including testing, building, and deployment.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="post-content-wrapper">
+            <div class="post-body">
+                <p>GitHub Actions provides a powerful platform for automating your .NET build, test, and deployment workflows. This guide walks you through setting up a complete CI/CD pipeline.</p>
+
+                <h2>Basic Build Workflow</h2>
+                <p>Create a file at <code>.github/workflows/build.yml</code>:</p>
+
+                <pre><code>name: Build and Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+
+    - name: Test
+      run: dotnet test --no-build --configuration Release --verbosity normal</code></pre>
+
+                <h2>Adding Code Coverage</h2>
+                <pre><code>    - name: Test with Coverage
+      run: |
+        dotnet test --no-build --configuration Release \
+          --collect:"XPlat Code Coverage" \
+          --results-directory ./coverage
+
+    - name: Upload Coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        directory: ./coverage
+        fail_ci_if_error: true</code></pre>
+
+                <h2>Multi-Platform Testing</h2>
+                <pre><code>jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        dotnet-version: ['8.0.x', '10.0.x']
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET ${{ matrix.dotnet-version }}
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ matrix.dotnet-version }}
+
+    - name: Build and Test
+      run: |
+        dotnet restore
+        dotnet build --configuration Release
+        dotnet test --configuration Release</code></pre>
+
+                <h2>Publishing NuGet Packages</h2>
+                <pre><code>name: Publish NuGet Package
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: Build
+      run: dotnet build --configuration Release
+
+    - name: Pack
+      run: dotnet pack --configuration Release --no-build --output ./nupkg
+
+    - name: Push to NuGet
+      run: |
+        dotnet nuget push ./nupkg/*.nupkg \
+          --api-key ${{ secrets.NUGET_API_KEY }} \
+          --source https://api.nuget.org/v3/index.json \
+          --skip-duplicate</code></pre>
+
+                <h2>Docker Build and Push</h2>
+                <pre><code>name: Docker Build
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and Push
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: |
+          myapp:latest
+          myapp:${{ github.sha }}</code></pre>
+
+                <h2>Deploy to Azure App Service</h2>
+                <pre><code>name: Deploy to Azure
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: Build and Publish
+      run: |
+        dotnet restore
+        dotnet build --configuration Release
+        dotnet publish -c Release -o ./publish
+
+    - name: Deploy to Azure Web App
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'my-app-name'
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        package: ./publish</code></pre>
+
+                <h2>Caching Dependencies</h2>
+                <pre><code>    - name: Cache NuGet packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-</code></pre>
+
+                <h2>Environment Variables and Secrets</h2>
+                <pre><code>jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    
+    env:
+      DOTNET_ENVIRONMENT: Production
+    
+    steps:
+    - name: Deploy with secrets
+      run: |
+        echo "Deploying to ${{ vars.DEPLOY_URL }}"
+        ./deploy.sh --api-key ${{ secrets.API_KEY }}</code></pre>
+
+                <h2>Complete Pipeline Example</h2>
+                <pre><code>name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  DOTNET_VERSION: '10.0.x'
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Cache NuGet
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: nuget-${{ hashFiles('**/*.csproj') }}
+
+    - name: Restore
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build -c Release --no-restore
+
+    - name: Test
+      run: dotnet test -c Release --no-build --collect:"XPlat Code Coverage"
+
+    - name: Publish
+      run: dotnet publish -c Release -o ./publish
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: app
+        path: ./publish
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+    
+    steps:
+    - name: Download Artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: app
+        path: ./publish
+
+    - name: Deploy
+      run: echo "Deploying application..."</code></pre>
+
+                <h2>Best Practices</h2>
+                <ul>
+                    <li>Use caching to speed up builds</li>
+                    <li>Run tests in parallel when possible</li>
+                    <li>Use environment-specific secrets</li>
+                    <li>Fail fast on errors</li>
+                    <li>Keep workflows DRY with reusable workflows</li>
+                    <li>Use status badges in your README</li>
+                </ul>
+
+                <h2>Conclusion</h2>
+                <p>GitHub Actions provides everything you need for .NET CI/CD. Start simple and gradually add more automation as your project grows.</p>
+
+                <div class="post-tags">
+                    <span class="tag">GitHub Actions</span>
+                    <span class="tag">CI/CD</span>
+                    <span class="tag">DevOps</span>
+                    <span class="tag">.NET</span>
+                </div>
+            </div>
+
+            <aside class="post-sidebar">
+                <div class="sidebar-section toc">
+                    <h4>Table of Contents</h4>
+                    <ul>
+                        <li><a href="#basic-build">Basic Build</a></li>
+                        <li><a href="#code-coverage">Code Coverage</a></li>
+                        <li><a href="#multi-platform">Multi-Platform</a></li>
+                        <li><a href="#nuget">NuGet Publishing</a></li>
+                        <li><a href="#docker">Docker Build</a></li>
+                        <li><a href="#azure">Azure Deploy</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section author">
+                    <h4>About the Author</h4>
+                    <div class="author-info">
+                        <div class="author-avatar">SF</div>
+                        <div>
+                            <strong>SharpForge Team</strong>
+                            <p>Passionate about C# and .NET development</p>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</article>
+
