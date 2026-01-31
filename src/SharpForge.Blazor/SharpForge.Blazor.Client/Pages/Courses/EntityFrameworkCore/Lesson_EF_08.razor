@@ -1,0 +1,120 @@
+﻿@page "/training/entity-framework-core/lesson/8"
+<PageTitle>Loading Related Data - Entity Framework Core - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <aside class="lesson-sidebar">
+        <div class="sidebar-header"><a href="/training/entity-framework-core" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Course Overview</a><h3>Entity Framework Core</h3></div>
+        <nav class="lesson-nav"><a href="/training/entity-framework-core/lesson/1" class="lesson-nav-item"><span class="lesson-num">1</span><span>Introduction</span></a><a href="/training/entity-framework-core/lesson/2" class="lesson-nav-item"><span class="lesson-num">2</span><span>DbContext</span></a><a href="/training/entity-framework-core/lesson/3" class="lesson-nav-item"><span class="lesson-num">3</span><span>Entity Models</span></a><a href="/training/entity-framework-core/lesson/4" class="lesson-nav-item"><span class="lesson-num">4</span><span>Migrations</span></a><a href="/training/entity-framework-core/lesson/5" class="lesson-nav-item"><span class="lesson-num">5</span><span>CRUD</span></a><a href="/training/entity-framework-core/lesson/6" class="lesson-nav-item"><span class="lesson-num">6</span><span>LINQ</span></a><a href="/training/entity-framework-core/lesson/7" class="lesson-nav-item"><span class="lesson-num">7</span><span>Relationships</span></a><a href="/training/entity-framework-core/lesson/8" class="lesson-nav-item active"><span class="lesson-num">8</span><span>Loading Data</span></a><a href="/training/entity-framework-core/lesson/9" class="lesson-nav-item"><span class="lesson-num">9</span><span>Change Tracking</span></a><a href="/training/entity-framework-core/lesson/10" class="lesson-nav-item"><span class="lesson-num">10</span><span>Transactions</span></a><a href="/training/entity-framework-core/lesson/11" class="lesson-nav-item"><span class="lesson-num">11</span><span>Concurrency</span></a><a href="/training/entity-framework-core/lesson/12" class="lesson-nav-item"><span class="lesson-num">12</span><span>Performance</span></a></nav>
+    </aside>
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <header class="lesson-header"><span class="lesson-number">Lesson 8</span><h1>Loading Related Data</h1><div class="lesson-meta"><span class="lesson-duration"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>25 min</span><span class="lesson-level intermediate">Intermediate</span></div></header>
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Eager Loading (Include)</h2>
+                    <pre><code class="language-csharp">// Load related data in the same query
+var products = await context.Products
+    .Include(p =&gt; p.Category)
+    .ToListAsync();
+
+// Multiple includes
+var orders = await context.Orders
+    .Include(o =&gt; o.Customer)
+    .Include(o =&gt; o.Items)
+    .ToListAsync();
+
+// Nested includes
+var orders = await context.Orders
+    .Include(o =&gt; o.Items)
+        .ThenInclude(i =&gt; i.Product)
+            .ThenInclude(p =&gt; p.Category)
+    .ToListAsync();</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Filtered Include</h2>
+                    <pre><code class="language-csharp">// Only load active products in each category
+var categories = await context.Categories
+    .Include(c =&gt; c.Products.Where(p =&gt; p.IsActive))
+    .ToListAsync();
+
+// Order included entities
+var categories = await context.Categories
+    .Include(c =&gt; c.Products.OrderBy(p =&gt; p.Name).Take(5))
+    .ToListAsync();</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Explicit Loading</h2>
+                    <pre><code class="language-csharp">// Load related data on demand
+var product = await context.Products.FindAsync(id);
+
+// Load reference navigation
+await context.Entry(product)
+    .Reference(p =&gt; p.Category)
+    .LoadAsync();
+
+// Load collection navigation
+var category = await context.Categories.FindAsync(categoryId);
+await context.Entry(category)
+    .Collection(c =&gt; c.Products)
+    .LoadAsync();
+
+// Check if loaded
+bool isLoaded = context.Entry(product)
+    .Reference(p =&gt; p.Category)
+    .IsLoaded;</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Lazy Loading</h2>
+                    <pre><code class="language-bash">dotnet add package Microsoft.EntityFrameworkCore.Proxies</code></pre>
+                    <pre><code class="language-csharp">// Enable lazy loading
+options.UseLazyLoadingProxies();
+
+// Entities must use virtual navigation properties
+public class Product
+{
+    public int Id { get; set; }
+    public virtual Category Category { get; set; }  // virtual!
+}</code></pre>
+                    <div class="warning-box">
+                        <div class="warning-box-header"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Warning</span></div>
+                        <p>Lazy loading can cause N+1 query problems! Prefer eager loading for predictable performance.</p>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Split Queries</h2>
+                    <pre><code class="language-csharp">// Default: single query with JOINs (can be slow)
+var orders = await context.Orders
+    .Include(o =&gt; o.Items)
+    .ToListAsync();
+
+// Split into multiple queries (can be faster)
+var orders = await context.Orders
+    .Include(o =&gt; o.Items)
+    .AsSplitQuery()
+    .ToListAsync();
+
+// Configure globally
+options.UseSqlServer(connectionString, o =&gt; o.UseQuerySplittingBehavior(
+    QuerySplittingBehavior.SplitQuery));</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Key Takeaways</h2>
+                    <div class="key-takeaways">
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Eager loading (Include) is the default recommendation.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Use ThenInclude for nested relationships.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Filtered Include can limit related data loaded.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Avoid lazy loading—it can cause N+1 queries.</span></div>
+                    </div>
+                </section>
+            </div>
+            <nav class="lesson-navigation"><a href="/training/entity-framework-core/lesson/7" class="btn btn-secondary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Previous</a><a href="/training/entity-framework-core/lesson/9" class="btn btn-primary">Next: Change Tracking<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a></nav>
+        </article>
+    </main>
+</div>
+

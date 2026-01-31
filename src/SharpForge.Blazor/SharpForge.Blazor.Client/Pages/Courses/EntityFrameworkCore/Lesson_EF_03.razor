@@ -1,0 +1,142 @@
+﻿@page "/training/entity-framework-core/lesson/3"
+<PageTitle>Defining Entity Models - Entity Framework Core - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <aside class="lesson-sidebar">
+        <div class="sidebar-header"><a href="/training/entity-framework-core" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Course Overview</a><h3>Entity Framework Core</h3></div>
+        <nav class="lesson-nav"><a href="/training/entity-framework-core/lesson/1" class="lesson-nav-item"><span class="lesson-num">1</span><span>Introduction</span></a><a href="/training/entity-framework-core/lesson/2" class="lesson-nav-item"><span class="lesson-num">2</span><span>DbContext</span></a><a href="/training/entity-framework-core/lesson/3" class="lesson-nav-item active"><span class="lesson-num">3</span><span>Entity Models</span></a><a href="/training/entity-framework-core/lesson/4" class="lesson-nav-item"><span class="lesson-num">4</span><span>Migrations</span></a><a href="/training/entity-framework-core/lesson/5" class="lesson-nav-item"><span class="lesson-num">5</span><span>CRUD</span></a><a href="/training/entity-framework-core/lesson/6" class="lesson-nav-item"><span class="lesson-num">6</span><span>LINQ</span></a><a href="/training/entity-framework-core/lesson/7" class="lesson-nav-item"><span class="lesson-num">7</span><span>Relationships</span></a><a href="/training/entity-framework-core/lesson/8" class="lesson-nav-item"><span class="lesson-num">8</span><span>Loading Data</span></a><a href="/training/entity-framework-core/lesson/9" class="lesson-nav-item"><span class="lesson-num">9</span><span>Change Tracking</span></a><a href="/training/entity-framework-core/lesson/10" class="lesson-nav-item"><span class="lesson-num">10</span><span>Transactions</span></a><a href="/training/entity-framework-core/lesson/11" class="lesson-nav-item"><span class="lesson-num">11</span><span>Concurrency</span></a><a href="/training/entity-framework-core/lesson/12" class="lesson-nav-item"><span class="lesson-num">12</span><span>Performance</span></a></nav>
+    </aside>
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <header class="lesson-header"><span class="lesson-number">Lesson 3</span><h1>Defining Entity Models</h1><div class="lesson-meta"><span class="lesson-duration"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>30 min</span><span class="lesson-level intermediate">Intermediate</span></div></header>
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Basic Entity Class</h2>
+                    <pre><code class="language-csharp">public class Product
+{
+    public int Id { get; set; }  // Convention: primary key
+    public string Name { get; set; } = string.Empty;
+    public string? Description { get; set; }
+    public decimal Price { get; set; }
+    public int Stock { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public bool IsActive { get; set; }
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Data Annotations</h2>
+                    <pre><code class="language-csharp">using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+public class Product
+{
+    [Key]
+    public int Id { get; set; }
+
+    [Required]
+    [MaxLength(100)]
+    public string Name { get; set; } = string.Empty;
+
+    [MaxLength(500)]
+    public string? Description { get; set; }
+
+    [Column(TypeName = "decimal(18,2)")]
+    public decimal Price { get; set; }
+
+    [Range(0, int.MaxValue)]
+    public int Stock { get; set; }
+
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public DateTime CreatedAt { get; set; }
+
+    [NotMapped]  // Not stored in database
+    public decimal TotalValue =&gt; Price * Stock;
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Fluent API Configuration</h2>
+                    <pre><code class="language-csharp">protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity&lt;Product&gt;(entity =&gt;
+    {
+        entity.ToTable("Products");
+        entity.HasKey(e =&gt; e.Id);
+        
+        entity.Property(e =&gt; e.Name)
+            .IsRequired()
+            .HasMaxLength(100);
+        
+        entity.Property(e =&gt; e.Price)
+            .HasPrecision(18, 2);
+        
+        entity.Property(e =&gt; e.CreatedAt)
+            .HasDefaultValueSql("GETUTCDATE()");
+        
+        entity.HasIndex(e =&gt; e.Name);
+        
+        entity.Ignore(e =&gt; e.TotalValue);  // Not mapped
+    });
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Entity Configuration Classes</h2>
+                    <pre><code class="language-csharp">public class ProductConfiguration : IEntityTypeConfiguration&lt;Product&gt;
+{
+    public void Configure(EntityTypeBuilder&lt;Product&gt; builder)
+    {
+        builder.ToTable("Products");
+        builder.HasKey(e =&gt; e.Id);
+        builder.Property(e =&gt; e.Name).IsRequired().HasMaxLength(100);
+        builder.Property(e =&gt; e.Price).HasPrecision(18, 2);
+    }
+}
+
+// Apply in OnModelCreating
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.ApplyConfiguration(new ProductConfiguration());
+    
+    // Or apply all configurations from assembly
+    modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Value Conversions</h2>
+                    <pre><code class="language-csharp">public enum ProductStatus { Draft, Active, Discontinued }
+
+public class Product
+{
+    public ProductStatus Status { get; set; }
+}
+
+// In configuration
+builder.Property(e =&gt; e.Status)
+    .HasConversion&lt;string&gt;();  // Store as string in DB
+
+// Custom conversion
+builder.Property(e =&gt; e.Tags)
+    .HasConversion(
+        v =&gt; string.Join(',', v),
+        v =&gt; v.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList());</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Key Takeaways</h2>
+                    <div class="key-takeaways">
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Id property is automatically the primary key by convention.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Use Data Annotations for simple configuration.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Use Fluent API for complex configuration.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>IEntityTypeConfiguration keeps DbContext clean.</span></div>
+                    </div>
+                </section>
+            </div>
+            <nav class="lesson-navigation"><a href="/training/entity-framework-core/lesson/2" class="btn btn-secondary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Previous</a><a href="/training/entity-framework-core/lesson/4" class="btn btn-primary">Next: Migrations<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a></nav>
+        </article>
+    </main>
+</div>
+

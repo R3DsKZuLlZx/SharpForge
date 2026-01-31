@@ -1,0 +1,139 @@
+﻿@page "/training/entity-framework-core/lesson/1"
+<PageTitle>Introduction to EF Core - Entity Framework Core - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <aside class="lesson-sidebar">
+        <div class="sidebar-header"><a href="/training/entity-framework-core" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Course Overview</a><h3>Entity Framework Core</h3></div>
+        <nav class="lesson-nav">
+            <a href="/training/entity-framework-core/lesson/1" class="lesson-nav-item active"><span class="lesson-num">1</span><span>Introduction to EF Core</span></a>
+            <a href="/training/entity-framework-core/lesson/2" class="lesson-nav-item"><span class="lesson-num">2</span><span>Setting Up DbContext</span></a>
+            <a href="/training/entity-framework-core/lesson/3" class="lesson-nav-item"><span class="lesson-num">3</span><span>Defining Entity Models</span></a>
+            <a href="/training/entity-framework-core/lesson/4" class="lesson-nav-item"><span class="lesson-num">4</span><span>Migrations</span></a>
+            <a href="/training/entity-framework-core/lesson/5" class="lesson-nav-item"><span class="lesson-num">5</span><span>Basic CRUD Operations</span></a>
+            <a href="/training/entity-framework-core/lesson/6" class="lesson-nav-item"><span class="lesson-num">6</span><span>Querying with LINQ</span></a>
+            <a href="/training/entity-framework-core/lesson/7" class="lesson-nav-item"><span class="lesson-num">7</span><span>Relationships</span></a>
+            <a href="/training/entity-framework-core/lesson/8" class="lesson-nav-item"><span class="lesson-num">8</span><span>Loading Related Data</span></a>
+            <a href="/training/entity-framework-core/lesson/9" class="lesson-nav-item"><span class="lesson-num">9</span><span>Change Tracking</span></a>
+            <a href="/training/entity-framework-core/lesson/10" class="lesson-nav-item"><span class="lesson-num">10</span><span>Transactions</span></a>
+            <a href="/training/entity-framework-core/lesson/11" class="lesson-nav-item"><span class="lesson-num">11</span><span>Concurrency Handling</span></a>
+            <a href="/training/entity-framework-core/lesson/12" class="lesson-nav-item"><span class="lesson-num">12</span><span>Performance Optimization</span></a>
+        </nav>
+    </aside>
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <header class="lesson-header">
+                <span class="lesson-number">Lesson 1</span>
+                <h1>Introduction to EF Core</h1>
+                <div class="lesson-meta"><span class="lesson-duration"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>25 min</span><span class="lesson-level intermediate">Intermediate</span></div>
+            </header>
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>What is Entity Framework Core?</h2>
+                    <p>Entity Framework Core (EF Core) is a modern, lightweight, extensible, and cross-platform Object-Relational Mapper (ORM) for .NET. It enables developers to work with databases using .NET objects, eliminating most of the data-access code.</p>
+                    <div class="info-box">
+                        <div class="info-box-header"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span>Key Benefits</span></div>
+                        <ul>
+                            <li>Write C# instead of SQL for most operations</li>
+                            <li>Type-safe queries with compile-time checking</li>
+                            <li>Database-agnostic code (supports SQL Server, PostgreSQL, SQLite, etc.)</li>
+                            <li>Automatic change tracking and migration support</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>How EF Core Works</h2>
+                    <pre><code class="language-csharp">// Your C# code
+var products = await context.Products
+    .Where(p => p.Price > 100)
+    .OrderBy(p => p.Name)
+    .ToListAsync();
+
+// EF Core generates SQL
+// SELECT * FROM Products WHERE Price > 100 ORDER BY Name</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>EF Core vs EF6 (Legacy)</h2>
+                    <div class="comparison-grid">
+                        <div class="comparison-card">
+                            <h4>EF Core (Modern)</h4>
+                            <ul>
+                                <li>Cross-platform</li>
+                                <li>Lightweight and fast</li>
+                                <li>Modular design</li>
+                                <li>Better LINQ translation</li>
+                                <li>Active development</li>
+                            </ul>
+                        </div>
+                        <div class="comparison-card">
+                            <h4>EF6 (Legacy)</h4>
+                            <ul>
+                                <li>.NET Framework only</li>
+                                <li>Heavier runtime</li>
+                                <li>More features (some)</li>
+                                <li>Maintenance mode</li>
+                                <li>EDMX designer support</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Supported Databases</h2>
+                    <ul>
+                        <li><strong>SQL Server</strong> - Microsoft.EntityFrameworkCore.SqlServer</li>
+                        <li><strong>PostgreSQL</strong> - Npgsql.EntityFrameworkCore.PostgreSQL</li>
+                        <li><strong>SQLite</strong> - Microsoft.EntityFrameworkCore.Sqlite</li>
+                        <li><strong>MySQL</strong> - Pomelo.EntityFrameworkCore.MySql</li>
+                        <li><strong>Cosmos DB</strong> - Microsoft.EntityFrameworkCore.Cosmos</li>
+                        <li><strong>In-Memory</strong> - Microsoft.EntityFrameworkCore.InMemory (testing)</li>
+                    </ul>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Installing EF Core</h2>
+                    <pre><code class="language-bash"># Core package
+dotnet add package Microsoft.EntityFrameworkCore
+
+# Database provider (pick one)
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+
+# Design-time tools for migrations
+dotnet add package Microsoft.EntityFrameworkCore.Design
+
+# CLI tools (global)
+dotnet tool install --global dotnet-ef</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Core Concepts</h2>
+                    <ul>
+                        <li><strong>DbContext:</strong> The main class that coordinates EF Core functionality</li>
+                        <li><strong>DbSet&lt;T&gt;:</strong> Represents a table in the database</li>
+                        <li><strong>Entity:</strong> A class that maps to a database table</li>
+                        <li><strong>Migration:</strong> A way to update the database schema</li>
+                        <li><strong>Change Tracker:</strong> Tracks modifications to entities</li>
+                    </ul>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Key Takeaways</h2>
+                    <div class="key-takeaways">
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>EF Core is a modern, cross-platform ORM for .NET.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>It translates LINQ queries to SQL automatically.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Supports multiple database providers.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>DbContext is the heart of EF Core operations.</span></div>
+                    </div>
+                </section>
+            </div>
+            <nav class="lesson-navigation">
+                <div></div>
+                <a href="/training/entity-framework-core/lesson/2" class="btn btn-primary">Next: Setting Up DbContext<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a>
+            </nav>
+        </article>
+    </main>
+</div>
+
