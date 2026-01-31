@@ -1,0 +1,156 @@
+﻿ @page "/training/aspnet-core-web-apis/lesson/3"
+<PageTitle>Routing Fundamentals - ASP.NET Core Web APIs - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <aside class="lesson-sidebar">
+        <div class="sidebar-header">
+            <a href="/training/aspnet-core-web-apis" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Course Overview</a>
+            <h3>ASP.NET Core Web APIs</h3>
+        </div>
+        <nav class="lesson-nav">
+            <a href="/training/aspnet-core-web-apis/lesson/1" class="lesson-nav-item"><span class="lesson-num">1</span><span>Introduction to ASP.NET Core</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/2" class="lesson-nav-item"><span class="lesson-num">2</span><span>Creating Your First API</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/3" class="lesson-nav-item active"><span class="lesson-num">3</span><span>Routing Fundamentals</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/4" class="lesson-nav-item"><span class="lesson-num">4</span><span>Controllers and Actions</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/5" class="lesson-nav-item"><span class="lesson-num">5</span><span>Model Binding and Validation</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/6" class="lesson-nav-item"><span class="lesson-num">6</span><span>Dependency Injection</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/7" class="lesson-nav-item"><span class="lesson-num">7</span><span>Middleware Pipeline</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/8" class="lesson-nav-item"><span class="lesson-num">8</span><span>Entity Framework Core Basics</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/9" class="lesson-nav-item"><span class="lesson-num">9</span><span>Repository Pattern</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/10" class="lesson-nav-item"><span class="lesson-num">10</span><span>Authentication with JWT</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/11" class="lesson-nav-item"><span class="lesson-num">11</span><span>Authorization Policies</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/12" class="lesson-nav-item"><span class="lesson-num">12</span><span>Error Handling</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/13" class="lesson-nav-item"><span class="lesson-num">13</span><span>Logging and Monitoring</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/14" class="lesson-nav-item"><span class="lesson-num">14</span><span>API Versioning</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/15" class="lesson-nav-item"><span class="lesson-num">15</span><span>Swagger and OpenAPI</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/16" class="lesson-nav-item"><span class="lesson-num">16</span><span>Minimal APIs</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/17" class="lesson-nav-item"><span class="lesson-num">17</span><span>Testing Your APIs</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/18" class="lesson-nav-item"><span class="lesson-num">18</span><span>Deployment and Docker</span></a>
+        </nav>
+    </aside>
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <header class="lesson-header">
+                <span class="lesson-number">Lesson 3</span>
+                <h1>Routing Fundamentals</h1>
+                <div class="lesson-meta">
+                    <span class="lesson-duration"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>30 min</span>
+                    <span class="lesson-level intermediate">Intermediate</span>
+                </div>
+            </header>
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Understanding Routing in ASP.NET Core</h2>
+                    <p>Routing is responsible for matching incoming HTTP requests to endpoints. ASP.NET Core uses attribute routing for Web APIs.</p>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Route Templates</h2>
+                    <pre><code class="language-csharp">// Controller-level route
+[Route("api/[controller]")]  // api/products
+public class ProductsController : ControllerBase
+{
+    // Action-level routes
+    [HttpGet]                    // GET api/products
+    [HttpGet("{id}")]           // GET api/products/5
+    [HttpGet("category/{cat}")] // GET api/products/category/electronics
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Route Parameters</h2>
+                    <pre><code class="language-csharp">// Required parameter
+[HttpGet("{id}")]
+public ActionResult Get(int id) { }
+
+// Optional parameter
+[HttpGet("{id?}")]
+public ActionResult Get(int? id) { }
+
+// Default value
+[HttpGet("{id=1}")]
+public ActionResult Get(int id) { }
+
+// Multiple parameters
+[HttpGet("{category}/{id}")]
+public ActionResult Get(string category, int id) { }</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Route Constraints</h2>
+                    <pre><code class="language-csharp">// Integer constraint
+[HttpGet("{id:int}")]
+public ActionResult GetById(int id) { }
+
+// Min/Max value
+[HttpGet("{id:int:min(1):max(100)}")]
+public ActionResult GetById(int id) { }
+
+// GUID constraint
+[HttpGet("{id:guid}")]
+public ActionResult GetById(Guid id) { }
+
+// Regex constraint
+[HttpGet("{slug:regex(^[a-z0-9-]+$)}")]
+public ActionResult GetBySlug(string slug) { }
+
+// Length constraint
+[HttpGet("{name:minlength(3):maxlength(50)}")]
+public ActionResult GetByName(string name) { }</code></pre>
+
+                    <div class="info-box">
+                        <div class="info-box-header">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                            <span>Common Constraints</span>
+                        </div>
+                        <p><code>int</code>, <code>long</code>, <code>guid</code>, <code>bool</code>, <code>datetime</code>, <code>decimal</code>, <code>double</code>, <code>float</code>, <code>alpha</code>, <code>minlength(n)</code>, <code>maxlength(n)</code>, <code>length(n)</code>, <code>min(n)</code>, <code>max(n)</code>, <code>range(min,max)</code>, <code>regex(expression)</code></p>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Query String Parameters</h2>
+                    <pre><code class="language-csharp">// GET api/products?page=1&pageSize=10&search=laptop
+[HttpGet]
+public ActionResult GetAll(
+    [FromQuery] int page = 1,
+    [FromQuery] int pageSize = 10,
+    [FromQuery] string? search = null)
+{
+    // page = 1, pageSize = 10, search = "laptop"
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Route Prefixes</h2>
+                    <pre><code class="language-csharp">// Base controller with common prefix
+[Route("api/v1/[controller]")]
+public class ProductsController : ControllerBase { }
+
+// Override route completely
+[Route("api/v1/[controller]")]
+public class ProductsController : ControllerBase
+{
+    [HttpGet("/api/all-products")]  // Absolute path (ignores prefix)
+    public ActionResult GetAll() { }
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Key Takeaways</h2>
+                    <div class="key-takeaways">
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Use <code>[Route]</code> and HTTP method attributes for routing.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Route parameters can be required, optional, or have defaults.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Constraints validate route parameters before reaching your action.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Use <code>[FromQuery]</code> for query string parameters.</span></div>
+                    </div>
+                </section>
+            </div>
+            <nav class="lesson-navigation">
+                <a href="/training/aspnet-core-web-apis/lesson/2" class="btn btn-secondary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Previous</a>
+                <a href="/training/aspnet-core-web-apis/lesson/4" class="btn btn-primary">Next: Controllers and Actions<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a>
+            </nav>
+        </article>
+    </main>
+</div>
+

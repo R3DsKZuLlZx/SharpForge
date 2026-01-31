@@ -1,0 +1,303 @@
+﻿@page "/training/aspnet-core-web-apis/lesson/1"
+
+<PageTitle>Introduction to ASP.NET Core - ASP.NET Core Web APIs - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <aside class="lesson-sidebar">
+        <div class="sidebar-header">
+            <a href="/training/aspnet-core-web-apis" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"/>
+                </svg>
+                Course Overview
+            </a>
+            <h3>ASP.NET Core Web APIs</h3>
+        </div>
+        <nav class="lesson-nav">
+            <a href="/training/aspnet-core-web-apis/lesson/1" class="lesson-nav-item active"><span class="lesson-num">1</span><span>Introduction to ASP.NET Core</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/2" class="lesson-nav-item"><span class="lesson-num">2</span><span>Creating Your First API</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/3" class="lesson-nav-item"><span class="lesson-num">3</span><span>Routing Fundamentals</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/4" class="lesson-nav-item"><span class="lesson-num">4</span><span>Controllers and Actions</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/5" class="lesson-nav-item"><span class="lesson-num">5</span><span>Model Binding and Validation</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/6" class="lesson-nav-item"><span class="lesson-num">6</span><span>Dependency Injection</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/7" class="lesson-nav-item"><span class="lesson-num">7</span><span>Middleware Pipeline</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/8" class="lesson-nav-item"><span class="lesson-num">8</span><span>Entity Framework Core Basics</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/9" class="lesson-nav-item"><span class="lesson-num">9</span><span>Repository Pattern</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/10" class="lesson-nav-item"><span class="lesson-num">10</span><span>Authentication with JWT</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/11" class="lesson-nav-item"><span class="lesson-num">11</span><span>Authorization Policies</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/12" class="lesson-nav-item"><span class="lesson-num">12</span><span>Error Handling</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/13" class="lesson-nav-item"><span class="lesson-num">13</span><span>Logging and Monitoring</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/14" class="lesson-nav-item"><span class="lesson-num">14</span><span>API Versioning</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/15" class="lesson-nav-item"><span class="lesson-num">15</span><span>Swagger and OpenAPI</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/16" class="lesson-nav-item"><span class="lesson-num">16</span><span>Minimal APIs</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/17" class="lesson-nav-item"><span class="lesson-num">17</span><span>Testing Your APIs</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/18" class="lesson-nav-item"><span class="lesson-num">18</span><span>Deployment and Docker</span></a>
+        </nav>
+    </aside>
+
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <header class="lesson-header">
+                <span class="lesson-number">Lesson 1</span>
+                <h1>Introduction to ASP.NET Core</h1>
+                <div class="lesson-meta">
+                    <span class="lesson-duration">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        25 min
+                    </span>
+                    <span class="lesson-level intermediate">Intermediate</span>
+                </div>
+            </header>
+
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Welcome to ASP.NET Core Web APIs!</h2>
+                    <p>In this course, you'll learn how to build production-ready REST APIs using ASP.NET Core. By the end, you'll be able to create secure, scalable, and well-documented APIs that follow best practices.</p>
+                    
+                    <p>This first lesson introduces ASP.NET Core, its architecture, and how it differs from other web frameworks.</p>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>What is ASP.NET Core?</h2>
+                    <p>ASP.NET Core is a cross-platform, high-performance, open-source framework for building modern, cloud-enabled, Internet-connected applications. It's the successor to ASP.NET and was redesigned from the ground up.</p>
+
+                    <div class="info-box">
+                        <div class="info-box-header">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="16" x2="12" y2="12"/>
+                                <line x1="12" y1="8" x2="12.01" y2="8"/>
+                            </svg>
+                            <span>Key Features</span>
+                        </div>
+                        <ul>
+                            <li><strong>Cross-platform:</strong> Runs on Windows, Linux, and macOS</li>
+                            <li><strong>High performance:</strong> One of the fastest web frameworks available</li>
+                            <li><strong>Modular:</strong> Pay for what you use with NuGet packages</li>
+                            <li><strong>Unified:</strong> Single framework for web UI and APIs</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>ASP.NET Core vs ASP.NET Framework</h2>
+                    <div class="comparison-grid">
+                        <div class="comparison-card">
+                            <h4>ASP.NET Core (Modern)</h4>
+                            <ul>
+                                <li>Cross-platform</li>
+                                <li>Open source</li>
+                                <li>High performance</li>
+                                <li>Built-in dependency injection</li>
+                                <li>Unified MVC and Web API</li>
+                            </ul>
+                            <span class="tag recommended">Use This</span>
+                        </div>
+                        <div class="comparison-card">
+                            <h4>ASP.NET Framework (Legacy)</h4>
+                            <ul>
+                                <li>Windows only</li>
+                                <li>Closed source (mostly)</li>
+                                <li>Heavier runtime</li>
+                                <li>Separate MVC and Web API</li>
+                                <li>Maintenance mode</li>
+                            </ul>
+                            <span class="tag legacy">Legacy</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>The Request Pipeline</h2>
+                    <p>ASP.NET Core uses a middleware pipeline to handle HTTP requests. Each middleware component can process the request, pass it to the next component, or short-circuit the pipeline.</p>
+
+                    <div class="pipeline-diagram">
+                        <div class="pipeline-step">Request</div>
+                        <div class="pipeline-arrow">→</div>
+                        <div class="pipeline-step">Logging</div>
+                        <div class="pipeline-arrow">→</div>
+                        <div class="pipeline-step">Auth</div>
+                        <div class="pipeline-arrow">→</div>
+                        <div class="pipeline-step">Routing</div>
+                        <div class="pipeline-arrow">→</div>
+                        <div class="pipeline-step">Endpoint</div>
+                    </div>
+
+                    <pre><code class="language-csharp">var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+// Middleware is added in order
+app.UseHttpsRedirection();   // 1. Redirect HTTP to HTTPS
+app.UseAuthentication();     // 2. Who is the user?
+app.UseAuthorization();      // 3. Can they access this?
+app.MapControllers();        // 4. Route to controller
+
+app.Run();</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Project Structure</h2>
+                    <p>A typical ASP.NET Core Web API project structure:</p>
+
+                    <pre><code class="language-bash">MyApi/
+├── Controllers/           # API endpoints
+│   └── WeatherController.cs
+├── Models/               # Data models/DTOs
+│   └── WeatherForecast.cs
+├── Services/             # Business logic
+│   └── WeatherService.cs
+├── Data/                 # Database context
+│   └── AppDbContext.cs
+├── Program.cs            # Application entry point
+├── appsettings.json      # Configuration
+└── MyApi.csproj          # Project file</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>The Program.cs File</h2>
+                    <p>Modern ASP.NET Core uses a simplified Program.cs with top-level statements:</p>
+
+                    <pre><code class="language-csharp">var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+app.UseAuthorization();
+app.MapControllers();
+
+app.Run();</code></pre>
+
+                    <h3>Two Phases</h3>
+                    <ul>
+                        <li><strong>Builder phase:</strong> Configure services and dependencies</li>
+                        <li><strong>App phase:</strong> Configure the request pipeline (middleware)</li>
+                    </ul>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>REST API Principles</h2>
+                    <p>We'll be building RESTful APIs. REST (Representational State Transfer) is an architectural style with these principles:</p>
+
+                    <div class="rest-methods">
+                        <div class="method-card get">
+                            <span class="method">GET</span>
+                            <span class="desc">Retrieve resources</span>
+                        </div>
+                        <div class="method-card post">
+                            <span class="method">POST</span>
+                            <span class="desc">Create new resources</span>
+                        </div>
+                        <div class="method-card put">
+                            <span class="method">PUT</span>
+                            <span class="desc">Update entire resources</span>
+                        </div>
+                        <div class="method-card patch">
+                            <span class="method">PATCH</span>
+                            <span class="desc">Partial updates</span>
+                        </div>
+                        <div class="method-card delete">
+                            <span class="method">DELETE</span>
+                            <span class="desc">Remove resources</span>
+                        </div>
+                    </div>
+
+                    <pre><code class="language-bash"># RESTful URL patterns
+GET    /api/products         # Get all products
+GET    /api/products/5       # Get product with ID 5
+POST   /api/products         # Create a new product
+PUT    /api/products/5       # Update product 5
+DELETE /api/products/5       # Delete product 5</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>HTTP Status Codes</h2>
+                    <p>APIs communicate using HTTP status codes:</p>
+
+                    <div class="status-codes">
+                        <div class="code-group success">
+                            <h4>2xx Success</h4>
+                            <ul>
+                                <li><code>200</code> OK</li>
+                                <li><code>201</code> Created</li>
+                                <li><code>204</code> No Content</li>
+                            </ul>
+                        </div>
+                        <div class="code-group client-error">
+                            <h4>4xx Client Error</h4>
+                            <ul>
+                                <li><code>400</code> Bad Request</li>
+                                <li><code>401</code> Unauthorized</li>
+                                <li><code>403</code> Forbidden</li>
+                                <li><code>404</code> Not Found</li>
+                            </ul>
+                        </div>
+                        <div class="code-group server-error">
+                            <h4>5xx Server Error</h4>
+                            <ul>
+                                <li><code>500</code> Internal Server Error</li>
+                                <li><code>503</code> Service Unavailable</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Key Takeaways</h2>
+                    <div class="key-takeaways">
+                        <div class="takeaway">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>ASP.NET Core is a cross-platform, high-performance web framework.</span>
+                        </div>
+                        <div class="takeaway">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>The request pipeline is built from middleware components.</span>
+                        </div>
+                        <div class="takeaway">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Program.cs has two phases: service configuration and pipeline configuration.</span>
+                        </div>
+                        <div class="takeaway">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>REST APIs use HTTP methods and status codes for communication.</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <nav class="lesson-navigation">
+                <div></div>
+                <a href="/training/aspnet-core-web-apis/lesson/2" class="btn btn-primary">
+                    Next: Creating Your First API
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"/>
+                    </svg>
+                </a>
+            </nav>
+        </article>
+    </main>
+</div>
+

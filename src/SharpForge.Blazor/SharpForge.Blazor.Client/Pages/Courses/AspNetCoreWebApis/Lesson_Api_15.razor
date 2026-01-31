@@ -1,0 +1,71 @@
+﻿@page "/training/aspnet-core-web-apis/lesson/15"
+<PageTitle>Swagger and OpenAPI - ASP.NET Core Web APIs - SharpForge</PageTitle>
+<CodeHighlighter />
+<div class="lesson-layout">
+    <aside class="lesson-sidebar"><div class="sidebar-header"><a href="/training/aspnet-core-web-apis" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Course Overview</a><h3>ASP.NET Core Web APIs</h3></div><nav class="lesson-nav"><a href="/training/aspnet-core-web-apis/lesson/1" class="lesson-nav-item"><span class="lesson-num">1</span><span>Introduction</span></a><a href="/training/aspnet-core-web-apis/lesson/2" class="lesson-nav-item"><span class="lesson-num">2</span><span>First API</span></a><a href="/training/aspnet-core-web-apis/lesson/3" class="lesson-nav-item"><span class="lesson-num">3</span><span>Routing</span></a><a href="/training/aspnet-core-web-apis/lesson/4" class="lesson-nav-item"><span class="lesson-num">4</span><span>Controllers</span></a><a href="/training/aspnet-core-web-apis/lesson/5" class="lesson-nav-item"><span class="lesson-num">5</span><span>Validation</span></a><a href="/training/aspnet-core-web-apis/lesson/6" class="lesson-nav-item"><span class="lesson-num">6</span><span>DI</span></a><a href="/training/aspnet-core-web-apis/lesson/7" class="lesson-nav-item"><span class="lesson-num">7</span><span>Middleware</span></a><a href="/training/aspnet-core-web-apis/lesson/8" class="lesson-nav-item"><span class="lesson-num">8</span><span>EF Core</span></a><a href="/training/aspnet-core-web-apis/lesson/9" class="lesson-nav-item"><span class="lesson-num">9</span><span>Repository</span></a><a href="/training/aspnet-core-web-apis/lesson/10" class="lesson-nav-item"><span class="lesson-num">10</span><span>JWT</span></a><a href="/training/aspnet-core-web-apis/lesson/11" class="lesson-nav-item"><span class="lesson-num">11</span><span>Authorization</span></a><a href="/training/aspnet-core-web-apis/lesson/12" class="lesson-nav-item"><span class="lesson-num">12</span><span>Errors</span></a><a href="/training/aspnet-core-web-apis/lesson/13" class="lesson-nav-item"><span class="lesson-num">13</span><span>Logging</span></a><a href="/training/aspnet-core-web-apis/lesson/14" class="lesson-nav-item"><span class="lesson-num">14</span><span>Versioning</span></a><a href="/training/aspnet-core-web-apis/lesson/15" class="lesson-nav-item active"><span class="lesson-num">15</span><span>Swagger</span></a><a href="/training/aspnet-core-web-apis/lesson/16" class="lesson-nav-item"><span class="lesson-num">16</span><span>Minimal APIs</span></a><a href="/training/aspnet-core-web-apis/lesson/17" class="lesson-nav-item"><span class="lesson-num">17</span><span>Testing</span></a><a href="/training/aspnet-core-web-apis/lesson/18" class="lesson-nav-item"><span class="lesson-num">18</span><span>Docker</span></a></nav></aside>
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <header class="lesson-header"><span class="lesson-number">Lesson 15</span><h1>Swagger and OpenAPI</h1><div class="lesson-meta"><span class="lesson-duration"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>25 min</span><span class="lesson-level intermediate">Intermediate</span></div></header>
+            <div class="lesson-body">
+                <section class="lesson-section"><h2>Setup Swagger</h2><pre><code class="language-csharp">builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo 
+    { 
+        Title = "My API", 
+        Version = "v1",
+        Description = "An API for managing products"
+    });
+});
+
+// Use in development
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}</code></pre></section>
+                <section class="lesson-section"><h2>XML Documentation</h2><pre><code class="language-xml">&lt;!-- In .csproj --&gt;
+&lt;PropertyGroup&gt;
+  &lt;GenerateDocumentationFile&gt;true&lt;/GenerateDocumentationFile&gt;
+&lt;/PropertyGroup&gt;</code></pre><pre><code class="language-csharp">builder.Services.AddSwaggerGen(c =>
+{
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFile));
+});
+
+/// &lt;summary&gt;
+/// Gets all products
+/// &lt;/summary&gt;
+/// &lt;returns&gt;A list of products&lt;/returns&gt;
+/// &lt;response code="200"&gt;Returns the list of products&lt;/response&gt;
+[HttpGet]
+[ProducesResponseType(typeof(IEnumerable&lt;Product&gt;), StatusCodes.Status200OK)]
+public async Task&lt;ActionResult&lt;IEnumerable&lt;Product&gt;&gt;&gt; GetAll() { }</code></pre></section>
+                <section class="lesson-section"><h2>JWT Authentication in Swagger</h2><pre><code class="language-csharp">builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+            },
+            Array.Empty&lt;string&gt;()
+        }
+    });
+});</code></pre></section>
+                <section class="lesson-section"><h2>Key Takeaways</h2><div class="key-takeaways"><div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Swagger provides interactive API documentation.</span></div><div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Use XML comments for detailed documentation.</span></div><div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Configure security schemes for authenticated endpoints.</span></div></div></section>
+            </div>
+            <nav class="lesson-navigation"><a href="/training/aspnet-core-web-apis/lesson/14" class="btn btn-secondary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Previous</a><a href="/training/aspnet-core-web-apis/lesson/16" class="btn btn-primary">Next: Minimal APIs<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a></nav>
+        </article>
+    </main>
+</div>
+

@@ -1,0 +1,166 @@
+﻿@page "/training/aspnet-core-web-apis/lesson/5"
+<PageTitle>Model Binding and Validation - ASP.NET Core Web APIs - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <aside class="lesson-sidebar">
+        <div class="sidebar-header"><a href="/training/aspnet-core-web-apis" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Course Overview</a><h3>ASP.NET Core Web APIs</h3></div>
+        <nav class="lesson-nav">
+            <a href="/training/aspnet-core-web-apis/lesson/1" class="lesson-nav-item"><span class="lesson-num">1</span><span>Introduction to ASP.NET Core</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/2" class="lesson-nav-item"><span class="lesson-num">2</span><span>Creating Your First API</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/3" class="lesson-nav-item"><span class="lesson-num">3</span><span>Routing Fundamentals</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/4" class="lesson-nav-item"><span class="lesson-num">4</span><span>Controllers and Actions</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/5" class="lesson-nav-item active"><span class="lesson-num">5</span><span>Model Binding and Validation</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/6" class="lesson-nav-item"><span class="lesson-num">6</span><span>Dependency Injection</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/7" class="lesson-nav-item"><span class="lesson-num">7</span><span>Middleware Pipeline</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/8" class="lesson-nav-item"><span class="lesson-num">8</span><span>Entity Framework Core Basics</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/9" class="lesson-nav-item"><span class="lesson-num">9</span><span>Repository Pattern</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/10" class="lesson-nav-item"><span class="lesson-num">10</span><span>Authentication with JWT</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/11" class="lesson-nav-item"><span class="lesson-num">11</span><span>Authorization Policies</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/12" class="lesson-nav-item"><span class="lesson-num">12</span><span>Error Handling</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/13" class="lesson-nav-item"><span class="lesson-num">13</span><span>Logging and Monitoring</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/14" class="lesson-nav-item"><span class="lesson-num">14</span><span>API Versioning</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/15" class="lesson-nav-item"><span class="lesson-num">15</span><span>Swagger and OpenAPI</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/16" class="lesson-nav-item"><span class="lesson-num">16</span><span>Minimal APIs</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/17" class="lesson-nav-item"><span class="lesson-num">17</span><span>Testing Your APIs</span></a>
+            <a href="/training/aspnet-core-web-apis/lesson/18" class="lesson-nav-item"><span class="lesson-num">18</span><span>Deployment and Docker</span></a>
+        </nav>
+    </aside>
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <header class="lesson-header">
+                <span class="lesson-number">Lesson 5</span>
+                <h1>Model Binding and Validation</h1>
+                <div class="lesson-meta"><span class="lesson-duration"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>35 min</span><span class="lesson-level intermediate">Intermediate</span></div>
+            </header>
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Data Annotations Validation</h2>
+                    <pre><code class="language-csharp">public class CreateProductDto
+{
+    [Required(ErrorMessage = "Name is required")]
+    [StringLength(100, MinimumLength = 2)]
+    public string Name { get; set; } = string.Empty;
+
+    [StringLength(500)]
+    public string? Description { get; set; }
+
+    [Required]
+    [Range(0.01, 999999.99, ErrorMessage = "Price must be between 0.01 and 999999.99")]
+    public decimal Price { get; set; }
+
+    [Required]
+    [Range(0, int.MaxValue)]
+    public int Stock { get; set; }
+
+    [EmailAddress]
+    public string? ContactEmail { get; set; }
+
+    [Url]
+    public string? Website { get; set; }
+
+    [RegularExpression("^[A-Z]{2}[0-9]{4}$", ErrorMessage = "Invalid SKU format")]
+    public string? Sku { get; set; }
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Automatic Validation with [ApiController]</h2>
+                    <p>With <code>[ApiController]</code>, validation happens automatically:</p>
+                    <pre><code class="language-csharp">[HttpPost]
+public ActionResult&lt;Product&gt; Create(CreateProductDto dto)
+{
+    // If validation fails, returns 400 automatically
+    // You only reach here if model is valid
+    
+    var product = MapToProduct(dto);
+    _repository.Add(product);
+    return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Custom Validation Attributes</h2>
+                    <pre><code class="language-csharp">public class FutureDateAttribute : ValidationAttribute
+{
+    protected override ValidationResult? IsValid(object? value, ValidationContext context)
+    {
+        if (value is DateTime date &amp;&amp; date &lt;= DateTime.Now)
+        {
+            return new ValidationResult("Date must be in the future");
+        }
+        return ValidationResult.Success;
+    }
+}
+
+// Usage
+public class CreateEventDto
+{
+    [Required]
+    public string Name { get; set; } = string.Empty;
+
+    [FutureDate]
+    public DateTime EventDate { get; set; }
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>FluentValidation</h2>
+                    <pre><code class="language-bash">dotnet add package FluentValidation.AspNetCore</code></pre>
+
+                    <pre><code class="language-csharp">public class CreateProductDtoValidator : AbstractValidator&lt;CreateProductDto&gt;
+{
+    public CreateProductDtoValidator()
+    {
+        RuleFor(x => x.Name)
+            .NotEmpty().WithMessage("Name is required")
+            .Length(2, 100);
+
+        RuleFor(x => x.Price)
+            .GreaterThan(0).WithMessage("Price must be positive")
+            .LessThanOrEqualTo(999999.99m);
+
+        RuleFor(x => x.Stock)
+            .GreaterThanOrEqualTo(0);
+
+        RuleFor(x => x.ContactEmail)
+            .EmailAddress()
+            .When(x => !string.IsNullOrEmpty(x.ContactEmail));
+    }
+}
+
+// Register in Program.cs
+builder.Services.AddValidatorsFromAssemblyContaining&lt;CreateProductDtoValidator&gt;();</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Problem Details Response</h2>
+                    <pre><code class="language-json">{
+  "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+  "title": "One or more validation errors occurred.",
+  "status": 400,
+  "errors": {
+    "Name": ["Name is required"],
+    "Price": ["Price must be between 0.01 and 999999.99"]
+  }
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Key Takeaways</h2>
+                    <div class="key-takeaways">
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Use Data Annotations for simple validation rules.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span><code>[ApiController]</code> automatically returns 400 for invalid models.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Use FluentValidation for complex validation scenarios.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Problem Details provides a standardized error format.</span></div>
+                    </div>
+                </section>
+            </div>
+            <nav class="lesson-navigation">
+                <a href="/training/aspnet-core-web-apis/lesson/4" class="btn btn-secondary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Previous</a>
+                <a href="/training/aspnet-core-web-apis/lesson/6" class="btn btn-primary">Next: Dependency Injection<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a>
+            </nav>
+        </article>
+    </main>
+</div>
+
