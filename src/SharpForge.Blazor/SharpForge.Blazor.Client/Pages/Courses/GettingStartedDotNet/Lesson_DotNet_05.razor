@@ -1,0 +1,340 @@
+﻿@page "/training/getting-started-dotnet/lesson/5"
+
+<PageTitle>NuGet Package Management - Getting Started with .NET - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <aside class="lesson-sidebar">
+        <div class="sidebar-header">
+            <a href="/training/getting-started-dotnet" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"/>
+                </svg>
+                Course Overview
+            </a>
+            <h3>Getting Started with .NET</h3>
+        </div>
+        <nav class="lesson-nav">
+            <a href="/training/getting-started-dotnet/lesson/1" class="lesson-nav-item"><span class="lesson-num">1</span><span>What is .NET?</span></a>
+            <a href="/training/getting-started-dotnet/lesson/2" class="lesson-nav-item"><span class="lesson-num">2</span><span>Installing the .NET SDK</span></a>
+            <a href="/training/getting-started-dotnet/lesson/3" class="lesson-nav-item"><span class="lesson-num">3</span><span>The .NET CLI</span></a>
+            <a href="/training/getting-started-dotnet/lesson/4" class="lesson-nav-item"><span class="lesson-num">4</span><span>Project Structure and Files</span></a>
+            <a href="/training/getting-started-dotnet/lesson/5" class="lesson-nav-item active"><span class="lesson-num">5</span><span>NuGet Package Management</span></a>
+            <a href="/training/getting-started-dotnet/lesson/6" class="lesson-nav-item"><span class="lesson-num">6</span><span>Building Console Applications</span></a>
+            <a href="/training/getting-started-dotnet/lesson/7" class="lesson-nav-item"><span class="lesson-num">7</span><span>Configuration and Settings</span></a>
+            <a href="/training/getting-started-dotnet/lesson/8" class="lesson-nav-item"><span class="lesson-num">8</span><span>Introduction to ASP.NET Core</span></a>
+            <a href="/training/getting-started-dotnet/lesson/9" class="lesson-nav-item"><span class="lesson-num">9</span><span>Debugging and Troubleshooting</span></a>
+            <a href="/training/getting-started-dotnet/lesson/10" class="lesson-nav-item"><span class="lesson-num">10</span><span>Publishing and Deployment</span></a>
+        </nav>
+    </aside>
+
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <header class="lesson-header">
+                <span class="lesson-number">Lesson 5</span>
+                <h1>NuGet Package Management</h1>
+                <div class="lesson-meta">
+                    <span class="lesson-duration">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        35 min
+                    </span>
+                    <span class="lesson-level beginner">Beginner</span>
+                </div>
+            </header>
+
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>What is NuGet?</h2>
+                    <p>NuGet is the package manager for .NET. It's how you add third-party libraries to your projects—everything from JSON serializers to database drivers to logging frameworks.</p>
+                    
+                    <p>The official repository at <a href="https://nuget.org" target="_blank">nuget.org</a> hosts over 350,000 packages, making it easy to find solutions for almost any problem.</p>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Finding Packages</h2>
+                    <p>There are several ways to discover NuGet packages:</p>
+                    
+                    <h3>NuGet.org Website</h3>
+                    <p>Browse <a href="https://nuget.org" target="_blank">nuget.org</a> to search for packages, view documentation, and check download statistics.</p>
+
+                    <h3>Command Line</h3>
+                    <pre><code class="language-bash"># Search for packages
+dotnet package search json
+
+# Search with detailed output
+dotnet package search serilog --take 10</code></pre>
+
+                    <h3>Popular Packages</h3>
+                    <div class="package-grid">
+                        <div class="package-card">
+                            <h4>Newtonsoft.Json</h4>
+                            <p>JSON serialization (legacy, but widely used)</p>
+                        </div>
+                        <div class="package-card">
+                            <h4>Serilog</h4>
+                            <p>Structured logging</p>
+                        </div>
+                        <div class="package-card">
+                            <h4>Dapper</h4>
+                            <p>Lightweight ORM</p>
+                        </div>
+                        <div class="package-card">
+                            <h4>AutoMapper</h4>
+                            <p>Object-to-object mapping</p>
+                        </div>
+                        <div class="package-card">
+                            <h4>FluentValidation</h4>
+                            <p>Validation library</p>
+                        </div>
+                        <div class="package-card">
+                            <h4>Polly</h4>
+                            <p>Resilience and transient fault handling</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Adding Packages</h2>
+                    <p>Use the <code>dotnet add package</code> command:</p>
+
+                    <pre><code class="language-bash"># Add the latest stable version
+dotnet add package Newtonsoft.Json
+
+# Add a specific version
+dotnet add package Serilog --version 3.1.1
+
+# Add a prerelease version
+dotnet add package SomePackage --prerelease
+
+# Add to a specific project
+dotnet add src/MyApp/MyApp.csproj package Newtonsoft.Json</code></pre>
+
+                    <p>This adds the package to your <code>.csproj</code> file:</p>
+
+                    <pre><code class="language-xml">&lt;ItemGroup&gt;
+  &lt;PackageReference Include="Newtonsoft.Json" Version="13.0.3" /&gt;
+&lt;/ItemGroup&gt;</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Package Versions</h2>
+                    <p>Understanding version numbers helps you manage updates safely:</p>
+
+                    <div class="version-example">
+                        <div class="version-number">
+                            <span class="major">13</span>.<span class="minor">0</span>.<span class="patch">3</span>
+                        </div>
+                        <div class="version-labels">
+                            <span>Major</span>
+                            <span>Minor</span>
+                            <span>Patch</span>
+                        </div>
+                    </div>
+
+                    <ul>
+                        <li><strong>Major:</strong> Breaking changes—may require code modifications</li>
+                        <li><strong>Minor:</strong> New features, backward compatible</li>
+                        <li><strong>Patch:</strong> Bug fixes, backward compatible</li>
+                    </ul>
+
+                    <h3>Version Ranges</h3>
+                    <pre><code class="language-xml">&lt;!-- Exact version --&gt;
+&lt;PackageReference Include="Pkg" Version="1.2.3" /&gt;
+
+&lt;!-- Minimum version --&gt;
+&lt;PackageReference Include="Pkg" Version="1.2.3" /&gt;
+
+&lt;!-- Floating version (latest patch) --&gt;
+&lt;PackageReference Include="Pkg" Version="1.2.*" /&gt;
+
+&lt;!-- Range --&gt;
+&lt;PackageReference Include="Pkg" Version="[1.0,2.0)" /&gt;</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Managing Packages</h2>
+
+                    <h3>List Installed Packages</h3>
+                    <pre><code class="language-bash"># List all packages in a project
+dotnet list package
+
+# List packages for entire solution
+dotnet list MySolution.sln package
+
+# Check for outdated packages
+dotnet list package --outdated
+
+# Include transitive dependencies
+dotnet list package --include-transitive</code></pre>
+
+                    <h3>Update Packages</h3>
+                    <pre><code class="language-bash"># Update a specific package
+dotnet add package Newtonsoft.Json
+
+# The above command updates to latest if already installed
+# There's no explicit "update" command - just add again</code></pre>
+
+                    <h3>Remove Packages</h3>
+                    <pre><code class="language-bash"># Remove a package
+dotnet remove package Newtonsoft.Json</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Restoring Packages</h2>
+                    <p>When you clone a project or your packages get corrupted, restore them:</p>
+
+                    <pre><code class="language-bash"># Restore packages for current project
+dotnet restore
+
+# Restore for entire solution
+dotnet restore MySolution.sln
+
+# Force restore (ignore cache)
+dotnet restore --force</code></pre>
+
+                    <div class="info-box">
+                        <div class="info-box-header">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="16" x2="12" y2="12"/>
+                                <line x1="12" y1="8" x2="12.01" y2="8"/>
+                            </svg>
+                            <span>Note</span>
+                        </div>
+                        <p><code>dotnet build</code> automatically restores packages, so you rarely need to run <code>dotnet restore</code> manually.</p>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Package Sources</h2>
+                    <p>By default, NuGet uses nuget.org. You can add additional sources for private packages:</p>
+
+                    <pre><code class="language-bash"># List configured sources
+dotnet nuget list source
+
+# Add a private source
+dotnet nuget add source https://pkgs.mycompany.com/nuget -n MyCompany
+
+# Add with credentials
+dotnet nuget add source https://pkgs.mycompany.com/nuget -n MyCompany -u username -p password
+
+# Remove a source
+dotnet nuget remove source MyCompany</code></pre>
+
+                    <h3>NuGet.Config</h3>
+                    <p>Configure sources in a <code>NuGet.Config</code> file for your project:</p>
+
+                    <pre><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;configuration&gt;
+  &lt;packageSources&gt;
+    &lt;add key="nuget.org" value="https://api.nuget.org/v3/index.json" /&gt;
+    &lt;add key="MyCompany" value="https://pkgs.mycompany.com/nuget" /&gt;
+  &lt;/packageSources&gt;
+&lt;/configuration&gt;</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Central Package Management</h2>
+                    <p>For solutions with many projects, centralize version management with <code>Directory.Packages.props</code>:</p>
+
+                    <pre><code class="language-xml">&lt;!-- Directory.Packages.props in solution root --&gt;
+&lt;Project&gt;
+  &lt;PropertyGroup&gt;
+    &lt;ManagePackageVersionsCentrally&gt;true&lt;/ManagePackageVersionsCentrally&gt;
+  &lt;/PropertyGroup&gt;
+  
+  &lt;ItemGroup&gt;
+    &lt;PackageVersion Include="Newtonsoft.Json" Version="13.0.3" /&gt;
+    &lt;PackageVersion Include="Serilog" Version="3.1.1" /&gt;
+    &lt;PackageVersion Include="xunit" Version="2.6.2" /&gt;
+  &lt;/ItemGroup&gt;
+&lt;/Project&gt;</code></pre>
+
+                    <p>Then in your project files, omit the version:</p>
+
+                    <pre><code class="language-xml">&lt;!-- Individual .csproj files --&gt;
+&lt;ItemGroup&gt;
+  &lt;PackageReference Include="Newtonsoft.Json" /&gt;
+  &lt;PackageReference Include="Serilog" /&gt;
+&lt;/ItemGroup&gt;</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Security Considerations</h2>
+                    
+                    <div class="warning-box">
+                        <div class="warning-box-header">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                <line x1="12" y1="9" x2="12" y2="13"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                            <span>Security Best Practices</span>
+                        </div>
+                        <ul>
+                            <li>Keep packages updated to get security patches</li>
+                            <li>Use <code>dotnet list package --vulnerable</code> to check for known vulnerabilities</li>
+                            <li>Verify package authors and download counts before installing</li>
+                            <li>Consider using a private feed to control which packages are available</li>
+                        </ul>
+                    </div>
+
+                    <pre><code class="language-bash"># Check for vulnerable packages
+dotnet list package --vulnerable
+
+# Check for deprecated packages
+dotnet list package --deprecated</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Key Takeaways</h2>
+                    <div class="key-takeaways">
+                        <div class="takeaway">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>NuGet is the package manager for .NET with 350,000+ packages on nuget.org.</span>
+                        </div>
+                        <div class="takeaway">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Use <code>dotnet add package</code> to install and <code>dotnet remove package</code> to uninstall.</span>
+                        </div>
+                        <div class="takeaway">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Use <code>dotnet list package --outdated</code> to find packages that need updating.</span>
+                        </div>
+                        <div class="takeaway">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Use Central Package Management for large solutions with many projects.</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <nav class="lesson-navigation">
+                <a href="/training/getting-started-dotnet/lesson/4" class="btn btn-secondary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6"/>
+                    </svg>
+                    Previous: Project Structure
+                </a>
+                <a href="/training/getting-started-dotnet/lesson/6" class="btn btn-primary">
+                    Next: Building Console Applications
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"/>
+                    </svg>
+                </a>
+            </nav>
+        </article>
+    </main>
+</div>
+

@@ -1,0 +1,316 @@
+﻿@page "/training/getting-started-dotnet/lesson/1"
+
+<PageTitle>What is .NET? - Getting Started with .NET - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <aside class="lesson-sidebar">
+        <div class="sidebar-header">
+            <a href="/training/getting-started-dotnet" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"/>
+                </svg>
+                Course Overview
+            </a>
+            <h3>Getting Started with .NET</h3>
+        </div>
+        <nav class="lesson-nav">
+            <a href="/training/getting-started-dotnet/lesson/1" class="lesson-nav-item active">
+                <span class="lesson-num">1</span>
+                <span>What is .NET?</span>
+            </a>
+            <a href="/training/getting-started-dotnet/lesson/2" class="lesson-nav-item">
+                <span class="lesson-num">2</span>
+                <span>Installing the .NET SDK</span>
+            </a>
+            <a href="/training/getting-started-dotnet/lesson/3" class="lesson-nav-item">
+                <span class="lesson-num">3</span>
+                <span>The .NET CLI</span>
+            </a>
+            <a href="/training/getting-started-dotnet/lesson/4" class="lesson-nav-item">
+                <span class="lesson-num">4</span>
+                <span>Project Structure and Files</span>
+            </a>
+            <a href="/training/getting-started-dotnet/lesson/5" class="lesson-nav-item">
+                <span class="lesson-num">5</span>
+                <span>NuGet Package Management</span>
+            </a>
+            <a href="/training/getting-started-dotnet/lesson/6" class="lesson-nav-item">
+                <span class="lesson-num">6</span>
+                <span>Building Console Applications</span>
+            </a>
+            <a href="/training/getting-started-dotnet/lesson/7" class="lesson-nav-item">
+                <span class="lesson-num">7</span>
+                <span>Configuration and Settings</span>
+            </a>
+            <a href="/training/getting-started-dotnet/lesson/8" class="lesson-nav-item">
+                <span class="lesson-num">8</span>
+                <span>Introduction to ASP.NET Core</span>
+            </a>
+            <a href="/training/getting-started-dotnet/lesson/9" class="lesson-nav-item">
+                <span class="lesson-num">9</span>
+                <span>Debugging and Troubleshooting</span>
+            </a>
+            <a href="/training/getting-started-dotnet/lesson/10" class="lesson-nav-item">
+                <span class="lesson-num">10</span>
+                <span>Publishing and Deployment</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <header class="lesson-header">
+                <span class="lesson-number">Lesson 1</span>
+                <h1>What is .NET?</h1>
+                <div class="lesson-meta">
+                    <span class="lesson-duration">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        25 min
+                    </span>
+                    <span class="lesson-level beginner">Beginner</span>
+                </div>
+            </header>
+
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Welcome to .NET!</h2>
+                    <p>Welcome to your journey into the .NET ecosystem! In this course, you'll learn everything you need to know to start building applications with .NET, from understanding the platform to deploying your first applications.</p>
+                    
+                    <p>In this first lesson, we'll explore what .NET is, understand its history and evolution, and discover the different types of applications you can build with it.</p>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>What is .NET?</h2>
+                    <p>.NET is a free, open-source, cross-platform development platform created by Microsoft. It provides a comprehensive framework for building virtually any type of application—from web and mobile apps to desktop software, games, IoT applications, and cloud services.</p>
+
+                    <div class="info-box">
+                        <div class="info-box-header">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="16" x2="12" y2="12"/>
+                                <line x1="12" y1="8" x2="12.01" y2="8"/>
+                            </svg>
+                            <span>Key Point</span>
+                        </div>
+                        <p>.NET is not just a single technology—it's an entire ecosystem that includes runtime environments, libraries, languages, and tools that work together to help you build applications.</p>
+                    </div>
+
+                    <h3>Core Components of .NET</h3>
+                    <p>The .NET platform consists of several key components:</p>
+                    
+                    <ul>
+                        <li><strong>Runtime (CLR)</strong> - The Common Language Runtime executes your code, manages memory, handles exceptions, and provides garbage collection.</li>
+                        <li><strong>Base Class Library (BCL)</strong> - A huge collection of pre-built classes for common tasks like file I/O, networking, data access, and more.</li>
+                        <li><strong>Languages</strong> - C#, F#, and Visual Basic are the primary languages, with C# being the most popular.</li>
+                        <li><strong>SDK and Tools</strong> - The Software Development Kit includes compilers, the CLI, and everything needed to build applications.</li>
+                    </ul>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>A Brief History of .NET</h2>
+                    <p>Understanding .NET's evolution helps clarify the different versions and implementations you might encounter:</p>
+
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-marker">2002</div>
+                            <div class="timeline-content">
+                                <h4>.NET Framework 1.0</h4>
+                                <p>The original .NET, Windows-only, introduced C# and the CLR.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker">2016</div>
+                            <div class="timeline-content">
+                                <h4>.NET Core 1.0</h4>
+                                <p>A complete rewrite—cross-platform, open-source, and modular.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker">2020</div>
+                            <div class="timeline-content">
+                                <h4>.NET 5</h4>
+                                <p>Unified .NET Core and .NET Framework into a single platform called ".NET".</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker">2024</div>
+                            <div class="timeline-content">
+                                <h4>.NET 9 (Current LTS)</h4>
+                                <p>Latest Long-Term Support version with performance improvements and new features.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="warning-box">
+                        <div class="warning-box-header">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                <line x1="12" y1="9" x2="12" y2="13"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                            <span>Important</span>
+                        </div>
+                        <p>When starting new projects today, always use modern .NET (version 6 or later). The older .NET Framework (versions 4.x and below) is in maintenance mode and only receives security updates.</p>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>.NET Implementations</h2>
+                    <p>You might encounter different .NET implementations:</p>
+
+                    <div class="comparison-grid">
+                        <div class="comparison-card">
+                            <h4>.NET (Modern)</h4>
+                            <p>The current, cross-platform version. Use this for all new development.</p>
+                            <span class="tag recommended">Recommended</span>
+                        </div>
+                        <div class="comparison-card">
+                            <h4>.NET Framework</h4>
+                            <p>Windows-only, legacy version. Only use for maintaining existing applications.</p>
+                            <span class="tag legacy">Legacy</span>
+                        </div>
+                        <div class="comparison-card">
+                            <h4>Mono</h4>
+                            <p>Cross-platform implementation, now integrated into .NET. Powers Xamarin and Unity.</p>
+                            <span class="tag specialized">Specialized</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>What Can You Build with .NET?</h2>
+                    <p>.NET is incredibly versatile. Here's what you can build:</p>
+
+                    <div class="app-types-grid">
+                        <div class="app-type">
+                            <div class="app-type-icon">🌐</div>
+                            <h4>Web Applications</h4>
+                            <p>ASP.NET Core for APIs, MVC apps, and Blazor for interactive web UIs.</p>
+                        </div>
+                        <div class="app-type">
+                            <div class="app-type-icon">🖥️</div>
+                            <h4>Desktop Apps</h4>
+                            <p>WPF, Windows Forms, or .NET MAUI for cross-platform desktop applications.</p>
+                        </div>
+                        <div class="app-type">
+                            <div class="app-type-icon">📱</div>
+                            <h4>Mobile Apps</h4>
+                            <p>.NET MAUI for iOS and Android apps from a single codebase.</p>
+                        </div>
+                        <div class="app-type">
+                            <div class="app-type-icon">☁️</div>
+                            <h4>Cloud Services</h4>
+                            <p>Microservices, serverless functions, and cloud-native applications.</p>
+                        </div>
+                        <div class="app-type">
+                            <div class="app-type-icon">🎮</div>
+                            <h4>Games</h4>
+                            <p>Unity game engine uses C# as its primary scripting language.</p>
+                        </div>
+                        <div class="app-type">
+                            <div class="app-type-icon">🤖</div>
+                            <h4>IoT & AI</h4>
+                            <p>IoT applications and machine learning with ML.NET.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Why Choose .NET?</h2>
+                    <p>There are many reasons developers and companies choose .NET:</p>
+
+                    <ul>
+                        <li><strong>Performance</strong> - .NET is one of the fastest platforms available, consistently ranking at the top in benchmarks.</li>
+                        <li><strong>Cross-Platform</strong> - Build once, run on Windows, macOS, and Linux.</li>
+                        <li><strong>Open Source</strong> - The entire platform is open source on GitHub with an active community.</li>
+                        <li><strong>Enterprise Ready</strong> - Trusted by millions of developers and companies worldwide.</li>
+                        <li><strong>Great Tooling</strong> - Visual Studio, VS Code, and JetBrains Rider provide excellent development experiences.</li>
+                        <li><strong>Strong Ecosystem</strong> - NuGet hosts over 350,000 packages for every need.</li>
+                    </ul>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>How .NET Code Runs</h2>
+                    <p>Understanding how your code executes helps you write better applications:</p>
+
+                    <div class="code-flow">
+                        <div class="flow-step">
+                            <div class="flow-number">1</div>
+                            <div class="flow-content">
+                                <h4>Write Code</h4>
+                                <p>You write C# source code (.cs files)</p>
+                            </div>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step">
+                            <div class="flow-number">2</div>
+                            <div class="flow-content">
+                                <h4>Compile</h4>
+                                <p>Compiler converts to Intermediate Language (IL)</p>
+                            </div>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step">
+                            <div class="flow-number">3</div>
+                            <div class="flow-content">
+                                <h4>Execute</h4>
+                                <p>JIT compiler converts IL to native machine code at runtime</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <pre><code class="language-csharp">// Your C# code
+Console.WriteLine("Hello, .NET!");
+
+// Gets compiled to IL, then JIT-compiled to native code
+// The CLR manages execution, memory, and more</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Key Takeaways</h2>
+                    <div class="key-takeaways">
+                        <div class="takeaway">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>.NET is a free, open-source, cross-platform development platform.</span>
+                        </div>
+                        <div class="takeaway">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Modern .NET (6+) unifies all .NET implementations into one platform.</span>
+                        </div>
+                        <div class="takeaway">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>You can build web, desktop, mobile, cloud, games, and IoT applications.</span>
+                        </div>
+                        <div class="takeaway">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>C# code compiles to IL, which is JIT-compiled to native code at runtime.</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <nav class="lesson-navigation">
+                <div></div>
+                <a href="/training/getting-started-dotnet/lesson/2" class="btn btn-primary">
+                    Next: Installing the .NET SDK
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"/>
+                    </svg>
+                </a>
+            </nav>
+        </article>
+    </main>
+</div>
+
