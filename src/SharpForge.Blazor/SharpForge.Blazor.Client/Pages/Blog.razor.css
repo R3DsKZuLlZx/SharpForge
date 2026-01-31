@@ -256,6 +256,16 @@
     color: var(--accent-color);
 }
 
+.category-list a.active {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+.category-list a.active span {
+    background: var(--accent-light);
+    color: var(--accent-color);
+}
+
 .category-list span {
     background: var(--bg-tertiary);
     padding: 0.125rem 0.5rem;

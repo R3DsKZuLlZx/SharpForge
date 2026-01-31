@@ -14,30 +14,27 @@
     <div class="container">
         <div class="blog-layout">
             <main class="blog-main">
-                @if (CurrentPage == 1)
-                {
-                    <!-- Featured Post (only on page 1) -->
-                    <article class="post-card featured">
-                        <div class="post-image">
-                            <div class="post-image-placeholder">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                                    <circle cx="8.5" cy="8.5" r="1.5"/>
-                                    <polyline points="21 15 16 10 5 21"/>
-                                </svg>
-                            </div>
+                <!-- Featured Post -->
+                <article class="post-card featured">
+                    <div class="post-image">
+                        <div class="post-image-placeholder">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                <circle cx="8.5" cy="8.5" r="1.5"/>
+                                <polyline points="21 15 16 10 5 21"/>
+                            </svg>
                         </div>
-                        <div class="post-content">
-                            <div class="post-meta">
-                                <span class="post-category">Featured</span>
-                                <span class="post-date">@FeaturedPost.Date</span>
-                            </div>
-                            <h2>@FeaturedPost.Title</h2>
-                            <p>@FeaturedPost.Excerpt</p>
-                            <a href="@FeaturedPost.Url" class="btn btn-primary">Read Article</a>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-category">Featured</span>
+                            <span class="post-date">@FeaturedPost.Date</span>
                         </div>
-                    </article>
-                }
+                        <h2>@FeaturedPost.Title</h2>
+                        <p>@FeaturedPost.Excerpt</p>
+                        <a href="@FeaturedPost.Url" class="btn btn-primary">Read Article</a>
+                    </div>
+                </article>
 
                 <!-- Regular Posts -->
                 <div class="posts-grid">
@@ -88,10 +85,19 @@
                 <div class="sidebar-section">
                     <h4>Categories</h4>
                     <ul class="category-list">
-                        <li><a href="#">All Posts <span>@(AllPosts.Count + 1)</span></a></li>
+                        <li>
+                            <a href="#" class="@(SelectedCategory == null ? "active" : "")" @onclick="@(() => SelectCategory(null))" @onclick:preventDefault>
+                                All Posts <span>@(AllPosts.Count + 1)</span>
+                            </a>
+                        </li>
                         @foreach (var category in Categories)
                         {
-                            <li><a href="#">@category.Key <span>@category.Value</span></a></li>
+                            <li>
+                                <a href="#" class="@(SelectedCategory == category.Key ? "active" : "")" 
+                                   @onclick="@(() => SelectCategory(category.Key))" @onclick:preventDefault>
+                                    @category.Key <span>@category.Value</span>
+                                </a>
+                            </li>
                         }
                     </ul>
                 </div>
@@ -126,6 +132,7 @@
 @code {
     private int CurrentPage { get; set; } = 1;
     private int PageSize { get; set; } = 6;
+    private string? SelectedCategory { get; set; } = null;
     
     private BlogPost FeaturedPost { get; } = new()
     {
@@ -160,15 +167,25 @@
         new() { Title = "Minimal APIs in .NET", Excerpt = "Build lightweight APIs with minimal code using .NET Minimal APIs. Perfect for microservices and simple endpoints.", Date = "October 20, 2025", Category = "ASP.NET Core", Url = "#" }
     };
 
-    private int TotalPages => (int)Math.Ceiling((double)AllPosts.Count / PageSize);
+    private int TotalPages => (int)Math.Ceiling((double)FilteredPosts.Count() / PageSize);
 
-    private IEnumerable<BlogPost> CurrentPagePosts => AllPosts
+    private IEnumerable<BlogPost> FilteredPosts => SelectedCategory == null 
+        ? AllPosts 
+        : AllPosts.Where(p => p.Category == SelectedCategory);
+
+    private IEnumerable<BlogPost> CurrentPagePosts => FilteredPosts
         .Skip((CurrentPage - 1) * PageSize)
         .Take(PageSize);
 
     private Dictionary<string, int> Categories => AllPosts
         .GroupBy(p => p.Category)
         .ToDictionary(g => g.Key, g => g.Count());
+
+    private void SelectCategory(string? category)
+    {
+        SelectedCategory = category;
+        CurrentPage = 1; // Reset to first page when changing category
+    }
 
     private void GoToPage(int page)
     {
