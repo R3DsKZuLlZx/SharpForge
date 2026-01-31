@@ -1,0 +1,184 @@
+﻿@page "/training/design-patterns/lesson/24"
+<PageTitle>Putting It All Together - Design Patterns in C# - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <aside class="lesson-sidebar">
+        <div class="sidebar-header"><a href="/training/design-patterns" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Course Overview</a><h3>Design Patterns in C#</h3></div>
+        <nav class="lesson-nav"><a href="/training/design-patterns/lesson/1" class="lesson-nav-item"><span class="lesson-num">1</span><span>Introduction</span></a><a href="/training/design-patterns/lesson/2" class="lesson-nav-item"><span class="lesson-num">2</span><span>SRP</span></a><a href="/training/design-patterns/lesson/3" class="lesson-nav-item"><span class="lesson-num">3</span><span>OCP</span></a><a href="/training/design-patterns/lesson/4" class="lesson-nav-item"><span class="lesson-num">4</span><span>LSP</span></a><a href="/training/design-patterns/lesson/5" class="lesson-nav-item"><span class="lesson-num">5</span><span>ISP</span></a><a href="/training/design-patterns/lesson/6" class="lesson-nav-item"><span class="lesson-num">6</span><span>DIP</span></a><a href="/training/design-patterns/lesson/7" class="lesson-nav-item"><span class="lesson-num">7</span><span>Singleton</span></a><a href="/training/design-patterns/lesson/8" class="lesson-nav-item"><span class="lesson-num">8</span><span>Factory</span></a><a href="/training/design-patterns/lesson/9" class="lesson-nav-item"><span class="lesson-num">9</span><span>Abstract Factory</span></a><a href="/training/design-patterns/lesson/10" class="lesson-nav-item"><span class="lesson-num">10</span><span>Builder</span></a><a href="/training/design-patterns/lesson/11" class="lesson-nav-item"><span class="lesson-num">11</span><span>Prototype</span></a><a href="/training/design-patterns/lesson/12" class="lesson-nav-item"><span class="lesson-num">12</span><span>Adapter</span></a><a href="/training/design-patterns/lesson/13" class="lesson-nav-item"><span class="lesson-num">13</span><span>Decorator</span></a><a href="/training/design-patterns/lesson/14" class="lesson-nav-item"><span class="lesson-num">14</span><span>Facade</span></a><a href="/training/design-patterns/lesson/15" class="lesson-nav-item"><span class="lesson-num">15</span><span>Proxy</span></a><a href="/training/design-patterns/lesson/16" class="lesson-nav-item"><span class="lesson-num">16</span><span>Composite</span></a><a href="/training/design-patterns/lesson/17" class="lesson-nav-item"><span class="lesson-num">17</span><span>Strategy</span></a><a href="/training/design-patterns/lesson/18" class="lesson-nav-item"><span class="lesson-num">18</span><span>Observer</span></a><a href="/training/design-patterns/lesson/19" class="lesson-nav-item"><span class="lesson-num">19</span><span>Command</span></a><a href="/training/design-patterns/lesson/20" class="lesson-nav-item"><span class="lesson-num">20</span><span>State</span></a><a href="/training/design-patterns/lesson/21" class="lesson-nav-item"><span class="lesson-num">21</span><span>Template</span></a><a href="/training/design-patterns/lesson/22" class="lesson-nav-item"><span class="lesson-num">22</span><span>Chain</span></a><a href="/training/design-patterns/lesson/23" class="lesson-nav-item"><span class="lesson-num">23</span><span>Clean Arch</span></a><a href="/training/design-patterns/lesson/24" class="lesson-nav-item active"><span class="lesson-num">24</span><span>Summary</span></a></nav>
+    </aside>
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <header class="lesson-header"><span class="lesson-number">Lesson 24</span><h1>Putting It All Together</h1><div class="lesson-meta"><span class="lesson-duration"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>40 min</span><span class="lesson-level advanced">Advanced</span></div></header>
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Real-World Example: E-Commerce Order System</h2>
+                    <p>Let's combine multiple patterns in a realistic scenario.</p>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Patterns Used</h2>
+                    <pre><code class="language-csharp">// FACTORY - Create payment processors
+public class PaymentProcessorFactory
+{
+    public IPaymentProcessor Create(PaymentMethod method) =&gt; method switch
+    {
+        PaymentMethod.CreditCard =&gt; new CreditCardProcessor(),
+        PaymentMethod.PayPal =&gt; new PayPalProcessor(),
+        _ =&gt; throw new ArgumentException()
+    };
+}
+
+// STRATEGY - Discount calculation
+public interface IDiscountStrategy
+{
+    decimal Calculate(Order order);
+}
+
+// DECORATOR - Add logging to services
+public class LoggingOrderService : IOrderService
+{
+    private readonly IOrderService _inner;
+    private readonly ILogger _logger;
+    
+    public async Task&lt;Order&gt; CreateAsync(OrderRequest request)
+    {
+        _logger.LogInformation("Creating order...");
+        var order = await _inner.CreateAsync(request);
+        _logger.LogInformation($"Order {order.Id} created");
+        return order;
+    }
+}
+
+// OBSERVER - Notify on order events
+public class OrderCreatedEvent
+{
+    public Guid OrderId { get; init; }
+    public string CustomerEmail { get; init; }
+}
+
+public class EmailNotificationHandler : IEventHandler&lt;OrderCreatedEvent&gt;
+{
+    public Task HandleAsync(OrderCreatedEvent e) =&gt; 
+        _emailService.SendOrderConfirmation(e.CustomerEmail, e.OrderId);
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Combined in a Service</h2>
+                    <pre><code class="language-csharp">public class OrderService : IOrderService
+{
+    private readonly IOrderRepository _repository;
+    private readonly IPaymentProcessorFactory _paymentFactory;
+    private readonly IDiscountStrategy _discountStrategy;
+    private readonly IEventPublisher _events;
+
+    public async Task&lt;OrderResult&gt; CreateOrderAsync(CreateOrderRequest request)
+    {
+        // Create order (Builder pattern internally)
+        var order = Order.Create(request.CustomerId);
+        foreach (var item in request.Items)
+            order.AddItem(item);
+
+        // Apply discount (Strategy)
+        var discount = _discountStrategy.Calculate(order);
+        order.ApplyDiscount(discount);
+
+        // Process payment (Factory)
+        var processor = _paymentFactory.Create(request.PaymentMethod);
+        var paymentResult = await processor.ProcessAsync(order.Total);
+        if (!paymentResult.Success)
+            return OrderResult.Failed(paymentResult.Error);
+
+        // Save order (Repository)
+        await _repository.AddAsync(order);
+
+        // Publish event (Observer)
+        await _events.PublishAsync(new OrderCreatedEvent 
+        { 
+            OrderId = order.Id, 
+            CustomerEmail = request.Email 
+        });
+
+        return OrderResult.Success(order);
+    }
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Pattern Summary</h2>
+                    <div class="comparison-grid">
+                        <div class="comparison-card">
+                            <h4>Creational</h4>
+                            <ul>
+                                <li>Singleton - One instance</li>
+                                <li>Factory - Object creation</li>
+                                <li>Builder - Complex construction</li>
+                                <li>Prototype - Cloning</li>
+                            </ul>
+                        </div>
+                        <div class="comparison-card">
+                            <h4>Structural</h4>
+                            <ul>
+                                <li>Adapter - Interface bridging</li>
+                                <li>Decorator - Add behavior</li>
+                                <li>Facade - Simplify</li>
+                                <li>Proxy - Control access</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="comparison-grid">
+                        <div class="comparison-card">
+                            <h4>Behavioral</h4>
+                            <ul>
+                                <li>Strategy - Swap algorithms</li>
+                                <li>Observer - Event notification</li>
+                                <li>Command - Encapsulate actions</li>
+                                <li>State - State machine</li>
+                            </ul>
+                        </div>
+                        <div class="comparison-card">
+                            <h4>SOLID</h4>
+                            <ul>
+                                <li>SRP - One responsibility</li>
+                                <li>OCP - Open/Closed</li>
+                                <li>LSP - Substitutability</li>
+                                <li>ISP - Interface segregation</li>
+                                <li>DIP - Depend on abstractions</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Key Takeaways</h2>
+                    <div class="key-takeaways">
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Patterns work together naturally.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Start simple, apply patterns as needs emerge.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>SOLID principles guide pattern usage.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Don't force patterns—use when they add value.</span></div>
+                    </div>
+                </section>
+
+                <section class="lesson-section congratulations">
+                    <div class="congrats-box">
+                        <h2>🎉 Congratulations!</h2>
+                        <p>You've completed the "Design Patterns in C#" course! You now have comprehensive knowledge of:</p>
+                        <ul>
+                            <li>All 5 SOLID principles</li>
+                            <li>Creational patterns: Singleton, Factory, Abstract Factory, Builder, Prototype</li>
+                            <li>Structural patterns: Adapter, Decorator, Facade, Proxy, Composite</li>
+                            <li>Behavioral patterns: Strategy, Observer, Command, State, Template Method, Chain of Responsibility</li>
+                            <li>Clean Architecture principles</li>
+                            <li>How to combine patterns in real applications</li>
+                        </ul>
+                        <p>You're now equipped to write maintainable, flexible, and professional C# code!</p>
+                        <a href="/training" class="btn btn-primary">Explore More Courses</a>
+                    </div>
+                </section>
+            </div>
+            <nav class="lesson-navigation"><a href="/training/design-patterns/lesson/23" class="btn btn-secondary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Previous: Clean Architecture</a><a href="/training" class="btn btn-primary">Back to Courses<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a></nav>
+        </article>
+    </main>
+</div>
+

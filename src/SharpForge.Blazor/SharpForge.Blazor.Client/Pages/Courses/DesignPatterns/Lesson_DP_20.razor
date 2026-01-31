@@ -1,0 +1,94 @@
+﻿@page "/training/design-patterns/lesson/20"
+<PageTitle>State Pattern - Design Patterns in C# - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <aside class="lesson-sidebar">
+        <div class="sidebar-header"><a href="/training/design-patterns" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Course Overview</a><h3>Design Patterns in C#</h3></div>
+        <nav class="lesson-nav"><a href="/training/design-patterns/lesson/1" class="lesson-nav-item"><span class="lesson-num">1</span><span>Introduction</span></a><a href="/training/design-patterns/lesson/2" class="lesson-nav-item"><span class="lesson-num">2</span><span>SRP</span></a><a href="/training/design-patterns/lesson/3" class="lesson-nav-item"><span class="lesson-num">3</span><span>OCP</span></a><a href="/training/design-patterns/lesson/4" class="lesson-nav-item"><span class="lesson-num">4</span><span>LSP</span></a><a href="/training/design-patterns/lesson/5" class="lesson-nav-item"><span class="lesson-num">5</span><span>ISP</span></a><a href="/training/design-patterns/lesson/6" class="lesson-nav-item"><span class="lesson-num">6</span><span>DIP</span></a><a href="/training/design-patterns/lesson/7" class="lesson-nav-item"><span class="lesson-num">7</span><span>Singleton</span></a><a href="/training/design-patterns/lesson/8" class="lesson-nav-item"><span class="lesson-num">8</span><span>Factory</span></a><a href="/training/design-patterns/lesson/9" class="lesson-nav-item"><span class="lesson-num">9</span><span>Abstract Factory</span></a><a href="/training/design-patterns/lesson/10" class="lesson-nav-item"><span class="lesson-num">10</span><span>Builder</span></a><a href="/training/design-patterns/lesson/11" class="lesson-nav-item"><span class="lesson-num">11</span><span>Prototype</span></a><a href="/training/design-patterns/lesson/12" class="lesson-nav-item"><span class="lesson-num">12</span><span>Adapter</span></a><a href="/training/design-patterns/lesson/13" class="lesson-nav-item"><span class="lesson-num">13</span><span>Decorator</span></a><a href="/training/design-patterns/lesson/14" class="lesson-nav-item"><span class="lesson-num">14</span><span>Facade</span></a><a href="/training/design-patterns/lesson/15" class="lesson-nav-item"><span class="lesson-num">15</span><span>Proxy</span></a><a href="/training/design-patterns/lesson/16" class="lesson-nav-item"><span class="lesson-num">16</span><span>Composite</span></a><a href="/training/design-patterns/lesson/17" class="lesson-nav-item"><span class="lesson-num">17</span><span>Strategy</span></a><a href="/training/design-patterns/lesson/18" class="lesson-nav-item"><span class="lesson-num">18</span><span>Observer</span></a><a href="/training/design-patterns/lesson/19" class="lesson-nav-item"><span class="lesson-num">19</span><span>Command</span></a><a href="/training/design-patterns/lesson/20" class="lesson-nav-item active"><span class="lesson-num">20</span><span>State</span></a><a href="/training/design-patterns/lesson/21" class="lesson-nav-item"><span class="lesson-num">21</span><span>Template</span></a><a href="/training/design-patterns/lesson/22" class="lesson-nav-item"><span class="lesson-num">22</span><span>Chain</span></a><a href="/training/design-patterns/lesson/23" class="lesson-nav-item"><span class="lesson-num">23</span><span>Clean Arch</span></a><a href="/training/design-patterns/lesson/24" class="lesson-nav-item"><span class="lesson-num">24</span><span>Summary</span></a></nav>
+    </aside>
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <header class="lesson-header"><span class="lesson-number">Lesson 20</span><h1>State Pattern</h1><div class="lesson-meta"><span class="lesson-duration"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>25 min</span><span class="lesson-level advanced">Advanced</span></div></header>
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Intent</h2>
+                    <p>Allow an object to alter its behavior when its internal state changes. The object will appear to change its class.</p>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Order State Machine</h2>
+                    <pre><code class="language-csharp">public interface IOrderState
+{
+    void Process(Order order);
+    void Ship(Order order);
+    void Deliver(Order order);
+    void Cancel(Order order);
+}
+
+public class PendingState : IOrderState
+{
+    public void Process(Order order) =&gt; order.SetState(new ProcessingState());
+    public void Ship(Order order) =&gt; throw new InvalidOperationException("Can't ship pending order");
+    public void Deliver(Order order) =&gt; throw new InvalidOperationException();
+    public void Cancel(Order order) =&gt; order.SetState(new CancelledState());
+}
+
+public class ProcessingState : IOrderState
+{
+    public void Process(Order order) =&gt; throw new InvalidOperationException("Already processing");
+    public void Ship(Order order) =&gt; order.SetState(new ShippedState());
+    public void Deliver(Order order) =&gt; throw new InvalidOperationException();
+    public void Cancel(Order order) =&gt; order.SetState(new CancelledState());
+}
+
+public class ShippedState : IOrderState
+{
+    public void Process(Order order) =&gt; throw new InvalidOperationException();
+    public void Ship(Order order) =&gt; throw new InvalidOperationException();
+    public void Deliver(Order order) =&gt; order.SetState(new DeliveredState());
+    public void Cancel(Order order) =&gt; throw new InvalidOperationException("Can't cancel shipped");
+}
+
+public class Order
+{
+    private IOrderState _state = new PendingState();
+    public string Status =&gt; _state.GetType().Name.Replace("State", "");
+
+    public void SetState(IOrderState state) =&gt; _state = state;
+    public void Process() =&gt; _state.Process(this);
+    public void Ship() =&gt; _state.Ship(this);
+    public void Deliver() =&gt; _state.Deliver(this);
+    public void Cancel() =&gt; _state.Cancel(this);
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Usage</h2>
+                    <pre><code class="language-csharp">var order = new Order();
+Console.WriteLine(order.Status);  // Pending
+
+order.Process();
+Console.WriteLine(order.Status);  // Processing
+
+order.Ship();
+Console.WriteLine(order.Status);  // Shipped
+
+order.Deliver();
+Console.WriteLine(order.Status);  // Delivered</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Key Takeaways</h2>
+                    <div class="key-takeaways">
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Encapsulate state-specific behavior in classes.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Object behavior changes with state transitions.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Eliminates complex conditionals.</span></div>
+                    </div>
+                </section>
+            </div>
+            <nav class="lesson-navigation"><a href="/training/design-patterns/lesson/19" class="btn btn-secondary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Previous</a><a href="/training/design-patterns/lesson/21" class="btn btn-primary">Next: Template Method<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a></nav>
+        </article>
+    </main>
+</div>
+

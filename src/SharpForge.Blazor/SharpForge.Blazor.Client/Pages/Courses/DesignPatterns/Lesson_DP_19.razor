@@ -1,0 +1,97 @@
+﻿@page "/training/design-patterns/lesson/19"
+<PageTitle>Command Pattern - Design Patterns in C# - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <aside class="lesson-sidebar">
+        <div class="sidebar-header"><a href="/training/design-patterns" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Course Overview</a><h3>Design Patterns in C#</h3></div>
+        <nav class="lesson-nav"><a href="/training/design-patterns/lesson/1" class="lesson-nav-item"><span class="lesson-num">1</span><span>Introduction</span></a><a href="/training/design-patterns/lesson/2" class="lesson-nav-item"><span class="lesson-num">2</span><span>SRP</span></a><a href="/training/design-patterns/lesson/3" class="lesson-nav-item"><span class="lesson-num">3</span><span>OCP</span></a><a href="/training/design-patterns/lesson/4" class="lesson-nav-item"><span class="lesson-num">4</span><span>LSP</span></a><a href="/training/design-patterns/lesson/5" class="lesson-nav-item"><span class="lesson-num">5</span><span>ISP</span></a><a href="/training/design-patterns/lesson/6" class="lesson-nav-item"><span class="lesson-num">6</span><span>DIP</span></a><a href="/training/design-patterns/lesson/7" class="lesson-nav-item"><span class="lesson-num">7</span><span>Singleton</span></a><a href="/training/design-patterns/lesson/8" class="lesson-nav-item"><span class="lesson-num">8</span><span>Factory</span></a><a href="/training/design-patterns/lesson/9" class="lesson-nav-item"><span class="lesson-num">9</span><span>Abstract Factory</span></a><a href="/training/design-patterns/lesson/10" class="lesson-nav-item"><span class="lesson-num">10</span><span>Builder</span></a><a href="/training/design-patterns/lesson/11" class="lesson-nav-item"><span class="lesson-num">11</span><span>Prototype</span></a><a href="/training/design-patterns/lesson/12" class="lesson-nav-item"><span class="lesson-num">12</span><span>Adapter</span></a><a href="/training/design-patterns/lesson/13" class="lesson-nav-item"><span class="lesson-num">13</span><span>Decorator</span></a><a href="/training/design-patterns/lesson/14" class="lesson-nav-item"><span class="lesson-num">14</span><span>Facade</span></a><a href="/training/design-patterns/lesson/15" class="lesson-nav-item"><span class="lesson-num">15</span><span>Proxy</span></a><a href="/training/design-patterns/lesson/16" class="lesson-nav-item"><span class="lesson-num">16</span><span>Composite</span></a><a href="/training/design-patterns/lesson/17" class="lesson-nav-item"><span class="lesson-num">17</span><span>Strategy</span></a><a href="/training/design-patterns/lesson/18" class="lesson-nav-item"><span class="lesson-num">18</span><span>Observer</span></a><a href="/training/design-patterns/lesson/19" class="lesson-nav-item active"><span class="lesson-num">19</span><span>Command</span></a><a href="/training/design-patterns/lesson/20" class="lesson-nav-item"><span class="lesson-num">20</span><span>State</span></a><a href="/training/design-patterns/lesson/21" class="lesson-nav-item"><span class="lesson-num">21</span><span>Template</span></a><a href="/training/design-patterns/lesson/22" class="lesson-nav-item"><span class="lesson-num">22</span><span>Chain</span></a><a href="/training/design-patterns/lesson/23" class="lesson-nav-item"><span class="lesson-num">23</span><span>Clean Arch</span></a><a href="/training/design-patterns/lesson/24" class="lesson-nav-item"><span class="lesson-num">24</span><span>Summary</span></a></nav>
+    </aside>
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <header class="lesson-header"><span class="lesson-number">Lesson 19</span><h1>Command Pattern</h1><div class="lesson-meta"><span class="lesson-duration"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>25 min</span><span class="lesson-level advanced">Advanced</span></div></header>
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Intent</h2>
+                    <p>Encapsulate a request as an object, allowing you to parameterize clients with different requests, queue or log requests, and support undoable operations.</p>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Text Editor Example</h2>
+                    <pre><code class="language-csharp">public interface ICommand
+{
+    void Execute();
+    void Undo();
+}
+
+public class TextEditor
+{
+    public string Text { get; set; } = "";
+}
+
+public class AddTextCommand : ICommand
+{
+    private readonly TextEditor _editor;
+    private readonly string _text;
+
+    public AddTextCommand(TextEditor editor, string text)
+    {
+        _editor = editor;
+        _text = text;
+    }
+
+    public void Execute() =&gt; _editor.Text += _text;
+    public void Undo() =&gt; _editor.Text = _editor.Text[..^_text.Length];
+}
+
+public class CommandHistory
+{
+    private readonly Stack&lt;ICommand&gt; _history = new();
+
+    public void ExecuteCommand(ICommand command)
+    {
+        command.Execute();
+        _history.Push(command);
+    }
+
+    public void Undo()
+    {
+        if (_history.Count &gt; 0)
+            _history.Pop().Undo();
+    }
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>MediatR (CQRS)</h2>
+                    <pre><code class="language-csharp">// Command
+public record CreateOrderCommand(string CustomerId, List&lt;OrderItem&gt; Items) 
+    : IRequest&lt;OrderResult&gt;;
+
+// Handler
+public class CreateOrderHandler : IRequestHandler&lt;CreateOrderCommand, OrderResult&gt;
+{
+    public async Task&lt;OrderResult&gt; Handle(CreateOrderCommand request, CancellationToken ct)
+    {
+        // Process command
+    }
+}
+
+// Usage
+var result = await _mediator.Send(new CreateOrderCommand(customerId, items));</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Key Takeaways</h2>
+                    <div class="key-takeaways">
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Encapsulates actions as objects.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Enables undo/redo, queuing, logging.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>MediatR implements this for CQRS.</span></div>
+                    </div>
+                </section>
+            </div>
+            <nav class="lesson-navigation"><a href="/training/design-patterns/lesson/18" class="btn btn-secondary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Previous</a><a href="/training/design-patterns/lesson/20" class="btn btn-primary">Next: State<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a></nav>
+        </article>
+    </main>
+</div>
+

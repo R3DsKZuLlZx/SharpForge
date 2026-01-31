@@ -1,0 +1,111 @@
+﻿@page "/training/design-patterns/lesson/7"
+<PageTitle>Singleton Pattern - Design Patterns in C# - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <aside class="lesson-sidebar">
+        <div class="sidebar-header"><a href="/training/design-patterns" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Course Overview</a><h3>Design Patterns in C#</h3></div>
+        <nav class="lesson-nav"><a href="/training/design-patterns/lesson/1" class="lesson-nav-item"><span class="lesson-num">1</span><span>Introduction</span></a><a href="/training/design-patterns/lesson/2" class="lesson-nav-item"><span class="lesson-num">2</span><span>SRP</span></a><a href="/training/design-patterns/lesson/3" class="lesson-nav-item"><span class="lesson-num">3</span><span>OCP</span></a><a href="/training/design-patterns/lesson/4" class="lesson-nav-item"><span class="lesson-num">4</span><span>LSP</span></a><a href="/training/design-patterns/lesson/5" class="lesson-nav-item"><span class="lesson-num">5</span><span>ISP</span></a><a href="/training/design-patterns/lesson/6" class="lesson-nav-item"><span class="lesson-num">6</span><span>DIP</span></a><a href="/training/design-patterns/lesson/7" class="lesson-nav-item active"><span class="lesson-num">7</span><span>Singleton</span></a><a href="/training/design-patterns/lesson/8" class="lesson-nav-item"><span class="lesson-num">8</span><span>Factory</span></a><a href="/training/design-patterns/lesson/9" class="lesson-nav-item"><span class="lesson-num">9</span><span>Abstract Factory</span></a><a href="/training/design-patterns/lesson/10" class="lesson-nav-item"><span class="lesson-num">10</span><span>Builder</span></a><a href="/training/design-patterns/lesson/11" class="lesson-nav-item"><span class="lesson-num">11</span><span>Prototype</span></a><a href="/training/design-patterns/lesson/12" class="lesson-nav-item"><span class="lesson-num">12</span><span>Adapter</span></a><a href="/training/design-patterns/lesson/13" class="lesson-nav-item"><span class="lesson-num">13</span><span>Decorator</span></a><a href="/training/design-patterns/lesson/14" class="lesson-nav-item"><span class="lesson-num">14</span><span>Facade</span></a><a href="/training/design-patterns/lesson/15" class="lesson-nav-item"><span class="lesson-num">15</span><span>Proxy</span></a><a href="/training/design-patterns/lesson/16" class="lesson-nav-item"><span class="lesson-num">16</span><span>Composite</span></a><a href="/training/design-patterns/lesson/17" class="lesson-nav-item"><span class="lesson-num">17</span><span>Strategy</span></a><a href="/training/design-patterns/lesson/18" class="lesson-nav-item"><span class="lesson-num">18</span><span>Observer</span></a><a href="/training/design-patterns/lesson/19" class="lesson-nav-item"><span class="lesson-num">19</span><span>Command</span></a><a href="/training/design-patterns/lesson/20" class="lesson-nav-item"><span class="lesson-num">20</span><span>State</span></a><a href="/training/design-patterns/lesson/21" class="lesson-nav-item"><span class="lesson-num">21</span><span>Template</span></a><a href="/training/design-patterns/lesson/22" class="lesson-nav-item"><span class="lesson-num">22</span><span>Chain</span></a><a href="/training/design-patterns/lesson/23" class="lesson-nav-item"><span class="lesson-num">23</span><span>Clean Arch</span></a><a href="/training/design-patterns/lesson/24" class="lesson-nav-item"><span class="lesson-num">24</span><span>Summary</span></a></nav>
+    </aside>
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <header class="lesson-header"><span class="lesson-number">Lesson 7</span><h1>Singleton Pattern</h1><div class="lesson-meta"><span class="lesson-duration"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>25 min</span><span class="lesson-level advanced">Advanced</span></div></header>
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Intent</h2>
+                    <p>Ensure a class has only one instance and provide a global point of access to it.</p>
+                    <div class="info-box">
+                        <div class="info-box-header"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span>Category</span></div>
+                        <p>Creational Pattern</p>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Thread-Safe Singleton (Lazy)</h2>
+                    <pre><code class="language-csharp">public sealed class Logger
+{
+    private static readonly Lazy&lt;Logger&gt; _instance = 
+        new(() =&gt; new Logger());
+
+    public static Logger Instance =&gt; _instance.Value;
+
+    private Logger() 
+    {
+        // Private constructor prevents external instantiation
+    }
+
+    public void Log(string message)
+    {
+        Console.WriteLine($"[{DateTime.Now}] {message}");
+    }
+}
+
+// Usage
+Logger.Instance.Log("Application started");</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Alternative: Static Initialization</h2>
+                    <pre><code class="language-csharp">public sealed class Configuration
+{
+    // Eager initialization - thread-safe by CLR guarantee
+    private static readonly Configuration _instance = new();
+
+    public static Configuration Instance =&gt; _instance;
+
+    private Configuration()
+    {
+        // Load configuration
+    }
+
+    public string ConnectionString { get; private set; }
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Modern Approach: Use DI Container</h2>
+                    <pre><code class="language-csharp">// Register as singleton in DI
+builder.Services.AddSingleton&lt;ILogger, Logger&gt;();
+builder.Services.AddSingleton&lt;IConfiguration&gt;(config);
+
+// Inject where needed - no static access!
+public class OrderService
+{
+    private readonly ILogger _logger;
+
+    public OrderService(ILogger logger)
+    {
+        _logger = logger;
+    }
+}</code></pre>
+                    <div class="info-box">
+                        <div class="info-box-header"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span>Best Practice</span></div>
+                        <p>In modern .NET, prefer using the DI container's singleton lifetime over implementing the pattern manually.</p>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>When to Use</h2>
+                    <ul>
+                        <li>Configuration settings</li>
+                        <li>Logging services</li>
+                        <li>Database connection pools</li>
+                        <li>Caches</li>
+                    </ul>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Key Takeaways</h2>
+                    <div class="key-takeaways">
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Singleton ensures only one instance exists.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Use Lazy&lt;T&gt; for thread-safe lazy initialization.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Prefer DI container's singleton registration.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Be cautious—singletons can make testing harder.</span></div>
+                    </div>
+                </section>
+            </div>
+            <nav class="lesson-navigation"><a href="/training/design-patterns/lesson/6" class="btn btn-secondary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Previous</a><a href="/training/design-patterns/lesson/8" class="btn btn-primary">Next: Factory Method<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a></nav>
+        </article>
+    </main>
+</div>
+

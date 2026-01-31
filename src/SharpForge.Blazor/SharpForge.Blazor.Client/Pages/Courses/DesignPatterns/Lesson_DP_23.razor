@@ -1,0 +1,126 @@
+﻿@page "/training/design-patterns/lesson/23"
+<PageTitle>Clean Architecture - Design Patterns in C# - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <aside class="lesson-sidebar">
+        <div class="sidebar-header"><a href="/training/design-patterns" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Course Overview</a><h3>Design Patterns in C#</h3></div>
+        <nav class="lesson-nav"><a href="/training/design-patterns/lesson/1" class="lesson-nav-item"><span class="lesson-num">1</span><span>Introduction</span></a><a href="/training/design-patterns/lesson/2" class="lesson-nav-item"><span class="lesson-num">2</span><span>SRP</span></a><a href="/training/design-patterns/lesson/3" class="lesson-nav-item"><span class="lesson-num">3</span><span>OCP</span></a><a href="/training/design-patterns/lesson/4" class="lesson-nav-item"><span class="lesson-num">4</span><span>LSP</span></a><a href="/training/design-patterns/lesson/5" class="lesson-nav-item"><span class="lesson-num">5</span><span>ISP</span></a><a href="/training/design-patterns/lesson/6" class="lesson-nav-item"><span class="lesson-num">6</span><span>DIP</span></a><a href="/training/design-patterns/lesson/7" class="lesson-nav-item"><span class="lesson-num">7</span><span>Singleton</span></a><a href="/training/design-patterns/lesson/8" class="lesson-nav-item"><span class="lesson-num">8</span><span>Factory</span></a><a href="/training/design-patterns/lesson/9" class="lesson-nav-item"><span class="lesson-num">9</span><span>Abstract Factory</span></a><a href="/training/design-patterns/lesson/10" class="lesson-nav-item"><span class="lesson-num">10</span><span>Builder</span></a><a href="/training/design-patterns/lesson/11" class="lesson-nav-item"><span class="lesson-num">11</span><span>Prototype</span></a><a href="/training/design-patterns/lesson/12" class="lesson-nav-item"><span class="lesson-num">12</span><span>Adapter</span></a><a href="/training/design-patterns/lesson/13" class="lesson-nav-item"><span class="lesson-num">13</span><span>Decorator</span></a><a href="/training/design-patterns/lesson/14" class="lesson-nav-item"><span class="lesson-num">14</span><span>Facade</span></a><a href="/training/design-patterns/lesson/15" class="lesson-nav-item"><span class="lesson-num">15</span><span>Proxy</span></a><a href="/training/design-patterns/lesson/16" class="lesson-nav-item"><span class="lesson-num">16</span><span>Composite</span></a><a href="/training/design-patterns/lesson/17" class="lesson-nav-item"><span class="lesson-num">17</span><span>Strategy</span></a><a href="/training/design-patterns/lesson/18" class="lesson-nav-item"><span class="lesson-num">18</span><span>Observer</span></a><a href="/training/design-patterns/lesson/19" class="lesson-nav-item"><span class="lesson-num">19</span><span>Command</span></a><a href="/training/design-patterns/lesson/20" class="lesson-nav-item"><span class="lesson-num">20</span><span>State</span></a><a href="/training/design-patterns/lesson/21" class="lesson-nav-item"><span class="lesson-num">21</span><span>Template</span></a><a href="/training/design-patterns/lesson/22" class="lesson-nav-item"><span class="lesson-num">22</span><span>Chain</span></a><a href="/training/design-patterns/lesson/23" class="lesson-nav-item active"><span class="lesson-num">23</span><span>Clean Arch</span></a><a href="/training/design-patterns/lesson/24" class="lesson-nav-item"><span class="lesson-num">24</span><span>Summary</span></a></nav>
+    </aside>
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <header class="lesson-header"><span class="lesson-number">Lesson 23</span><h1>Clean Architecture</h1><div class="lesson-meta"><span class="lesson-duration"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>35 min</span><span class="lesson-level advanced">Advanced</span></div></header>
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>The Layers</h2>
+                    <p>Clean Architecture organizes code into concentric layers with dependencies pointing inward.</p>
+                    <ul>
+                        <li><strong>Domain (Core):</strong> Entities, value objects, domain events</li>
+                        <li><strong>Application:</strong> Use cases, interfaces, DTOs</li>
+                        <li><strong>Infrastructure:</strong> Database, external services, file system</li>
+                        <li><strong>Presentation:</strong> API controllers, Blazor components, UI</li>
+                    </ul>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Project Structure</h2>
+                    <pre><code class="language-text">Solution/
+├── src/
+│   ├── Domain/           # No dependencies
+│   │   ├── Entities/
+│   │   ├── ValueObjects/
+│   │   └── Events/
+│   ├── Application/      # Depends on Domain
+│   │   ├── Interfaces/
+│   │   ├── Services/
+│   │   └── DTOs/
+│   ├── Infrastructure/   # Depends on Application
+│   │   ├── Persistence/
+│   │   └── ExternalServices/
+│   └── WebApi/          # Depends on Application
+│       └── Controllers/
+└── tests/</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Domain Layer</h2>
+                    <pre><code class="language-csharp">// Domain/Entities/Order.cs
+public class Order
+{
+    public Guid Id { get; private set; }
+    public CustomerId CustomerId { get; private set; }
+    public Money Total { get; private set; }
+    public OrderStatus Status { get; private set; }
+    
+    private readonly List&lt;OrderItem&gt; _items = new();
+    public IReadOnlyList&lt;OrderItem&gt; Items =&gt; _items.AsReadOnly();
+
+    public void AddItem(Product product, int quantity)
+    {
+        _items.Add(new OrderItem(product, quantity));
+        RecalculateTotal();
+    }
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Application Layer</h2>
+                    <pre><code class="language-csharp">// Application/Interfaces/IOrderRepository.cs
+public interface IOrderRepository
+{
+    Task&lt;Order?&gt; GetByIdAsync(Guid id);
+    Task AddAsync(Order order);
+}
+
+// Application/Services/CreateOrderUseCase.cs
+public class CreateOrderUseCase
+{
+    private readonly IOrderRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
+
+    public async Task&lt;OrderDto&gt; ExecuteAsync(CreateOrderRequest request)
+    {
+        var order = new Order(request.CustomerId);
+        foreach (var item in request.Items)
+            order.AddItem(item.Product, item.Quantity);
+
+        await _repository.AddAsync(order);
+        await _unitOfWork.SaveChangesAsync();
+
+        return OrderDto.FromEntity(order);
+    }
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Infrastructure Layer</h2>
+                    <pre><code class="language-csharp">// Infrastructure/Persistence/OrderRepository.cs
+public class OrderRepository : IOrderRepository
+{
+    private readonly AppDbContext _context;
+
+    public async Task&lt;Order?&gt; GetByIdAsync(Guid id)
+        =&gt; await _context.Orders
+            .Include(o =&gt; o.Items)
+            .FirstOrDefaultAsync(o =&gt; o.Id == id);
+
+    public async Task AddAsync(Order order)
+        =&gt; await _context.Orders.AddAsync(order);
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Key Takeaways</h2>
+                    <div class="key-takeaways">
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Dependencies point inward toward the domain.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Domain has no external dependencies.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Interfaces defined in Application, implemented in Infrastructure.</span></div>
+                        <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Business logic is testable without infrastructure.</span></div>
+                    </div>
+                </section>
+            </div>
+            <nav class="lesson-navigation"><a href="/training/design-patterns/lesson/22" class="btn btn-secondary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Previous</a><a href="/training/design-patterns/lesson/24" class="btn btn-primary">Next: Putting It Together<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a></nav>
+        </article>
+    </main>
+</div>
+
