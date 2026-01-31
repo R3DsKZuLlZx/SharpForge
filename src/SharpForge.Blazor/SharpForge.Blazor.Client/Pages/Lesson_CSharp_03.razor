@@ -1,0 +1,550 @@
+﻿@page "/training/csharp-fundamentals/lesson/3"
+
+<PageTitle>Variables and Data Types - C# Fundamentals - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <aside class="lesson-sidebar">
+        <div class="sidebar-header">
+            <a href="/training/csharp-fundamentals" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"/>
+                </svg>
+                Course Overview
+            </a>
+            <h3>C# Fundamentals</h3>
+        </div>
+        <nav class="lesson-nav">
+            <a href="/training/csharp-fundamentals/lesson/1" class="lesson-nav-item completed">
+                <span class="lesson-num">1</span>
+                <span>Introduction to C# and .NET</span>
+            </a>
+            <a href="/training/csharp-fundamentals/lesson/2" class="lesson-nav-item completed">
+                <span class="lesson-num">2</span>
+                <span>Your First C# Program</span>
+            </a>
+            <a href="/training/csharp-fundamentals/lesson/3" class="lesson-nav-item active">
+                <span class="lesson-num">3</span>
+                <span>Variables and Data Types</span>
+            </a>
+            <a href="/training/csharp-fundamentals/lesson/4" class="lesson-nav-item">
+                <span class="lesson-num">4</span>
+                <span>Operators and Expressions</span>
+            </a>
+            <a href="/training/csharp-fundamentals/lesson/5" class="lesson-nav-item">
+                <span class="lesson-num">5</span>
+                <span>Control Flow: Conditionals</span>
+            </a>
+            <a href="/training/csharp-fundamentals/lesson/6" class="lesson-nav-item">
+                <span class="lesson-num">6</span>
+                <span>Control Flow: Loops</span>
+            </a>
+            <a href="/training/csharp-fundamentals/lesson/7" class="lesson-nav-item">
+                <span class="lesson-num">7</span>
+                <span>Methods and Parameters</span>
+            </a>
+            <a href="/training/csharp-fundamentals/lesson/8" class="lesson-nav-item">
+                <span class="lesson-num">8</span>
+                <span>Arrays and Collections</span>
+            </a>
+            <a href="/training/csharp-fundamentals/lesson/9" class="lesson-nav-item">
+                <span class="lesson-num">9</span>
+                <span>Introduction to OOP: Classes</span>
+            </a>
+            <a href="/training/csharp-fundamentals/lesson/10" class="lesson-nav-item">
+                <span class="lesson-num">10</span>
+                <span>OOP: Inheritance and Polymorphism</span>
+            </a>
+            <a href="/training/csharp-fundamentals/lesson/11" class="lesson-nav-item">
+                <span class="lesson-num">11</span>
+                <span>Exception Handling</span>
+            </a>
+            <a href="/training/csharp-fundamentals/lesson/12" class="lesson-nav-item">
+                <span class="lesson-num">12</span>
+                <span>LINQ Basics</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <header class="lesson-header">
+                <span class="lesson-number">Lesson 3</span>
+                <h1>Variables and Data Types</h1>
+                <div class="lesson-meta">
+                    <span class="lesson-duration">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        35 min
+                    </span>
+                    <span class="lesson-level beginner">Beginner</span>
+                </div>
+            </header>
+
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Storing Data in Your Programs</h2>
+                    <p>Every program needs to work with data – names, numbers, dates, and more. In this lesson, you'll learn how to store and manage data using <strong>variables</strong> and understand the different <strong>data types</strong> that C# provides.</p>
+                    
+                    <p>By the end of this lesson, you'll be able to declare variables, choose the right data type for your needs, and convert between different types.</p>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>What is a Variable?</h2>
+                    <p>A <strong>variable</strong> is a named container that stores a value in your computer's memory. Think of it like a labeled box where you can put something, take it out, or replace it with something else.</p>
+
+                    <pre><code class="language-csharp">// Declaring and assigning a variable
+string name = "Alice";
+int age = 25;
+double salary = 55000.50;
+bool isEmployed = true;</code></pre>
+
+                    <h3>Variable Declaration Syntax</h3>
+                    <p>The basic syntax for declaring a variable is:</p>
+
+                    <div class="syntax-box">
+                        <code>type variableName = value;</code>
+                    </div>
+
+                    <ul>
+                        <li><strong>type</strong> – The kind of data the variable will hold (e.g., <code>int</code>, <code>string</code>)</li>
+                        <li><strong>variableName</strong> – The name you give to the variable</li>
+                        <li><strong>value</strong> – The initial value (optional at declaration)</li>
+                    </ul>
+
+                    <pre><code class="language-csharp">// You can also declare first, assign later
+int score;          // Declaration
+score = 100;        // Assignment
+
+// Or declare multiple variables of the same type
+int x, y, z;
+x = 10;
+y = 20;
+z = 30;
+
+// Or initialize multiple at once
+int a = 1, b = 2, c = 3;</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Naming Variables</h2>
+                    <p>Choosing good variable names makes your code easier to read and understand. Follow these rules and conventions:</p>
+
+                    <h3>Rules (Must Follow)</h3>
+                    <ul>
+                        <li>Must start with a letter or underscore (<code>_</code>)</li>
+                        <li>Can contain letters, numbers, and underscores</li>
+                        <li>Cannot be a C# keyword (like <code>class</code>, <code>int</code>, <code>if</code>)</li>
+                        <li>Case-sensitive (<code>Name</code> and <code>name</code> are different)</li>
+                    </ul>
+
+                    <h3>Conventions (Best Practices)</h3>
+                    <ul>
+                        <li>Use <strong>camelCase</strong> for local variables: <code>firstName</code>, <code>totalAmount</code></li>
+                        <li>Use meaningful, descriptive names</li>
+                        <li>Avoid single letters except for loop counters</li>
+                        <li>Don't use abbreviations that aren't widely known</li>
+                    </ul>
+
+                    <pre><code class="language-csharp">// ✅ Good variable names
+string firstName = "John";
+int itemCount = 42;
+double accountBalance = 1234.56;
+bool isLoggedIn = true;
+
+// ❌ Poor variable names
+string s = "John";           // Too short, unclear
+int x = 42;                  // What does x represent?
+double aB = 1234.56;         // Cryptic abbreviation
+bool flag = true;            // Flag for what?</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Built-in Data Types</h2>
+                    <p>C# provides many built-in data types. Let's explore the most commonly used ones:</p>
+
+                    <h3>Numeric Types - Integers</h3>
+                    <p>For whole numbers (no decimals):</p>
+
+                    <div class="type-table">
+                        <div class="type-row header">
+                            <span>Type</span>
+                            <span>Size</span>
+                            <span>Range</span>
+                            <span>Example</span>
+                        </div>
+                        <div class="type-row">
+                            <code>byte</code>
+                            <span>1 byte</span>
+                            <span>0 to 255</span>
+                            <code>byte b = 255;</code>
+                        </div>
+                        <div class="type-row">
+                            <code>short</code>
+                            <span>2 bytes</span>
+                            <span>-32,768 to 32,767</span>
+                            <code>short s = 1000;</code>
+                        </div>
+                        <div class="type-row">
+                            <code>int</code>
+                            <span>4 bytes</span>
+                            <span>±2.1 billion</span>
+                            <code>int i = 42;</code>
+                        </div>
+                        <div class="type-row">
+                            <code>long</code>
+                            <span>8 bytes</span>
+                            <span>±9.2 quintillion</span>
+                            <code>long l = 9000000000L;</code>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <div class="info-box-header">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="16" x2="12" y2="12"/>
+                                <line x1="12" y1="8" x2="12.01" y2="8"/>
+                            </svg>
+                            <span>Tip</span>
+                        </div>
+                        <p>When in doubt, use <code>int</code> for whole numbers. It's the most commonly used and works well for most scenarios.</p>
+                    </div>
+
+                    <h3>Numeric Types - Floating Point</h3>
+                    <p>For numbers with decimals:</p>
+
+                    <div class="type-table">
+                        <div class="type-row header">
+                            <span>Type</span>
+                            <span>Size</span>
+                            <span>Precision</span>
+                            <span>Example</span>
+                        </div>
+                        <div class="type-row">
+                            <code>float</code>
+                            <span>4 bytes</span>
+                            <span>~7 digits</span>
+                            <code>float f = 3.14f;</code>
+                        </div>
+                        <div class="type-row">
+                            <code>double</code>
+                            <span>8 bytes</span>
+                            <span>~15 digits</span>
+                            <code>double d = 3.14159;</code>
+                        </div>
+                        <div class="type-row">
+                            <code>decimal</code>
+                            <span>16 bytes</span>
+                            <span>~28 digits</span>
+                            <code>decimal m = 19.99m;</code>
+                        </div>
+                    </div>
+
+                    <pre><code class="language-csharp">// Note the suffixes!
+float temperature = 98.6f;      // 'f' suffix for float
+double pi = 3.14159265359;      // No suffix needed (default)
+decimal price = 19.99m;         // 'm' suffix for decimal
+
+// Use decimal for money - it's more precise!
+decimal accountBalance = 1234567.89m;</code></pre>
+
+                    <h3>Text Types</h3>
+
+                    <pre><code class="language-csharp">// char - a single character (use single quotes)
+char grade = 'A';
+char symbol = '@@';
+char newline = '\n';
+
+// string - text of any length (use double quotes)
+string greeting = "Hello, World!";
+string empty = "";
+string name = "Alice";
+
+// String with special characters (escape sequences)
+string path = "C:\\Users\\Documents";      // Backslash
+string quote = "She said \"Hello\"";       // Quotes
+string multiline = "Line 1\nLine 2";       // New line
+
+// Verbatim string (@@) - no escaping needed
+string verbatimPath = @@"C:\Users\Documents";
+
+// Raw string literals (C# 11+) - for complex strings
+string json = """
+    {
+        "name": "Alice",
+        "age": 25
+    }
+    """;</code></pre>
+
+                    <h3>Boolean Type</h3>
+
+                    <pre><code class="language-csharp">// bool - true or false
+bool isActive = true;
+bool hasPermission = false;
+bool isComplete = true;
+
+// Often used with comparisons
+bool isAdult = age >= 18;
+bool isEmpty = name.Length == 0;</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>The var Keyword</h2>
+                    <p>C# can often figure out the type automatically using <strong>type inference</strong>:</p>
+
+                    <pre><code class="language-csharp">// Explicit typing
+string message = "Hello";
+int count = 42;
+double price = 19.99;
+
+// Implicit typing with var
+var message = "Hello";      // Compiler knows it's a string
+var count = 42;             // Compiler knows it's an int
+var price = 19.99;          // Compiler knows it's a double
+
+// var requires initialization
+var x;          // ❌ Error! Can't infer type without a value
+var y = 10;     // ✅ OK</code></pre>
+
+                    <div class="info-box">
+                        <div class="info-box-header">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="16" x2="12" y2="12"/>
+                                <line x1="12" y1="8" x2="12.01" y2="8"/>
+                            </svg>
+                            <span>When to use var</span>
+                        </div>
+                        <p>Use <code>var</code> when the type is obvious from the right side. Use explicit types when clarity is more important or when the type isn't immediately clear.</p>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Constants</h2>
+                    <p>A <strong>constant</strong> is a variable whose value cannot change after it's set:</p>
+
+                    <pre><code class="language-csharp">// Constants - use 'const' keyword
+const double Pi = 3.14159265359;
+const int MaxRetries = 3;
+const string AppName = "MyApplication";
+
+// Trying to change a constant causes an error
+Pi = 3.14;  // ❌ Error! Cannot assign to a constant
+
+// Convention: Use PascalCase for constants</code></pre>
+
+                    <p>Use constants for values that never change, like mathematical constants, configuration values, or magic numbers that have meaning.</p>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Nullable Types</h2>
+                    <p>Sometimes a variable might not have a value. C# handles this with <strong>nullable types</strong>:</p>
+
+                    <pre><code class="language-csharp">// Regular types cannot be null
+int age = null;        // ❌ Error!
+string name = null;    // ⚠️ Warning (with nullable enabled)
+
+// Nullable value types - add ? after the type
+int? age = null;       // ✅ OK - age might not have a value
+int? score = 85;       // ✅ OK - score has a value
+
+// Check if nullable has a value
+if (age.HasValue)
+{
+    Console.WriteLine($"Age is {age.Value}");
+}
+else
+{
+    Console.WriteLine("Age is unknown");
+}
+
+// Null-coalescing operator (??) - provide a default
+int displayAge = age ?? 0;  // Use 0 if age is null
+
+// Nullable reference types (string?)
+string? middleName = null;  // Explicitly nullable string</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Type Conversion</h2>
+                    <p>Sometimes you need to convert between different types:</p>
+
+                    <h3>Implicit Conversion (Automatic)</h3>
+                    <p>When there's no risk of data loss, C# converts automatically:</p>
+
+                    <pre><code class="language-csharp">int myInt = 100;
+long myLong = myInt;      // int to long - OK (long is bigger)
+double myDouble = myInt;  // int to double - OK
+
+// Small to large: byte → short → int → long → float → double</code></pre>
+
+                    <h3>Explicit Conversion (Casting)</h3>
+                    <p>When data might be lost, you must explicitly cast:</p>
+
+                    <pre><code class="language-csharp">double myDouble = 9.78;
+int myInt = (int)myDouble;    // Cast to int - loses decimal part
+Console.WriteLine(myInt);      // Output: 9
+
+long bigNumber = 1000;
+int smallNumber = (int)bigNumber;  // Might overflow if too large!</code></pre>
+
+                    <h3>Converting To and From Strings</h3>
+
+                    <pre><code class="language-csharp">// Converting TO string - use ToString()
+int number = 42;
+string text = number.ToString();    // "42"
+
+double price = 19.99;
+string priceText = price.ToString("C");  // "$19.99" (currency format)
+
+// Converting FROM string - use Parse() or TryParse()
+string input = "123";
+int value = int.Parse(input);       // Throws if invalid!
+
+// Safer: TryParse returns true/false
+string userInput = "456";
+if (int.TryParse(userInput, out int result))
+{
+    Console.WriteLine($"Parsed: {result}");
+}
+else
+{
+    Console.WriteLine("Invalid number");
+}
+
+// Convert class - another option
+int num = Convert.ToInt32("789");
+double dbl = Convert.ToDouble("3.14");</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Default Values</h2>
+                    <p>Every type has a default value when not explicitly initialized:</p>
+
+                    <div class="type-table">
+                        <div class="type-row header">
+                            <span>Type</span>
+                            <span>Default Value</span>
+                        </div>
+                        <div class="type-row">
+                            <span>Numeric types (int, double, etc.)</span>
+                            <code>0</code>
+                        </div>
+                        <div class="type-row">
+                            <span>bool</span>
+                            <code>false</code>
+                        </div>
+                        <div class="type-row">
+                            <span>char</span>
+                            <code>'\0'</code> (null character)
+                        </div>
+                        <div class="type-row">
+                            <span>Reference types (string, object)</span>
+                            <code>null</code>
+                        </div>
+                    </div>
+
+                    <pre><code class="language-csharp">// Using the default keyword
+int number = default;      // 0
+bool flag = default;       // false
+string text = default;     // null
+
+// Or with the type specified
+var x = default(int);      // 0</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Key Takeaways</h2>
+                    <div class="takeaways">
+                        <div class="takeaway">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Variables store data and must be declared with a type.</span>
+                        </div>
+                        <div class="takeaway">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Use <code>int</code> for whole numbers, <code>double</code> for decimals, <code>decimal</code> for money.</span>
+                        </div>
+                        <div class="takeaway">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Use <code>string</code> for text and <code>bool</code> for true/false values.</span>
+                        </div>
+                        <div class="takeaway">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>The <code>var</code> keyword lets the compiler infer the type.</span>
+                        </div>
+                        <div class="takeaway">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Use <code>TryParse()</code> for safe string-to-number conversion.</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Practice Exercises</h2>
+                    
+                    <div class="exercise-box">
+                        <h4>Exercise 3.1: Variable Declaration</h4>
+                        <p>Create a program that stores and displays information about a book:</p>
+                        <ul>
+                            <li>Title (string)</li>
+                            <li>Author (string)</li>
+                            <li>Year published (int)</li>
+                            <li>Price (decimal)</li>
+                            <li>Is available (bool)</li>
+                        </ul>
+                        <p>Display all the information in a nicely formatted way.</p>
+                    </div>
+
+                    <div class="exercise-box">
+                        <h4>Exercise 3.2: Type Conversion</h4>
+                        <p>Create a program that:</p>
+                        <ol>
+                            <li>Asks the user for their birth year</li>
+                            <li>Converts the input to an integer</li>
+                            <li>Calculates and displays their age</li>
+                        </ol>
+                        <p><strong>Bonus:</strong> Use <code>TryParse()</code> to handle invalid input gracefully.</p>
+                    </div>
+
+                    <div class="exercise-box">
+                        <h4>Exercise 3.3: Temperature Converter</h4>
+                        <p>Create a program that asks for a temperature in Celsius and converts it to Fahrenheit.</p>
+                        <p><strong>Formula:</strong> F = (C × 9/5) + 32</p>
+                        <p><strong>Hint:</strong> Be careful with integer vs floating-point division!</p>
+                    </div>
+                </section>
+            </div>
+
+            <footer class="lesson-footer">
+                <div class="lesson-nav-buttons">
+                    <a href="/training/csharp-fundamentals/lesson/2" class="btn btn-secondary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="15 18 9 12 15 6"/>
+                        </svg>
+                        Previous Lesson
+                    </a>
+                    <a href="/training/csharp-fundamentals/lesson/4" class="btn btn-primary">
+                        Next Lesson
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"/>
+                        </svg>
+                    </a>
+                </div>
+            </footer>
+        </article>
+    </main>
+</div>
+

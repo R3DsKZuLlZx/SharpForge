@@ -747,3 +747,898 @@ input, textarea, select {
         border-radius: 0;
     }
 }
+
+/* ============================================
+   Lesson Pages - Shared Styles
+   ============================================ */
+
+/* Lesson Layout */
+.lesson-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: calc(100vh - 4rem);
+}
+
+/* Lesson Sidebar */
+.lesson-sidebar {
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+    padding: 1.5rem;
+    position: sticky;
+    top: 4rem;
+    height: calc(100vh - 4rem);
+    overflow-y: auto;
+}
+
+.sidebar-header {
+    margin-bottom: 1.5rem;
+}
+
+.sidebar-header .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    margin-bottom: 0.75rem;
+    transition: color 0.2s ease;
+}
+
+.sidebar-header .back-link:hover {
+    color: var(--accent-color);
+}
+
+.sidebar-header h3 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* Lesson Navigation */
+.lesson-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.lesson-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 0.75rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.lesson-nav-item:hover {
+    background: var(--hover-bg);
+    color: var(--text-primary);
+}
+
+.lesson-nav-item.active {
+    background: var(--accent-light);
+    color: var(--accent-color);
+}
+
+.lesson-nav-item.completed {
+    color: var(--text-tertiary);
+}
+
+.lesson-nav-item .lesson-num {
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-tertiary);
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.lesson-nav-item.active .lesson-num {
+    background: var(--accent-color);
+    color: white;
+}
+
+/* Lesson Content */
+.lesson-content {
+    padding: 2rem 3rem 4rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.lesson-article {
+    max-width: 100%;
+}
+
+/* Lesson Header */
+.lesson-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.lesson-number {
+    display: inline-block;
+    font-size: 0.875rem;
+    color: var(--accent-color);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.lesson-header h1 {
+    font-size: 2.25rem;
+    margin-bottom: 1rem;
+}
+
+.lesson-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.lesson-duration {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    color: var(--text-tertiary);
+    font-size: 0.875rem;
+}
+
+.lesson-level {
+    padding: 0.25rem 0.75rem;
+    border-radius: 2rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.lesson-level.beginner {
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+}
+
+.lesson-level.intermediate {
+    background: rgba(234, 179, 8, 0.15);
+    color: #eab308;
+}
+
+.lesson-level.advanced {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+}
+
+/* Lesson Body */
+.lesson-body {
+    line-height: 1.8;
+}
+
+.lesson-section {
+    margin-bottom: 3rem;
+}
+
+.lesson-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    padding-top: 0.5rem;
+}
+
+.lesson-section h3 {
+    font-size: 1.125rem;
+    margin: 1.5rem 0 0.75rem;
+}
+
+.lesson-section p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.lesson-section ul,
+.lesson-section ol {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+}
+
+.lesson-section li {
+    margin-bottom: 0.5rem;
+}
+
+.lesson-section a {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+/* Info Boxes */
+.info-box {
+    background: var(--bg-secondary);
+    border-left: 4px solid var(--accent-color);
+    border-radius: 0 0.5rem 0.5rem 0;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+}
+
+.info-box.success {
+    border-left-color: #22c55e;
+}
+
+.info-box.warning {
+    border-left-color: #eab308;
+}
+
+.info-box-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.info-box-header svg {
+    color: var(--accent-color);
+}
+
+.info-box.success .info-box-header svg {
+    color: #22c55e;
+}
+
+.info-box.warning .info-box-header svg {
+    color: #eab308;
+}
+
+.info-box p {
+    margin: 0;
+    font-size: 0.9375rem;
+}
+
+/* Syntax Box */
+.syntax-box {
+    background: var(--accent-light);
+    border: 1px solid var(--accent-color);
+    border-radius: 0.5rem;
+    padding: 1rem 1.5rem;
+    margin: 1rem 0 1.5rem;
+    text-align: center;
+}
+
+.syntax-box code {
+    font-size: 1rem;
+    color: var(--accent-color);
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+/* Concept Cards */
+.concept-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.concept-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+}
+
+.concept-card h4 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent-color);
+}
+
+.concept-card p {
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+/* Use Cases */
+.use-cases {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.use-case {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    text-align: center;
+}
+
+.use-case-icon {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+}
+
+.use-case h4 {
+    font-size: 0.9375rem;
+    margin-bottom: 0.5rem;
+}
+
+.use-case p {
+    font-size: 0.8125rem;
+    margin: 0;
+}
+
+/* Steps List */
+.steps-list {
+    counter-reset: step;
+    list-style: none;
+    padding-left: 0;
+}
+
+.steps-list li {
+    position: relative;
+    padding-left: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.steps-list li::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1.75rem;
+    height: 1.75rem;
+    background: var(--accent-light);
+    color: var(--accent-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.steps-list li strong {
+    color: var(--text-primary);
+}
+
+.steps-list li p {
+    margin: 0.25rem 0 0.5rem;
+}
+
+/* Tool Options */
+.tool-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.tool-option {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    position: relative;
+}
+
+.tool-option.recommended {
+    border-color: var(--accent-color);
+}
+
+.tool-badge {
+    position: absolute;
+    top: -0.625rem;
+    right: 1rem;
+    background: var(--accent-color);
+    color: white;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    text-transform: uppercase;
+}
+
+.tool-option h4 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.tool-option > p {
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
+}
+
+.tool-option ul {
+    font-size: 0.8125rem;
+    margin: 0;
+    padding-left: 1rem;
+}
+
+.tool-option li {
+    margin-bottom: 0.25rem;
+}
+
+/* Takeaways */
+.takeaways {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.takeaway {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: var(--card-bg);
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-color);
+}
+
+.takeaway svg {
+    flex-shrink: 0;
+    color: #22c55e;
+    margin-top: 0.125rem;
+}
+
+.takeaway span {
+    color: var(--text-secondary);
+}
+
+/* Exercise Box */
+.exercise-box {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.exercise-box h4 {
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+}
+
+.exercise-box ol {
+    margin-bottom: 1rem;
+}
+
+.exercise-box p:last-child {
+    margin: 0;
+}
+
+/* Lesson Footer */
+.lesson-footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.lesson-nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.lesson-nav-buttons .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Code Explanation */
+.code-explanation {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.explanation-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1rem 1.25rem;
+}
+
+.explanation-item code {
+    display: block;
+    font-size: 0.9375rem;
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+}
+
+.explanation-item p {
+    margin: 0;
+    font-size: 0.875rem;
+}
+
+/* Command Table */
+.command-table {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 1.5rem 0;
+}
+
+.command-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding: 0.875rem 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    align-items: center;
+}
+
+.command-row code {
+    font-size: 0.875rem;
+}
+
+.command-row span {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* Type Table */
+.type-table {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin: 1.5rem 0;
+    font-size: 0.875rem;
+}
+
+.type-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.5fr 1.5fr;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    align-items: center;
+}
+
+.type-row.header {
+    background: var(--bg-tertiary);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.type-row code {
+    font-size: 0.8125rem;
+}
+
+.type-row span {
+    color: var(--text-secondary);
+}
+
+/* Operator Table */
+.operator-table {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin: 1.5rem 0;
+    font-size: 0.875rem;
+}
+
+.operator-row {
+    display: grid;
+    grid-template-columns: 0.75fr 1.25fr 1fr 0.75fr;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    align-items: center;
+}
+
+.operator-row.header {
+    background: var(--bg-tertiary);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.operator-row code {
+    font-size: 0.875rem;
+}
+
+.operator-row span {
+    color: var(--text-secondary);
+}
+
+/* Comparison Box */
+.comparison-box {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.comparison-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+}
+
+.comparison-item h4 {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    color: var(--accent-color);
+}
+
+.comparison-item ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    font-size: 0.875rem;
+}
+
+.comparison-item li {
+    margin-bottom: 0.375rem;
+    color: var(--text-secondary);
+}
+
+.comparison-item pre {
+    margin: 0;
+    font-size: 0.8125rem;
+}
+
+.comparison-item p {
+    margin: 0.75rem 0 0 0;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* Method Cards */
+.method-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+}
+
+.method-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    text-align: center;
+}
+
+.method-card code {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--accent-color);
+    margin-bottom: 0.25rem;
+}
+
+.method-card span {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+/* Congratulations Section */
+.congratulations {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    padding: 2.5rem;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.congrats-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.congrats-icon {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.congratulations h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.congratulations .congrats-content p {
+    color: var(--text-secondary);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+.congratulations ul {
+    text-align: left;
+    display: inline-block;
+    margin: 0 0 2rem 0;
+    padding-left: 1.5rem;
+}
+
+.congratulations li {
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.congratulations .btn {
+    margin-top: 1rem;
+    background: var(--accent-color);
+    color: white;
+}
+
+.congratulations .btn:hover {
+    background: var(--accent-hover);
+    color: white;
+}
+
+/* Lesson Pages - Responsive */
+@media (max-width: 1400px) {
+    .lesson-content {
+        padding: 2rem 2rem 4rem;
+    }
+    
+    .concept-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .use-cases {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .tool-options {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .comparison-box {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 1024px) {
+    .lesson-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .lesson-sidebar {
+        position: static;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .lesson-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .lesson-nav-item {
+        padding: 0.5rem 0.75rem;
+    }
+
+    .lesson-nav-item span:not(.lesson-num) {
+        display: none;
+    }
+
+    .lesson-content {
+        padding: 2rem 1.5rem;
+    }
+
+    .concept-cards,
+    .use-cases,
+    .tool-options {
+        grid-template-columns: 1fr;
+    }
+    
+    .comparison-box {
+        grid-template-columns: 1fr;
+    }
+    
+    .oop-pillars {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .benefits-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .collection-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .exception-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .best-practices {
+        grid-template-columns: 1fr;
+    }
+    
+    .loop-choice-table {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .lesson-header h1 {
+        font-size: 1.75rem;
+    }
+
+    .use-cases {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .lesson-nav-buttons {
+        flex-direction: column;
+    }
+
+    .lesson-nav-buttons .btn {
+        justify-content: center;
+    }
+
+    .command-row {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .type-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+    }
+    
+    .type-row.header span:nth-child(3),
+    .type-row.header span:nth-child(4),
+    .type-row span:nth-child(3),
+    .type-row code:nth-child(4) {
+        display: none;
+    }
+
+    .operator-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+    }
+
+    .operator-row span:nth-child(3),
+    .operator-row span:nth-child(4),
+    .operator-row code:nth-child(3),
+    .operator-row code:nth-child(4) {
+        display: none;
+    }
+
+    .operator-row.header span:nth-child(3),
+    .operator-row.header span:nth-child(4) {
+        display: none;
+    }
+
+    .comparison-box {
+        grid-template-columns: 1fr;
+    }
+
+    .congratulations {
+        padding: 1.5rem;
+    }
+
+    .congrats-icon {
+        font-size: 3rem;
+    }
+
+    .congratulations h2 {
+        font-size: 1.5rem;
+    }
+}

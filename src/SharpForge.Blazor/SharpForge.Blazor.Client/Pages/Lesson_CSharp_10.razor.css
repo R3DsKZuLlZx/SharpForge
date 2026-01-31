@@ -1,0 +1,185 @@
+﻿/* Inherit base lesson styles */
+
+/* Inheritance Diagram */
+.inheritance-diagram {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    margin: 1.5rem 0;
+}
+
+.diagram-box {
+    border-radius: 0.5rem;
+    padding: 1rem;
+    min-width: 150px;
+    text-align: center;
+}
+
+.diagram-box.base {
+    background: var(--accent-light);
+    border: 2px solid var(--accent-color);
+}
+
+.diagram-box.derived {
+    background: var(--bg-tertiary);
+    border: 2px solid var(--border-color);
+}
+
+.box-header {
+    font-weight: 600;
+    color: var(--text-primary);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 0.5rem;
+}
+
+.diagram-box.base .box-header {
+    color: var(--accent-color);
+    border-bottom-color: var(--accent-color);
+}
+
+.box-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.box-content span {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.diagram-arrows {
+    display: flex;
+    gap: 3rem;
+    margin: 1rem 0;
+    font-size: 1.5rem;
+    color: var(--text-tertiary);
+}
+
+.diagram-derived {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Keyword Table */
+.keyword-table {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin: 1.5rem 0;
+}
+
+.keyword-row {
+    display: grid;
+    grid-template-columns: 120px 140px 1fr;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    align-items: center;
+}
+
+.keyword-row.header {
+    background: var(--bg-tertiary);
+    font-weight: 600;
+}
+
+.keyword-row code {
+    font-size: 0.875rem;
+    color: var(--accent-color);
+}
+
+.keyword-row span {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* Comparison Box */
+.comparison-box {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.comparison-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+}
+
+.comparison-item h4 {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    color: var(--accent-color);
+}
+
+.comparison-item ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    font-size: 0.875rem;
+}
+
+.comparison-item li {
+    margin-bottom: 0.375rem;
+    color: var(--text-secondary);
+}
+
+/* Info Box */
+.info-box {
+    background: var(--bg-secondary);
+    border-left: 4px solid var(--accent-color);
+    border-radius: 0 0.5rem 0.5rem 0;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+}
+
+.info-box-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.info-box-header svg {
+    color: var(--accent-color);
+}
+
+.info-box p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .diagram-derived {
+        flex-direction: column;
+    }
+
+    .diagram-arrows {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .keyword-row {
+        grid-template-columns: 1fr;
+        gap: 0.25rem;
+    }
+
+    .comparison-box {
+        grid-template-columns: 1fr;
+    }
+}
+
