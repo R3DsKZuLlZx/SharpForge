@@ -1,0 +1,266 @@
+﻿@page "/blog/async-await-best-practices"
+
+<PageTitle>Async/Await Best Practices in C# 13 - SharpForge</PageTitle>
+
+<article class="blog-post">
+    <header class="post-header">
+        <div class="container">
+            <a href="/blog" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"/>
+                </svg>
+                Back to Blog
+            </a>
+            <div class="post-meta">
+                <span class="post-category">Best Practices</span>
+                <span class="post-date">January 15, 2026</span>
+                <span class="post-read-time">8 min read</span>
+            </div>
+            <h1>Async/Await Best Practices in C# 13</h1>
+            <p class="post-excerpt">Master asynchronous programming with these essential tips, patterns, and common pitfalls to avoid in modern C# development.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="post-content-wrapper">
+            <div class="post-body">
+                <p>Asynchronous programming is essential for building responsive applications in .NET. However, it comes with its own set of challenges and gotchas. In this article, we'll explore best practices for using async/await effectively in C# 13.</p>
+
+                <h2>1. Async All the Way</h2>
+                <p>One of the most important rules: once you go async, stay async. Don't mix synchronous and asynchronous code by calling <code>.Result</code> or <code>.Wait()</code> on tasks.</p>
+
+                <h3>❌ Don't Do This</h3>
+                <pre><code>public string GetData()
+{
+    // This can cause deadlocks!
+    var result = GetDataAsync().Result;
+    return result;
+}</code></pre>
+
+                <h3>✅ Do This Instead</h3>
+                <pre><code>public async Task&lt;string&gt; GetDataAsync()
+{
+    var result = await GetDataFromApiAsync();
+    return result;
+}</code></pre>
+
+                <h2>2. Use ConfigureAwait Appropriately</h2>
+                <p>In library code, use <code>ConfigureAwait(false)</code> to avoid capturing the synchronization context when you don't need it.</p>
+
+                <pre><code>// In library/service code
+public async Task&lt;Data&gt; FetchDataAsync()
+{
+    var response = await httpClient.GetAsync(url)
+        .ConfigureAwait(false);
+    
+    var content = await response.Content.ReadAsStringAsync()
+        .ConfigureAwait(false);
+    
+    return JsonSerializer.Deserialize&lt;Data&gt;(content);
+}</code></pre>
+
+                <p><strong>Note:</strong> In ASP.NET Core, there's no synchronization context, so <code>ConfigureAwait(false)</code> has no effect. However, it's still a good practice for library code that might be used in other contexts.</p>
+
+                <h2>3. Avoid Async Void</h2>
+                <p>Never use <code>async void</code> except for event handlers. Async void methods can't be awaited, and exceptions thrown from them can't be caught.</p>
+
+                <h3>❌ Don't Do This</h3>
+                <pre><code>// Exceptions here will crash the application!
+public async void ProcessDataAsync()
+{
+    await SomeOperationAsync();
+}</code></pre>
+
+                <h3>✅ Do This Instead</h3>
+                <pre><code>public async Task ProcessDataAsync()
+{
+    await SomeOperationAsync();
+}
+
+// Only use async void for event handlers
+private async void Button_Click(object sender, EventArgs e)
+{
+    try
+    {
+        await ProcessDataAsync();
+    }
+    catch (Exception ex)
+    {
+        // Handle the exception
+        logger.LogError(ex, "Error processing data");
+    }
+}</code></pre>
+
+                <h2>4. Use ValueTask for Hot Paths</h2>
+                <p>When a method frequently completes synchronously, use <code>ValueTask</code> instead of <code>Task</code> to avoid allocations.</p>
+
+                <pre><code>public ValueTask&lt;Data&gt; GetCachedDataAsync(string key)
+{
+    if (cache.TryGetValue(key, out var data))
+    {
+        // No allocation when returning cached data
+        return ValueTask.FromResult(data);
+    }
+    
+    return new ValueTask&lt;Data&gt;(FetchAndCacheAsync(key));
+}
+
+private async Task&lt;Data&gt; FetchAndCacheAsync(string key)
+{
+    var data = await FetchFromDatabaseAsync(key);
+    cache.Set(key, data);
+    return data;
+}</code></pre>
+
+                <h2>5. Cancellation Token Support</h2>
+                <p>Always accept and pass through cancellation tokens in async methods.</p>
+
+                <pre><code>public async Task&lt;List&lt;User&gt;&gt; GetUsersAsync(
+    CancellationToken cancellationToken = default)
+{
+    var response = await httpClient.GetAsync(
+        "/api/users", 
+        cancellationToken);
+    
+    response.EnsureSuccessStatusCode();
+    
+    return await response.Content
+        .ReadFromJsonAsync&lt;List&lt;User&gt;&gt;(cancellationToken);
+}</code></pre>
+
+                <h2>6. Parallel Async Operations</h2>
+                <p>When you have multiple independent async operations, run them in parallel using <code>Task.WhenAll</code>.</p>
+
+                <h3>❌ Sequential (Slower)</h3>
+                <pre><code>var users = await GetUsersAsync();
+var products = await GetProductsAsync();
+var orders = await GetOrdersAsync();</code></pre>
+
+                <h3>✅ Parallel (Faster)</h3>
+                <pre><code>var usersTask = GetUsersAsync();
+var productsTask = GetProductsAsync();
+var ordersTask = GetOrdersAsync();
+
+await Task.WhenAll(usersTask, productsTask, ordersTask);
+
+var users = usersTask.Result;
+var products = productsTask.Result;
+var orders = ordersTask.Result;</code></pre>
+
+                <h2>7. Use IAsyncEnumerable for Streaming</h2>
+                <p>For operations that return multiple items over time, use <code>IAsyncEnumerable</code>:</p>
+
+                <pre><code>public async IAsyncEnumerable&lt;LogEntry&gt; StreamLogsAsync(
+    [EnumeratorCancellation] CancellationToken cancellationToken = default)
+{
+    await foreach (var line in ReadLinesAsync(cancellationToken))
+    {
+        if (TryParseLogEntry(line, out var entry))
+        {
+            yield return entry;
+        }
+    }
+}
+
+// Consuming the stream
+await foreach (var log in StreamLogsAsync(cancellationToken))
+{
+    ProcessLog(log);
+}</code></pre>
+
+                <h2>8. Exception Handling</h2>
+                <p>Handle exceptions properly in async code. Remember that exceptions are stored in the Task and rethrown when awaited.</p>
+
+                <pre><code>public async Task ProcessWithRetryAsync(int maxRetries = 3)
+{
+    for (int i = 0; i &lt; maxRetries; i++)
+    {
+        try
+        {
+            await ProcessAsync();
+            return; // Success
+        }
+        catch (HttpRequestException) when (i &lt; maxRetries - 1)
+        {
+            // Wait before retrying
+            await Task.Delay(TimeSpan.FromSeconds(Math.Pow(2, i)));
+        }
+    }
+}</code></pre>
+
+                <h2>9. Avoid Capturing Variables in Closures</h2>
+                <p>Be careful with closures in async lambdas - they can cause unexpected behavior:</p>
+
+                <pre><code>// ❌ Bug: All tasks use the same 'i' value
+var tasks = new List&lt;Task&gt;();
+for (int i = 0; i &lt; 10; i++)
+{
+    tasks.Add(Task.Run(async () =&gt; 
+    {
+        await ProcessAsync(i); // Wrong!
+    }));
+}
+
+// ✅ Fixed: Capture the value
+for (int i = 0; i &lt; 10; i++)
+{
+    int captured = i;
+    tasks.Add(Task.Run(async () =&gt; 
+    {
+        await ProcessAsync(captured); // Correct!
+    }));
+}</code></pre>
+
+                <h2>Summary</h2>
+                <p>Following these best practices will help you write more efficient, reliable, and maintainable async code:</p>
+
+                <ul>
+                    <li>Go async all the way - avoid blocking calls</li>
+                    <li>Use ConfigureAwait(false) in library code</li>
+                    <li>Avoid async void (except for event handlers)</li>
+                    <li>Consider ValueTask for frequently synchronous operations</li>
+                    <li>Always support cancellation tokens</li>
+                    <li>Run independent operations in parallel</li>
+                    <li>Use IAsyncEnumerable for streaming scenarios</li>
+                    <li>Handle exceptions appropriately</li>
+                    <li>Be mindful of closures in async code</li>
+                </ul>
+
+                <div class="post-tags">
+                    <span class="tag">C#</span>
+                    <span class="tag">async/await</span>
+                    <span class="tag">Best Practices</span>
+                    <span class="tag">Performance</span>
+                </div>
+            </div>
+
+            <aside class="post-sidebar">
+                <div class="sidebar-section toc">
+                    <h4>Table of Contents</h4>
+                    <ul>
+                        <li><a href="#1-async-all-the-way">Async All the Way</a></li>
+                        <li><a href="#2-use-configureawait">ConfigureAwait</a></li>
+                        <li><a href="#3-avoid-async-void">Avoid Async Void</a></li>
+                        <li><a href="#4-use-valuetask">Use ValueTask</a></li>
+                        <li><a href="#5-cancellation-tokens">Cancellation Tokens</a></li>
+                        <li><a href="#6-parallel-operations">Parallel Operations</a></li>
+                        <li><a href="#7-iasyncenumerable">IAsyncEnumerable</a></li>
+                        <li><a href="#8-exception-handling">Exception Handling</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section author">
+                    <h4>About the Author</h4>
+                    <div class="author-info">
+                        <div class="author-avatar">SF</div>
+                        <div>
+                            <strong>SharpForge Team</strong>
+                            <p>Passionate about C# and .NET development</p>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</article>
+
