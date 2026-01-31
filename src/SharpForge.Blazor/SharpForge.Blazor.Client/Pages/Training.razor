@@ -13,199 +13,156 @@
 <section class="section">
     <div class="container">
         <div class="filter-bar">
-            <button class="filter-btn active">All Levels</button>
-            <button class="filter-btn">Beginner</button>
-            <button class="filter-btn">Intermediate</button>
-            <button class="filter-btn">Advanced</button>
+            <button class="filter-btn @(SelectedFilter == "All" ? "active" : "")" @onclick="@(() => SetFilter("All"))">All Levels</button>
+            <button class="filter-btn @(SelectedFilter == "Beginner" ? "active" : "")" @onclick="@(() => SetFilter("Beginner"))">Beginner</button>
+            <button class="filter-btn @(SelectedFilter == "Intermediate" ? "active" : "")" @onclick="@(() => SetFilter("Intermediate"))">Intermediate</button>
+            <button class="filter-btn @(SelectedFilter == "Advanced" ? "active" : "")" @onclick="@(() => SetFilter("Advanced"))">Advanced</button>
         </div>
 
         <div class="courses-grid">
-            <!-- Beginner Courses -->
-            <article class="course-card">
-                <div class="course-header">
-                    <div class="course-level beginner">Beginner</div>
-                    <span class="course-duration">4 Hours</span>
-                </div>
-                <h2>C# Fundamentals</h2>
-                <p>Start your C# journey with the basics. Learn about variables, data types, control flow, methods, and object-oriented programming concepts.</p>
-                <div class="course-topics">
-                    <span class="topic">Variables</span>
-                    <span class="topic">Control Flow</span>
-                    <span class="topic">Methods</span>
-                    <span class="topic">Classes</span>
-                </div>
-                <div class="course-footer">
-                    <div class="course-stats">
-                        <span>12 Lessons</span>
-                        <span>•</span>
-                        <span>6 Exercises</span>
+            @foreach (var course in FilteredCourses)
+            {
+                <article class="course-card">
+                    <div class="course-header">
+                        <div class="course-level @course.Level.ToLower()">@course.Level</div>
+                        <span class="course-duration">@course.Duration</span>
                     </div>
-                    <a href="#" class="btn btn-primary">Start Course</a>
-                </div>
-            </article>
-
-            <article class="course-card">
-                <div class="course-header">
-                    <div class="course-level beginner">Beginner</div>
-                    <span class="course-duration">3 Hours</span>
-                </div>
-                <h2>Getting Started with .NET</h2>
-                <p>Understand the .NET ecosystem, SDK, CLI tools, and project structure. Learn how to create, build, and run .NET applications.</p>
-                <div class="course-topics">
-                    <span class="topic">.NET CLI</span>
-                    <span class="topic">Project Structure</span>
-                    <span class="topic">NuGet</span>
-                </div>
-                <div class="course-footer">
-                    <div class="course-stats">
-                        <span>8 Lessons</span>
-                        <span>•</span>
-                        <span>4 Exercises</span>
+                    <h2>@course.Title</h2>
+                    <p>@course.Description</p>
+                    <div class="course-topics">
+                        @foreach (var topic in course.Topics)
+                        {
+                            <span class="topic">@topic</span>
+                        }
                     </div>
-                    <a href="#" class="btn btn-primary">Start Course</a>
-                </div>
-            </article>
-
-            <!-- Intermediate Courses -->
-            <article class="course-card">
-                <div class="course-header">
-                    <div class="course-level intermediate">Intermediate</div>
-                    <span class="course-duration">8 Hours</span>
-                </div>
-                <h2>ASP.NET Core Web APIs</h2>
-                <p>Build production-ready REST APIs with ASP.NET Core. Learn about routing, middleware, dependency injection, authentication, and more.</p>
-                <div class="course-topics">
-                    <span class="topic">REST APIs</span>
-                    <span class="topic">Middleware</span>
-                    <span class="topic">Authentication</span>
-                    <span class="topic">EF Core</span>
-                </div>
-                <div class="course-footer">
-                    <div class="course-stats">
-                        <span>18 Lessons</span>
-                        <span>•</span>
-                        <span>10 Exercises</span>
+                    <div class="course-footer">
+                        <div class="course-stats">
+                            <span>@course.Lessons Lessons</span>
+                            <span>•</span>
+                            <span>@course.Exercises Exercises</span>
+                        </div>
+                        <a href="#" class="btn btn-primary">Start Course</a>
                     </div>
-                    <a href="#" class="btn btn-primary">Start Course</a>
-                </div>
-            </article>
-
-            <article class="course-card">
-                <div class="course-header">
-                    <div class="course-level intermediate">Intermediate</div>
-                    <span class="course-duration">6 Hours</span>
-                </div>
-                <h2>Blazor WebAssembly</h2>
-                <p>Create interactive web applications with Blazor WebAssembly. Build SPAs with C# instead of JavaScript.</p>
-                <div class="course-topics">
-                    <span class="topic">Components</span>
-                    <span class="topic">Data Binding</span>
-                    <span class="topic">Routing</span>
-                    <span class="topic">State Management</span>
-                </div>
-                <div class="course-footer">
-                    <div class="course-stats">
-                        <span>14 Lessons</span>
-                        <span>•</span>
-                        <span>8 Exercises</span>
-                    </div>
-                    <a href="#" class="btn btn-primary">Start Course</a>
-                </div>
-            </article>
-
-            <article class="course-card">
-                <div class="course-header">
-                    <div class="course-level intermediate">Intermediate</div>
-                    <span class="course-duration">5 Hours</span>
-                </div>
-                <h2>Entity Framework Core</h2>
-                <p>Master database access with Entity Framework Core. Learn about DbContext, migrations, relationships, and performance optimization.</p>
-                <div class="course-topics">
-                    <span class="topic">DbContext</span>
-                    <span class="topic">Migrations</span>
-                    <span class="topic">LINQ</span>
-                    <span class="topic">Performance</span>
-                </div>
-                <div class="course-footer">
-                    <div class="course-stats">
-                        <span>12 Lessons</span>
-                        <span>•</span>
-                        <span>6 Exercises</span>
-                    </div>
-                    <a href="#" class="btn btn-primary">Start Course</a>
-                </div>
-            </article>
-
-            <!-- Advanced Courses -->
-            <article class="course-card">
-                <div class="course-header">
-                    <div class="course-level advanced">Advanced</div>
-                    <span class="course-duration">10 Hours</span>
-                </div>
-                <h2>Design Patterns in C#</h2>
-                <p>Learn Gang of Four patterns, SOLID principles, and clean architecture. Write maintainable, testable, and scalable code.</p>
-                <div class="course-topics">
-                    <span class="topic">SOLID</span>
-                    <span class="topic">Creational Patterns</span>
-                    <span class="topic">Structural Patterns</span>
-                    <span class="topic">Behavioral Patterns</span>
-                </div>
-                <div class="course-footer">
-                    <div class="course-stats">
-                        <span>24 Lessons</span>
-                        <span>•</span>
-                        <span>12 Exercises</span>
-                    </div>
-                    <a href="#" class="btn btn-primary">Start Course</a>
-                </div>
-            </article>
-
-            <article class="course-card">
-                <div class="course-header">
-                    <div class="course-level advanced">Advanced</div>
-                    <span class="course-duration">8 Hours</span>
-                </div>
-                <h2>Async/Await & Concurrency</h2>
-                <p>Deep dive into asynchronous programming, Task Parallel Library, and concurrency patterns in C#.</p>
-                <div class="course-topics">
-                    <span class="topic">async/await</span>
-                    <span class="topic">TPL</span>
-                    <span class="topic">Channels</span>
-                    <span class="topic">Synchronization</span>
-                </div>
-                <div class="course-footer">
-                    <div class="course-stats">
-                        <span>16 Lessons</span>
-                        <span>•</span>
-                        <span>10 Exercises</span>
-                    </div>
-                    <a href="#" class="btn btn-primary">Start Course</a>
-                </div>
-            </article>
-
-            <article class="course-card">
-                <div class="course-header">
-                    <div class="course-level advanced">Advanced</div>
-                    <span class="course-duration">12 Hours</span>
-                </div>
-                <h2>Microservices with .NET</h2>
-                <p>Build distributed systems with microservices architecture. Learn about Docker, Kubernetes, message queues, and API gateways.</p>
-                <div class="course-topics">
-                    <span class="topic">Docker</span>
-                    <span class="topic">Kubernetes</span>
-                    <span class="topic">RabbitMQ</span>
-                    <span class="topic">gRPC</span>
-                </div>
-                <div class="course-footer">
-                    <div class="course-stats">
-                        <span>28 Lessons</span>
-                        <span>•</span>
-                        <span>15 Exercises</span>
-                    </div>
-                    <a href="#" class="btn btn-primary">Start Course</a>
-                </div>
-            </article>
+                </article>
+            }
         </div>
+        
+        @if (!FilteredCourses.Any())
+        {
+            <div class="no-courses">
+                <p>No courses found for the selected filter.</p>
+            </div>
+        }
     </div>
 </section>
 
+@code {
+    private string SelectedFilter { get; set; } = "All";
+    
+    private List<Course> Courses { get; set; } = new()
+    {
+        // Beginner Courses
+        new Course
+        {
+            Title = "C# Fundamentals",
+            Description = "Start your C# journey with the basics. Learn about variables, data types, control flow, methods, and object-oriented programming concepts.",
+            Level = "Beginner",
+            Duration = "4 Hours",
+            Lessons = 12,
+            Exercises = 6,
+            Topics = ["Variables", "Control Flow", "Methods", "Classes"]
+        },
+        new Course
+        {
+            Title = "Getting Started with .NET",
+            Description = "Understand the .NET ecosystem, SDK, CLI tools, and project structure. Learn how to create, build, and run .NET applications.",
+            Level = "Beginner",
+            Duration = "3 Hours",
+            Lessons = 8,
+            Exercises = 4,
+            Topics = [".NET CLI", "Project Structure", "NuGet"]
+        },
+        // Intermediate Courses
+        new Course
+        {
+            Title = "ASP.NET Core Web APIs",
+            Description = "Build production-ready REST APIs with ASP.NET Core. Learn about routing, middleware, dependency injection, authentication, and more.",
+            Level = "Intermediate",
+            Duration = "8 Hours",
+            Lessons = 18,
+            Exercises = 10,
+            Topics = ["REST APIs", "Middleware", "Authentication", "EF Core"]
+        },
+        new Course
+        {
+            Title = "Blazor WebAssembly",
+            Description = "Create interactive web applications with Blazor WebAssembly. Build SPAs with C# instead of JavaScript.",
+            Level = "Intermediate",
+            Duration = "6 Hours",
+            Lessons = 14,
+            Exercises = 8,
+            Topics = ["Components", "Data Binding", "Routing", "State Management"]
+        },
+        new Course
+        {
+            Title = "Entity Framework Core",
+            Description = "Master database access with Entity Framework Core. Learn about DbContext, migrations, relationships, and performance optimization.",
+            Level = "Intermediate",
+            Duration = "5 Hours",
+            Lessons = 12,
+            Exercises = 6,
+            Topics = ["DbContext", "Migrations", "LINQ", "Performance"]
+        },
+        // Advanced Courses
+        new Course
+        {
+            Title = "Design Patterns in C#",
+            Description = "Learn Gang of Four patterns, SOLID principles, and clean architecture. Write maintainable, testable, and scalable code.",
+            Level = "Advanced",
+            Duration = "10 Hours",
+            Lessons = 24,
+            Exercises = 12,
+            Topics = ["SOLID", "Creational Patterns", "Structural Patterns", "Behavioral Patterns"]
+        },
+        new Course
+        {
+            Title = "Async/Await & Concurrency",
+            Description = "Deep dive into asynchronous programming, Task Parallel Library, and concurrency patterns in C#.",
+            Level = "Advanced",
+            Duration = "8 Hours",
+            Lessons = 16,
+            Exercises = 10,
+            Topics = ["async/await", "TPL", "Channels", "Synchronization"]
+        },
+        new Course
+        {
+            Title = "Microservices with .NET",
+            Description = "Build distributed systems with microservices architecture. Learn about Docker, Kubernetes, message queues, and API gateways.",
+            Level = "Advanced",
+            Duration = "12 Hours",
+            Lessons = 28,
+            Exercises = 15,
+            Topics = ["Docker", "Kubernetes", "RabbitMQ", "gRPC"]
+        }
+    };
+    
+    private IEnumerable<Course> FilteredCourses => SelectedFilter == "All" 
+        ? Courses 
+        : Courses.Where(c => c.Level == SelectedFilter);
+    
+    private void SetFilter(string filter)
+    {
+        SelectedFilter = filter;
+    }
+    
+    private class Course
+    {
+        public string Title { get; set; } = "";
+        public string Description { get; set; } = "";
+        public string Level { get; set; } = "";
+        public string Duration { get; set; } = "";
+        public int Lessons { get; set; }
+        public int Exercises { get; set; }
+        public string[] Topics { get; set; } = [];
+    }
+}
