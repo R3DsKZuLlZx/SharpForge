@@ -1,0 +1,241 @@
+﻿@page "/training/async-await-concurrency"
+
+<PageTitle>Async/Await & Concurrency - SharpForge</PageTitle>
+
+<section class="course-hero">
+    <div class="container">
+        <a href="/training" class="back-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"/>
+            </svg>
+            Back to Training
+        </a>
+        <div class="course-hero-content">
+            <div class="course-hero-text">
+                <span class="course-level advanced">Advanced</span>
+                <h1>Async/Await & Concurrency</h1>
+                <p class="course-description">Deep dive into asynchronous programming, Task Parallel Library, and concurrency patterns in C#. Master async/await, parallel processing, and thread-safe code.</p>
+                <div class="course-meta">
+                    <div class="meta-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 20V10M18 20V4M6 20v-4"/>
+                        </svg>
+                        <span>16 Lessons</span>
+                    </div>
+                    <div class="meta-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        <span>8 Hours</span>
+                    </div>
+                    <div class="meta-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        <span>987 Students</span>
+                    </div>
+                </div>
+                <a href="/training/async-await-concurrency/lesson/1" class="btn btn-primary btn-lg">Start Learning</a>
+            </div>
+            <div class="course-hero-image">
+                <div class="course-icon">
+                    <svg viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="64" cy="64" r="60" fill="url(#async-gradient)"/>
+                        <path d="M40 64h48" stroke="white" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M64 40v48" stroke="white" stroke-width="4" stroke-linecap="round"/>
+                        <circle cx="40" cy="64" r="8" fill="white"/>
+                        <circle cx="88" cy="64" r="8" fill="white"/>
+                        <circle cx="64" cy="40" r="8" fill="white"/>
+                        <circle cx="64" cy="88" r="8" fill="white"/>
+                        <path d="M48 48l32 32M80 48l-32 32" stroke="white" stroke-width="2" stroke-dasharray="4 4"/>
+                        <defs>
+                            <linearGradient id="async-gradient" x1="0" y1="0" x2="128" y2="128" gradientUnits="userSpaceOnUse">
+                                <stop offset="0" stop-color="#f59e0b"/>
+                                <stop offset="1" stop-color="#d97706"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section course-content">
+    <div class="container">
+        <div class="course-layout">
+            <main class="course-main">
+                <div class="course-section">
+                    <h2>What You'll Learn</h2>
+                    <div class="learning-outcomes">
+                        <div class="outcome-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Understand the fundamentals of asynchronous programming</span>
+                        </div>
+                        <div class="outcome-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Master async/await patterns and best practices</span>
+                        </div>
+                        <div class="outcome-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Work with Tasks, ValueTasks, and Task combinators</span>
+                        </div>
+                        <div class="outcome-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Implement cancellation with CancellationTokens</span>
+                        </div>
+                        <div class="outcome-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Use the Task Parallel Library for parallel processing</span>
+                        </div>
+                        <div class="outcome-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Handle thread synchronization and avoid deadlocks</span>
+                        </div>
+                        <div class="outcome-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Use Channels for producer-consumer patterns</span>
+                        </div>
+                        <div class="outcome-item">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Debug and profile asynchronous code effectively</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="course-section">
+                    <h2>Course Curriculum</h2>
+                    <div class="lessons-list">
+                        @foreach (var lesson in Lessons)
+                        {
+                            <a href="/training/async-await-concurrency/lesson/@lesson.Number" class="lesson-card">
+                                <div class="lesson-number">@lesson.Number</div>
+                                <div class="lesson-info">
+                                    <h3>@lesson.Title</h3>
+                                    <p>@lesson.Description</p>
+                                </div>
+                                <div class="lesson-duration">@lesson.Duration</div>
+                            </a>
+                        }
+                    </div>
+                </div>
+
+                <div class="course-section">
+                    <h2>Prerequisites</h2>
+                    <ul class="prerequisites-list">
+                        <li>Strong understanding of C# fundamentals</li>
+                        <li>Experience with .NET application development</li>
+                        <li>Basic understanding of threads and processes</li>
+                        <li>Familiarity with lambda expressions and delegates</li>
+                        <li>Knowledge of exception handling in C#</li>
+                    </ul>
+                </div>
+            </main>
+
+            <aside class="course-sidebar">
+                <div class="sidebar-card">
+                    <h4>Course Progress</h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <p class="progress-text">0 of 16 lessons completed</p>
+                    <a href="/training/async-await-concurrency/lesson/1" class="btn btn-primary">Start Course</a>
+                </div>
+
+                <div class="sidebar-card">
+                    <h4>Course Includes</h4>
+                    <ul class="includes-list">
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="23 7 16 12 23 17 23 7"/>
+                                <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+                            </svg>
+                            8 hours of content
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                            </svg>
+                            16 lessons
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="16 18 22 12 16 6"/>
+                                <polyline points="8 6 2 12 8 18"/>
+                            </svg>
+                            10 hands-on exercises
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            </svg>
+                            Concurrent application project
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="8" x2="12" y2="12"/>
+                                <line x1="12" y1="16" x2="12.01" y2="16"/>
+                            </svg>
+                            Lifetime access
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+
+@code {
+    private List<LessonInfo> Lessons { get; } = new()
+    {
+        // Async Fundamentals
+        new(1, "Introduction to Asynchronous Programming", "Understand why async matters and how it differs from parallel programming.", "30 min"),
+        new(2, "Tasks and the Task-Based Asynchronous Pattern", "Learn about Task, Task<T>, and how the TAP pattern works.", "30 min"),
+        new(3, "Async and Await Keywords", "Master the syntax and mechanics of async/await in C#.", "35 min"),
+        new(4, "ValueTask for Performance", "Use ValueTask to reduce allocations in hot paths.", "25 min"),
+        
+        // Advanced Async Patterns
+        new(5, "Task Combinators", "Work with Task.WhenAll, Task.WhenAny, and custom combinators.", "30 min"),
+        new(6, "Cancellation Tokens", "Implement cooperative cancellation in async operations.", "30 min"),
+        new(7, "Progress Reporting", "Report progress from long-running async operations.", "25 min"),
+        new(8, "Exception Handling in Async Code", "Handle exceptions properly in async methods and aggregated exceptions.", "30 min"),
+        
+        // Parallel Programming
+        new(9, "Parallel.For and Parallel.ForEach", "Process collections in parallel with the TPL.", "30 min"),
+        new(10, "PLINQ - Parallel LINQ", "Execute LINQ queries in parallel for data-intensive operations.", "30 min"),
+        new(11, "Dataflow with TPL Dataflow", "Build producer-consumer pipelines with TPL Dataflow blocks.", "35 min"),
+        
+        // Synchronization
+        new(12, "Thread Synchronization Primitives", "Use locks, Monitor, Mutex, and Semaphore for thread safety.", "35 min"),
+        new(13, "Concurrent Collections", "Work with ConcurrentDictionary, ConcurrentQueue, and other thread-safe collections.", "30 min"),
+        new(14, "Channels", "Implement producer-consumer patterns with System.Threading.Channels.", "30 min"),
+        
+        // Best Practices
+        new(15, "Avoiding Common Pitfalls", "Avoid deadlocks, async void, and other common mistakes.", "30 min"),
+        new(16, "Debugging and Profiling Async Code", "Use tools to diagnose issues in concurrent applications.", "35 min")
+    };
+
+    private record LessonInfo(int Number, string Title, string Description, string Duration);
+}
+
