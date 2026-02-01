@@ -61,15 +61,12 @@ var result = await httpClient.GetAsync(url, cts.Token);</code></pre>
 If API pool exhausted, DB operations continue</code></pre>
                 </section>
 
-                <section class="lesson-section">
-                    <h2>Key Takeaways</h2>
-                    <div class="takeaways">
+                <LessonTakeaways>
                         <LessonTakeaway>Retry with exponential backoff for transient failures.</LessonTakeaway>
                         <LessonTakeaway>Circuit breaker prevents cascade failures.</LessonTakeaway>
                         <LessonTakeaway>Timeouts prevent resource exhaustion.</LessonTakeaway>
                         <LessonTakeaway>Bulkheads isolate failures.</LessonTakeaway>
-                    </div>
-                </section>
+                    </LessonTakeaways>
             </div>
             <LessonFooter 
                 PreviousUrl="/training/microservices/lesson/25" 

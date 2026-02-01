@@ -92,15 +92,12 @@ Interlocked.Exchange(ref _counter, 0);
 Interlocked.CompareExchange(ref _counter, newValue, expectedValue);</code></pre>
                 </section>
 
-                <section class="lesson-section">
-                    <h2>Key Takeaways</h2>
-                    <div class="takeaways">
+                <LessonTakeaways>
                         <LessonTakeaway>lock for simple mutual exclusion.</LessonTakeaway>
                         <LessonTakeaway>SemaphoreSlim for async-friendly throttling.</LessonTakeaway>
                         <LessonTakeaway>ReaderWriterLockSlim for read-heavy scenarios.</LessonTakeaway>
                         <LessonTakeaway>Interlocked for simple atomic operations.</LessonTakeaway>
-                    </div>
-                </section>
+                    </LessonTakeaways>
             </div>
             <LessonFooter 
                 PreviousUrl="/training/async-concurrency/lesson/11" 

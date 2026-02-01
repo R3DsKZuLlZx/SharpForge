@@ -64,14 +64,11 @@ app.MapHealthChecks("/health/ready", new HealthCheckOptions
                     </ul>
                 </section>
 
-                <section class="lesson-section">
-                    <h2>Key Takeaways</h2>
-                    <div class="takeaways">
+                <LessonTakeaways>
                         <LessonTakeaway>Liveness checks if app is alive (restart if not).</LessonTakeaway>
                         <LessonTakeaway>Readiness checks if app can handle traffic.</LessonTakeaway>
                         <LessonTakeaway>Use .NET health checks library.</LessonTakeaway>
-                    </div>
-                </section>
+                    </LessonTakeaways>
             </div>
             <LessonFooter 
                 PreviousUrl="/training/microservices/lesson/20" 

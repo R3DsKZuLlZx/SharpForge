@@ -68,14 +68,11 @@ builder.Services.AddRefitClient&lt;IInventoryApi&gt;()
     .ConfigureHttpClient(c =&gt; c.BaseAddress = new Uri("http://inventoryservice"));</code></pre>
                 </section>
 
-                <section class="lesson-section">
-                    <h2>Key Takeaways</h2>
-                    <div class="takeaways">
+                <LessonTakeaways>
                         <LessonTakeaway>Use typed HttpClient for service calls.</LessonTakeaway>
                         <LessonTakeaway>IHttpClientFactory manages connection pooling.</LessonTakeaway>
                         <LessonTakeaway>Refit provides type-safe REST clients.</LessonTakeaway>
-                    </div>
-                </section>
+                    </LessonTakeaways>
             </div>
             <LessonFooter 
                 PreviousUrl="/training/microservices/lesson/6" 

@@ -74,14 +74,11 @@ COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "OrderService.dll"]</code></pre>
                 </section>
 
-                <section class="lesson-section">
-                    <h2>Key Takeaways</h2>
-                    <div class="takeaways">
+                <LessonTakeaways>
                         <LessonTakeaway>Use multi-stage builds for smaller images.</LessonTakeaway>
                         <LessonTakeaway>Order COPY commands for layer caching.</LessonTakeaway>
                         <LessonTakeaway>Run as non-root for security.</LessonTakeaway>
-                    </div>
-                </section>
+                    </LessonTakeaways>
             </div>
             <LessonFooter 
                 PreviousUrl="/training/microservices/lesson/4" 

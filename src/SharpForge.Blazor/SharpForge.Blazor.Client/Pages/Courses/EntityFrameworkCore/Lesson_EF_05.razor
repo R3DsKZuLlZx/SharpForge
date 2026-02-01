@@ -102,15 +102,12 @@ await context.Products
         .SetProperty(p =&gt; p.UpdatedAt, DateTime.UtcNow));</code></pre>
                 </section>
 
-                <section class="lesson-section">
-                    <h2>Key Takeaways</h2>
-                    <div class="takeaways">
+                <LessonTakeaways>
                         <LessonTakeaway>Always call SaveChangesAsync() to persist changes.</LessonTakeaway>
                         <LessonTakeaway>FindAsync is optimal for getting by primary key.</LessonTakeaway>
                         <LessonTakeaway>Use ExecuteUpdateAsync/ExecuteDeleteAsync for bulk operations.</LessonTakeaway>
                         <LessonTakeaway>Modify tracked entities directly, then save.</LessonTakeaway>
-                    </div>
-                </section>
+                    </LessonTakeaways>
             </div>
             <LessonFooter 
                 PreviousUrl="/training/entity-framework-core/lesson/4" 

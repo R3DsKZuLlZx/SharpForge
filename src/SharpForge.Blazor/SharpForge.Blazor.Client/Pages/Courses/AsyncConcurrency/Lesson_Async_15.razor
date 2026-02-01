@@ -86,15 +86,12 @@ var data = await Task.Run(() =&gt; httpClient.GetStringAsync(url));
 var data = await httpClient.GetStringAsync(url);</code></pre>
                 </section>
 
-                <section class="lesson-section">
-                    <h2>Key Takeaways</h2>
-                    <div class="takeaways">
+                <LessonTakeaways>
                         <LessonTakeaway>Never use async void (except event handlers).</LessonTakeaway>
                         <LessonTakeaway>Never block on async with .Result or .Wait().</LessonTakeaway>
                         <LessonTakeaway>Use ConfigureAwait(false) in library code.</LessonTakeaway>
                         <LessonTakeaway>Always pass CancellationToken through call chains.</LessonTakeaway>
-                    </div>
-                </section>
+                    </LessonTakeaways>
             </div>
             <LessonFooter 
                 PreviousUrl="/training/async-concurrency/lesson/14" 

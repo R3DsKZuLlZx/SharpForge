@@ -81,14 +81,11 @@ public class CreateOrderHandler : IRequestHandler&lt;CreateOrderCommand, OrderRe
 var result = await _mediator.Send(new CreateOrderCommand(customerId, items));</code></pre>
                 </section>
 
-                <section class="lesson-section">
-                    <h2>Key Takeaways</h2>
-                    <div class="takeaways">
+                <LessonTakeaways>
                         <LessonTakeaway>Encapsulates actions as objects.</LessonTakeaway>
                         <LessonTakeaway>Enables undo/redo, queuing, logging.</LessonTakeaway>
                         <LessonTakeaway>MediatR implements this for CQRS.</LessonTakeaway>
-                    </div>
-                </section>
+                    </LessonTakeaways>
             </div>
             <LessonFooter 
                 PreviousUrl="/training/design-patterns/lesson/18" 

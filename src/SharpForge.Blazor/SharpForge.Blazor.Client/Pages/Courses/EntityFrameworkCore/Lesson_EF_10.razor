@@ -103,15 +103,12 @@ using (var context2 = new AppDbContext(options))
 scope.Complete();</code></pre>
                 </section>
 
-                <section class="lesson-section">
-                    <h2>Key Takeaways</h2>
-                    <div class="takeaways">
+                <LessonTakeaways>
                         <LessonTakeaway>SaveChangesAsync wraps changes in an implicit transaction.</LessonTakeaway>
                         <LessonTakeaway>Use BeginTransactionAsync for multiple SaveChanges calls.</LessonTakeaway>
                         <LessonTakeaway>Savepoints allow partial rollbacks.</LessonTakeaway>
                         <LessonTakeaway>TransactionScope spans multiple contexts.</LessonTakeaway>
-                    </div>
-                </section>
+                    </LessonTakeaways>
             </div>
             <LessonFooter 
                 PreviousUrl="/training/entity-framework-core/lesson/9" 

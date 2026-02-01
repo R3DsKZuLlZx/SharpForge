@@ -253,15 +253,12 @@ dotnet user-secrets remove "ConnectionStrings:DefaultConnection"</code></pre>
 dotnet run -- --AppSettings:MaxRetries=10 --Logging:LogLevel=Debug</code></pre>
                 </section>
 
-                <section class="lesson-section">
-                    <h2>Key Takeaways</h2>
-                    <div class="takeaways">
+                <LessonTakeaways>
                         <LessonTakeaway>Use <code>appsettings.json</code> for configuration with environment-specific overrides.</LessonTakeaway>
                         <LessonTakeaway>Use the Options pattern for strongly-typed configuration access.</LessonTakeaway>
                         <LessonTakeaway>Use User Secrets for sensitive data during development.</LessonTakeaway>
                         <LessonTakeaway>Environment variables and command-line args override file-based config.</LessonTakeaway>
-                    </div>
-                </section>
+                    </LessonTakeaways>
             </div>
 
             <LessonFooter 

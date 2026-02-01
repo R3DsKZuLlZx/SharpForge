@@ -75,15 +75,12 @@ var block = new TransformBlock&lt;Input, Output&gt;(Process, options);
 await block.SendAsync(item);</code></pre>
                 </section>
 
-                <section class="lesson-section">
-                    <h2>Key Takeaways</h2>
-                    <div class="takeaways">
+                <LessonTakeaways>
                         <LessonTakeaway>Dataflow provides producer-consumer building blocks.</LessonTakeaway>
                         <LessonTakeaway>Link blocks together to form pipelines.</LessonTakeaway>
                         <LessonTakeaway>BoundedCapacity prevents memory issues.</LessonTakeaway>
                         <LessonTakeaway>PropagateCompletion chains completion signals.</LessonTakeaway>
-                    </div>
-                </section>
+                    </LessonTakeaways>
             </div>
             <LessonFooter 
                 PreviousUrl="/training/async-concurrency/lesson/10" 
