@@ -25,7 +25,6 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.0.x'
-          include-prerelease: true
 
       - name: Restore dependencies
         run: dotnet restore src/SharpForge.Client/SharpForge.Client.csproj
@@ -33,29 +32,14 @@ jobs:
       - name: Publish
         run: dotnet publish src/SharpForge.Client/SharpForge.Client.csproj -c Release -o release --nologo
 
-      # Update base href for GitHub Pages (repo name becomes the base path)
-      - name: Update base href
-        run: |
-          sed -i 's|<base href="/"/>|<base href="/${{ github.event.repository.name }}/"/>|g' release/wwwroot/index.html
-          echo "Updated base href to: /${{ github.event.repository.name }}/"
-          grep -i "base href" release/wwwroot/index.html
+      - name: Update base href for GitHub Pages
+        run: sed -i 's|<base href="/"/>|<base href="/SharpForge/"/>|g' release/wwwroot/index.html
 
-      # Blazor WASM needs 404.html to be the same as index.html for SPA routing
-      - name: Copy index.html to 404.html
+      - name: Copy index.html to 404.html for SPA routing
         run: cp release/wwwroot/index.html release/wwwroot/404.html
 
-      # Add .nojekyll to prevent GitHub Pages from ignoring files starting with _
       - name: Add .nojekyll
         run: touch release/wwwroot/.nojekyll
-
-      # Debug: List published files
-      - name: List published files
-        run: |
-          echo "=== wwwroot contents ==="
-          ls -la release/wwwroot/
-          echo "=== _framework contents ==="
-          ls -la release/wwwroot/_framework/ | head -20
-
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
