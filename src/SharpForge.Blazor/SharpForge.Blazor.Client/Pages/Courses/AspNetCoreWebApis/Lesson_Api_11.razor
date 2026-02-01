@@ -1,4 +1,4 @@
-@page "/training/aspnet-core-web-apis/lesson/11"
+﻿@page "/training/aspnet-core-web-apis/lesson/11"
 <PageTitle>Authorization Policies - ASP.NET Core Web APIs - SharpForge</PageTitle>
 <CodeHighlighter />
 <div class="lesson-layout">
@@ -55,7 +55,7 @@ public class MinimumAgeHandler : AuthorizationHandler&lt;MinimumAgeRequirement&g
 
 // Register
 builder.Services.AddSingleton&lt;IAuthorizationHandler, MinimumAgeHandler&gt;();</code></pre></section>
-                <section class="lesson-section"><h2>Key Takeaways</h2><div class="key-takeaways"><div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Policies provide flexible, reusable authorization rules.</span></div><div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Use RequireAssertion for complex logic.</span></div><div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Custom handlers allow advanced authorization scenarios.</span></div></div></section>
+                <section class="lesson-section"><h2>Key Takeaways</h2><div class="takeaways"><div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Policies provide flexible, reusable authorization rules.</span></div><div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Use RequireAssertion for complex logic.</span></div><div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Custom handlers allow advanced authorization scenarios.</span></div></div></section>
             </div>
             <LessonFooter 
                 PreviousUrl="/training/aspnet-core-web-apis/lesson/10" 

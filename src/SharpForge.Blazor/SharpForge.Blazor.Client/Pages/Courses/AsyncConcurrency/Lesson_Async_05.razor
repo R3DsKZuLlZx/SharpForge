@@ -1,4 +1,4 @@
-@page "/training/async-concurrency/lesson/5"
+﻿@page "/training/async-concurrency/lesson/5"
 <PageTitle>Task Combinators - Async/Await & Concurrency - SharpForge</PageTitle>
 <CodeHighlighter />
 
@@ -104,7 +104,7 @@ public async Task ProcessAllAsync(IEnumerable&lt;string&gt; urls, int maxConcurr
 
                 <section class="lesson-section">
                     <h2>Key Takeaways</h2>
-                    <div class="key-takeaways">
+                    <div class="takeaways">
                         <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>WhenAll waits for ALL tasks to complete.</span></div>
                         <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>WhenAny returns when ANY task completes.</span></div>
                         <div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Use SemaphoreSlim for throttling concurrency.</span></div>
