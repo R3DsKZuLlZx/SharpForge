@@ -1,4 +1,5 @@
-﻿@page "/training/getting-started-dotnet/lesson/10"
+﻿@using SharpForge.Blazor.Client.Data
+@page "/training/getting-started-dotnet/lesson/10"
 
 <PageTitle>Publishing and Deployment - Getting Started with .NET - SharpForge</PageTitle>
 <CodeHighlighter />
@@ -8,7 +9,7 @@
         CourseUrl="/training/getting-started-dotnet"
         CourseTitle="Getting Started with .NET"
         CurrentLesson="10"
-        Lessons="@_lessons" />
+        Lessons="CourseLessons.GettingStartedDotNet" />
     <main class="lesson-content">
         <article class="lesson-article">
             <header class="lesson-header">
@@ -300,19 +301,3 @@ sudo systemctl status myapp</code></pre>
         </article>
     </main>
 </div>
-
-@code {
-    private readonly List<LessonSidebar.LessonInfo> _lessons =
-    [
-        new() { Number = 1, Title = "What is .NET?", Url = "/training/getting-started-dotnet/lesson/1" },
-        new() { Number = 2, Title = "Installing the .NET SDK", Url = "/training/getting-started-dotnet/lesson/2" },
-        new() { Number = 3, Title = "The .NET CLI", Url = "/training/getting-started-dotnet/lesson/3" },
-        new() { Number = 4, Title = "Project Structure and Files", Url = "/training/getting-started-dotnet/lesson/4" },
-        new() { Number = 5, Title = "NuGet Package Management", Url = "/training/getting-started-dotnet/lesson/5" },
-        new() { Number = 6, Title = "Building Console Applications", Url = "/training/getting-started-dotnet/lesson/6" },
-        new() { Number = 7, Title = "Configuration and Settings", Url = "/training/getting-started-dotnet/lesson/7" },
-        new() { Number = 8, Title = "Introduction to ASP.NET Core", Url = "/training/getting-started-dotnet/lesson/8" },
-        new() { Number = 9, Title = "Debugging and Troubleshooting", Url = "/training/getting-started-dotnet/lesson/9" },
-        new() { Number = 10, Title = "Publishing and Deployment", Url = "/training/getting-started-dotnet/lesson/10" }
-    ];
-}

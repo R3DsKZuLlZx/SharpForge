@@ -1,4 +1,5 @@
-﻿@* Common component for lesson sidebar navigation *@
+﻿@using SharpForge.Blazor.Client.Data
+@* Common component for lesson sidebar navigation *@
 
 <aside class="lesson-sidebar">
     <div class="sidebar-header">
@@ -26,13 +27,6 @@
     [Parameter] public string CourseUrl { get; set; } = "#";
     [Parameter] public string CourseTitle { get; set; } = "";
     [Parameter] public int CurrentLesson { get; set; } = 1;
-    [Parameter] public List<LessonInfo> Lessons { get; set; } = new();
-
-    public class LessonInfo
-    {
-        public int Number { get; set; }
-        public string Title { get; set; } = "";
-        public string Url { get; set; } = "#";
-    }
+    [Parameter] public List<CourseLessons.LessonInfo> Lessons { get; set; } = [];
 }
 

@@ -1,4 +1,5 @@
-﻿@page "/training/entity-framework-core/lesson/12"
+﻿@using SharpForge.Blazor.Client.Data
+@page "/training/entity-framework-core/lesson/12"
 <PageTitle>Performance Optimization - Entity Framework Core - SharpForge</PageTitle>
 <CodeHighlighter />
 
@@ -7,7 +8,7 @@
         CourseUrl="/training/entity-framework-core"
         CourseTitle="Entity Framework Core"
         CurrentLesson="12"
-        Lessons="@_lessons" />
+        Lessons="CourseLessons.EntityFrameworkCore" />
     <main class="lesson-content">
         <article class="lesson-article">
             <header class="lesson-header"><span class="lesson-number">Lesson 12</span><h1>Performance Optimization</h1><div class="lesson-meta"><span class="lesson-duration"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>30 min</span><span class="lesson-level intermediate">Intermediate</span></div></header>
@@ -153,21 +154,3 @@ options.UseLoggerFactory(LoggerFactory.Create(builder => builder
         </article>
     </main>
 </div>
-
-@code {
-    private readonly List<LessonSidebar.LessonInfo> _lessons =
-    [
-        new() { Number = 1, Title = "Introduction to EF Core", Url = "/training/entity-framework-core/lesson/1" },
-        new() { Number = 2, Title = "DbContext and Models", Url = "/training/entity-framework-core/lesson/2" },
-        new() { Number = 3, Title = "Migrations", Url = "/training/entity-framework-core/lesson/3" },
-        new() { Number = 4, Title = "CRUD Operations", Url = "/training/entity-framework-core/lesson/4" },
-        new() { Number = 5, Title = "Querying Data", Url = "/training/entity-framework-core/lesson/5" },
-        new() { Number = 6, Title = "Relationships", Url = "/training/entity-framework-core/lesson/6" },
-        new() { Number = 7, Title = "Fluent API", Url = "/training/entity-framework-core/lesson/7" },
-        new() { Number = 8, Title = "Change Tracking", Url = "/training/entity-framework-core/lesson/8" },
-        new() { Number = 9, Title = "Transactions", Url = "/training/entity-framework-core/lesson/9" },
-        new() { Number = 10, Title = "Performance", Url = "/training/entity-framework-core/lesson/10" },
-        new() { Number = 11, Title = "Raw SQL", Url = "/training/entity-framework-core/lesson/11" },
-        new() { Number = 12, Title = "Testing with EF Core", Url = "/training/entity-framework-core/lesson/12" }
-    ];
-}

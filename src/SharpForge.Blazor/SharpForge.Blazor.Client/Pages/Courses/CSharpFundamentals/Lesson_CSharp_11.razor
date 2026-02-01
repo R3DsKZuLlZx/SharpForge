@@ -1,4 +1,5 @@
-﻿@page "/training/csharp-fundamentals/lesson/11"
+﻿@using SharpForge.Blazor.Client.Data
+@page "/training/csharp-fundamentals/lesson/11"
 
 <PageTitle>Exception Handling - C# Fundamentals - SharpForge</PageTitle>
 <CodeHighlighter />
@@ -8,7 +9,7 @@
         CourseUrl="/training/csharp-fundamentals"
         CourseTitle="C# Fundamentals"
         CurrentLesson="11"
-        Lessons="@_lessons" />
+        Lessons="CourseLessons.CSharpFundamentals" />
     <main class="lesson-content">
         <article class="lesson-article">
             <header class="lesson-header">
@@ -515,21 +516,3 @@ catch (SpecificException ex)
         </article>
     </main>
 </div>
-
-@code {
-    private readonly List<LessonSidebar.LessonInfo> _lessons =
-    [
-        new() { Number = 1, Title = "Introduction to C# and .NET", Url = "/training/csharp-fundamentals/lesson/1" },
-        new() { Number = 2, Title = "Your First C# Program", Url = "/training/csharp-fundamentals/lesson/2" },
-        new() { Number = 3, Title = "Variables and Data Types", Url = "/training/csharp-fundamentals/lesson/3" },
-        new() { Number = 4, Title = "Operators and Expressions", Url = "/training/csharp-fundamentals/lesson/4" },
-        new() { Number = 5, Title = "Control Flow: Conditionals", Url = "/training/csharp-fundamentals/lesson/5" },
-        new() { Number = 6, Title = "Control Flow: Loops", Url = "/training/csharp-fundamentals/lesson/6" },
-        new() { Number = 7, Title = "Methods and Parameters", Url = "/training/csharp-fundamentals/lesson/7" },
-        new() { Number = 8, Title = "Arrays and Collections", Url = "/training/csharp-fundamentals/lesson/8" },
-        new() { Number = 9, Title = "Introduction to OOP: Classes", Url = "/training/csharp-fundamentals/lesson/9" },
-        new() { Number = 10, Title = "OOP: Inheritance and Polymorphism", Url = "/training/csharp-fundamentals/lesson/10" },
-        new() { Number = 11, Title = "Exception Handling", Url = "/training/csharp-fundamentals/lesson/11" },
-        new() { Number = 12, Title = "LINQ Basics", Url = "/training/csharp-fundamentals/lesson/12" }
-    ];
-}

@@ -1,4 +1,5 @@
-﻿@page "/training/entity-framework-core/lesson/1"
+﻿@using SharpForge.Blazor.Client.Data
+@page "/training/entity-framework-core/lesson/1"
 <PageTitle>Introduction to EF Core - Entity Framework Core - SharpForge</PageTitle>
 <CodeHighlighter />
 
@@ -7,7 +8,7 @@
         CourseUrl="/training/entity-framework-core"
         CourseTitle="Entity Framework Core"
         CurrentLesson="1"
-        Lessons="@_lessons" />
+        Lessons="CourseLessons.EntityFrameworkCore" />
     <main class="lesson-content">
         <article class="lesson-article">
             <header class="lesson-header">
@@ -122,21 +123,3 @@ dotnet tool install --global dotnet-ef</code></pre>
         </article>
     </main>
 </div>
-
-@code {
-    private readonly List<LessonSidebar.LessonInfo> _lessons =
-    [
-        new() { Number = 1, Title = "Introduction to EF Core", Url = "/training/entity-framework-core/lesson/1" },
-        new() { Number = 2, Title = "DbContext and Models", Url = "/training/entity-framework-core/lesson/2" },
-        new() { Number = 3, Title = "Migrations", Url = "/training/entity-framework-core/lesson/3" },
-        new() { Number = 4, Title = "CRUD Operations", Url = "/training/entity-framework-core/lesson/4" },
-        new() { Number = 5, Title = "Querying Data", Url = "/training/entity-framework-core/lesson/5" },
-        new() { Number = 6, Title = "Relationships", Url = "/training/entity-framework-core/lesson/6" },
-        new() { Number = 7, Title = "Fluent API", Url = "/training/entity-framework-core/lesson/7" },
-        new() { Number = 8, Title = "Change Tracking", Url = "/training/entity-framework-core/lesson/8" },
-        new() { Number = 9, Title = "Transactions", Url = "/training/entity-framework-core/lesson/9" },
-        new() { Number = 10, Title = "Performance", Url = "/training/entity-framework-core/lesson/10" },
-        new() { Number = 11, Title = "Raw SQL", Url = "/training/entity-framework-core/lesson/11" },
-        new() { Number = 12, Title = "Testing with EF Core", Url = "/training/entity-framework-core/lesson/12" }
-    ];
-}
