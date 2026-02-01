@@ -1364,6 +1364,10 @@ input, textarea, select {
     margin: 1.5rem 0;
 }
 
+.comparison-box.stacked {
+    grid-template-columns: 1fr;
+}
+
 .comparison-item {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
@@ -1429,7 +1433,7 @@ input, textarea, select {
 
 /* Congratulations Section */
 .congratulations {
-    background: var(--card-bg);
+    background: var(--gradient-hero);
     border: 1px solid var(--border-color);
     border-radius: 1rem;
     padding: 2.5rem;
@@ -1487,158 +1491,1367 @@ input, textarea, select {
     color: white;
 }
 
-/* Lesson Pages - Responsive */
-@media (max-width: 1400px) {
-    .lesson-content {
-        padding: 2rem 2rem 4rem;
-    }
-    
-    .concept-cards {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .use-cases {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .tool-options {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .comparison-box {
-        grid-template-columns: repeat(2, 1fr);
-    }
+/* ============================================
+   C# Fundamentals Course - Additional Styles
+   ============================================ */
+
+/* Course Hero */
+.course-hero {
+    padding: 3rem 0 4rem;
+    background: var(--gradient-hero);
 }
 
+.course-hero .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9375rem;
+    margin-bottom: 2rem;
+    transition: color 0.2s ease;
+}
+
+.course-hero .back-link:hover {
+    color: var(--accent-color);
+}
+
+.course-hero-content {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4rem;
+    align-items: center;
+}
+
+.course-hero-text {
+    max-width: 700px;
+}
+
+.course-level {
+    display: inline-block;
+    padding: 0.375rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+}
+
+.course-level.beginner {
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+}
+
+.course-level.intermediate {
+    background: rgba(234, 179, 8, 0.15);
+    color: #eab308;
+}
+
+.course-level.advanced {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+}
+
+.course-hero h1 {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    margin-bottom: 1rem;
+}
+
+.course-description {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.course-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.meta-item svg {
+    color: var(--accent-color);
+}
+
+.course-hero-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.course-icon {
+    width: 200px;
+    height: 200px;
+}
+
+.course-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Course Content */
+.course-content {
+    padding: 4rem 0;
+}
+
+.course-layout {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 3rem;
+}
+
+.course-main {
+    min-width: 0;
+}
+
+.course-section {
+    margin-bottom: 3rem;
+}
+
+.course-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Learning Outcomes */
+.learning-outcomes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.outcome-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: var(--card-bg);
+    border-radius: 0.75rem;
+    border: 1px solid var(--border-color);
+}
+
+.outcome-item svg {
+    flex-shrink: 0;
+    color: #22c55e;
+    margin-top: 0.125rem;
+}
+
+.outcome-item span {
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* Lessons List */
+.lessons-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.lesson-card {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    background: var(--card-bg);
+    border-radius: 0.75rem;
+    border: 1px solid var(--border-color);
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+}
+
+.lesson-card:hover {
+    border-color: var(--accent-color);
+    transform: translateX(4px);
+}
+
+.lesson-card .lesson-number {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent-light);
+    color: var(--accent-color);
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 0.875rem;
+}
+
+.lesson-info h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.lesson-info p {
+    font-size: 0.875rem;
+    color: var(--text-tertiary);
+    margin: 0;
+}
+
+.lesson-card .lesson-duration {
+    font-size: 0.875rem;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+}
+
+/* Prerequisites */
+.prerequisites-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.prerequisites-list li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.prerequisites-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+/* Course Sidebar */
+.course-sidebar {
+    position: sticky;
+    top: 5rem;
+    height: fit-content;
+}
+
+.sidebar-card {
+    background: var(--card-bg);
+    border-radius: 1rem;
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.sidebar-card h4 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.progress-bar {
+    height: 0.5rem;
+    background: var(--bg-tertiary);
+    border-radius: 0.25rem;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--gradient-primary);
+    border-radius: 0.25rem;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    font-size: 0.875rem;
+    color: var(--text-tertiary);
+    margin-bottom: 1rem;
+}
+
+.sidebar-card .btn {
+    width: 100%;
+}
+
+.includes-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.includes-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+}
+
+.includes-list svg {
+    color: var(--text-tertiary);
+}
+
+/* Flow Diagram (Lesson 5) */
+.flow-diagram {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    margin: 1.5rem 0;
+}
+
+.flow-box {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.flow-box.start,
+.flow-box.end {
+    background: var(--bg-tertiary);
+    border: 2px solid var(--border-color);
+    border-radius: 2rem;
+}
+
+.flow-box.condition {
+    background: var(--accent-light);
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+    transform: rotate(0deg);
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    padding: 1.5rem 2rem;
+}
+
+.flow-box.action {
+    background: #22c55e20;
+    border: 2px solid #22c55e;
+    color: #22c55e;
+}
+
+.flow-box.skip {
+    background: var(--bg-tertiary);
+    border: 2px dashed var(--border-color);
+    color: var(--text-tertiary);
+}
+
+.flow-arrow {
+    color: var(--text-tertiary);
+    font-size: 1.25rem;
+    margin: 0.5rem 0;
+}
+
+.flow-branches {
+    display: flex;
+    gap: 3rem;
+    margin: 1rem 0;
+}
+
+.flow-branch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.branch-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.branch-label.yes {
+    background: #22c55e20;
+    color: #22c55e;
+}
+
+.branch-label.no {
+    background: #ef444420;
+    color: #ef4444;
+}
+
+/* Mistake Box (Lesson 5) */
+.mistake-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid #ef4444;
+    border-radius: 0 0.5rem 0.5rem 0;
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+}
+
+.mistake-box h4 {
+    font-size: 0.9375rem;
+    margin-bottom: 0.75rem;
+    color: #ef4444;
+}
+
+.mistake-box pre {
+    margin: 0;
+}
+
+/* Loop Diagram (Lesson 6) */
+.loop-diagram {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    margin: 1.5rem 0;
+}
+
+.loop-step {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 1rem;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.loop-step.condition {
+    background: var(--accent-light);
+    border-color: var(--accent-color);
+}
+
+.step-num {
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent-color);
+    color: white;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.loop-arrow {
+    color: var(--text-tertiary);
+    font-size: 1rem;
+    margin: 0.375rem 0;
+}
+
+.loop-arrow.loop-back {
+    color: var(--accent-color);
+    font-weight: 500;
+}
+
+/* Loop Choice Table (Lesson 6) */
+.loop-choice-table {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.loop-choice {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+}
+
+.loop-choice h4 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent-color);
+}
+
+.loop-choice p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+}
+
+.loop-choice code {
+    font-size: 0.8125rem;
+    display: block;
+}
+
+/* Benefits Grid (Lesson 7) */
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.benefit-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    text-align: center;
+}
+
+.benefit-icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+.benefit-item h4 {
+    font-size: 0.9375rem;
+    margin-bottom: 0.375rem;
+}
+
+.benefit-item p {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* Method Anatomy (Lesson 7) */
+.method-anatomy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 1.5rem 0;
+}
+
+.anatomy-item {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    align-items: center;
+}
+
+.anatomy-item code {
+    font-size: 0.9375rem;
+    color: var(--accent-color);
+}
+
+.anatomy-item span {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* Array Visual (Lesson 8) */
+.array-visual {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+.array-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9375rem;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+
+.array-boxes {
+    display: flex;
+    justify-content: center;
+    gap: 0.25rem;
+}
+
+.array-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--bg-tertiary);
+    border: 2px solid var(--accent-color);
+    border-radius: 0.375rem;
+    padding: 0.75rem 1rem;
+    min-width: 3.5rem;
+}
+
+.box-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.box-index {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    margin-top: 0.25rem;
+}
+
+/* Collection Cards (Lesson 8) */
+.collection-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.collection-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+}
+
+.collection-card h4 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent-color);
+}
+
+.collection-card > p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+}
+
+.collection-card pre {
+    margin: 0;
+    font-size: 0.75rem;
+    padding: 0.75rem !important;
+}
+
+/* OOP Pillars (Lesson 9) */
+.oop-pillars {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.pillar {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    text-align: center;
+}
+
+.pillar-icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+.pillar h4 {
+    font-size: 0.9375rem;
+    margin-bottom: 0.375rem;
+    color: var(--accent-color);
+}
+
+.pillar p {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* Class Diagram (Lesson 9) */
+.class-diagram {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    margin: 1.5rem 0;
+}
+
+.diagram-class {
+    background: var(--accent-light);
+    border: 2px solid var(--accent-color);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    min-width: 250px;
+}
+
+.diagram-header {
+    font-weight: 600;
+    color: var(--accent-color);
+    text-align: center;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--accent-color);
+    margin-bottom: 0.75rem;
+}
+
+.diagram-section {
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.diagram-section strong {
+    display: block;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.diagram-section span {
+    color: var(--text-secondary);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8125rem;
+}
+
+.diagram-arrow {
+    color: var(--text-tertiary);
+    font-size: 1.25rem;
+    margin: 1rem 0;
+}
+
+.diagram-objects {
+    display: flex;
+    gap: 1rem;
+}
+
+.diagram-object {
+    background: var(--bg-tertiary);
+    border: 2px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    min-width: 120px;
+}
+
+.object-header {
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.diagram-object span {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Access Table (Lesson 9) */
+.access-table {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin: 1.5rem 0;
+}
+
+.access-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    align-items: center;
+}
+
+.access-row.header {
+    background: var(--bg-tertiary);
+    font-weight: 600;
+}
+
+.access-row code {
+    font-size: 0.875rem;
+}
+
+.access-row span {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+/* Inheritance Diagram (Lesson 10) */
+.inheritance-diagram {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    margin: 1.5rem 0;
+}
+
+.diagram-box {
+    border-radius: 0.5rem;
+    padding: 1rem;
+    min-width: 150px;
+    text-align: center;
+}
+
+.diagram-box.base {
+    background: var(--accent-light);
+    border: 2px solid var(--accent-color);
+}
+
+.diagram-box.derived {
+    background: var(--bg-tertiary);
+    border: 2px solid var(--border-color);
+}
+
+.box-header {
+    font-weight: 600;
+    color: var(--text-primary);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 0.5rem;
+}
+
+.diagram-box.base .box-header {
+    color: var(--accent-color);
+    border-bottom-color: var(--accent-color);
+}
+
+.box-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.box-content span {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.diagram-arrows {
+    display: flex;
+    gap: 3rem;
+    margin: 1rem 0;
+    font-size: 1.5rem;
+    color: var(--text-tertiary);
+}
+
+.diagram-derived {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Keyword Table (Lesson 10) */
+.keyword-table {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin: 1.5rem 0;
+}
+
+.keyword-row {
+    display: grid;
+    grid-template-columns: 120px 140px 1fr;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    align-items: center;
+}
+
+.keyword-row.header {
+    background: var(--bg-tertiary);
+    font-weight: 600;
+}
+
+.keyword-row code {
+    font-size: 0.875rem;
+    color: var(--accent-color);
+}
+
+.keyword-row span {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* Exception Flow (Lesson 11) */
+.exception-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    margin: 1.5rem 0;
+}
+
+.flow-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    min-width: 100px;
+    text-align: center;
+}
+
+.flow-step.error {
+    background: #ef444420;
+    border: 1px solid #ef4444;
+    color: #ef4444;
+}
+
+.flow-step.exception {
+    background: #eab30820;
+    border: 1px solid #eab308;
+    color: #eab308;
+}
+
+.flow-step.handle {
+    background: #3b82f620;
+    border: 1px solid #3b82f6;
+    color: #3b82f6;
+}
+
+.flow-step.success {
+    background: #22c55e20;
+    border: 1px solid #22c55e;
+    color: #22c55e;
+}
+
+.step-icon {
+    font-size: 1.25rem;
+}
+
+/* Property Table (Lesson 11) */
+.property-table {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin: 1.5rem 0;
+}
+
+.property-row {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    align-items: center;
+}
+
+.property-row.header {
+    background: var(--bg-tertiary);
+    font-weight: 600;
+}
+
+.property-row code {
+    font-size: 0.875rem;
+    color: var(--accent-color);
+}
+
+.property-row span {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* Try-Catch Diagram (Lesson 11) */
+.try-catch-diagram {
+    display: flex;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.diagram-block {
+    flex: 1;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.block-header {
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.875rem;
+}
+
+.block-content {
+    padding: 0.75rem 1rem;
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+}
+
+.block-note {
+    padding: 0.25rem 1rem 0.75rem;
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    font-style: italic;
+}
+
+.diagram-block.try {
+    border: 2px solid #3b82f6;
+}
+
+.diagram-block.try .block-header {
+    background: #3b82f6;
+    color: white;
+}
+
+.diagram-block.catch {
+    border: 2px solid #eab308;
+}
+
+.diagram-block.catch .block-header {
+    background: #eab308;
+    color: black;
+}
+
+.diagram-block.finally {
+    border: 2px solid #22c55e;
+}
+
+.diagram-block.finally .block-header {
+    background: #22c55e;
+    color: white;
+}
+
+/* Exception Cards (Lesson 11) */
+.exception-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+}
+
+.exception-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 0.875rem 1rem;
+}
+
+.exception-card code {
+    display: block;
+    font-size: 0.8125rem;
+    color: var(--accent-color);
+    margin-bottom: 0.375rem;
+}
+
+.exception-card p {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+}
+
+/* Best Practices (Lesson 11) */
+.best-practices {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.practice {
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+}
+
+.practice h4 {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.practice.do {
+    background: #22c55e10;
+    border: 1px solid #22c55e;
+}
+
+.practice.do h4 {
+    color: #22c55e;
+}
+
+.practice.dont {
+    background: #ef444410;
+    border: 1px solid #ef4444;
+}
+
+.practice.dont h4 {
+    color: #ef4444;
+}
+
+.practice ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    font-size: 0.875rem;
+}
+
+.practice li {
+    margin-bottom: 0.375rem;
+    color: var(--text-secondary);
+}
+
+/* Truth Tables (Lesson 4) */
+.truth-tables {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.truth-table {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1rem;
+}
+
+.truth-table h4 {
+    text-align: center;
+    margin-bottom: 0.75rem;
+    font-size: 0.9375rem;
+}
+
+.table-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.25rem;
+    font-size: 0.8125rem;
+    text-align: center;
+}
+
+.table-grid span {
+    padding: 0.375rem;
+    background: var(--bg-tertiary);
+    border-radius: 0.25rem;
+}
+
+.table-grid span:nth-child(-n+3) {
+    font-weight: 600;
+    background: var(--bg-secondary);
+}
+
+.result-true {
+    color: #22c55e !important;
+    font-weight: 600;
+}
+
+.result-false {
+    color: #ef4444 !important;
+    font-weight: 600;
+}
+
+/* Precedence List (Lesson 4) */
+.precedence-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 1.5rem 0;
+}
+
+.precedence-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+}
+
+.precedence-rank {
+    width: 1.75rem;
+    height: 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent-light);
+    color: var(--accent-color);
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+}
+
+.precedence-item span:last-child {
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+}
+
+.precedence-item code {
+    margin-left: 0.5rem;
+    font-size: 0.8125rem;
+}
+
+/* ============================================
+   C# Fundamentals Course - Responsive Styles
+   ============================================ */
+
 @media (max-width: 1024px) {
-    .lesson-layout {
+    .course-layout {
         grid-template-columns: 1fr;
     }
 
-    .lesson-sidebar {
+    .course-sidebar {
         position: static;
-        height: auto;
-        border-right: none;
-        border-bottom: 1px solid var(--border-color);
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
     }
 
-    .lesson-nav {
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 0.5rem;
+    .sidebar-card {
+        margin-bottom: 0;
     }
 
-    .lesson-nav-item {
-        padding: 0.5rem 0.75rem;
-    }
-
-    .lesson-nav-item span:not(.lesson-num) {
-        display: none;
-    }
-
-    .lesson-content {
-        padding: 2rem 1.5rem;
-    }
-
-    .concept-cards,
-    .use-cases,
-    .tool-options {
-        grid-template-columns: 1fr;
-    }
-    
-    .comparison-box {
-        grid-template-columns: 1fr;
-    }
-    
     .oop-pillars {
         grid-template-columns: repeat(2, 1fr);
     }
-    
+
     .benefits-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-    
+
     .collection-cards {
-        grid-template-columns: 1fr;
-    }
-    
-    .exception-cards {
-        grid-template-columns: 1fr;
-    }
-    
-    .best-practices {
-        grid-template-columns: 1fr;
-    }
-    
-    .loop-choice-table {
         grid-template-columns: 1fr;
     }
 }
 
 @media (max-width: 768px) {
-    .lesson-header h1 {
-        font-size: 1.75rem;
+    .course-hero {
+        padding: 2rem 0 3rem;
     }
 
-    .use-cases {
-        grid-template-columns: repeat(2, 1fr);
+    .course-hero-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
     }
 
-    .lesson-nav-buttons {
+    .course-hero-image {
+        order: -1;
+    }
+
+    .course-icon {
+        width: 120px;
+        height: 120px;
+    }
+
+    .course-description {
+        font-size: 1rem;
+    }
+
+    .learning-outcomes {
+        grid-template-columns: 1fr;
+    }
+
+    .lesson-card {
+        grid-template-columns: auto 1fr;
+        gap: 1rem;
+    }
+
+    .lesson-card .lesson-duration {
+        grid-column: 2;
+        margin-top: -0.5rem;
+    }
+
+    .flow-branches {
+        gap: 1.5rem;
+    }
+
+    .flow-box.condition {
+        padding: 1rem 1.5rem;
+        font-size: 0.75rem;
+    }
+
+    .loop-step {
+        font-size: 0.8125rem;
+    }
+
+    .benefits-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .anatomy-item {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .array-boxes {
+        flex-wrap: wrap;
+    }
+
+    .array-box {
+        min-width: 2.5rem;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .box-value {
+        font-size: 1rem;
+    }
+
+    .oop-pillars {
+        grid-template-columns: 1fr;
+    }
+
+    .diagram-objects {
         flex-direction: column;
     }
 
-    .lesson-nav-buttons .btn {
-        justify-content: center;
-    }
-
-    .command-row {
+    .access-row {
         grid-template-columns: 1fr;
+        gap: 0.25rem;
+    }
+
+    .diagram-derived {
+        flex-direction: column;
+    }
+
+    .diagram-arrows {
+        flex-direction: column;
         gap: 0.5rem;
+        align-items: center;
     }
 
-    .type-row {
-        grid-template-columns: 1fr 1fr;
-        gap: 0.5rem;
-    }
-    
-    .type-row.header span:nth-child(3),
-    .type-row.header span:nth-child(4),
-    .type-row span:nth-child(3),
-    .type-row code:nth-child(4) {
-        display: none;
+    .keyword-row {
+        grid-template-columns: 1fr;
+        gap: 0.25rem;
     }
 
-    .operator-row {
-        grid-template-columns: 1fr 1fr;
-        gap: 0.5rem;
+    .exception-flow {
+        flex-direction: column;
     }
 
-    .operator-row span:nth-child(3),
-    .operator-row span:nth-child(4),
-    .operator-row code:nth-child(3),
-    .operator-row code:nth-child(4) {
-        display: none;
+    .exception-flow .flow-arrow {
+        transform: rotate(90deg);
     }
 
-    .operator-row.header span:nth-child(3),
-    .operator-row.header span:nth-child(4) {
-        display: none;
+    .try-catch-diagram {
+        flex-direction: column;
     }
 
-    .comparison-box {
+    .exception-cards {
         grid-template-columns: 1fr;
     }
 
-    .congratulations {
-        padding: 1.5rem;
+    .best-practices {
+        grid-template-columns: 1fr;
     }
 
-    .congrats-icon {
-        font-size: 3rem;
+    .property-row {
+        grid-template-columns: 1fr;
+        gap: 0.25rem;
     }
 
-    .congratulations h2 {
-        font-size: 1.5rem;
+    .truth-tables {
+        grid-template-columns: 1fr;
+    }
+
+    .loop-choice-table {
+        grid-template-columns: 1fr;
     }
 }
