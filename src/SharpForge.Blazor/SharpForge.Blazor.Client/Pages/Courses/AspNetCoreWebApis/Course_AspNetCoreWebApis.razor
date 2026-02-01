@@ -2,208 +2,64 @@
 
 <PageTitle>ASP.NET Core Web APIs - SharpForge</PageTitle>
 
-<section class="course-hero">
-    <div class="container">
-        <a href="/training" class="back-link">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="15 18 9 12 15 6"/>
-            </svg>
-            Back to Training
-        </a>
-        <div class="course-hero-content">
-            <div class="course-hero-text">
-                <span class="course-level intermediate">Intermediate</span>
-                <h1>ASP.NET Core Web APIs</h1>
-                <p class="course-description">Build production-ready REST APIs with ASP.NET Core. Master routing, middleware, dependency injection, authentication, Entity Framework Core, and deployment strategies.</p>
-                <div class="course-meta">
-                    <div class="meta-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 20V10M18 20V4M6 20v-4"/>
-                        </svg>
-                        <span>18 Lessons</span>
-                    </div>
-                    <div class="meta-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/>
-                            <polyline points="12 6 12 12 16 14"/>
-                        </svg>
-                        <span>8 Hours</span>
-                    </div>
-                    <div class="meta-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                            <circle cx="9" cy="7" r="4"/>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-                        </svg>
-                        <span>2,847 Students</span>
-                    </div>
-                </div>
-                <a href="/training/aspnet-core-web-apis/lesson/1" class="btn btn-primary btn-lg">Start Learning</a>
-            </div>
-            <div class="course-hero-image">
-                <div class="course-icon">
-                    <svg viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="64" cy="64" r="60" fill="url(#api-gradient)"/>
-                        <path d="M40 50h48M40 64h48M40 78h32" stroke="white" stroke-width="4" stroke-linecap="round"/>
-                        <circle cx="88" cy="78" r="6" fill="white"/>
-                        <defs>
-                            <linearGradient id="api-gradient" x1="0" y1="0" x2="128" y2="128" gradientUnits="userSpaceOnUse">
-                                <stop offset="0" stop-color="#0d6efd"/>
-                                <stop offset="1" stop-color="#6610f2"/>
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+<CourseHero 
+    Level="Intermediate"
+    Title="ASP.NET Core Web APIs"
+    Description="Build production-ready REST APIs with ASP.NET Core. Master routing, middleware, dependency injection, authentication, Entity Framework Core, and deployment strategies."
+    LessonCount="18"
+    Duration="8 Hours"
+    StudentCount="2,847"
+    StartUrl="/training/aspnet-core-web-apis/lesson/1">
+    <IconContent>
+        <svg viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="64" cy="64" r="60" fill="url(#api-gradient)"/>
+            <path d="M40 50h48M40 64h48M40 78h32" stroke="white" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="88" cy="78" r="6" fill="white"/>
+            <defs>
+                <linearGradient id="api-gradient" x1="0" y1="0" x2="128" y2="128" gradientUnits="userSpaceOnUse">
+                    <stop offset="0" stop-color="#0d6efd"/>
+                    <stop offset="1" stop-color="#6610f2"/>
+                </linearGradient>
+            </defs>
+        </svg>
+    </IconContent>
+</CourseHero>
 
 <section class="section course-content">
     <div class="container">
         <div class="course-layout">
             <main class="course-main">
-                <div class="course-section">
-                    <h2>What You'll Learn</h2>
-                    <div class="learning-outcomes">
-                        <div class="outcome-item">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            <span>Build RESTful APIs following best practices</span>
-                        </div>
-                        <div class="outcome-item">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            <span>Implement routing with controllers and minimal APIs</span>
-                        </div>
-                        <div class="outcome-item">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            <span>Master middleware and the request pipeline</span>
-                        </div>
-                        <div class="outcome-item">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            <span>Use dependency injection effectively</span>
-                        </div>
-                        <div class="outcome-item">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            <span>Implement JWT authentication and authorization</span>
-                        </div>
-                        <div class="outcome-item">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            <span>Work with Entity Framework Core for data access</span>
-                        </div>
-                        <div class="outcome-item">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            <span>Add validation, error handling, and logging</span>
-                        </div>
-                        <div class="outcome-item">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            <span>Deploy APIs to Azure and Docker containers</span>
-                        </div>
-                    </div>
-                </div>
+                <CourseLearningOutcomes>
+                    <CourseLearningOutcome Text="Build RESTful APIs following best practices" />
+                    <CourseLearningOutcome Text="Implement routing with controllers and minimal APIs" />
+                    <CourseLearningOutcome Text="Master middleware and the request pipeline" />
+                    <CourseLearningOutcome Text="Use dependency injection effectively" />
+                    <CourseLearningOutcome Text="Implement JWT authentication and authorization" />
+                    <CourseLearningOutcome Text="Work with Entity Framework Core for data access" />
+                    <CourseLearningOutcome Text="Handle errors and implement logging" />
+                    <CourseLearningOutcome Text="Deploy APIs with Docker to cloud platforms" />
+                </CourseLearningOutcomes>
 
-                <div class="course-section">
-                    <h2>Course Curriculum</h2>
-                    <div class="lessons-list">
-                        @foreach (var lesson in Lessons)
-                        {
-                            <a href="/training/aspnet-core-web-apis/lesson/@lesson.Number" class="lesson-card">
-                                <div class="lesson-number">@lesson.Number</div>
-                                <div class="lesson-info">
-                                    <h3>@lesson.Title</h3>
-                                    <p>@lesson.Description</p>
-                                </div>
-                                <div class="lesson-duration">@lesson.Duration</div>
-                            </a>
-                        }
-                    </div>
-                </div>
+                <CourseCurriculum 
+                    BaseUrl="/training/aspnet-core-web-apis"
+                    Lessons="@_lessons" />
 
-                <div class="course-section">
-                    <h2>Prerequisites</h2>
-                    <ul class="prerequisites-list">
-                        <li>Solid understanding of C# fundamentals (variables, classes, methods)</li>
-                        <li>Basic knowledge of .NET and the CLI</li>
-                        <li>Familiarity with HTTP concepts (GET, POST, PUT, DELETE)</li>
-                        <li>Understanding of JSON format</li>
-                        <li>A code editor (Visual Studio or VS Code recommended)</li>
-                    </ul>
-                </div>
+                <CoursePrerequisites Prerequisites="@_prerequisites" />
             </main>
 
-            <aside class="course-sidebar">
-                <div class="sidebar-card">
-                    <h4>Course Progress</h4>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 0%"></div>
-                    </div>
-                    <p class="progress-text">0 of 18 lessons completed</p>
-                    <a href="/training/aspnet-core-web-apis/lesson/1" class="btn btn-primary">Start Course</a>
-                </div>
-
-                <div class="sidebar-card">
-                    <h4>Course Includes</h4>
-                    <ul class="includes-list">
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polygon points="23 7 16 12 23 17 23 7"/>
-                                <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
-                            </svg>
-                            8 hours of content
-                        </li>
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                <polyline points="14 2 14 8 20 8"/>
-                            </svg>
-                            18 lessons
-                        </li>
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="16 18 22 12 16 6"/>
-                                <polyline points="8 6 2 12 8 18"/>
-                            </svg>
-                            10 hands-on exercises
-                        </li>
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                            </svg>
-                            Complete API project
-                        </li>
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"/>
-                                <line x1="12" y1="8" x2="12" y2="12"/>
-                                <line x1="12" y1="16" x2="12.01" y2="16"/>
-                            </svg>
-                            Lifetime access
-                        </li>
-                    </ul>
-                </div>
-            </aside>
+            <CourseSidebar 
+                TotalLessons="18"
+                Duration="8 hours"
+                ExerciseCount="10"
+                ProjectDescription="Complete API project"
+                StartUrl="/training/aspnet-core-web-apis/lesson/1" />
         </div>
     </div>
 </section>
 
 @code {
-    private List<LessonInfo> Lessons { get; } = new()
-    {
+    private readonly List<CourseCurriculum.CourseLessonInfo> _lessons =
+    [
         new(1, "Introduction to ASP.NET Core", "Understand the ASP.NET Core framework, its architecture, and how it differs from ASP.NET Framework.", "25 min"),
         new(2, "Creating Your First API", "Set up a new Web API project and create your first endpoint using controllers.", "30 min"),
         new(3, "Routing Fundamentals", "Master attribute routing, route templates, and route constraints.", "30 min"),
@@ -222,8 +78,13 @@
         new(16, "Minimal APIs", "Build lightweight APIs using the minimal API approach in .NET 6+.", "30 min"),
         new(17, "Testing Your APIs", "Write unit tests and integration tests for your API endpoints.", "35 min"),
         new(18, "Deployment and Docker", "Deploy your API to Azure App Service and containerize with Docker.", "40 min")
-    };
+    ];
 
-    private record LessonInfo(int Number, string Title, string Description, string Duration);
+    private readonly List<string> _prerequisites =
+    [
+        "Solid understanding of C# fundamentals",
+        "Basic knowledge of HTTP and REST concepts",
+        "Familiarity with Visual Studio or VS Code",
+        "Understanding of JSON data format"
+    ];
 }
-

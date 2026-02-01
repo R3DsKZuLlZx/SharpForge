@@ -2,213 +2,68 @@
 
 <PageTitle>Microservices with .NET - SharpForge</PageTitle>
 
-<section class="course-hero">
-    <div class="container">
-        <a href="/training" class="back-link">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="15 18 9 12 15 6"/>
-            </svg>
-            Back to Training
-        </a>
-        <div class="course-hero-content">
-            <div class="course-hero-text">
-                <span class="course-level advanced">Advanced</span>
-                <h1>Microservices with .NET</h1>
-                <p class="course-description">Build distributed systems with microservices architecture. Learn about Docker, Kubernetes, message queues, API gateways, and service-to-service communication patterns.</p>
-                <div class="course-meta">
-                    <div class="meta-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 20V10M18 20V4M6 20v-4"/>
-                        </svg>
-                        <span>28 Lessons</span>
-                    </div>
-                    <div class="meta-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/>
-                            <polyline points="12 6 12 12 16 14"/>
-                        </svg>
-                        <span>12 Hours</span>
-                    </div>
-                    <div class="meta-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                            <circle cx="9" cy="7" r="4"/>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-                        </svg>
-                        <span>756 Students</span>
-                    </div>
-                </div>
-                <a href="/training/microservices-dotnet/lesson/1" class="btn btn-primary btn-lg">Start Learning</a>
-            </div>
-            <div class="course-hero-image">
-                <div class="course-icon">
-                    <svg viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="64" cy="64" r="60" fill="url(#microservices-gradient)"/>
-                        <circle cx="44" cy="44" r="12" fill="white"/>
-                        <circle cx="84" cy="44" r="12" fill="white"/>
-                        <circle cx="44" cy="84" r="12" fill="white"/>
-                        <circle cx="84" cy="84" r="12" fill="white"/>
-                        <circle cx="64" cy="64" r="10" fill="white"/>
-                        <path d="M52 52l8 8M76 52l-8 8M52 76l8-8M76 76l-8-8" stroke="white" stroke-width="3" stroke-linecap="round"/>
-                        <defs>
-                            <linearGradient id="microservices-gradient" x1="0" y1="0" x2="128" y2="128" gradientUnits="userSpaceOnUse">
-                                <stop offset="0" stop-color="#0891b2"/>
-                                <stop offset="1" stop-color="#0e7490"/>
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+<CourseHero 
+    Level="Advanced"
+    Title="Microservices with .NET"
+    Description="Build distributed systems with microservices architecture. Learn about Docker, Kubernetes, message queues, API gateways, and service-to-service communication patterns."
+    LessonCount="28"
+    Duration="12 Hours"
+    StudentCount="756"
+    StartUrl="/training/microservices-dotnet/lesson/1">
+    <IconContent>
+        <svg viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="64" cy="64" r="60" fill="url(#microservices-gradient)"/>
+            <circle cx="44" cy="44" r="12" fill="white"/>
+            <circle cx="84" cy="44" r="12" fill="white"/>
+            <circle cx="44" cy="84" r="12" fill="white"/>
+            <circle cx="84" cy="84" r="12" fill="white"/>
+            <circle cx="64" cy="64" r="10" fill="white"/>
+            <path d="M52 52l8 8M76 52l-8 8M52 76l8-8M76 76l-8-8" stroke="white" stroke-width="3" stroke-linecap="round"/>
+            <defs>
+                <linearGradient id="microservices-gradient" x1="0" y1="0" x2="128" y2="128" gradientUnits="userSpaceOnUse">
+                    <stop offset="0" stop-color="#0891b2"/>
+                    <stop offset="1" stop-color="#0e7490"/>
+                </linearGradient>
+            </defs>
+        </svg>
+    </IconContent>
+</CourseHero>
 
 <section class="section course-content">
     <div class="container">
         <div class="course-layout">
             <main class="course-main">
-                <div class="course-section">
-                    <h2>What You'll Learn</h2>
-                    <div class="learning-outcomes">
-                        <div class="outcome-item">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            <span>Design and architect microservices systems</span>
-                        </div>
-                        <div class="outcome-item">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            <span>Containerize .NET applications with Docker</span>
-                        </div>
-                        <div class="outcome-item">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            <span>Orchestrate containers with Kubernetes</span>
-                        </div>
-                        <div class="outcome-item">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            <span>Implement async messaging with RabbitMQ</span>
-                        </div>
-                        <div class="outcome-item">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            <span>Build high-performance services with gRPC</span>
-                        </div>
-                        <div class="outcome-item">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            <span>Configure API gateways and service discovery</span>
-                        </div>
-                        <div class="outcome-item">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            <span>Implement distributed tracing and logging</span>
-                        </div>
-                        <div class="outcome-item">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            <span>Handle failures with resilience patterns</span>
-                        </div>
-                    </div>
-                </div>
+                <CourseLearningOutcomes>
+                    <CourseLearningOutcome Text="Design and architect microservices systems" />
+                    <CourseLearningOutcome Text="Containerize .NET applications with Docker" />
+                    <CourseLearningOutcome Text="Orchestrate containers with Kubernetes" />
+                    <CourseLearningOutcome Text="Implement async messaging with RabbitMQ" />
+                    <CourseLearningOutcome Text="Build high-performance services with gRPC" />
+                    <CourseLearningOutcome Text="Configure API gateways and service discovery" />
+                    <CourseLearningOutcome Text="Implement distributed tracing and logging" />
+                    <CourseLearningOutcome Text="Handle failures with resilience patterns" />
+                </CourseLearningOutcomes>
 
-                <div class="course-section">
-                    <h2>Course Curriculum</h2>
-                    <div class="lessons-list">
-                        @foreach (var lesson in Lessons)
-                        {
-                            <a href="/training/microservices-dotnet/lesson/@lesson.Number" class="lesson-card">
-                                <div class="lesson-number">@lesson.Number</div>
-                                <div class="lesson-info">
-                                    <h3>@lesson.Title</h3>
-                                    <p>@lesson.Description</p>
-                                </div>
-                                <div class="lesson-duration">@lesson.Duration</div>
-                            </a>
-                        }
-                    </div>
-                </div>
+                <CourseCurriculum 
+                    BaseUrl="/training/microservices-dotnet"
+                    Lessons="@_lessons" />
 
-                <div class="course-section">
-                    <h2>Prerequisites</h2>
-                    <ul class="prerequisites-list">
-                        <li>Strong experience with ASP.NET Core Web APIs</li>
-                        <li>Understanding of REST and HTTP fundamentals</li>
-                        <li>Familiarity with Entity Framework Core</li>
-                        <li>Basic knowledge of Docker concepts</li>
-                        <li>Experience with dependency injection</li>
-                        <li>Understanding of async/await patterns</li>
-                    </ul>
-                </div>
+                <CoursePrerequisites Prerequisites="@_prerequisites" />
             </main>
 
-            <aside class="course-sidebar">
-                <div class="sidebar-card">
-                    <h4>Course Progress</h4>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 0%"></div>
-                    </div>
-                    <p class="progress-text">0 of 28 lessons completed</p>
-                    <a href="/training/microservices-dotnet/lesson/1" class="btn btn-primary">Start Course</a>
-                </div>
-
-                <div class="sidebar-card">
-                    <h4>Course Includes</h4>
-                    <ul class="includes-list">
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polygon points="23 7 16 12 23 17 23 7"/>
-                                <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
-                            </svg>
-                            12 hours of content
-                        </li>
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                <polyline points="14 2 14 8 20 8"/>
-                            </svg>
-                            28 lessons
-                        </li>
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="16 18 22 12 16 6"/>
-                                <polyline points="8 6 2 12 8 18"/>
-                            </svg>
-                            15 hands-on exercises
-                        </li>
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                            </svg>
-                            Complete e-commerce microservices project
-                        </li>
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"/>
-                                <line x1="12" y1="8" x2="12" y2="12"/>
-                                <line x1="12" y1="16" x2="12.01" y2="16"/>
-                            </svg>
-                            Lifetime access
-                        </li>
-                    </ul>
-                </div>
-            </aside>
+            <CourseSidebar 
+                TotalLessons="28"
+                Duration="12 hours"
+                ExerciseCount="15"
+                ProjectDescription="Complete e-commerce microservices project"
+                StartUrl="/training/microservices-dotnet/lesson/1" />
         </div>
     </div>
 </section>
 
 @code {
-    private List<LessonInfo> Lessons { get; } = new()
-    {
+    private readonly List<CourseCurriculum.CourseLessonInfo> _lessons =
+    [
         // Foundations
         new(1, "Introduction to Microservices", "Understand microservices architecture, benefits, challenges, and when to use it.", "25 min"),
         new(2, "Monolith to Microservices", "Learn strategies for decomposing monolithic applications.", "30 min"),
@@ -254,8 +109,15 @@
         
         // Putting It Together
         new(28, "Building a Complete Microservices System", "Build an e-commerce system with all patterns applied.", "45 min")
-    };
+    ];
 
-    private record LessonInfo(int Number, string Title, string Description, string Duration);
+    private readonly List<string> _prerequisites =
+    [
+        "Strong experience with ASP.NET Core Web APIs",
+        "Understanding of REST and HTTP fundamentals",
+        "Familiarity with Entity Framework Core",
+        "Basic knowledge of Docker concepts",
+        "Experience with dependency injection",
+        "Understanding of async/await patterns"
+    ];
 }
-

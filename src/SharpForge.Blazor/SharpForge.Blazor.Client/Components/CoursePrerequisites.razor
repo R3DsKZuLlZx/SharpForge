@@ -1,0 +1,16 @@
+﻿@* Common component for course prerequisites section *@
+
+<div class="course-section">
+    <h2>Prerequisites</h2>
+    <ul class="prerequisites-list">
+        @foreach (var prereq in Prerequisites)
+        {
+            <li>@prereq</li>
+        }
+    </ul>
+</div>
+
+@code {
+    [Parameter] public List<string> Prerequisites { get; set; } = [];
+}
+
