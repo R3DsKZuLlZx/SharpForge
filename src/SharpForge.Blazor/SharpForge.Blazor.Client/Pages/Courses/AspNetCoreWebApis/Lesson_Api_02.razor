@@ -1,4 +1,4 @@
-﻿@page "/training/aspnet-core-web-apis/lesson/2"
+@page "/training/aspnet-core-web-apis/lesson/2"
 
 <PageTitle>Creating Your First API - ASP.NET Core Web APIs - SharpForge</PageTitle>
 <CodeHighlighter />
@@ -248,16 +248,11 @@ return StatusCode(500, "Something went wrong");</code></pre>
                 </section>
             </div>
 
-            <nav class="lesson-navigation">
-                <a href="/training/aspnet-core-web-apis/lesson/1" class="btn btn-secondary">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-                    Previous: Introduction
-                </a>
-                <a href="/training/aspnet-core-web-apis/lesson/3" class="btn btn-primary">
-                    Next: Routing Fundamentals
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                </a>
-            </nav>
+            <LessonFooter 
+                PreviousUrl="/training/aspnet-core-web-apis/lesson/1" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/aspnet-core-web-apis/lesson/3" 
+                NextText="Next Lesson" />
         </article>
     </main>
 </div>

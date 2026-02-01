@@ -1,4 +1,4 @@
-﻿@page "/training/aspnet-core-web-apis/lesson/10"
+@page "/training/aspnet-core-web-apis/lesson/10"
 <PageTitle>Authentication with JWT - ASP.NET Core Web APIs - SharpForge</PageTitle>
 <CodeHighlighter />
 <div class="lesson-layout">
@@ -69,7 +69,11 @@ public IActionResult Delete(int id) { }
 public ActionResult GetPublic() { }</code></pre></section>
                 <section class="lesson-section"><h2>Key Takeaways</h2><div class="key-takeaways"><div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>JWT tokens are self-contained and stateless.</span></div><div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Store secret keys in configuration, never in code.</span></div><div class="takeaway"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span>Use [Authorize] to protect endpoints.</span></div></div></section>
             </div>
-            <nav class="lesson-navigation"><a href="/training/aspnet-core-web-apis/lesson/9" class="btn btn-secondary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Previous</a><a href="/training/aspnet-core-web-apis/lesson/11" class="btn btn-primary">Next: Authorization<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a></nav>
+            <LessonFooter 
+                PreviousUrl="/training/aspnet-core-web-apis/lesson/9" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/aspnet-core-web-apis/lesson/11" 
+                NextText="Next Lesson" />
         </article>
     </main>
 </div>

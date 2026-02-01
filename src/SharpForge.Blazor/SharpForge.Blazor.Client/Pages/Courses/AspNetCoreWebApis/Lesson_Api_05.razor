@@ -1,4 +1,4 @@
-﻿@page "/training/aspnet-core-web-apis/lesson/5"
+@page "/training/aspnet-core-web-apis/lesson/5"
 <PageTitle>Model Binding and Validation - ASP.NET Core Web APIs - SharpForge</PageTitle>
 <CodeHighlighter />
 
@@ -156,10 +156,11 @@ builder.Services.AddValidatorsFromAssemblyContaining&lt;CreateProductDtoValidato
                     </div>
                 </section>
             </div>
-            <nav class="lesson-navigation">
-                <a href="/training/aspnet-core-web-apis/lesson/4" class="btn btn-secondary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Previous</a>
-                <a href="/training/aspnet-core-web-apis/lesson/6" class="btn btn-primary">Next: Dependency Injection<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a>
-            </nav>
+            <LessonFooter 
+                PreviousUrl="/training/aspnet-core-web-apis/lesson/4" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/aspnet-core-web-apis/lesson/6" 
+                NextText="Next Lesson" />
         </article>
     </main>
 </div>
