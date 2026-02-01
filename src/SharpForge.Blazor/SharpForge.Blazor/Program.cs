@@ -8,6 +8,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddScoped<ThemeService>();
+builder.Services.AddScoped<CourseProgressService>();
 
 var app = builder.Build();
 

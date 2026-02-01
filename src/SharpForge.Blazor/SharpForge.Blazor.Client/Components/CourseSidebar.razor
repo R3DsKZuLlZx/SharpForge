@@ -67,6 +67,7 @@
 
     private int _completedLessons;
     private int[] _completedLessonNumbers = [];
+    private bool _hasLoadedProgress;
 
     private int ProgressPercent => TotalLessons > 0 ? (_completedLessons * 100) / TotalLessons : 0;
     
@@ -85,16 +86,28 @@
         return TotalLessons;
     }
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         ProgressService.OnProgressChanged += HandleProgressChanged;
-        await LoadProgressAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await LoadProgressAsync();
+            _hasLoadedProgress = true;
+            StateHasChanged();
+        }
     }
 
     private async void HandleProgressChanged()
     {
-        await LoadProgressAsync();
-        await InvokeAsync(StateHasChanged);
+        if (_hasLoadedProgress)
+        {
+            await LoadProgressAsync();
+            await InvokeAsync(StateHasChanged);
+        }
     }
 
     private async Task LoadProgressAsync()
