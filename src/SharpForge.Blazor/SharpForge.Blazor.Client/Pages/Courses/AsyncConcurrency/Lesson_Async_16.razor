@@ -1,4 +1,4 @@
-﻿@page "/training/async-concurrency/lesson/16"
+@page "/training/async-concurrency/lesson/16"
 <PageTitle>Debugging and Profiling Async Code - Async/Await & Concurrency - SharpForge</PageTitle>
 <CodeHighlighter />
 
@@ -119,7 +119,12 @@ dotnet trace collect --process-id &lt;pid&gt; --duration 00:00:30
                     </div>
                 </section>
             </div>
-            <nav class="lesson-navigation"><a href="/training/async-concurrency/lesson/15" class="btn btn-secondary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Previous: Pitfalls</a><a href="/training" class="btn btn-primary">Back to Courses<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a></nav>
+            <LessonFooter 
+                PreviousUrl="/training/async-concurrency/lesson/15" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/async-concurrency" 
+                NextText="Back to Course"
+                ShowHomeIcon="true" />
         </article>
     </main>
 </div>

@@ -1,4 +1,4 @@
-﻿@page "/training/async-concurrency/lesson/5"
+@page "/training/async-concurrency/lesson/5"
 <PageTitle>Task Combinators - Async/Await & Concurrency - SharpForge</PageTitle>
 <CodeHighlighter />
 
@@ -111,7 +111,11 @@ public async Task ProcessAllAsync(IEnumerable&lt;string&gt; urls, int maxConcurr
                     </div>
                 </section>
             </div>
-            <nav class="lesson-navigation"><a href="/training/async-concurrency/lesson/4" class="btn btn-secondary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Previous</a><a href="/training/async-concurrency/lesson/6" class="btn btn-primary">Next: Cancellation<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a></nav>
+            <LessonFooter 
+                PreviousUrl="/training/async-concurrency/lesson/4" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/async-concurrency/lesson/6" 
+                NextText="Next Lesson" />
         </article>
     </main>
 </div>
