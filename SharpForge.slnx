@@ -1,7 +1,5 @@
 <Solution>
   <Folder Name="/src/">
-    <Project Path="src/SharpForge.Blazor/SharpForge.Blazor.Client/SharpForge.Blazor.Client.csproj" />
-    <Project Path="src/SharpForge.Blazor/SharpForge.Blazor/SharpForge.Blazor.csproj" />
     <Project Path="src/SharpForge.Client/SharpForge.Client.csproj" />
   </Folder>
 </Solution>
