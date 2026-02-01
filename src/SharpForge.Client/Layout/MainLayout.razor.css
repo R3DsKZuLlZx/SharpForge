@@ -104,6 +104,13 @@
     overflow: visible;
 }
 
+/* Mobile Actions Container */
+.mobile-actions {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 /* Animated Hamburger Icon */
 .hamburger-icon {
     display: flex;
@@ -316,8 +323,12 @@
 /* Responsive */
 @media (max-width: 768px) {
     .nav-main,
-    .header-actions .github-link {
+    .header-actions {
         display: none;
+    }
+
+    .mobile-actions {
+        display: flex;
     }
 
     .mobile-menu-toggle {

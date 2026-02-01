@@ -34,13 +34,16 @@
                 </a>
             </div>
             
-            <button class="mobile-menu-toggle" @onclick="ToggleMobileMenu" aria-label="Toggle menu">
-                <span class="hamburger-icon @(_mobileMenuOpen ? "open" : "")">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </span>
-            </button>
+            <div class="mobile-actions">
+                <ThemeToggle />
+                <button class="mobile-menu-toggle" @onclick="ToggleMobileMenu" aria-label="Toggle menu">
+                    <span class="hamburger-icon @(_mobileMenuOpen ? "open" : "")">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </button>
+            </div>
         </div>
         
         <div class="mobile-menu @(_mobileMenuOpen ? "open" : "")">
