@@ -1,4 +1,6 @@
 ﻿@* Common footer component for lesson pages *@
+@inject CourseProgressService ProgressService
+@inject NavigationManager NavigationManager
 
 <footer class="lesson-footer">
     <div class="lesson-nav-buttons">
@@ -8,7 +10,7 @@
             </svg>
             @PreviousText
         </a>
-        <a href="@NextUrl" class="btn btn-primary">
+        <button type="button" class="btn btn-primary" @onclick="HandleNextClickAsync">
             @NextText
             @if (ShowHomeIcon)
             {
@@ -23,7 +25,7 @@
                     <polyline points="9 18 15 12 9 6"/>
                 </svg>
             }
-        </a>
+        </button>
     </div>
 </footer>
 
@@ -33,5 +35,25 @@
     [Parameter] public string NextUrl { get; set; } = "#";
     [Parameter] public string NextText { get; set; } = "Next";
     [Parameter] public bool ShowHomeIcon { get; set; } = false;
+
+    private async Task HandleNextClickAsync()
+    {
+        // Parse the current URL to get CourseId and LessonNumber
+        // URL format: /training/{courseId}/lesson/{lessonNumber}
+        var uri = new Uri(NavigationManager.Uri);
+        var segments = uri.AbsolutePath.Trim('/').Split('/');
+        
+        if (segments.Length >= 4 && segments[0] == "training" && segments[2] == "lesson")
+        {
+            var courseId = segments[1];
+            if (int.TryParse(segments[3], out var lessonNumber))
+            {
+                await ProgressService.MarkLessonCompleteAsync(courseId, lessonNumber);
+            }
+        }
+        
+        // Navigate to the next lesson/page
+        NavigationManager.NavigateTo(NextUrl);
+    }
 }
 

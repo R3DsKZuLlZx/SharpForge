@@ -1,4 +1,6 @@
 ﻿@* Common component for course sidebar *@
+@inject CourseProgressService ProgressService
+@implements IDisposable
 
 <aside class="course-sidebar">
     <div class="sidebar-card">
@@ -6,8 +8,8 @@
         <div class="progress-bar">
             <div class="progress-fill" style="width: @(ProgressPercent)%"></div>
         </div>
-        <p class="progress-text">@CompletedLessons of @TotalLessons lessons completed</p>
-        <a href="@StartUrl" class="btn btn-primary">@(CompletedLessons > 0 ? "Continue Course" : "Start Course")</a>
+        <p class="progress-text">@_completedLessons of @TotalLessons lessons completed</p>
+        <a href="@ContinueUrl" class="btn btn-primary">@(_completedLessons > 0 ? "Continue Course" : "Start Course")</a>
     </div>
 
     <div class="sidebar-card">
@@ -56,13 +58,57 @@
 </aside>
 
 @code {
-    [Parameter] public int CompletedLessons { get; set; } = 0;
+    [Parameter, EditorRequired] public string CourseId { get; set; } = "";
     [Parameter] public int TotalLessons { get; set; }
     [Parameter] public string Duration { get; set; } = "";
     [Parameter] public int ExerciseCount { get; set; }
     [Parameter] public string ProjectDescription { get; set; } = "";
     [Parameter] public string StartUrl { get; set; } = "#";
 
-    private int ProgressPercent => TotalLessons > 0 ? (CompletedLessons * 100) / TotalLessons : 0;
+    private int _completedLessons;
+    private int[] _completedLessonNumbers = [];
+
+    private int ProgressPercent => TotalLessons > 0 ? (_completedLessons * 100) / TotalLessons : 0;
+    
+    private string ContinueUrl => _completedLessons > 0 && _completedLessons < TotalLessons
+        ? $"{StartUrl.TrimEnd('1').TrimEnd('/')}/{GetNextLessonNumber()}"
+        : StartUrl;
+
+    private int GetNextLessonNumber()
+    {
+        // Find the first incomplete lesson
+        for (int i = 1; i <= TotalLessons; i++)
+        {
+            if (!_completedLessonNumbers.Contains(i))
+                return i;
+        }
+        return TotalLessons;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ProgressService.OnProgressChanged += HandleProgressChanged;
+        await LoadProgressAsync();
+    }
+
+    private async void HandleProgressChanged()
+    {
+        await LoadProgressAsync();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task LoadProgressAsync()
+    {
+        if (!string.IsNullOrEmpty(CourseId))
+        {
+            _completedLessonNumbers = await ProgressService.GetCompletedLessonsAsync(CourseId);
+            _completedLessons = _completedLessonNumbers.Length;
+        }
+    }
+
+    public void Dispose()
+    {
+        ProgressService.OnProgressChanged -= HandleProgressChanged;
+    }
 }
 
