@@ -54,7 +54,7 @@
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="15 18 9 12 15 6"/>
                         </svg>
-                        Previous
+                        <span class="pagination-text">Previous</span>
                     </button>
                     <div class="pagination-pages">
                         @for (int i = 1; i <= TotalPages; i++)
@@ -67,7 +67,7 @@
                         }
                     </div>
                     <button class="pagination-btn" disabled="@(CurrentPage == TotalPages)" @onclick="NextPage">
-                        Next
+                        <span class="pagination-text">Next</span>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="9 18 15 12 9 6"/>
                         </svg>
