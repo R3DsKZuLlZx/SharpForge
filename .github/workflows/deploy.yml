@@ -25,6 +25,7 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.0.x'
+          include-prerelease: true
 
       - name: Restore dependencies
         run: dotnet restore src/SharpForge.Client/SharpForge.Client.csproj
@@ -40,9 +41,32 @@ jobs:
       - name: Add .nojekyll
         run: touch release/wwwroot/.nojekyll
 
+      # Debug: List published files
+      - name: List published files
+        run: |
+          echo "=== wwwroot contents ==="
+          ls -la release/wwwroot/
+          echo "=== _framework contents ==="
+          ls -la release/wwwroot/_framework/ | head -20
+
       # Update base href for GitHub Pages (repo name becomes the base path)
       - name: Update base href
-        run: sed -i 's|<base href="/"/>|<base href="/${{ github.event.repository.name }}/"/>|g' release/wwwroot/index.html release/wwwroot/404.html
+        run: |
+          sed -i 's|<base href="/"|<base href="/${{ github.event.repository.name }}/"|g' release/wwwroot/index.html release/wwwroot/404.html
+          echo "Updated base href to: /${{ github.event.repository.name }}/"
+          grep -i "base href" release/wwwroot/index.html
+
+      # Update blazor.webassembly.js reference with fingerprinted filename
+      - name: Update Blazor script reference
+        run: |
+          BLAZOR_JS=$(ls release/wwwroot/_framework/blazor.webassembly.*.js 2>/dev/null | head -1 | xargs basename)
+          if [ -n "$BLAZOR_JS" ]; then
+            echo "Found fingerprinted Blazor JS: $BLAZOR_JS"
+            sed -i "s|_framework/blazor.webassembly.js|_framework/$BLAZOR_JS|g" release/wwwroot/index.html release/wwwroot/404.html
+            grep -i "blazor.webassembly" release/wwwroot/index.html
+          else
+            echo "No fingerprinted Blazor JS found, using default"
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
