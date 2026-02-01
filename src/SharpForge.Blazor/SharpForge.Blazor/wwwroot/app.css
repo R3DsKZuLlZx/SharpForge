@@ -247,6 +247,17 @@ code[class*="language-"] {
     text-shadow: none !important;
 }
 
+/* Code block text color - theme dependent */
+[data-theme="dark"] pre[class*="language-"],
+[data-theme="dark"] code[class*="language-"] {
+    color: #d4d4d4 !important;
+}
+
+[data-theme="light"] pre[class*="language-"],
+[data-theme="light"] code[class*="language-"] {
+    color: #393a34 !important;
+}
+
 pre[class*="language-"] {
     background: var(--code-bg) !important;
     border: 1px solid var(--code-border);
