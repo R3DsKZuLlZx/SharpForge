@@ -3,10 +3,11 @@
 <CodeHighlighter />
 
 <div class="lesson-layout">
-    <aside class="lesson-sidebar">
-        <div class="sidebar-header"><a href="/training/blazor-webassembly" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Course Overview</a><h3>Blazor WebAssembly</h3></div>
-        <nav class="lesson-nav"><a href="/training/blazor-webassembly/lesson/1" class="lesson-nav-item"><span class="lesson-num">1</span><span>Introduction</span></a><a href="/training/blazor-webassembly/lesson/2" class="lesson-nav-item"><span class="lesson-num">2</span><span>Project Setup</span></a><a href="/training/blazor-webassembly/lesson/3" class="lesson-nav-item"><span class="lesson-num">3</span><span>Razor Components</span></a><a href="/training/blazor-webassembly/lesson/4" class="lesson-nav-item"><span class="lesson-num">4</span><span>Parameters</span></a><a href="/training/blazor-webassembly/lesson/5" class="lesson-nav-item"><span class="lesson-num">5</span><span>Events</span></a><a href="/training/blazor-webassembly/lesson/6" class="lesson-nav-item"><span class="lesson-num">6</span><span>Data Binding</span></a><a href="/training/blazor-webassembly/lesson/7" class="lesson-nav-item"><span class="lesson-num">7</span><span>Lifecycle</span></a><a href="/training/blazor-webassembly/lesson/8" class="lesson-nav-item"><span class="lesson-num">8</span><span>Routing</span></a><a href="/training/blazor-webassembly/lesson/9" class="lesson-nav-item"><span class="lesson-num">9</span><span>Forms</span></a><a href="/training/blazor-webassembly/lesson/10" class="lesson-nav-item"><span class="lesson-num">10</span><span>REST APIs</span></a><a href="/training/blazor-webassembly/lesson/11" class="lesson-nav-item active"><span class="lesson-num">11</span><span>State</span></a><a href="/training/blazor-webassembly/lesson/12" class="lesson-nav-item"><span class="lesson-num">12</span><span>JS Interop</span></a><a href="/training/blazor-webassembly/lesson/13" class="lesson-nav-item"><span class="lesson-num">13</span><span>Auth</span></a><a href="/training/blazor-webassembly/lesson/14" class="lesson-nav-item"><span class="lesson-num">14</span><span>Deployment</span></a></nav>
-    </aside>
+    <LessonSidebar 
+        CourseUrl="/training/blazor-webassembly"
+        CourseTitle="Blazor WebAssembly"
+        CurrentLesson="11"
+        Lessons="@_lessons" />
     <main class="lesson-content">
         <article class="lesson-article">
             <header class="lesson-header"><span class="lesson-number">Lesson 11</span><h1>State Management</h1><div class="lesson-meta"><span class="lesson-duration"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>35 min</span><span class="lesson-level intermediate">Intermediate</span></div></header>
@@ -150,3 +151,22 @@ builder.Services.AddBlazoredLocalStorage();</code></pre>
     </main>
 </div>
 
+@code {
+    private readonly List<LessonSidebar.LessonInfo> _lessons =
+    [
+        new() { Number = 1, Title = "Introduction to Blazor", Url = "/training/blazor-webassembly/lesson/1" },
+        new() { Number = 2, Title = "Components Basics", Url = "/training/blazor-webassembly/lesson/2" },
+        new() { Number = 3, Title = "Data Binding", Url = "/training/blazor-webassembly/lesson/3" },
+        new() { Number = 4, Title = "Event Handling", Url = "/training/blazor-webassembly/lesson/4" },
+        new() { Number = 5, Title = "Component Parameters", Url = "/training/blazor-webassembly/lesson/5" },
+        new() { Number = 6, Title = "Layouts and Routing", Url = "/training/blazor-webassembly/lesson/6" },
+        new() { Number = 7, Title = "Forms and Validation", Url = "/training/blazor-webassembly/lesson/7" },
+        new() { Number = 8, Title = "Dependency Injection", Url = "/training/blazor-webassembly/lesson/8" },
+        new() { Number = 9, Title = "HTTP and API Calls", Url = "/training/blazor-webassembly/lesson/9" },
+        new() { Number = 10, Title = "State Management", Url = "/training/blazor-webassembly/lesson/10" },
+        new() { Number = 11, Title = "JavaScript Interop", Url = "/training/blazor-webassembly/lesson/11" },
+        new() { Number = 12, Title = "Authentication", Url = "/training/blazor-webassembly/lesson/12" },
+        new() { Number = 13, Title = "Performance", Url = "/training/blazor-webassembly/lesson/13" },
+        new() { Number = 14, Title = "Deployment", Url = "/training/blazor-webassembly/lesson/14" }
+    ];
+}

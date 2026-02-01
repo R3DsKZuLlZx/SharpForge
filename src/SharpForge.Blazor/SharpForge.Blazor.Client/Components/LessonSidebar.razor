@@ -1,0 +1,38 @@
+﻿@* Common component for lesson sidebar navigation *@
+
+<aside class="lesson-sidebar">
+    <div class="sidebar-header">
+        <a href="@CourseUrl" class="back-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"/>
+            </svg>
+            Course Overview
+        </a>
+        <h3>@CourseTitle</h3>
+    </div>
+    <nav class="lesson-nav">
+        @foreach (var lesson in Lessons)
+        {
+            var isActive = lesson.Number == CurrentLesson;
+            <a href="@lesson.Url" class="lesson-nav-item @(isActive ? "active" : "")">
+                <span class="lesson-num">@lesson.Number</span>
+                <span>@lesson.Title</span>
+            </a>
+        }
+    </nav>
+</aside>
+
+@code {
+    [Parameter] public string CourseUrl { get; set; } = "#";
+    [Parameter] public string CourseTitle { get; set; } = "";
+    [Parameter] public int CurrentLesson { get; set; } = 1;
+    [Parameter] public List<LessonInfo> Lessons { get; set; } = new();
+
+    public class LessonInfo
+    {
+        public int Number { get; set; }
+        public string Title { get; set; } = "";
+        public string Url { get; set; } = "#";
+    }
+}
+

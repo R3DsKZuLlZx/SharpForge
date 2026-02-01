@@ -4,68 +4,11 @@
 <CodeHighlighter />
 
 <div class="lesson-layout">
-    <aside class="lesson-sidebar">
-        <div class="sidebar-header">
-            <a href="/training/csharp-fundamentals" class="back-link">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="15 18 9 12 15 6"/>
-                </svg>
-                Course Overview
-            </a>
-            <h3>C# Fundamentals</h3>
-        </div>
-        <nav class="lesson-nav">
-            <a href="/training/csharp-fundamentals/lesson/1" class="lesson-nav-item completed">
-                <span class="lesson-num">1</span>
-                <span>Introduction to C# and .NET</span>
-            </a>
-            <a href="/training/csharp-fundamentals/lesson/2" class="lesson-nav-item completed">
-                <span class="lesson-num">2</span>
-                <span>Your First C# Program</span>
-            </a>
-            <a href="/training/csharp-fundamentals/lesson/3" class="lesson-nav-item active">
-                <span class="lesson-num">3</span>
-                <span>Variables and Data Types</span>
-            </a>
-            <a href="/training/csharp-fundamentals/lesson/4" class="lesson-nav-item">
-                <span class="lesson-num">4</span>
-                <span>Operators and Expressions</span>
-            </a>
-            <a href="/training/csharp-fundamentals/lesson/5" class="lesson-nav-item">
-                <span class="lesson-num">5</span>
-                <span>Control Flow: Conditionals</span>
-            </a>
-            <a href="/training/csharp-fundamentals/lesson/6" class="lesson-nav-item">
-                <span class="lesson-num">6</span>
-                <span>Control Flow: Loops</span>
-            </a>
-            <a href="/training/csharp-fundamentals/lesson/7" class="lesson-nav-item">
-                <span class="lesson-num">7</span>
-                <span>Methods and Parameters</span>
-            </a>
-            <a href="/training/csharp-fundamentals/lesson/8" class="lesson-nav-item">
-                <span class="lesson-num">8</span>
-                <span>Arrays and Collections</span>
-            </a>
-            <a href="/training/csharp-fundamentals/lesson/9" class="lesson-nav-item">
-                <span class="lesson-num">9</span>
-                <span>Introduction to OOP: Classes</span>
-            </a>
-            <a href="/training/csharp-fundamentals/lesson/10" class="lesson-nav-item">
-                <span class="lesson-num">10</span>
-                <span>OOP: Inheritance and Polymorphism</span>
-            </a>
-            <a href="/training/csharp-fundamentals/lesson/11" class="lesson-nav-item">
-                <span class="lesson-num">11</span>
-                <span>Exception Handling</span>
-            </a>
-            <a href="/training/csharp-fundamentals/lesson/12" class="lesson-nav-item">
-                <span class="lesson-num">12</span>
-                <span>LINQ Basics</span>
-            </a>
-        </nav>
-    </aside>
-
+    <LessonSidebar 
+        CourseUrl="/training/csharp-fundamentals"
+        CourseTitle="C# Fundamentals"
+        CurrentLesson="3"
+        Lessons="@_lessons" />
     <main class="lesson-content">
         <article class="lesson-article">
             <header class="lesson-header">
@@ -509,3 +452,20 @@ var x = default(int);      // 0</code></pre>
     </main>
 </div>
 
+@code {
+    private readonly List<LessonSidebar.LessonInfo> _lessons =
+    [
+        new() { Number = 1, Title = "Introduction to C# and .NET", Url = "/training/csharp-fundamentals/lesson/1" },
+        new() { Number = 2, Title = "Your First C# Program", Url = "/training/csharp-fundamentals/lesson/2" },
+        new() { Number = 3, Title = "Variables and Data Types", Url = "/training/csharp-fundamentals/lesson/3" },
+        new() { Number = 4, Title = "Operators and Expressions", Url = "/training/csharp-fundamentals/lesson/4" },
+        new() { Number = 5, Title = "Control Flow: Conditionals", Url = "/training/csharp-fundamentals/lesson/5" },
+        new() { Number = 6, Title = "Control Flow: Loops", Url = "/training/csharp-fundamentals/lesson/6" },
+        new() { Number = 7, Title = "Methods and Parameters", Url = "/training/csharp-fundamentals/lesson/7" },
+        new() { Number = 8, Title = "Arrays and Collections", Url = "/training/csharp-fundamentals/lesson/8" },
+        new() { Number = 9, Title = "Introduction to OOP: Classes", Url = "/training/csharp-fundamentals/lesson/9" },
+        new() { Number = 10, Title = "OOP: Inheritance and Polymorphism", Url = "/training/csharp-fundamentals/lesson/10" },
+        new() { Number = 11, Title = "Exception Handling", Url = "/training/csharp-fundamentals/lesson/11" },
+        new() { Number = 12, Title = "LINQ Basics", Url = "/training/csharp-fundamentals/lesson/12" }
+    ];
+}

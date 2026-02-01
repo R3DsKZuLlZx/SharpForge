@@ -4,38 +4,11 @@
 <CodeHighlighter />
 
 <div class="lesson-layout">
-    <aside class="lesson-sidebar">
-        <div class="sidebar-header">
-            <a href="/training/aspnet-core-web-apis" class="back-link">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="15 18 9 12 15 6"/>
-                </svg>
-                Course Overview
-            </a>
-            <h3>ASP.NET Core Web APIs</h3>
-        </div>
-        <nav class="lesson-nav">
-            <a href="/training/aspnet-core-web-apis/lesson/1" class="lesson-nav-item active"><span class="lesson-num">1</span><span>Introduction to ASP.NET Core</span></a>
-            <a href="/training/aspnet-core-web-apis/lesson/2" class="lesson-nav-item"><span class="lesson-num">2</span><span>Creating Your First API</span></a>
-            <a href="/training/aspnet-core-web-apis/lesson/3" class="lesson-nav-item"><span class="lesson-num">3</span><span>Routing Fundamentals</span></a>
-            <a href="/training/aspnet-core-web-apis/lesson/4" class="lesson-nav-item"><span class="lesson-num">4</span><span>Controllers and Actions</span></a>
-            <a href="/training/aspnet-core-web-apis/lesson/5" class="lesson-nav-item"><span class="lesson-num">5</span><span>Model Binding and Validation</span></a>
-            <a href="/training/aspnet-core-web-apis/lesson/6" class="lesson-nav-item"><span class="lesson-num">6</span><span>Dependency Injection</span></a>
-            <a href="/training/aspnet-core-web-apis/lesson/7" class="lesson-nav-item"><span class="lesson-num">7</span><span>Middleware Pipeline</span></a>
-            <a href="/training/aspnet-core-web-apis/lesson/8" class="lesson-nav-item"><span class="lesson-num">8</span><span>Entity Framework Core Basics</span></a>
-            <a href="/training/aspnet-core-web-apis/lesson/9" class="lesson-nav-item"><span class="lesson-num">9</span><span>Repository Pattern</span></a>
-            <a href="/training/aspnet-core-web-apis/lesson/10" class="lesson-nav-item"><span class="lesson-num">10</span><span>Authentication with JWT</span></a>
-            <a href="/training/aspnet-core-web-apis/lesson/11" class="lesson-nav-item"><span class="lesson-num">11</span><span>Authorization Policies</span></a>
-            <a href="/training/aspnet-core-web-apis/lesson/12" class="lesson-nav-item"><span class="lesson-num">12</span><span>Error Handling</span></a>
-            <a href="/training/aspnet-core-web-apis/lesson/13" class="lesson-nav-item"><span class="lesson-num">13</span><span>Logging and Monitoring</span></a>
-            <a href="/training/aspnet-core-web-apis/lesson/14" class="lesson-nav-item"><span class="lesson-num">14</span><span>API Versioning</span></a>
-            <a href="/training/aspnet-core-web-apis/lesson/15" class="lesson-nav-item"><span class="lesson-num">15</span><span>Swagger and OpenAPI</span></a>
-            <a href="/training/aspnet-core-web-apis/lesson/16" class="lesson-nav-item"><span class="lesson-num">16</span><span>Minimal APIs</span></a>
-            <a href="/training/aspnet-core-web-apis/lesson/17" class="lesson-nav-item"><span class="lesson-num">17</span><span>Testing Your APIs</span></a>
-            <a href="/training/aspnet-core-web-apis/lesson/18" class="lesson-nav-item"><span class="lesson-num">18</span><span>Deployment and Docker</span></a>
-        </nav>
-    </aside>
-
+    <LessonSidebar 
+        CourseUrl="/training/aspnet-core-web-apis"
+        CourseTitle="ASP.NET Core Web APIs"
+        CurrentLesson="1"
+        Lessons="@_lessons" />
     <main class="lesson-content">
         <article class="lesson-article">
             <header class="lesson-header">
@@ -274,3 +247,26 @@ DELETE /api/products/5       # Delete product 5</code></pre>
     </main>
 </div>
 
+@code {
+    private readonly List<LessonSidebar.LessonInfo> _lessons =
+    [
+        new() { Number = 1, Title = "Introduction to Web APIs", Url = "/training/aspnet-core-web-apis/lesson/1" },
+        new() { Number = 2, Title = "Creating Your First API", Url = "/training/aspnet-core-web-apis/lesson/2" },
+        new() { Number = 3, Title = "Routing and Endpoints", Url = "/training/aspnet-core-web-apis/lesson/3" },
+        new() { Number = 4, Title = "Model Binding", Url = "/training/aspnet-core-web-apis/lesson/4" },
+        new() { Number = 5, Title = "Validation", Url = "/training/aspnet-core-web-apis/lesson/5" },
+        new() { Number = 6, Title = "Dependency Injection", Url = "/training/aspnet-core-web-apis/lesson/6" },
+        new() { Number = 7, Title = "Entity Framework Core", Url = "/training/aspnet-core-web-apis/lesson/7" },
+        new() { Number = 8, Title = "Repository Pattern", Url = "/training/aspnet-core-web-apis/lesson/8" },
+        new() { Number = 9, Title = "Error Handling", Url = "/training/aspnet-core-web-apis/lesson/9" },
+        new() { Number = 10, Title = "Authentication", Url = "/training/aspnet-core-web-apis/lesson/10" },
+        new() { Number = 11, Title = "Authorization", Url = "/training/aspnet-core-web-apis/lesson/11" },
+        new() { Number = 12, Title = "API Versioning", Url = "/training/aspnet-core-web-apis/lesson/12" },
+        new() { Number = 13, Title = "Caching", Url = "/training/aspnet-core-web-apis/lesson/13" },
+        new() { Number = 14, Title = "Rate Limiting", Url = "/training/aspnet-core-web-apis/lesson/14" },
+        new() { Number = 15, Title = "OpenAPI/Swagger", Url = "/training/aspnet-core-web-apis/lesson/15" },
+        new() { Number = 16, Title = "Testing APIs", Url = "/training/aspnet-core-web-apis/lesson/16" },
+        new() { Number = 17, Title = "Logging and Monitoring", Url = "/training/aspnet-core-web-apis/lesson/17" },
+        new() { Number = 18, Title = "Deployment", Url = "/training/aspnet-core-web-apis/lesson/18" }
+    ];
+}

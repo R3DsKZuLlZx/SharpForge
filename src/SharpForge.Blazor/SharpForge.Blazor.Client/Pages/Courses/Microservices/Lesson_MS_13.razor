@@ -3,10 +3,11 @@
 <CodeHighlighter />
 
 <div class="lesson-layout">
-    <aside class="lesson-sidebar">
-        <div class="sidebar-header"><a href="/training/microservices" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Course Overview</a><h3>Microservices with .NET</h3></div>
-        <nav class="lesson-nav"><a href="/training/microservices/lesson/1" class="lesson-nav-item"><span class="lesson-num">1</span><span>Intro</span></a><a href="/training/microservices/lesson/2" class="lesson-nav-item"><span class="lesson-num">2</span><span>Migration</span></a><a href="/training/microservices/lesson/3" class="lesson-nav-item"><span class="lesson-num">3</span><span>DDD</span></a><a href="/training/microservices/lesson/4" class="lesson-nav-item"><span class="lesson-num">4</span><span>Docker</span></a><a href="/training/microservices/lesson/5" class="lesson-nav-item"><span class="lesson-num">5</span><span>Dockerizing</span></a><a href="/training/microservices/lesson/6" class="lesson-nav-item"><span class="lesson-num">6</span><span>Compose</span></a><a href="/training/microservices/lesson/7" class="lesson-nav-item"><span class="lesson-num">7</span><span>HTTP</span></a><a href="/training/microservices/lesson/8" class="lesson-nav-item"><span class="lesson-num">8</span><span>gRPC</span></a><a href="/training/microservices/lesson/9" class="lesson-nav-item"><span class="lesson-num">9</span><span>Messaging</span></a><a href="/training/microservices/lesson/10" class="lesson-nav-item"><span class="lesson-num">10</span><span>RabbitMQ</span></a><a href="/training/microservices/lesson/11" class="lesson-nav-item"><span class="lesson-num">11</span><span>Events</span></a><a href="/training/microservices/lesson/12" class="lesson-nav-item"><span class="lesson-num">12</span><span>DB</span></a><a href="/training/microservices/lesson/13" class="lesson-nav-item active"><span class="lesson-num">13</span><span>Saga</span></a><a href="/training/microservices/lesson/14" class="lesson-nav-item"><span class="lesson-num">14</span><span>Outbox</span></a><a href="/training/microservices/lesson/15" class="lesson-nav-item"><span class="lesson-num">15</span><span>Gateway</span></a><a href="/training/microservices/lesson/16" class="lesson-nav-item"><span class="lesson-num">16</span><span>YARP</span></a><a href="/training/microservices/lesson/17" class="lesson-nav-item"><span class="lesson-num">17</span><span>Auth</span></a><a href="/training/microservices/lesson/18" class="lesson-nav-item"><span class="lesson-num">18</span><span>K8s</span></a><a href="/training/microservices/lesson/19" class="lesson-nav-item"><span class="lesson-num">19</span><span>Deploy</span></a><a href="/training/microservices/lesson/20" class="lesson-nav-item"><span class="lesson-num">20</span><span>Config</span></a><a href="/training/microservices/lesson/21" class="lesson-nav-item"><span class="lesson-num">21</span><span>Health</span></a><a href="/training/microservices/lesson/22" class="lesson-nav-item"><span class="lesson-num">22</span><span>Scale</span></a><a href="/training/microservices/lesson/23" class="lesson-nav-item"><span class="lesson-num">23</span><span>Logs</span></a><a href="/training/microservices/lesson/24" class="lesson-nav-item"><span class="lesson-num">24</span><span>Trace</span></a><a href="/training/microservices/lesson/25" class="lesson-nav-item"><span class="lesson-num">25</span><span>Metrics</span></a><a href="/training/microservices/lesson/26" class="lesson-nav-item"><span class="lesson-num">26</span><span>Resilience</span></a><a href="/training/microservices/lesson/27" class="lesson-nav-item"><span class="lesson-num">27</span><span>Polly</span></a><a href="/training/microservices/lesson/28" class="lesson-nav-item"><span class="lesson-num">28</span><span>Complete</span></a></nav>
-    </aside>
+    <LessonSidebar 
+        CourseUrl="/training/microservices"
+        CourseTitle="Microservices with .NET"
+        CurrentLesson="13"
+        Lessons="@_lessons" />
     <main class="lesson-content">
         <article class="lesson-article">
             <header class="lesson-header"><span class="lesson-number">Lesson 13</span><h1>Saga Pattern</h1><div class="lesson-meta"><span class="lesson-duration"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>35 min</span><span class="lesson-level advanced">Advanced</span></div></header>
@@ -89,3 +90,36 @@ If Step 2 fails → Run Compensate for Step 1</code></pre>
     </main>
 </div>
 
+@code {
+    private readonly List<LessonSidebar.LessonInfo> _lessons =
+    [
+        new() { Number = 1, Title = "Introduction", Url = "/training/microservices/lesson/1" },
+        new() { Number = 2, Title = "Monolith to Microservices", Url = "/training/microservices/lesson/2" },
+        new() { Number = 3, Title = "DDD Basics", Url = "/training/microservices/lesson/3" },
+        new() { Number = 4, Title = "Docker Fundamentals", Url = "/training/microservices/lesson/4" },
+        new() { Number = 5, Title = "Dockerizing .NET", Url = "/training/microservices/lesson/5" },
+        new() { Number = 6, Title = "Docker Compose", Url = "/training/microservices/lesson/6" },
+        new() { Number = 7, Title = "HTTP Communication", Url = "/training/microservices/lesson/7" },
+        new() { Number = 8, Title = "gRPC", Url = "/training/microservices/lesson/8" },
+        new() { Number = 9, Title = "Async Messaging", Url = "/training/microservices/lesson/9" },
+        new() { Number = 10, Title = "RabbitMQ", Url = "/training/microservices/lesson/10" },
+        new() { Number = 11, Title = "Event Sourcing", Url = "/training/microservices/lesson/11" },
+        new() { Number = 12, Title = "Database per Service", Url = "/training/microservices/lesson/12" },
+        new() { Number = 13, Title = "Saga Pattern", Url = "/training/microservices/lesson/13" },
+        new() { Number = 14, Title = "Outbox Pattern", Url = "/training/microservices/lesson/14" },
+        new() { Number = 15, Title = "API Gateway", Url = "/training/microservices/lesson/15" },
+        new() { Number = 16, Title = "YARP", Url = "/training/microservices/lesson/16" },
+        new() { Number = 17, Title = "Authentication", Url = "/training/microservices/lesson/17" },
+        new() { Number = 18, Title = "Kubernetes Basics", Url = "/training/microservices/lesson/18" },
+        new() { Number = 19, Title = "Deploying to K8s", Url = "/training/microservices/lesson/19" },
+        new() { Number = 20, Title = "ConfigMaps & Secrets", Url = "/training/microservices/lesson/20" },
+        new() { Number = 21, Title = "Health Checks", Url = "/training/microservices/lesson/21" },
+        new() { Number = 22, Title = "Scaling", Url = "/training/microservices/lesson/22" },
+        new() { Number = 23, Title = "Centralized Logging", Url = "/training/microservices/lesson/23" },
+        new() { Number = 24, Title = "Distributed Tracing", Url = "/training/microservices/lesson/24" },
+        new() { Number = 25, Title = "Metrics", Url = "/training/microservices/lesson/25" },
+        new() { Number = 26, Title = "Resilience Patterns", Url = "/training/microservices/lesson/26" },
+        new() { Number = 27, Title = "Polly", Url = "/training/microservices/lesson/27" },
+        new() { Number = 28, Title = "Complete System", Url = "/training/microservices/lesson/28" }
+    ];
+}

@@ -3,10 +3,11 @@
 <CodeHighlighter />
 
 <div class="lesson-layout">
-    <aside class="lesson-sidebar">
-        <div class="sidebar-header"><a href="/training/entity-framework-core" class="back-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Course Overview</a><h3>Entity Framework Core</h3></div>
-        <nav class="lesson-nav"><a href="/training/entity-framework-core/lesson/1" class="lesson-nav-item"><span class="lesson-num">1</span><span>Introduction</span></a><a href="/training/entity-framework-core/lesson/2" class="lesson-nav-item"><span class="lesson-num">2</span><span>DbContext</span></a><a href="/training/entity-framework-core/lesson/3" class="lesson-nav-item"><span class="lesson-num">3</span><span>Entity Models</span></a><a href="/training/entity-framework-core/lesson/4" class="lesson-nav-item active"><span class="lesson-num">4</span><span>Migrations</span></a><a href="/training/entity-framework-core/lesson/5" class="lesson-nav-item"><span class="lesson-num">5</span><span>CRUD</span></a><a href="/training/entity-framework-core/lesson/6" class="lesson-nav-item"><span class="lesson-num">6</span><span>LINQ</span></a><a href="/training/entity-framework-core/lesson/7" class="lesson-nav-item"><span class="lesson-num">7</span><span>Relationships</span></a><a href="/training/entity-framework-core/lesson/8" class="lesson-nav-item"><span class="lesson-num">8</span><span>Loading Data</span></a><a href="/training/entity-framework-core/lesson/9" class="lesson-nav-item"><span class="lesson-num">9</span><span>Change Tracking</span></a><a href="/training/entity-framework-core/lesson/10" class="lesson-nav-item"><span class="lesson-num">10</span><span>Transactions</span></a><a href="/training/entity-framework-core/lesson/11" class="lesson-nav-item"><span class="lesson-num">11</span><span>Concurrency</span></a><a href="/training/entity-framework-core/lesson/12" class="lesson-nav-item"><span class="lesson-num">12</span><span>Performance</span></a></nav>
-    </aside>
+    <LessonSidebar 
+        CourseUrl="/training/entity-framework-core"
+        CourseTitle="Entity Framework Core"
+        CurrentLesson="4"
+        Lessons="@_lessons" />
     <main class="lesson-content">
         <article class="lesson-article">
             <header class="lesson-header"><span class="lesson-number">Lesson 4</span><h1>Migrations</h1><div class="lesson-meta"><span class="lesson-duration"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>30 min</span><span class="lesson-level intermediate">Intermediate</span></div></header>
@@ -121,3 +122,20 @@ if (context.Database.GetPendingMigrations().Any())
     </main>
 </div>
 
+@code {
+    private readonly List<LessonSidebar.LessonInfo> _lessons =
+    [
+        new() { Number = 1, Title = "Introduction to EF Core", Url = "/training/entity-framework-core/lesson/1" },
+        new() { Number = 2, Title = "DbContext and Models", Url = "/training/entity-framework-core/lesson/2" },
+        new() { Number = 3, Title = "Migrations", Url = "/training/entity-framework-core/lesson/3" },
+        new() { Number = 4, Title = "CRUD Operations", Url = "/training/entity-framework-core/lesson/4" },
+        new() { Number = 5, Title = "Querying Data", Url = "/training/entity-framework-core/lesson/5" },
+        new() { Number = 6, Title = "Relationships", Url = "/training/entity-framework-core/lesson/6" },
+        new() { Number = 7, Title = "Fluent API", Url = "/training/entity-framework-core/lesson/7" },
+        new() { Number = 8, Title = "Change Tracking", Url = "/training/entity-framework-core/lesson/8" },
+        new() { Number = 9, Title = "Transactions", Url = "/training/entity-framework-core/lesson/9" },
+        new() { Number = 10, Title = "Performance", Url = "/training/entity-framework-core/lesson/10" },
+        new() { Number = 11, Title = "Raw SQL", Url = "/training/entity-framework-core/lesson/11" },
+        new() { Number = 12, Title = "Testing with EF Core", Url = "/training/entity-framework-core/lesson/12" }
+    ];
+}

@@ -4,60 +4,11 @@
 <CodeHighlighter />
 
 <div class="lesson-layout">
-    <aside class="lesson-sidebar">
-        <div class="sidebar-header">
-            <a href="/training/getting-started-dotnet" class="back-link">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="15 18 9 12 15 6"/>
-                </svg>
-                Course Overview
-            </a>
-            <h3>Getting Started with .NET</h3>
-        </div>
-        <nav class="lesson-nav">
-            <a href="/training/getting-started-dotnet/lesson/1" class="lesson-nav-item active">
-                <span class="lesson-num">1</span>
-                <span>What is .NET?</span>
-            </a>
-            <a href="/training/getting-started-dotnet/lesson/2" class="lesson-nav-item">
-                <span class="lesson-num">2</span>
-                <span>Installing the .NET SDK</span>
-            </a>
-            <a href="/training/getting-started-dotnet/lesson/3" class="lesson-nav-item">
-                <span class="lesson-num">3</span>
-                <span>The .NET CLI</span>
-            </a>
-            <a href="/training/getting-started-dotnet/lesson/4" class="lesson-nav-item">
-                <span class="lesson-num">4</span>
-                <span>Project Structure and Files</span>
-            </a>
-            <a href="/training/getting-started-dotnet/lesson/5" class="lesson-nav-item">
-                <span class="lesson-num">5</span>
-                <span>NuGet Package Management</span>
-            </a>
-            <a href="/training/getting-started-dotnet/lesson/6" class="lesson-nav-item">
-                <span class="lesson-num">6</span>
-                <span>Building Console Applications</span>
-            </a>
-            <a href="/training/getting-started-dotnet/lesson/7" class="lesson-nav-item">
-                <span class="lesson-num">7</span>
-                <span>Configuration and Settings</span>
-            </a>
-            <a href="/training/getting-started-dotnet/lesson/8" class="lesson-nav-item">
-                <span class="lesson-num">8</span>
-                <span>Introduction to ASP.NET Core</span>
-            </a>
-            <a href="/training/getting-started-dotnet/lesson/9" class="lesson-nav-item">
-                <span class="lesson-num">9</span>
-                <span>Debugging and Troubleshooting</span>
-            </a>
-            <a href="/training/getting-started-dotnet/lesson/10" class="lesson-nav-item">
-                <span class="lesson-num">10</span>
-                <span>Publishing and Deployment</span>
-            </a>
-        </nav>
-    </aside>
-
+    <LessonSidebar 
+        CourseUrl="/training/getting-started-dotnet"
+        CourseTitle="Getting Started with .NET"
+        CurrentLesson="1"
+        Lessons="@_lessons" />
     <main class="lesson-content">
         <article class="lesson-article">
             <header class="lesson-header">
@@ -287,3 +238,18 @@ Console.WriteLine("Hello, .NET!");
     </main>
 </div>
 
+@code {
+    private readonly List<LessonSidebar.LessonInfo> _lessons =
+    [
+        new() { Number = 1, Title = "What is .NET?", Url = "/training/getting-started-dotnet/lesson/1" },
+        new() { Number = 2, Title = "Installing the .NET SDK", Url = "/training/getting-started-dotnet/lesson/2" },
+        new() { Number = 3, Title = "The .NET CLI", Url = "/training/getting-started-dotnet/lesson/3" },
+        new() { Number = 4, Title = "Project Structure and Files", Url = "/training/getting-started-dotnet/lesson/4" },
+        new() { Number = 5, Title = "NuGet Package Management", Url = "/training/getting-started-dotnet/lesson/5" },
+        new() { Number = 6, Title = "Building Console Applications", Url = "/training/getting-started-dotnet/lesson/6" },
+        new() { Number = 7, Title = "Configuration and Settings", Url = "/training/getting-started-dotnet/lesson/7" },
+        new() { Number = 8, Title = "Introduction to ASP.NET Core", Url = "/training/getting-started-dotnet/lesson/8" },
+        new() { Number = 9, Title = "Debugging and Troubleshooting", Url = "/training/getting-started-dotnet/lesson/9" },
+        new() { Number = 10, Title = "Publishing and Deployment", Url = "/training/getting-started-dotnet/lesson/10" }
+    ];
+}
