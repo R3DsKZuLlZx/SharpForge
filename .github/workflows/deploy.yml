@@ -56,17 +56,6 @@ jobs:
           echo "Updated base href to: /${{ github.event.repository.name }}/"
           grep -i "base href" release/wwwroot/index.html
 
-      # Update blazor.webassembly.js reference with fingerprinted filename
-      - name: Update Blazor script reference
-        run: |
-          BLAZOR_JS=$(ls release/wwwroot/_framework/blazor.webassembly.*.js 2>/dev/null | head -1 | xargs basename)
-          if [ -n "$BLAZOR_JS" ]; then
-            echo "Found fingerprinted Blazor JS: $BLAZOR_JS"
-            sed -i "s|_framework/blazor.webassembly.js|_framework/$BLAZOR_JS|g" release/wwwroot/index.html release/wwwroot/404.html
-            grep -i "blazor.webassembly" release/wwwroot/index.html
-          else
-            echo "No fingerprinted Blazor JS found, using default"
-          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

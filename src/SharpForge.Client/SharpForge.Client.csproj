@@ -4,7 +4,10 @@
         <TargetFramework>net10.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <OverrideHtmlAssetPlaceholders>true</OverrideHtmlAssetPlaceholders>
+        
+        <!-- Disable fingerprinting for simpler static hosting -->
+        <WasmFingerprintDotnetJs>false</WasmFingerprintDotnetJs>
+        <WasmFingerprintAssets>false</WasmFingerprintAssets>
         
         <!-- Production optimizations -->
         <BlazorEnableCompression>true</BlazorEnableCompression>
@@ -19,6 +22,13 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.2"/>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="10.0.2" PrivateAssets="all"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="publish_test\web.config" />
+      <_ContentIncludedByDefault Remove="publish_test\SharpForge.Client.runtimeconfig.json" />
+      <_ContentIncludedByDefault Remove="publish_test\SharpForge.Client.staticwebassets.endpoints.json" />
+      <_ContentIncludedByDefault Remove="publish_test\wwwroot\sample-data\weather.json" />
     </ItemGroup>
 
 </Project>
