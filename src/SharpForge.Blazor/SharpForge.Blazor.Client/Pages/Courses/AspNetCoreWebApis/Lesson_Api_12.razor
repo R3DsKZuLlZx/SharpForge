@@ -64,7 +64,11 @@ public class ValidationException : Exception
     public IDictionary&lt;string, string[]&gt; Errors { get; }
     public ValidationException(IDictionary&lt;string, string[]&gt; errors) => Errors = errors;
 }</code></pre></section>
-                <LessonTakeaways><LessonTakeaway>Use middleware for centralized error handling.</LessonTakeaway><LessonTakeaway>Return Problem Details format for consistency.</LessonTakeaway><LessonTakeaway>Never expose stack traces in production.</LessonTakeaway></LessonTakeaways>
+                <LessonTakeaways>
+                    <LessonTakeaway>Use middleware for centralized error handling.</LessonTakeaway>
+                    <LessonTakeaway>Return Problem Details format for consistency.</LessonTakeaway>
+                    <LessonTakeaway>Never expose stack traces in production.</LessonTakeaway>
+                </LessonTakeaways>
             </div>
             <LessonFooter 
                 PreviousUrl="/training/aspnet-core-web-apis/lesson/11" 

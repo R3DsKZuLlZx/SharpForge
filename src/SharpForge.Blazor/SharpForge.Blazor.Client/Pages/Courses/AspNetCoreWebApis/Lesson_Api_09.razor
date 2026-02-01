@@ -51,7 +51,11 @@ public class ProductRepository : Repository&lt;Product&gt;, IProductRepository
 }</code></pre></section>
                 <section class="lesson-section"><h2>Registration</h2><pre><code class="language-csharp">builder.Services.AddScoped(typeof(IRepository&lt;&gt;), typeof(Repository&lt;&gt;));
 builder.Services.AddScoped&lt;IProductRepository, ProductRepository&gt;();</code></pre></section>
-                <LessonTakeaways><LessonTakeaway>Repositories abstract data access from business logic.</LessonTakeaway><LessonTakeaway>Generic repositories reduce code duplication.</LessonTakeaway><LessonTakeaway>Extend generic repos for entity-specific queries.</LessonTakeaway></LessonTakeaways>
+                <LessonTakeaways>
+                    <LessonTakeaway>Repositories abstract data access from business logic.</LessonTakeaway>
+                    <LessonTakeaway>Generic repositories reduce code duplication.</LessonTakeaway>
+                    <LessonTakeaway>Extend generic repos for entity-specific queries.</LessonTakeaway>
+                </LessonTakeaways>
             </div>
             <LessonFooter 
                 PreviousUrl="/training/aspnet-core-web-apis/lesson/8" 

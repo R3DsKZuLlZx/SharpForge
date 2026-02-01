@@ -44,7 +44,11 @@ app.UseSerilogRequestLogging(options =>
 {
     options.MessageTemplate = "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000}ms";
 });</code></pre></section>
-                <LessonTakeaways><LessonTakeaway>Use structured logging with named placeholders.</LessonTakeaway><LessonTakeaway>Serilog provides powerful logging capabilities.</LessonTakeaway><LessonTakeaway>Log appropriate levels: Debug, Info, Warning, Error.</LessonTakeaway></LessonTakeaways>
+                <LessonTakeaways>
+                    <LessonTakeaway>Use structured logging with named placeholders.</LessonTakeaway>
+                    <LessonTakeaway>Serilog provides powerful logging capabilities.</LessonTakeaway>
+                    <LessonTakeaway>Log appropriate levels: Debug, Info, Warning, Error.</LessonTakeaway>
+                </LessonTakeaways>
             </div>
             <LessonFooter 
                 PreviousUrl="/training/aspnet-core-web-apis/lesson/12" 

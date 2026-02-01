@@ -67,7 +67,11 @@ public IActionResult Delete(int id) { }
 [AllowAnonymous]  // No authentication required
 [HttpGet("public")]
 public ActionResult GetPublic() { }</code></pre></section>
-                <LessonTakeaways><LessonTakeaway>JWT tokens are self-contained and stateless.</LessonTakeaway><LessonTakeaway>Store secret keys in configuration, never in code.</LessonTakeaway><LessonTakeaway>Use [Authorize] to protect endpoints.</LessonTakeaway></LessonTakeaways>
+                <LessonTakeaways>
+                    <LessonTakeaway>JWT tokens are self-contained and stateless.</LessonTakeaway>
+                    <LessonTakeaway>Store secret keys in configuration, never in code.</LessonTakeaway>
+                    <LessonTakeaway>Use [Authorize] to protect endpoints.</LessonTakeaway>
+                </LessonTakeaways>
             </div>
             <LessonFooter 
                 PreviousUrl="/training/aspnet-core-web-apis/lesson/9" 

@@ -87,11 +87,11 @@ var data = await httpClient.GetStringAsync(url);</code></pre>
                 </section>
 
                 <LessonTakeaways>
-                        <LessonTakeaway>Never use async void (except event handlers).</LessonTakeaway>
-                        <LessonTakeaway>Never block on async with .Result or .Wait().</LessonTakeaway>
-                        <LessonTakeaway>Use ConfigureAwait(false) in library code.</LessonTakeaway>
-                        <LessonTakeaway>Always pass CancellationToken through call chains.</LessonTakeaway>
-                    </LessonTakeaways>
+                    <LessonTakeaway>Never use async void (except event handlers).</LessonTakeaway>
+                    <LessonTakeaway>Never block on async with .Result or .Wait().</LessonTakeaway>
+                    <LessonTakeaway>Use ConfigureAwait(false) in library code.</LessonTakeaway>
+                    <LessonTakeaway>Always pass CancellationToken through call chains.</LessonTakeaway>
+                </LessonTakeaways>
             </div>
             <LessonFooter 
                 PreviousUrl="/training/async-concurrency/lesson/14" 
