@@ -1,0 +1,88 @@
+﻿@page "/training/microservices/lesson/14"
+<PageTitle>Outbox Pattern - Microservices with .NET - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <LessonSidebar 
+        CourseUrl="/training/microservices"
+        CourseTitle="Microservices with .NET"
+        CurrentLesson="14"
+        Lessons="CourseLessons.Microservices" />
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <LessonHeader 
+                LessonNumber="14"
+                Title="Outbox Pattern"
+                Duration="25 min"
+                Level="Advanced" />
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>The Problem</h2>
+                    <pre><code class="language-csharp">// ❌ Not atomic - what if message broker fails?
+await _dbContext.SaveChangesAsync();        // ✅ Saved
+await _messagebus.PublishAsync(event);      // ❌ Broker down = lost event!</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Outbox Solution</h2>
+                    <pre><code class="language-text">1. Save entity + outbox message in SAME transaction
+2. Background process reads outbox table
+3. Publishes messages to broker
+4. Marks messages as processed
+
+┌─────────────────────────────────────┐
+│         Database Transaction        │
+│  ┌────────┐    ┌─────────────────┐  │
+│  │ Orders │    │ OutboxMessages  │  │
+│  │  ...   │    │ - OrderPlaced   │  │
+│  └────────┘    └─────────────────┘  │
+└─────────────────────────────────────┘
+                    │
+                    ▼ Background Worker
+              ┌───────────┐
+              │  Broker   │
+              └───────────┘</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>MassTransit Outbox</h2>
+                    <pre><code class="language-csharp">// Program.cs
+builder.Services.AddMassTransit(x =&gt;
+{
+    x.AddEntityFrameworkOutbox&lt;AppDbContext&gt;(o =&gt;
+    {
+        o.UseSqlServer();
+        o.UseBusOutbox();
+    });
+    
+    x.UsingRabbitMq((context, cfg) =&gt;
+    {
+        cfg.ConfigureEndpoints(context);
+    });
+});
+
+// Usage - messages saved with transaction
+public async Task PlaceOrderAsync(Order order)
+{
+    _dbContext.Orders.Add(order);
+    
+    await _publishEndpoint.Publish(new OrderPlaced(order.Id));
+    
+    await _dbContext.SaveChangesAsync();  // Both saved atomically
+}</code></pre>
+                </section>
+
+                <LessonTakeaways>
+                    <LessonTakeaway>Outbox ensures at-least-once message delivery.</LessonTakeaway>
+                    <LessonTakeaway>Messages saved in same transaction as data.</LessonTakeaway>
+                    <LessonTakeaway>MassTransit has built-in EF Core outbox.</LessonTakeaway>
+                </LessonTakeaways>
+            </div>
+            <LessonFooter 
+                PreviousUrl="/training/microservices/lesson/13" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/microservices/lesson/15" 
+                NextText="Next Lesson" />
+        </article>
+    </main>
+</div>

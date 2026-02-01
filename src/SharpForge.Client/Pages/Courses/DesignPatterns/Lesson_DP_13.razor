@@ -1,0 +1,118 @@
+﻿@page "/training/design-patterns/lesson/13"
+<PageTitle>Decorator Pattern - Design Patterns in C# - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <LessonSidebar 
+        CourseUrl="/training/design-patterns"
+        CourseTitle="Design Patterns in C#"
+        CurrentLesson="13"
+        Lessons="CourseLessons.DesignPatterns" />
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <LessonHeader 
+                LessonNumber="13"
+                Title="Decorator Pattern"
+                Duration="30 min"
+                Level="Advanced" />
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Intent</h2>
+                    <p>Attach additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.</p>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Coffee Shop Example</h2>
+                    <pre><code class="language-csharp">public interface ICoffee
+{
+    string Description { get; }
+    decimal Cost { get; }
+}
+
+public class Espresso : ICoffee
+{
+    public string Description =&gt; "Espresso";
+    public decimal Cost =&gt; 2.00m;
+}
+
+// Base decorator
+public abstract class CoffeeDecorator : ICoffee
+{
+    protected readonly ICoffee _coffee;
+    protected CoffeeDecorator(ICoffee coffee) =&gt; _coffee = coffee;
+    public virtual string Description =&gt; _coffee.Description;
+    public virtual decimal Cost =&gt; _coffee.Cost;
+}
+
+public class Milk : CoffeeDecorator
+{
+    public Milk(ICoffee coffee) : base(coffee) { }
+    public override string Description =&gt; $"{_coffee.Description}, Milk";
+    public override decimal Cost =&gt; _coffee.Cost + 0.50m;
+}
+
+public class Caramel : CoffeeDecorator
+{
+    public Caramel(ICoffee coffee) : base(coffee) { }
+    public override string Description =&gt; $"{_coffee.Description}, Caramel";
+    public override decimal Cost =&gt; _coffee.Cost + 0.75m;
+}
+
+// Usage - stack decorators!
+ICoffee order = new Espresso();
+order = new Milk(order);
+order = new Caramel(order);
+Console.WriteLine($"{order.Description}: ${order.Cost}");
+// Output: Espresso, Milk, Caramel: $3.25</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Real-World: Logging Decorator</h2>
+                    <pre><code class="language-csharp">public interface IOrderService
+{
+    Task&lt;Order&gt; CreateOrderAsync(OrderRequest request);
+}
+
+public class OrderService : IOrderService
+{
+    public async Task&lt;Order&gt; CreateOrderAsync(OrderRequest request)
+    {
+        // Actual implementation
+    }
+}
+
+public class LoggingOrderService : IOrderService
+{
+    private readonly IOrderService _inner;
+    private readonly ILogger _logger;
+
+    public LoggingOrderService(IOrderService inner, ILogger logger)
+    {
+        _inner = inner;
+        _logger = logger;
+    }
+
+    public async Task&lt;Order&gt; CreateOrderAsync(OrderRequest request)
+    {
+        _logger.LogInformation("Creating order...");
+        var result = await _inner.CreateOrderAsync(request);
+        _logger.LogInformation($"Order {result.Id} created");
+        return result;
+    }
+}</code></pre>
+                </section>
+
+                <LessonTakeaways>
+                    <LessonTakeaway>Add behavior dynamically without changing class.</LessonTakeaway>
+                    <LessonTakeaway>Decorators can be stacked/combined.</LessonTakeaway>
+                    <LessonTakeaway>Alternative to creating many subclasses.</LessonTakeaway>
+                </LessonTakeaways>
+            </div>
+            <LessonFooter 
+                PreviousUrl="/training/design-patterns/lesson/12" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/design-patterns/lesson/14" 
+                NextText="Next Lesson" />
+        </article>
+    </main>
+</div>

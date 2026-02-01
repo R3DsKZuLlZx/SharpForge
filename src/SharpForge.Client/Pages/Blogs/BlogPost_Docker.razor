@@ -1,0 +1,292 @@
+@page "/blog/docker-for-dotnet-developers"
+
+<PageTitle>Docker for .NET Developers - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<article class="blog-post">
+    <header class="post-header">
+        <div class="container">
+            <a href="/blog" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"/>
+                </svg>
+                Back to Blog
+            </a>
+            <div class="post-meta">
+                <span class="post-category">DevOps</span>
+                <span class="post-date">November 1, 2025</span>
+                <span class="post-read-time">10 min read</span>
+            </div>
+            <h1>Docker for .NET Developers</h1>
+            <p class="post-excerpt">Containerize your .NET applications with Docker. Learn about multi-stage builds, optimization, and Docker Compose.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="post-content-wrapper">
+            <div class="post-body">
+                <p>Docker enables consistent deployment across environments. This guide covers containerizing .NET applications effectively.</p>
+
+                <h2 id="basic-dockerfile">Basic Dockerfile</h2>
+                <pre><code>FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
+WORKDIR /app
+EXPOSE 8080
+
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+COPY ["MyApp.csproj", "."]
+RUN dotnet restore
+COPY . .
+RUN dotnet build -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "MyApp.dll"]</code></pre>
+
+                <h2>Optimized Multi-Stage Build</h2>
+                <pre><code># Build stage
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+
+# Copy csproj files first for layer caching
+COPY ["src/MyApp.Api/MyApp.Api.csproj", "src/MyApp.Api/"]
+COPY ["src/MyApp.Core/MyApp.Core.csproj", "src/MyApp.Core/"]
+COPY ["src/MyApp.Infrastructure/MyApp.Infrastructure.csproj", "src/MyApp.Infrastructure/"]
+
+# Restore as a separate layer
+RUN dotnet restore "src/MyApp.Api/MyApp.Api.csproj"
+
+# Copy everything else
+COPY . .
+
+# Build
+WORKDIR "/src/src/MyApp.Api"
+RUN dotnet build -c Release -o /app/build --no-restore
+
+# Publish
+FROM build AS publish
+RUN dotnet publish -c Release -o /app/publish --no-restore /p:UseAppHost=false
+
+# Runtime stage
+FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine AS final
+WORKDIR /app
+
+# Create non-root user
+RUN adduser -D appuser
+USER appuser
+
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "MyApp.Api.dll"]</code></pre>
+
+                <h2>Native AOT Dockerfile</h2>
+                <pre><code>FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+
+COPY ["MyApp.csproj", "."]
+RUN dotnet restore
+
+COPY . .
+RUN dotnet publish -c Release -o /app/publish \
+    /p:PublishAot=true \
+    /p:StripSymbols=true
+
+# Use distroless or scratch for minimal image
+FROM mcr.microsoft.com/dotnet/runtime-deps:10.0-alpine AS final
+WORKDIR /app
+COPY --from=build /app/publish .
+ENTRYPOINT ["./MyApp"]</code></pre>
+
+                <h2>.dockerignore</h2>
+                <pre><code>**/.vs
+**/.vscode
+**/bin
+**/obj
+**/.git
+**/.gitignore
+**/node_modules
+**/*.md
+**/Dockerfile*
+**/.dockerignore
+**/docker-compose*
+**/*.user
+**/*.sln.docstates</code></pre>
+
+                <h2 id="docker-compose">Docker Compose</h2>
+                <pre><code># docker-compose.yml
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: src/MyApp.Api/Dockerfile
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Default=Server=db;Database=MyApp;User=sa;Password=YourStrong!Password
+    depends_on:
+      - db
+      - redis
+    networks:
+      - myapp-network
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong!Password
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqldata:/var/opt/mssql
+    networks:
+      - myapp-network
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - myapp-network
+
+networks:
+  myapp-network:
+    driver: bridge
+
+volumes:
+  sqldata:</code></pre>
+
+                <h3>Development Override</h3>
+                <pre><code># docker-compose.override.yml
+version: '3.8'
+
+services:
+  api:
+    build:
+      target: build
+    volumes:
+      - .:/src
+      - ~/.nuget/packages:/root/.nuget/packages:ro
+    environment:
+      - DOTNET_USE_POLLING_FILE_WATCHER=1
+    command: dotnet watch run --project src/MyApp.Api</code></pre>
+
+                <h2 id="health-checks">Health Checks</h2>
+                <pre><code>FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
+WORKDIR /app
+
+# Install curl for health checks
+RUN apt-get update &amp;&amp; apt-get install -y curl &amp;&amp; rm -rf /var/lib/apt/lists/*
+
+COPY --from=publish /app/publish .
+
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8080/health || exit 1
+
+ENTRYPOINT ["dotnet", "MyApp.dll"]</code></pre>
+
+                <h2>Environment Configuration</h2>
+                <pre><code># docker-compose.yml
+services:
+  api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - Logging__LogLevel__Default=Warning
+    env_file:
+      - .env.production</code></pre>
+
+                <pre><code># .env.production
+ConnectionStrings__Default=Server=prod-db;Database=MyApp;...
+Redis__ConnectionString=prod-redis:6379
+JWT__Secret=your-production-secret</code></pre>
+
+                <h2>Useful Commands</h2>
+                <pre><code># Build image
+docker build -t myapp:latest .
+
+# Run container
+docker run -d -p 5000:8080 --name myapp myapp:latest
+
+# View logs
+docker logs -f myapp
+
+# Execute command in container
+docker exec -it myapp /bin/bash
+
+# Docker Compose commands
+docker-compose up -d          # Start all services
+docker-compose down           # Stop all services
+docker-compose logs -f api    # Follow logs
+docker-compose build --no-cache  # Rebuild
+
+# Clean up
+docker system prune -a        # Remove unused data
+docker volume prune           # Remove unused volumes</code></pre>
+
+                <h2>Image Size Optimization</h2>
+                <ul>
+                    <li>Use Alpine-based images when possible</li>
+                    <li>Use multi-stage builds</li>
+                    <li>Minimize layers by combining RUN commands</li>
+                    <li>Use .dockerignore to exclude unnecessary files</li>
+                    <li>Consider Native AOT for smallest images</li>
+                </ul>
+
+                <pre><code># Image size comparison
+mcr.microsoft.com/dotnet/aspnet:10.0         ~220MB
+mcr.microsoft.com/dotnet/aspnet:10.0-alpine  ~110MB
+Native AOT + alpine                          ~30-50MB
+Native AOT + scratch                         ~15-30MB</code></pre>
+
+                <h2 id="best-practices">Best Practices</h2>
+                <ul>
+                    <li>Use specific image tags, not <code>latest</code></li>
+                    <li>Run as non-root user</li>
+                    <li>Use multi-stage builds</li>
+                    <li>Order Dockerfile commands for optimal caching</li>
+                    <li>Use health checks</li>
+                    <li>Don't store secrets in images</li>
+                    <li>Scan images for vulnerabilities</li>
+                </ul>
+
+                <div class="post-tags">
+                    <span class="tag">Docker</span>
+                    <span class="tag">Containers</span>
+                    <span class="tag">.NET</span>
+                    <span class="tag">DevOps</span>
+                </div>
+            </div>
+
+            <aside class="post-sidebar">
+                <div class="sidebar-section toc">
+                    <h4>Table of Contents</h4>
+                    <ul>
+                        <li><a href="#basic-dockerfile">Basic Dockerfile</a></li>
+                        <li><a href="#multi-stage">Multi-Stage Builds</a></li>
+                        <li><a href="#docker-compose">Docker Compose</a></li>
+                        <li><a href="#health-checks">Health Checks</a></li>
+                        <li><a href="#optimization">Optimization</a></li>
+                        <li><a href="#best-practices">Best Practices</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section author">
+                    <h4>About the Author</h4>
+                    <div class="author-info">
+                        <div class="author-avatar">SF</div>
+                        <div>
+                            <strong>SharpForge Team</strong>
+                            <p>Passionate about C# and .NET development</p>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</article>
+

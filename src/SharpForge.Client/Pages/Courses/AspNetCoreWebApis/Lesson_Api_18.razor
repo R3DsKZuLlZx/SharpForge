@@ -1,0 +1,119 @@
+﻿@page "/training/aspnet-core-web-apis/lesson/18"
+<PageTitle>Deployment and Docker - ASP.NET Core Web APIs - SharpForge</PageTitle>
+<CodeHighlighter />
+<div class="lesson-layout">
+    <LessonSidebar 
+        CourseUrl="/training/aspnet-core-web-apis"
+        CourseTitle="ASP.NET Core Web APIs"
+        CurrentLesson="18"
+        Lessons="CourseLessons.AspNetCoreWebApis" />
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <LessonHeader 
+                LessonNumber="18"
+                Title="Deployment and Docker"
+                Duration="35 min"
+                Level="Intermediate" />
+            <div class="lesson-body">
+                <section class="lesson-section"><h2>Dockerfile for ASP.NET Core</h2><pre><code class="language-dockerfile">FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+
+COPY *.csproj ./
+RUN dotnet restore
+
+COPY . ./
+RUN dotnet publish -c Release -o /app/publish
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+WORKDIR /app
+COPY --from=build /app/publish .
+
+EXPOSE 8080
+ENV ASPNETCORE_URLS=http://+:8080
+
+ENTRYPOINT ["dotnet", "MyApi.dll"]</code></pre></section>
+                <section class="lesson-section"><h2>Docker Compose</h2><pre><code class="language-yaml">version: '3.8'
+services:
+  api:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__Default=Server=db;Database=MyDb;User=sa;Password=YourPassword123!
+    depends_on:
+      - db
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourPassword123!
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqldata:/var/opt/mssql
+
+volumes:
+  sqldata:</code></pre></section>
+                <section class="lesson-section"><h2>Build and Run</h2><pre><code class="language-bash"># Build the image
+docker build -t myapi .
+
+# Run the container
+docker run -p 8080:8080 myapi
+
+# With Docker Compose
+docker-compose up -d
+
+# View logs
+docker-compose logs -f api</code></pre></section>
+                <section class="lesson-section"><h2>Health Checks</h2><pre><code class="language-csharp">builder.Services.AddHealthChecks()
+    .AddDbContextCheck&lt;AppDbContext&gt;()
+    .AddCheck("custom", () => HealthCheckResult.Healthy());
+
+app.MapHealthChecks("/health");
+app.MapHealthChecks("/health/ready", new HealthCheckOptions
+{
+    Predicate = check => check.Tags.Contains("ready")
+});</code></pre></section>
+                <section class="lesson-section"><h2>Production Configuration</h2><pre><code class="language-csharp">// Use environment variables in production
+builder.Configuration
+    .AddJsonFile("appsettings.json")
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
+    .AddEnvironmentVariables();
+
+// Configure Kestrel
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Limits.MaxRequestBodySize = 10 * 1024 * 1024; // 10MB
+});</code></pre></section>
+                <LessonTakeaways>
+                    <LessonTakeaway>Use multi-stage Docker builds for smaller images.</LessonTakeaway>
+                    <LessonTakeaway>Docker Compose orchestrates multi-container apps.</LessonTakeaway>
+                    <LessonTakeaway>Implement health checks for container orchestration.</LessonTakeaway>
+                    <LessonTakeaway>Use environment variables for production config.</LessonTakeaway>
+                </LessonTakeaways>
+
+                <LessonCongratulations 
+                    CourseTitle="ASP.NET Core Web APIs"
+                    Topics="@(new List<string> {
+                        "Building RESTful APIs with controllers and minimal APIs",
+                        "Routing, model binding, and validation",
+                        "Dependency injection and middleware",
+                        "Entity Framework Core and the Repository pattern",
+                        "JWT authentication and authorization policies",
+                        "Error handling, logging, and monitoring",
+                        "API versioning and Swagger documentation",
+                        "Testing and Docker deployment"
+                    })"
+                    ClosingMessage="<strong>What's next?</strong> You're now ready to build production-ready APIs with ASP.NET Core!" />
+            </div>
+            <LessonFooter 
+                PreviousUrl="/training/aspnet-core-web-apis/lesson/17" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/aspnet-core-web-apis" 
+                NextText="Back to Course"
+                ShowHomeIcon="true" />
+        </article>
+    </main>
+</div>

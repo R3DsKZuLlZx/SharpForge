@@ -1,0 +1,100 @@
+﻿@page "/training/async-concurrency/lesson/1"
+<PageTitle>Introduction to Asynchronous Programming - Async/Await & Concurrency - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <LessonSidebar 
+        CourseUrl="/training/async-concurrency"
+        CourseTitle="Async/Await & Concurrency"
+        CurrentLesson="1"
+        Lessons="CourseLessons.AsyncConcurrency" />
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <LessonHeader 
+                LessonNumber="1"
+                Title="Introduction to Asynchronous Programming"
+                Duration="30 min"
+                Level="Intermediate" />
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Why Asynchronous Programming?</h2>
+                    <p>Asynchronous programming allows your application to remain responsive while waiting for I/O operations like network requests, file access, or database queries.</p>
+                    <div class="info-box">
+                        <div class="info-box-header"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span>Key Insight</span></div>
+                        <p>Async doesn't make things faster—it makes better use of resources while waiting.</p>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Synchronous vs Asynchronous</h2>
+                    <pre><code class="language-csharp">// Synchronous - blocks the thread while waiting
+public string GetData()
+{
+    var data = httpClient.GetStringAsync(url).Result;  // Thread blocked!
+    return data;
+}
+
+// Asynchronous - frees the thread while waiting
+public async Task&lt;string&gt; GetDataAsync()
+{
+    var data = await httpClient.GetStringAsync(url);  // Thread free to do other work
+    return data;
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Async vs Parallel</h2>
+                    <div class="comparison-grid">
+                        <div class="comparison-card">
+                            <h4>Asynchronous</h4>
+                            <p>About waiting efficiently</p>
+                            <ul>
+                                <li>I/O-bound operations</li>
+                                <li>Network requests</li>
+                                <li>File/database access</li>
+                                <li>Non-blocking waits</li>
+                            </ul>
+                        </div>
+                        <div class="comparison-card">
+                            <h4>Parallel</h4>
+                            <p>About doing multiple things</p>
+                            <ul>
+                                <li>CPU-bound operations</li>
+                                <li>Data processing</li>
+                                <li>Calculations</li>
+                                <li>Multiple cores</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>The Thread Pool</h2>
+                    <pre><code class="language-csharp">// When you await, the thread returns to the pool
+// When the operation completes, a thread continues execution
+public async Task ProcessAsync()
+{
+    Console.WriteLine($"Before: Thread {Thread.CurrentThread.ManagedThreadId}");
+    
+    await Task.Delay(100);  // Thread returned to pool during delay
+    
+    Console.WriteLine($"After: Thread {Thread.CurrentThread.ManagedThreadId}");
+    // May be a different thread!
+}</code></pre>
+                </section>
+
+                <LessonTakeaways>
+                    <LessonTakeaway>Async is for I/O-bound operations (waiting).</LessonTakeaway>
+                    <LessonTakeaway>Parallel is for CPU-bound operations (computing).</LessonTakeaway>
+                    <LessonTakeaway>Async frees threads to do other work while waiting.</LessonTakeaway>
+                    <LessonTakeaway>Never block on async code with .Result or .Wait().</LessonTakeaway>
+                </LessonTakeaways>
+            </div>
+            <LessonFooter 
+                PreviousUrl="/training/async-concurrency" 
+                PreviousText="Course Overview"
+                NextUrl="/training/async-concurrency/lesson/2" 
+                NextText="Next Lesson" />
+        </article>
+    </main>
+</div>

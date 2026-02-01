@@ -1,0 +1,76 @@
+﻿@page "/training/microservices/lesson/23"
+<PageTitle>Centralized Logging with Serilog - Microservices with .NET - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <LessonSidebar 
+        CourseUrl="/training/microservices"
+        CourseTitle="Microservices with .NET"
+        CurrentLesson="23"
+        Lessons="CourseLessons.Microservices" />
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <LessonHeader 
+                LessonNumber="23"
+                Title="Centralized Logging with Serilog"
+                Duration="25 min"
+                Level="Advanced" />
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Serilog Setup</h2>
+                    <pre><code class="language-csharp">// Program.cs
+builder.Host.UseSerilog((context, config) =&gt;
+{
+    config
+        .ReadFrom.Configuration(context.Configuration)
+        .Enrich.FromLogContext()
+        .Enrich.WithMachineName()
+        .Enrich.WithProperty("Service", "OrderService")
+        .WriteTo.Console()
+        .WriteTo.Seq("http://seq:5341");
+});
+
+// Usage
+_logger.LogInformation("Order {OrderId} placed for {CustomerId}", order.Id, order.CustomerId);</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Structured Logging</h2>
+                    <pre><code class="language-csharp">// ✅ Good - structured properties
+_logger.LogInformation("Processing order {OrderId} with {ItemCount} items", 
+    order.Id, order.Items.Count);
+
+// ❌ Bad - string interpolation loses structure
+_logger.LogInformation($"Processing order {order.Id}");</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Correlation IDs</h2>
+                    <pre><code class="language-csharp">// Middleware to add correlation ID
+app.Use(async (context, next) =&gt;
+{
+    var correlationId = context.Request.Headers["X-Correlation-ID"].FirstOrDefault()
+        ?? Guid.NewGuid().ToString();
+    
+    using (LogContext.PushProperty("CorrelationId", correlationId))
+    {
+        context.Response.Headers["X-Correlation-ID"] = correlationId;
+        await next();
+    }
+});</code></pre>
+                </section>
+
+                <LessonTakeaways>
+                    <LessonTakeaway>Use structured logging with Serilog.</LessonTakeaway>
+                    <LessonTakeaway>Send logs to centralized system (Seq, ELK).</LessonTakeaway>
+                    <LessonTakeaway>Use Correlation IDs to trace requests.</LessonTakeaway>
+                </LessonTakeaways>
+            </div>
+            <LessonFooter 
+                PreviousUrl="/training/microservices/lesson/22" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/microservices/lesson/24" 
+                NextText="Next Lesson" />
+        </article>
+    </main>
+</div>

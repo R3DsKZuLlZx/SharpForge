@@ -1,0 +1,100 @@
+﻿@page "/training/async-concurrency/lesson/4"
+<PageTitle>ValueTask for Performance - Async/Await & Concurrency - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <LessonSidebar 
+        CourseUrl="/training/async-concurrency"
+        CourseTitle="Async/Await & Concurrency"
+        CurrentLesson="4"
+        Lessons="CourseLessons.AsyncConcurrency" />
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <LessonHeader 
+                LessonNumber="4"
+                Title="ValueTask for Performance"
+                Duration="25 min"
+                Level="Intermediate" />
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Why ValueTask?</h2>
+                    <p>Task is a reference type—every async call allocates. ValueTask is a struct that can avoid allocations when the result is available synchronously.</p>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>When to Use ValueTask</h2>
+                    <pre><code class="language-csharp">// Perfect for methods that often complete synchronously
+public class Cache
+{
+    private readonly Dictionary&lt;string, Data&gt; _cache = new();
+
+    // Often returns cached value (sync), sometimes fetches (async)
+    public async ValueTask&lt;Data&gt; GetAsync(string key)
+    {
+        if (_cache.TryGetValue(key, out var cached))
+            return cached;  // No allocation!
+
+        var data = await FetchFromDatabaseAsync(key);
+        _cache[key] = data;
+        return data;
+    }
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>ValueTask Rules</h2>
+                    <div class="warning-box">
+                        <div class="warning-box-header"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Important Rules</span></div>
+                        <ul>
+                            <li>Never await a ValueTask more than once</li>
+                            <li>Never use .Result or .GetAwaiter().GetResult() before completion</li>
+                            <li>If you need multiple awaits, convert to Task first</li>
+                        </ul>
+                    </div>
+                    <pre><code class="language-csharp">// ❌ WRONG - awaiting twice
+var valueTask = GetAsync(key);
+var result1 = await valueTask;
+var result2 = await valueTask;  // Undefined behavior!
+
+// ✅ CORRECT - convert to Task if needed
+var task = GetAsync(key).AsTask();
+var result1 = await task;
+var result2 = await task;  // Safe</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Task vs ValueTask</h2>
+                    <div class="comparison-grid">
+                        <div class="comparison-card">
+                            <h4>Use Task</h4>
+                            <ul>
+                                <li>Public API surfaces</li>
+                                <li>When caching the result</li>
+                                <li>General-purpose async</li>
+                            </ul>
+                        </div>
+                        <div class="comparison-card">
+                            <h4>Use ValueTask</h4>
+                            <ul>
+                                <li>Hot paths with sync completion</li>
+                                <li>Performance-critical code</li>
+                                <li>IAsyncEnumerable</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <LessonTakeaways>
+                    <LessonTakeaway>ValueTask avoids allocations for sync completion.</LessonTakeaway>
+                    <LessonTakeaway>Only await ValueTask once!</LessonTakeaway>
+                    <LessonTakeaway>Use Task for public APIs, ValueTask for hot paths.</LessonTakeaway>
+                </LessonTakeaways>
+            </div>
+            <LessonFooter 
+                PreviousUrl="/training/async-concurrency/lesson/3" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/async-concurrency/lesson/5" 
+                NextText="Next Lesson" />
+        </article>
+    </main>
+</div>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="SharpForge - Learn C# the right way with training materials, blog posts, and real-world projects"/>
+    <title>SharpForge - Learn C# the Right Way</title>
+    <base href="/"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"/>
+    <link rel="stylesheet" href="css/app.css"/>
+    <link rel="stylesheet" href="SharpForge.Client.styles.css"/>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+    <style>
+        /* Prevent flash while loading - uses CSS variable from app.css */
+        html, body { background-color: var(--bg-primary, #0d0d0d); margin: 0; }
+        html[data-theme="light"], html[data-theme="light"] body { background-color: var(--bg-primary, #ffffff); }
+        #app:empty { min-height: 100vh; }
+    </style>
+    <script>
+        // Apply saved theme immediately to prevent flash
+        (function() {
+            var savedTheme = localStorage.getItem('sharpforge-theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <div id="blazor-error-ui" data-nosnippet>
+        An unhandled error has occurred.
+        <a href="." class="reload">Reload</a>
+        <span class="dismiss">🗙</span>
+    </div>
+
+    <script>window.Prism = window.Prism || {}; window.Prism.manual = true;</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-docker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-protobuf.min.js"></script>
+    <script>
+        window.highlightCode = function() {
+            if (typeof Prism !== 'undefined') {
+                document.querySelectorAll('pre code:not([class*="language-"])').forEach(function(block) {
+                    var code = block.textContent;
+                    var lang = 'csharp';
+
+                    if (code.includes('FROM ') && code.includes('RUN ')) {
+                        lang = 'docker';
+                    } else if (code.includes('dotnet ') || code.includes('# ')) {
+                        if (code.includes('apt-get') || code.includes('#!/')) {
+                            lang = 'bash';
+                        } else if (!code.includes('class ') && !code.includes('public ') && !code.includes('private ')) {
+                            lang = 'bash';
+                        }
+                    } else if (code.includes('name:') && code.includes('runs-on:')) {
+                        lang = 'yaml';
+                    } else if (code.trim().startsWith('{') || code.trim().startsWith('[')) {
+                        lang = 'json';
+                    } else if (code.includes('syntax = "proto') || code.includes('message ') && code.includes('rpc ')) {
+                        lang = 'protobuf';
+                    }
+
+                    block.classList.add('language-' + lang);
+                    block.parentElement.classList.add('language-' + lang);
+                });
+
+                Prism.highlightAll();
+            }
+        };
+    </script>
+    <script src="_framework/blazor.webassembly.js"></script>
+    <script>
+        window.scrollToElement = function(elementId) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                const headerOffset = 100;
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        };
+        
+        document.addEventListener('click', function(e) {
+            const target = e.target.closest('a');
+            if (target && target.getAttribute('href')) {
+                const href = target.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const elementId = href.substring(1);
+                    window.scrollToElement(elementId);
+                    const newUrl = window.location.pathname + window.location.search + href;
+                    history.pushState(null, null, newUrl);
+                }
+            }
+        });
+        
+        (function() {
+            if (window.location.hash) {
+                if ('scrollRestoration' in history) {
+                    history.scrollRestoration = 'manual';
+                }
+            }
+            
+            document.addEventListener('DOMContentLoaded', function() {
+                if (window.location.hash) {
+                    setTimeout(function() {
+                        const elementId = window.location.hash.substring(1);
+                        window.scrollToElement(elementId);
+                    }, 800);
+                }
+            });
+        })();
+    </script>
+</body>
+
+</html>

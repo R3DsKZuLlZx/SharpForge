@@ -1,0 +1,154 @@
+﻿@page "/training/aspnet-core-web-apis/lesson/4"
+<PageTitle>Controllers and Actions - ASP.NET Core Web APIs - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <LessonSidebar 
+        CourseUrl="/training/aspnet-core-web-apis"
+        CourseTitle="ASP.NET Core Web APIs"
+        CurrentLesson="4"
+        Lessons="CourseLessons.AspNetCoreWebApis" />
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <LessonHeader 
+                LessonNumber="4"
+                Title="Controllers and Actions"
+                Duration="35 min"
+                Level="Intermediate" />
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Controller Fundamentals</h2>
+                    <p>Controllers group related actions together. API controllers inherit from <code>ControllerBase</code> (not <code>Controller</code> which adds View support).</p>
+                    <pre><code class="language-csharp">[ApiController]
+[Route("api/[controller]")]
+public class ProductsController : ControllerBase
+{
+    // Actions go here
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>The [ApiController] Attribute</h2>
+                    <p>This attribute enables API-specific behaviors:</p>
+                    <ul>
+                        <li><strong>Automatic model validation</strong> - Returns 400 if ModelState is invalid</li>
+                        <li><strong>Binding source inference</strong> - Complex types from body, simple types from route/query</li>
+                        <li><strong>Problem details for errors</strong> - Standardized error responses</li>
+                    </ul>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Action Return Types</h2>
+                    <pre><code class="language-csharp">// Specific type - always returns 200
+[HttpGet]
+public IEnumerable&lt;Product&gt; GetAll() => _products;
+
+// ActionResult&lt;T&gt; - can return different status codes
+[HttpGet("{id}")]
+public ActionResult&lt;Product&gt; GetById(int id)
+{
+    var product = _products.Find(p => p.Id == id);
+    if (product == null) return NotFound();
+    return product;  // Implicitly wrapped in Ok()
+}
+
+// IActionResult - for actions without return type info
+[HttpDelete("{id}")]
+public IActionResult Delete(int id)
+{
+    // ...
+    return NoContent();
+}
+
+// Async actions
+[HttpGet]
+public async Task&lt;ActionResult&lt;IEnumerable&lt;Product&gt;&gt;&gt; GetAllAsync()
+{
+    var products = await _repository.GetAllAsync();
+    return Ok(products);
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Parameter Binding Attributes</h2>
+                    <pre><code class="language-csharp">[HttpPost]
+public ActionResult Create(
+    [FromBody] CreateProductDto dto,      // From request body
+    [FromRoute] int categoryId,           // From route
+    [FromQuery] bool notify = false,      // From query string
+    [FromHeader(Name = "X-Request-Id")] string? requestId,  // From header
+    [FromServices] ILogger logger)        // From DI container
+{
+    // ...
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>DTOs (Data Transfer Objects)</h2>
+                    <p>Use DTOs to control what data is exposed and accepted:</p>
+                    <pre><code class="language-csharp">// Input DTO
+public record CreateProductDto(
+    string Name,
+    string Description,
+    decimal Price,
+    int Stock);
+
+// Output DTO
+public record ProductDto(
+    int Id,
+    string Name,
+    decimal Price);
+
+// Controller
+[HttpPost]
+public ActionResult&lt;ProductDto&gt; Create(CreateProductDto dto)
+{
+    var product = new Product
+    {
+        Name = dto.Name,
+        Description = dto.Description,
+        Price = dto.Price,
+        Stock = dto.Stock
+    };
+    
+    _repository.Add(product);
+    
+    return CreatedAtAction(
+        nameof(GetById),
+        new { id = product.Id },
+        new ProductDto(product.Id, product.Name, product.Price));
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Async Best Practices</h2>
+                    <pre><code class="language-csharp">// ✅ Good - async all the way
+[HttpGet]
+public async Task&lt;ActionResult&lt;IEnumerable&lt;Product&gt;&gt;&gt; GetAll()
+{
+    return Ok(await _repository.GetAllAsync());
+}
+
+// ❌ Bad - blocking on async (can cause deadlocks)
+[HttpGet]
+public ActionResult&lt;IEnumerable&lt;Product&gt;&gt; GetAll()
+{
+    return Ok(_repository.GetAllAsync().Result);  // DON'T DO THIS
+}</code></pre>
+                </section>
+
+                <LessonTakeaways>
+                    <LessonTakeaway>API controllers inherit from <code>ControllerBase</code> with <code>[ApiController]</code>.</LessonTakeaway>
+                    <LessonTakeaway>Use <code>ActionResult&lt;T&gt;</code> for flexible return types.</LessonTakeaway>
+                    <LessonTakeaway>Use DTOs to separate API contracts from internal models.</LessonTakeaway>
+                    <LessonTakeaway>Always use async/await for I/O operations.</LessonTakeaway>
+                </LessonTakeaways>
+            </div>
+            <LessonFooter 
+                PreviousUrl="/training/aspnet-core-web-apis/lesson/3" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/aspnet-core-web-apis/lesson/5" 
+                NextText="Next Lesson" />
+        </article>
+    </main>
+</div>

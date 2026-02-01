@@ -1,0 +1,168 @@
+﻿@page "/training/blazor-webassembly/lesson/13"
+<PageTitle>Authentication - Blazor WebAssembly - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <LessonSidebar 
+        CourseUrl="/training/blazor-webassembly"
+        CourseTitle="Blazor WebAssembly"
+        CurrentLesson="13"
+        Lessons="CourseLessons.BlazorWebAssembly" />
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <LessonHeader 
+                LessonNumber="13"
+                Title="Authentication"
+                Duration="35 min"
+                Level="Intermediate" />
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Authentication Setup</h2>
+                    <pre><code class="language-bash">dotnet add package Microsoft.AspNetCore.Components.WebAssembly.Authentication</code></pre>
+                    <pre><code class="language-csharp">// Program.cs
+builder.Services.AddAuthorizationCore();
+builder.Services.AddScoped&lt;AuthenticationStateProvider, CustomAuthStateProvider&gt;();</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Custom Auth State Provider</h2>
+                    <pre><code class="language-csharp">public class CustomAuthStateProvider : AuthenticationStateProvider
+{
+    private readonly ILocalStorageService _localStorage;
+    private readonly HttpClient _http;
+
+    public CustomAuthStateProvider(ILocalStorageService localStorage, HttpClient http)
+    {
+        _localStorage = localStorage;
+        _http = http;
+    }
+
+    public override async Task&lt;AuthenticationState&gt; GetAuthenticationStateAsync()
+    {
+        var token = await _localStorage.GetItemAsync&lt;string&gt;("authToken");
+        
+        if (string.IsNullOrEmpty(token))
+        {
+            return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
+        }
+
+        _http.DefaultRequestHeaders.Authorization = 
+            new AuthenticationHeaderValue("Bearer", token);
+
+        return new AuthenticationState(
+            new ClaimsPrincipal(new ClaimsIdentity(ParseClaimsFromJwt(token), "jwt")));
+    }
+
+    public void NotifyUserAuthentication(string token)
+    {
+        var authenticatedUser = new ClaimsPrincipal(
+            new ClaimsIdentity(ParseClaimsFromJwt(token), "jwt"));
+        NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(authenticatedUser)));
+    }
+
+    public void NotifyUserLogout()
+    {
+        var anonymous = new ClaimsPrincipal(new ClaimsIdentity());
+        NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(anonymous)));
+    }
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>CascadingAuthenticationState</h2>
+                    <pre><code class="language-razor">@@* App.razor *@@
+&lt;CascadingAuthenticationState&gt;
+    &lt;Router AppAssembly="@@typeof(App).Assembly"&gt;
+        &lt;Found Context="routeData"&gt;
+            &lt;AuthorizeRouteView RouteData="@@routeData" 
+                                DefaultLayout="@@typeof(MainLayout)"&gt;
+                &lt;NotAuthorized&gt;
+                    &lt;p&gt;You are not authorized.&lt;/p&gt;
+                &lt;/NotAuthorized&gt;
+            &lt;/AuthorizeRouteView&gt;
+        &lt;/Found&gt;
+    &lt;/Router&gt;
+&lt;/CascadingAuthenticationState&gt;</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>AuthorizeView Component</h2>
+                    <pre><code class="language-razor">&lt;AuthorizeView&gt;
+    &lt;Authorized&gt;
+        &lt;p&gt;Hello, @@context.User.Identity?.Name!&lt;/p&gt;
+        &lt;button @@onclick="Logout"&gt;Logout&lt;/button&gt;
+    &lt;/Authorized&gt;
+    &lt;NotAuthorized&gt;
+        &lt;a href="/login"&gt;Login&lt;/a&gt;
+    &lt;/NotAuthorized&gt;
+&lt;/AuthorizeView&gt;
+
+@@* Role-based *@@
+&lt;AuthorizeView Roles="Admin"&gt;
+    &lt;p&gt;Admin only content&lt;/p&gt;
+&lt;/AuthorizeView&gt;
+
+@@* Policy-based *@@
+&lt;AuthorizeView Policy="CanEditProducts"&gt;
+    &lt;button&gt;Edit&lt;/button&gt;
+&lt;/AuthorizeView&gt;</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Protecting Pages</h2>
+                    <pre><code class="language-razor">@@page "/admin"
+@@attribute [Authorize]
+
+&lt;h1&gt;Admin Dashboard&lt;/h1&gt;
+
+@@* With roles *@@
+@@attribute [Authorize(Roles = "Admin,Manager")]
+
+@@* With policy *@@
+@@attribute [Authorize(Policy = "RequireAdmin")]</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Login Flow</h2>
+                    <pre><code class="language-razor">@@page "/login"
+@@inject HttpClient Http
+@@inject ILocalStorageService LocalStorage
+@@inject AuthenticationStateProvider AuthProvider
+@@inject NavigationManager Nav
+
+&lt;EditForm Model="@@loginModel" OnValidSubmit="HandleLogin"&gt;
+    &lt;InputText @@bind-Value="loginModel.Email" placeholder="Email" /&gt;
+    &lt;InputText @@bind-Value="loginModel.Password" type="password" placeholder="Password" /&gt;
+    &lt;button type="submit"&gt;Login&lt;/button&gt;
+&lt;/EditForm&gt;
+
+@@code {
+    private LoginModel loginModel = new();
+
+    private async Task HandleLogin()
+    {
+        var response = await Http.PostAsJsonAsync("api/auth/login", loginModel);
+        var result = await response.Content.ReadFromJsonAsync&lt;LoginResult&gt;();
+        
+        await LocalStorage.SetItemAsync("authToken", result!.Token);
+        ((CustomAuthStateProvider)AuthProvider).NotifyUserAuthentication(result.Token);
+        Nav.NavigateTo("/");
+    }
+}</code></pre>
+                </section>
+
+                <LessonTakeaways>
+                    <LessonTakeaway>AuthenticationStateProvider manages auth state.</LessonTakeaway>
+                    <LessonTakeaway>AuthorizeView shows content based on auth status.</LessonTakeaway>
+                    <LessonTakeaway>[Authorize] attribute protects entire pages.</LessonTakeaway>
+                    <LessonTakeaway>Store JWT tokens in localStorage and send with requests.</LessonTakeaway>
+                </LessonTakeaways>
+            </div>
+            <LessonFooter 
+                PreviousUrl="/training/blazor-webassembly/lesson/12" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/blazor-webassembly/lesson/14" 
+                NextText="Next Lesson" />
+        </article>
+    </main>
+</div>

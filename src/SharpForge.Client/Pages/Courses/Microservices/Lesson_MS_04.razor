@@ -1,0 +1,94 @@
+﻿@page "/training/microservices/lesson/4"
+<PageTitle>Docker Fundamentals - Microservices with .NET - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <LessonSidebar 
+        CourseUrl="/training/microservices"
+        CourseTitle="Microservices with .NET"
+        CurrentLesson="4"
+        Lessons="CourseLessons.Microservices" />
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <LessonHeader 
+                LessonNumber="4"
+                Title="Docker Fundamentals"
+                Duration="30 min"
+                Level="Advanced" />
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Core Concepts</h2>
+                    <ul>
+                        <li><strong>Image:</strong> Read-only template with OS, runtime, app code</li>
+                        <li><strong>Container:</strong> Running instance of an image</li>
+                        <li><strong>Registry:</strong> Storage for images (Docker Hub, ACR, ECR)</li>
+                        <li><strong>Dockerfile:</strong> Script to build an image</li>
+                    </ul>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Essential Commands</h2>
+                    <pre><code class="language-bash"># Pull an image
+docker pull mcr.microsoft.com/dotnet/aspnet:8.0
+
+# Run a container
+docker run -d -p 8080:80 --name myapp myimage
+
+# List containers
+docker ps        # running
+docker ps -a     # all
+
+# Stop and remove
+docker stop myapp
+docker rm myapp
+
+# Build an image
+docker build -t myapp:1.0 .
+
+# View logs
+docker logs myapp -f</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Volumes</h2>
+                    <pre><code class="language-bash"># Named volume (Docker managed)
+docker run -v mydata:/app/data myimage
+
+# Bind mount (host directory)
+docker run -v /host/path:/container/path myimage
+
+# Volume for SQL Server
+docker run -v sqldata:/var/opt/mssql \
+    -e 'ACCEPT_EULA=Y' \
+    -e 'SA_PASSWORD=YourPassword123!' \
+    -p 1433:1433 \
+    mcr.microsoft.com/mssql/server:2022-latest</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Networks</h2>
+                    <pre><code class="language-bash"># Create network
+docker network create mynetwork
+
+# Run containers on same network
+docker run -d --network mynetwork --name db postgres
+docker run -d --network mynetwork --name api myapi
+
+# Containers can reach each other by name
+# api can connect to "db:5432"</code></pre>
+                </section>
+
+                <LessonTakeaways>
+                    <LessonTakeaway>Images are templates; containers are running instances.</LessonTakeaway>
+                    <LessonTakeaway>Use volumes for persistent data.</LessonTakeaway>
+                    <LessonTakeaway>Networks enable container-to-container communication.</LessonTakeaway>
+                </LessonTakeaways>
+            </div>
+            <LessonFooter 
+                PreviousUrl="/training/microservices/lesson/3" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/microservices/lesson/5" 
+                NextText="Next Lesson" />
+        </article>
+    </main>
+</div>

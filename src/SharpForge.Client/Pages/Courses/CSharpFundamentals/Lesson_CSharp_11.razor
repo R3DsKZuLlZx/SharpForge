@@ -1,0 +1,502 @@
+﻿@page "/training/csharp-fundamentals/lesson/11"
+
+<PageTitle>Exception Handling - C# Fundamentals - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <LessonSidebar 
+        CourseUrl="/training/csharp-fundamentals"
+        CourseTitle="C# Fundamentals"
+        CurrentLesson="11"
+        Lessons="CourseLessons.CSharpFundamentals" />
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <LessonHeader 
+                LessonNumber="11"
+                Title="Exception Handling"
+                Duration="30 min"
+                Level="Beginner" />
+
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Dealing with Errors Gracefully</h2>
+                    <p>Things go wrong. Users enter invalid data, files don't exist, network connections fail. <strong>Exception handling</strong> allows your program to respond to errors gracefully instead of crashing.</p>
+                    
+                    <p>In this lesson, you'll learn how to catch, handle, and throw exceptions, making your applications more robust and user-friendly.</p>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>What is an Exception?</h2>
+                    <p>An <strong>exception</strong> is an object that represents an error or unexpected situation. When something goes wrong, .NET "throws" an exception, which disrupts normal program flow.</p>
+
+                    <pre><code class="language-csharp">// Without exception handling, errors crash the program
+int[] numbers = { 1, 2, 3 };
+Console.WriteLine(numbers[10]);  // IndexOutOfRangeException - CRASH!
+
+int result = 10 / 0;  // DivideByZeroException - CRASH!
+
+string text = null;
+Console.WriteLine(text.Length);  // NullReferenceException - CRASH!</code></pre>
+
+                    <div class="exception-flow">
+                        <div class="flow-step error">
+                            <span class="step-icon">⚠️</span>
+                            <span>Error Occurs</span>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step exception">
+                            <span class="step-icon">📦</span>
+                            <span>Exception Thrown</span>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step handle">
+                            <span class="step-icon">🛡️</span>
+                            <span>Caught &amp; Handled</span>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step success">
+                            <span class="step-icon">✅</span>
+                            <span>Program Continues</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Try-Catch Blocks</h2>
+                    <p>Use <code>try-catch</code> to handle exceptions:</p>
+
+                    <pre><code class="language-csharp">try
+{
+    // Code that might throw an exception
+    int[] numbers = { 1, 2, 3 };
+    Console.WriteLine(numbers[10]);  // This throws!
+}
+catch (IndexOutOfRangeException ex)
+{
+    // Handle the specific exception
+    Console.WriteLine($"Error: {ex.Message}");
+}
+
+Console.WriteLine("Program continues...");  // This still runs!</code></pre>
+
+                    <h3>Catching Multiple Exception Types</h3>
+                    <pre><code class="language-csharp">try
+{
+    Console.Write("Enter a number: ");
+    string input = Console.ReadLine();
+    int number = int.Parse(input);
+    int result = 100 / number;
+    Console.WriteLine($"Result: {result}");
+}
+catch (FormatException)
+{
+    Console.WriteLine("That's not a valid number!");
+}
+catch (DivideByZeroException)
+{
+    Console.WriteLine("Cannot divide by zero!");
+}
+catch (Exception ex)  // Catches any other exception
+{
+    Console.WriteLine($"Unexpected error: {ex.Message}");
+}</code></pre>
+
+                    <div class="info-box warning">
+                        <div class="info-box-header">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                <line x1="12" y1="9" x2="12" y2="13"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                            <span>Order Matters!</span>
+                        </div>
+                        <p>Catch more specific exceptions first. The base <code>Exception</code> class catches everything, so put it last.</p>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>The Exception Object</h2>
+                    <p>The caught exception object contains useful information:</p>
+
+                    <pre><code class="language-csharp">try
+{
+    int[] arr = { 1, 2, 3 };
+    Console.WriteLine(arr[100]);
+}
+catch (Exception ex)
+{
+    // Common exception properties
+    Console.WriteLine($"Message: {ex.Message}");
+    Console.WriteLine($"Type: {ex.GetType().Name}");
+    Console.WriteLine($"Source: {ex.Source}");
+    Console.WriteLine($"Stack Trace: {ex.StackTrace}");
+    
+    // Inner exception (if this was caused by another exception)
+    if (ex.InnerException != null)
+    {
+        Console.WriteLine($"Inner: {ex.InnerException.Message}");
+    }
+}</code></pre>
+
+                    <div class="property-table">
+                        <div class="property-row header">
+                            <span>Property</span>
+                            <span>Description</span>
+                        </div>
+                        <div class="property-row">
+                            <code>Message</code>
+                            <span>Human-readable error description</span>
+                        </div>
+                        <div class="property-row">
+                            <code>StackTrace</code>
+                            <span>Call stack showing where error occurred</span>
+                        </div>
+                        <div class="property-row">
+                            <code>Source</code>
+                            <span>Name of the application/assembly</span>
+                        </div>
+                        <div class="property-row">
+                            <code>InnerException</code>
+                            <span>The exception that caused this one</span>
+                        </div>
+                        <div class="property-row">
+                            <code>Data</code>
+                            <span>Dictionary for additional information</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>The finally Block</h2>
+                    <p>The <code>finally</code> block always executes, whether an exception occurred or not. Use it for cleanup:</p>
+
+                    <pre><code class="language-csharp">StreamReader? reader = null;
+try
+{
+    reader = new StreamReader("data.txt");
+    string content = reader.ReadToEnd();
+    Console.WriteLine(content);
+}
+catch (FileNotFoundException)
+{
+    Console.WriteLine("File not found!");
+}
+catch (IOException ex)
+{
+    Console.WriteLine($"IO Error: {ex.Message}");
+}
+finally
+{
+    // Always runs - perfect for cleanup
+    reader?.Dispose();
+    Console.WriteLine("Cleanup complete.");
+}</code></pre>
+
+                    <div class="try-catch-diagram">
+                        <div class="diagram-block try">
+                            <div class="block-header">try</div>
+                            <div class="block-content">Code that might fail</div>
+                        </div>
+                        <div class="diagram-block catch">
+                            <div class="block-header">catch</div>
+                            <div class="block-content">Handle the error</div>
+                            <div class="block-note">(only if exception)</div>
+                        </div>
+                        <div class="diagram-block finally">
+                            <div class="block-header">finally</div>
+                            <div class="block-content">Cleanup code</div>
+                            <div class="block-note">(always runs)</div>
+                        </div>
+                    </div>
+
+                    <h3>Using Statement (Better for Cleanup)</h3>
+                    <p>For objects that implement <code>IDisposable</code>, use the <code>using</code> statement instead:</p>
+
+                    <pre><code class="language-csharp">// The 'using' statement automatically disposes the resource
+using (StreamReader reader = new StreamReader("data.txt"))
+{
+    string content = reader.ReadToEnd();
+    Console.WriteLine(content);
+}  // reader.Dispose() called automatically, even if exception!
+
+// Modern C# - using declaration (no braces needed)
+using StreamReader reader = new StreamReader("data.txt");
+string content = reader.ReadToEnd();
+// Disposed when variable goes out of scope</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Throwing Exceptions</h2>
+                    <p>You can throw exceptions to signal errors in your own code:</p>
+
+                    <pre><code class="language-csharp">void SetAge(int age)
+{
+    if (age &lt; 0)
+    {
+        throw new ArgumentException("Age cannot be negative", nameof(age));
+    }
+    if (age &gt; 150)
+    {
+        throw new ArgumentOutOfRangeException(nameof(age), "Age seems unrealistic");
+    }
+    
+    // Valid age, continue...
+}
+
+// Usage
+try
+{
+    SetAge(-5);
+}
+catch (ArgumentException ex)
+{
+    Console.WriteLine(ex.Message);  // Age cannot be negative (Parameter 'age')
+}</code></pre>
+
+                    <h3>Re-throwing Exceptions</h3>
+                    <pre><code class="language-csharp">try
+{
+    DoSomethingRisky();
+}
+catch (Exception ex)
+{
+    // Log the error
+    Console.WriteLine($"Error logged: {ex.Message}");
+    
+    // Re-throw to let caller handle it too
+    throw;  // Preserves original stack trace
+    
+    // DON'T do this (loses stack trace):
+    // throw ex;
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Common Exception Types</h2>
+
+                    <div class="exception-cards">
+                        <div class="exception-card">
+                            <code>ArgumentNullException</code>
+                            <p>A null argument was passed when not allowed</p>
+                        </div>
+                        <div class="exception-card">
+                            <code>ArgumentException</code>
+                            <p>An argument is invalid</p>
+                        </div>
+                        <div class="exception-card">
+                            <code>ArgumentOutOfRangeException</code>
+                            <p>Argument is outside the allowed range</p>
+                        </div>
+                        <div class="exception-card">
+                            <code>InvalidOperationException</code>
+                            <p>Operation not valid for current state</p>
+                        </div>
+                        <div class="exception-card">
+                            <code>NullReferenceException</code>
+                            <p>Tried to use a null object reference</p>
+                        </div>
+                        <div class="exception-card">
+                            <code>IndexOutOfRangeException</code>
+                            <p>Array/collection index is invalid</p>
+                        </div>
+                        <div class="exception-card">
+                            <code>FileNotFoundException</code>
+                            <p>Specified file doesn't exist</p>
+                        </div>
+                        <div class="exception-card">
+                            <code>FormatException</code>
+                            <p>String format is invalid for parsing</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Creating Custom Exceptions</h2>
+                    <p>Create your own exception types for domain-specific errors:</p>
+
+                    <pre><code class="language-csharp">// Custom exception class
+public class InsufficientFundsException : Exception
+{
+    public decimal Balance { get; }
+    public decimal AttemptedAmount { get; }
+    
+    public InsufficientFundsException(decimal balance, decimal attempted)
+        : base($"Insufficient funds. Balance: {balance:C}, Attempted: {attempted:C}")
+    {
+        Balance = balance;
+        AttemptedAmount = attempted;
+    }
+}
+
+// Using the custom exception
+class BankAccount
+{
+    public decimal Balance { get; private set; }
+    
+    public void Withdraw(decimal amount)
+    {
+        if (amount &gt; Balance)
+        {
+            throw new InsufficientFundsException(Balance, amount);
+        }
+        Balance -= amount;
+    }
+}
+
+// Handling it
+try
+{
+    account.Withdraw(1000);
+}
+catch (InsufficientFundsException ex)
+{
+    Console.WriteLine(ex.Message);
+    Console.WriteLine($"You need {ex.AttemptedAmount - ex.Balance:C} more.");
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Exception Filters</h2>
+                    <p>C# 6+ allows filtering exceptions with the <code>when</code> keyword:</p>
+
+                    <pre><code class="language-csharp">try
+{
+    MakeHttpRequest();
+}
+catch (HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
+{
+    Console.WriteLine("Resource not found!");
+}
+catch (HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.Unauthorized)
+{
+    Console.WriteLine("Please log in first.");
+}
+catch (HttpRequestException ex)
+{
+    Console.WriteLine($"HTTP error: {ex.StatusCode}");
+}
+
+// Useful for logging without catching
+try
+{
+    DoWork();
+}
+catch (Exception ex) when (LogException(ex))  // LogException returns false
+{
+    // Never enters here, but exception is logged
+}
+
+bool LogException(Exception ex)
+{
+    Console.WriteLine($"[LOG] {ex.Message}");
+    return false;  // Don't catch, just log
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Best Practices</h2>
+
+                    <div class="best-practices">
+                        <div class="practice do">
+                            <h4>✅ Do</h4>
+                            <ul>
+                                <li>Catch specific exceptions when possible</li>
+                                <li>Use <code>finally</code> or <code>using</code> for cleanup</li>
+                                <li>Include helpful messages when throwing</li>
+                                <li>Log exceptions for debugging</li>
+                                <li>Use <code>throw;</code> to re-throw (preserves stack trace)</li>
+                            </ul>
+                        </div>
+                        <div class="practice dont">
+                            <h4>❌ Don't</h4>
+                            <ul>
+                                <li>Catch <code>Exception</code> without good reason</li>
+                                <li>Use exceptions for normal flow control</li>
+                                <li>Swallow exceptions silently (empty catch)</li>
+                                <li>Use <code>throw ex;</code> (loses stack trace)</li>
+                                <li>Throw exceptions in constructors if avoidable</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <pre><code class="language-csharp">// ❌ Bad: Empty catch block (swallowing exceptions)
+try
+{
+    DoWork();
+}
+catch { }  // Error is hidden - bugs become impossible to find!
+
+// ❌ Bad: Using exceptions for flow control
+try
+{
+    int index = Array.IndexOf(items, searchItem);
+    if (index == -1) throw new Exception("Not found");
+}
+catch { }  // Don't do this - just use the -1 return value!
+
+// ✅ Good: Specific handling with logging
+try
+{
+    DoWork();
+}
+catch (SpecificException ex)
+{
+    _logger.LogError(ex, "Work failed");
+    throw;  // Re-throw if caller should handle it
+}</code></pre>
+                </section>
+
+                <LessonTakeaways>
+                    <LessonTakeaway>Use <code>try-catch</code> to handle exceptions and prevent crashes.</LessonTakeaway>
+                    <LessonTakeaway>Catch specific exceptions before general ones.</LessonTakeaway>
+                    <LessonTakeaway>Use <code>finally</code> or <code>using</code> for cleanup that must always happen.</LessonTakeaway>
+                    <LessonTakeaway>Throw meaningful exceptions with descriptive messages.</LessonTakeaway>
+                    <LessonTakeaway>Never swallow exceptions silently – always log or re-throw.</LessonTakeaway>
+                </LessonTakeaways>
+
+                <LessonExercises>
+                    <LessonExercise Title="Exercise 11.1: Safe Calculator">
+                        <p>Create a calculator that asks for two numbers and an operation (+, -, *, /). Handle:</p>
+                        <ul>
+                            <li>Invalid number format</li>
+                            <li>Division by zero</li>
+                            <li>Invalid operation</li>
+                        </ul>
+                        <p>Keep asking until the user enters "quit".</p>
+                    </LessonExercise>
+
+                    <LessonExercise Title="Exercise 11.2: File Reader">
+                        <p>Create a program that reads a file and displays its contents. Handle:</p>
+                        <ul>
+                            <li>File not found</li>
+                            <li>Permission denied</li>
+                            <li>Any other IO errors</li>
+                        </ul>
+                        <p>Use a <code>finally</code> block or <code>using</code> statement for cleanup.</p>
+                    </LessonExercise>
+
+                    <LessonExercise Title="Exercise 11.3: Custom Exception">
+                        <p>Create a <code>PasswordTooWeakException</code> that includes:</p>
+                        <ul>
+                            <li>The attempted password</li>
+                            <li>A list of requirements that weren't met</li>
+                        </ul>
+                        <p>Create a <code>ValidatePassword</code> method that throws this exception.</p>
+                    </LessonExercise>
+
+                    <LessonExercise Title="Exercise 11.4: Retry Logic">
+                        <p>Create a method that retries an operation up to 3 times before giving up:</p>
+                        <pre><code class="language-csharp">void RetryOperation(Action operation, int maxRetries = 3)</code></pre>
+                        <p>Log each attempt and the final success or failure.</p>
+                    </LessonExercise>
+                </LessonExercises>
+            </div>
+
+            <LessonFooter 
+                PreviousUrl="/training/csharp-fundamentals/lesson/10" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/csharp-fundamentals/lesson/12" 
+                NextText="Next Lesson" />
+        </article>
+    </main>
+</div>

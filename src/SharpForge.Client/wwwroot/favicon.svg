@@ -1,0 +1,11 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="sharpforge-gradient" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7B68EE"/>
+      <stop offset="1" stop-color="#9945FF"/>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" fill="url(#sharpforge-gradient)"/>
+  <path d="M5 23V26H27V23H5ZM5 5L11 11L5 17L7 19L15 11L7 3L5 5Z" fill="white"/>
+</svg>
+

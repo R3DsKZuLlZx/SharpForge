@@ -1,0 +1,251 @@
+@page "/blog/blazor-signalr-realtime"
+
+<PageTitle>Building Real-Time Apps with Blazor and SignalR - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<article class="blog-post">
+    <header class="post-header">
+        <div class="container">
+            <a href="/blog" class="back-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"/>
+                </svg>
+                Back to Blog
+            </a>
+            <div class="post-meta">
+                <span class="post-category">Blazor</span>
+                <span class="post-date">January 22, 2026</span>
+                <span class="post-read-time">10 min read</span>
+            </div>
+            <h1>Building Real-Time Apps with Blazor and SignalR</h1>
+            <p class="post-excerpt">Learn how to create interactive real-time applications using Blazor WebAssembly and SignalR for seamless client-server communication.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="post-content-wrapper">
+            <div class="post-body">
+                <p>Real-time functionality has become a staple of modern web applications. From chat applications to live dashboards, users expect instant updates without refreshing the page. In this tutorial, we'll explore how to build real-time features using Blazor WebAssembly and SignalR.</p>
+
+                <h2 id="what-is-signalr">What is SignalR?</h2>
+                <p>SignalR is a library that simplifies adding real-time web functionality to applications. It enables server-side code to push content to connected clients instantly. SignalR handles connection management automatically and can scale to thousands of simultaneous connections.</p>
+
+                <h2 id="setting-up-the-project">Setting Up the Project</h2>
+                <p>Let's start by creating a new Blazor WebAssembly project with a SignalR hub.</p>
+
+                <h3>1. Create the Solution</h3>
+                <pre><code>dotnet new blazorwasm -ho -n RealTimeApp
+cd RealTimeApp</code></pre>
+
+                <h3>2. Add SignalR to the Server</h3>
+                <p>In the Server project, add the SignalR services:</p>
+
+                <pre><code>// Program.cs (Server)
+builder.Services.AddSignalR();
+
+// After app.UseRouting()
+app.MapHub&lt;ChatHub&gt;("/chathub");</code></pre>
+
+                <h3>3. Create the Hub</h3>
+                <pre><code>// Hubs/ChatHub.cs
+using Microsoft.AspNetCore.SignalR;
+
+public class ChatHub : Hub
+{
+    public async Task SendMessage(string user, string message)
+    {
+        await Clients.All.SendAsync("ReceiveMessage", user, message);
+    }
+
+    public async Task JoinGroup(string groupName)
+    {
+        await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+        await Clients.Group(groupName).SendAsync("UserJoined", Context.ConnectionId);
+    }
+
+    public override async Task OnConnectedAsync()
+    {
+        await Clients.All.SendAsync("UserConnected", Context.ConnectionId);
+        await base.OnConnectedAsync();
+    }
+
+    public override async Task OnDisconnectedAsync(Exception? exception)
+    {
+        await Clients.All.SendAsync("UserDisconnected", Context.ConnectionId);
+        await base.OnDisconnectedAsync(exception);
+    }
+}</code></pre>
+
+                <h2 id="building-the-client">Building the Client</h2>
+                <p>Now let's create a Blazor component that connects to our SignalR hub.</p>
+
+                <h3>Install the Client Package</h3>
+                <pre><code>cd Client
+dotnet add package Microsoft.AspNetCore.SignalR.Client</code></pre>
+
+                <h3>Create the Chat Component</h3>
+                <pre><code>@@page "/chat"
+@@using Microsoft.AspNetCore.SignalR.Client
+@@inject NavigationManager Navigation
+@@implements IAsyncDisposable
+
+&lt;div class="chat-container"&gt;
+    &lt;div class="messages"&gt;
+        @@foreach (var message in messages)
+        {
+            &lt;div class="message"&gt;
+                &lt;strong&gt;@@message.User:&lt;/strong&gt; @@message.Text
+            &lt;/div&gt;
+        }
+    &lt;/div&gt;
+
+    &lt;div class="input-area"&gt;
+        &lt;input @@bind="userName" placeholder="Your name" /&gt;
+        &lt;input @@bind="messageText" placeholder="Type a message..." /&gt;
+        &lt;button @@onclick="SendMessage" disabled="@@(!IsConnected)"&gt;
+            Send
+        &lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;p&gt;Status: @@(IsConnected ? "Connected" : "Disconnected")&lt;/p&gt;
+&lt;/div&gt;
+
+@@code {
+    private HubConnection? hubConnection;
+    private List&lt;ChatMessage&gt; messages = new();
+    private string userName = "";
+    private string messageText = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(Navigation.ToAbsoluteUri("/chathub"))
+            .WithAutomaticReconnect()
+            .Build();
+
+        hubConnection.On&lt;string, string&gt;("ReceiveMessage", (user, message) =&gt;
+        {
+            messages.Add(new ChatMessage(user, message));
+            InvokeAsync(StateHasChanged);
+        });
+
+        await hubConnection.StartAsync();
+    }
+
+    private async Task SendMessage()
+    {
+        if (hubConnection is not null && !string.IsNullOrEmpty(messageText))
+        {
+            await hubConnection.SendAsync("SendMessage", userName, messageText);
+            messageText = "";
+        }
+    }
+
+    private bool IsConnected =&gt;
+        hubConnection?.State == HubConnectionState.Connected;
+
+    public async ValueTask DisposeAsync()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.DisposeAsync();
+        }
+    }
+
+    private record ChatMessage(string User, string Text);
+}</code></pre>
+
+                <h2 id="advanced-features">Advanced Features</h2>
+
+                <h3>Strongly-Typed Hubs</h3>
+                <p>For better type safety, you can create strongly-typed hubs:</p>
+
+                <pre><code>// Shared interface (in a shared project)
+public interface IChatClient
+{
+    Task ReceiveMessage(string user, string message);
+    Task UserConnected(string connectionId);
+    Task UserDisconnected(string connectionId);
+}
+
+// Strongly-typed hub
+public class ChatHub : Hub&lt;IChatClient&gt;
+{
+    public async Task SendMessage(string user, string message)
+    {
+        await Clients.All.ReceiveMessage(user, message);
+    }
+}</code></pre>
+
+                <h3>Connection State Management</h3>
+                <p>Handle connection state changes gracefully:</p>
+
+                <pre><code>hubConnection.Reconnecting += error =&gt;
+{
+    connectionStatus = "Reconnecting...";
+    InvokeAsync(StateHasChanged);
+    return Task.CompletedTask;
+};
+
+hubConnection.Reconnected += connectionId =&gt;
+{
+    connectionStatus = "Connected";
+    InvokeAsync(StateHasChanged);
+    return Task.CompletedTask;
+};
+
+hubConnection.Closed += error =&gt;
+{
+    connectionStatus = "Disconnected";
+    InvokeAsync(StateHasChanged);
+    return Task.CompletedTask;
+};</code></pre>
+
+                <h2 id="best-practices">Best Practices</h2>
+                <ul>
+                    <li><strong>Always use automatic reconnection</strong> - Network issues are common, and SignalR's built-in reconnection handles them gracefully</li>
+                    <li><strong>Dispose connections properly</strong> - Implement IAsyncDisposable and clean up hub connections</li>
+                    <li><strong>Use groups for targeted messaging</strong> - Instead of broadcasting to all clients, use groups to send messages to specific subsets</li>
+                    <li><strong>Consider using strongly-typed hubs</strong> - They provide compile-time safety and better IntelliSense</li>
+                    <li><strong>Handle disconnections</strong> - Users may lose connection; always provide feedback about connection state</li>
+                </ul>
+
+                <h2 id="conclusion">Conclusion</h2>
+                <p>Blazor and SignalR make an excellent combination for building real-time web applications. With minimal setup, you can create interactive experiences that update instantly across all connected clients. Whether you're building a chat application, a live dashboard, or a collaborative tool, these technologies provide the foundation you need.</p>
+
+                <div class="post-tags">
+                    <span class="tag">Blazor</span>
+                    <span class="tag">SignalR</span>
+                    <span class="tag">Real-Time</span>
+                    <span class="tag">WebAssembly</span>
+                </div>
+            </div>
+
+            <aside class="post-sidebar">
+                <div class="sidebar-section toc">
+                    <h4>Table of Contents</h4>
+                    <ul>
+                        <li><a href="#what-is-signalr">What is SignalR?</a></li>
+                        <li><a href="#setting-up-the-project">Setting Up the Project</a></li>
+                        <li><a href="#building-the-client">Building the Client</a></li>
+                        <li><a href="#advanced-features">Advanced Features</a></li>
+                        <li><a href="#best-practices">Best Practices</a></li>
+                        <li><a href="#conclusion">Conclusion</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section author">
+                    <h4>About the Author</h4>
+                    <div class="author-info">
+                        <div class="author-avatar">SF</div>
+                        <div>
+                            <strong>SharpForge Team</strong>
+                            <p>Passionate about C# and .NET development</p>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</article>
+

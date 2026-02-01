@@ -1,0 +1,124 @@
+﻿@page "/training/entity-framework-core/lesson/5"
+<PageTitle>Basic CRUD Operations - Entity Framework Core - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <LessonSidebar 
+        CourseUrl="/training/entity-framework-core"
+        CourseTitle="Entity Framework Core"
+        CurrentLesson="5"
+        Lessons="CourseLessons.EntityFrameworkCore" />
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <LessonHeader 
+                LessonNumber="5"
+                Title="Basic CRUD Operations"
+                Duration="25 min"
+                Level="Intermediate" />
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Create (Insert)</h2>
+                    <pre><code class="language-csharp">// Single entity
+var product = new Product { Name = "Laptop", Price = 999.99m };
+context.Products.Add(product);
+await context.SaveChangesAsync();
+// product.Id is now set
+
+// Multiple entities
+var products = new List&lt;Product&gt;
+{
+    new() { Name = "Mouse", Price = 29.99m },
+    new() { Name = "Keyboard", Price = 79.99m }
+};
+context.Products.AddRange(products);
+await context.SaveChangesAsync();</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Read (Query)</h2>
+                    <pre><code class="language-csharp">// Get all
+var allProducts = await context.Products.ToListAsync();
+
+// Get by primary key (most efficient)
+var product = await context.Products.FindAsync(id);
+
+// Get single with condition
+var laptop = await context.Products
+    .FirstOrDefaultAsync(p =&gt; p.Name == "Laptop");
+
+// Get single (throws if not exactly one)
+var single = await context.Products
+    .SingleOrDefaultAsync(p =&gt; p.Id == id);
+
+// Check existence
+var exists = await context.Products.AnyAsync(p =&gt; p.Id == id);</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Update</h2>
+                    <pre><code class="language-csharp">// Tracked entity (recommended)
+var product = await context.Products.FindAsync(id);
+if (product != null)
+{
+    product.Price = 899.99m;
+    product.Name = "Gaming Laptop";
+    await context.SaveChangesAsync();
+}
+
+// Disconnected entity
+public async Task UpdateProductAsync(Product product)
+{
+    context.Products.Update(product);
+    await context.SaveChangesAsync();
+}
+
+// Update specific properties only
+context.Entry(product).Property(p =&gt; p.Price).IsModified = true;</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Delete</h2>
+                    <pre><code class="language-csharp">// With tracking
+var product = await context.Products.FindAsync(id);
+if (product != null)
+{
+    context.Products.Remove(product);
+    await context.SaveChangesAsync();
+}
+
+// Without loading (EF Core 7+)
+await context.Products
+    .Where(p =&gt; p.Id == id)
+    .ExecuteDeleteAsync();
+
+// Bulk delete
+await context.Products
+    .Where(p =&gt; p.Price &lt; 10)
+    .ExecuteDeleteAsync();</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Bulk Update (EF Core 7+)</h2>
+                    <pre><code class="language-csharp">// Update all products in category
+await context.Products
+    .Where(p =&gt; p.CategoryId == categoryId)
+    .ExecuteUpdateAsync(setters =&gt; setters
+        .SetProperty(p =&gt; p.Price, p =&gt; p.Price * 1.1m)
+        .SetProperty(p =&gt; p.UpdatedAt, DateTime.UtcNow));</code></pre>
+                </section>
+
+                <LessonTakeaways>
+                    <LessonTakeaway>Always call SaveChangesAsync() to persist changes.</LessonTakeaway>
+                    <LessonTakeaway>FindAsync is optimal for getting by primary key.</LessonTakeaway>
+                    <LessonTakeaway>Use ExecuteUpdateAsync/ExecuteDeleteAsync for bulk operations.</LessonTakeaway>
+                    <LessonTakeaway>Modify tracked entities directly, then save.</LessonTakeaway>
+                </LessonTakeaways>
+            </div>
+            <LessonFooter 
+                PreviousUrl="/training/entity-framework-core/lesson/4" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/entity-framework-core/lesson/6" 
+                NextText="Next Lesson" />
+        </article>
+    </main>
+</div>

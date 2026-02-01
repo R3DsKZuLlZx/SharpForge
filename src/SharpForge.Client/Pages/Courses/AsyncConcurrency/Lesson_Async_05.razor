@@ -1,0 +1,123 @@
+﻿@page "/training/async-concurrency/lesson/5"
+<PageTitle>Task Combinators - Async/Await & Concurrency - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <LessonSidebar 
+        CourseUrl="/training/async-concurrency"
+        CourseTitle="Async/Await & Concurrency"
+        CurrentLesson="5"
+        Lessons="CourseLessons.AsyncConcurrency" />
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <LessonHeader 
+                LessonNumber="5"
+                Title="Task Combinators"
+                Duration="30 min"
+                Level="Intermediate" />
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Task.WhenAll</h2>
+                    <p>Wait for all tasks to complete. Returns when ALL are done.</p>
+                    <pre><code class="language-csharp">// Run multiple operations concurrently
+var userTask = GetUserAsync(userId);
+var ordersTask = GetOrdersAsync(userId);
+var prefsTask = GetPreferencesAsync(userId);
+
+// Wait for all to complete
+await Task.WhenAll(userTask, ordersTask, prefsTask);
+
+// Access results
+var user = await userTask;
+var orders = await ordersTask;
+var prefs = await prefsTask;
+
+// Or get all results at once
+var urls = new[] { "url1", "url2", "url3" };
+var tasks = urls.Select(url =&gt; httpClient.GetStringAsync(url));
+string[] results = await Task.WhenAll(tasks);</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Task.WhenAny</h2>
+                    <p>Returns when ANY task completes. Useful for timeouts and racing.</p>
+                    <pre><code class="language-csharp">// Timeout pattern
+var dataTask = GetDataAsync();
+var timeoutTask = Task.Delay(TimeSpan.FromSeconds(5));
+
+var completedTask = await Task.WhenAny(dataTask, timeoutTask);
+
+if (completedTask == timeoutTask)
+    throw new TimeoutException("Operation timed out");
+
+var result = await dataTask;  // Get the actual result</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>First Successful Result</h2>
+                    <pre><code class="language-csharp">// Try multiple sources, use first success
+public async Task&lt;Data&gt; GetFromAnySourceAsync()
+{
+    var tasks = new List&lt;Task&lt;Data&gt;&gt;
+    {
+        GetFromCacheAsync(),
+        GetFromDatabaseAsync(),
+        GetFromApiAsync()
+    };
+
+    while (tasks.Count &gt; 0)
+    {
+        var completed = await Task.WhenAny(tasks);
+        tasks.Remove(completed);
+
+        try
+        {
+            return await completed;  // Return first success
+        }
+        catch
+        {
+            // Try next one
+        }
+    }
+
+    throw new Exception("All sources failed");
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Throttling Concurrent Operations</h2>
+                    <pre><code class="language-csharp">// Process with limited concurrency
+public async Task ProcessAllAsync(IEnumerable&lt;string&gt; urls, int maxConcurrency = 10)
+{
+    var semaphore = new SemaphoreSlim(maxConcurrency);
+    var tasks = urls.Select(async url =&gt;
+    {
+        await semaphore.WaitAsync();
+        try
+        {
+            await ProcessUrlAsync(url);
+        }
+        finally
+        {
+            semaphore.Release();
+        }
+    });
+
+    await Task.WhenAll(tasks);
+}</code></pre>
+                </section>
+
+                <LessonTakeaways>
+                    <LessonTakeaway>WhenAll waits for ALL tasks to complete.</LessonTakeaway>
+                    <LessonTakeaway>WhenAny returns when ANY task completes.</LessonTakeaway>
+                    <LessonTakeaway>Use SemaphoreSlim for throttling concurrency.</LessonTakeaway>
+                </LessonTakeaways>
+            </div>
+            <LessonFooter 
+                PreviousUrl="/training/async-concurrency/lesson/4" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/async-concurrency/lesson/6" 
+                NextText="Next Lesson" />
+        </article>
+    </main>
+</div>

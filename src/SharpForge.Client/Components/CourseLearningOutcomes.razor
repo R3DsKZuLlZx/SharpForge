@@ -1,0 +1,13 @@
+﻿@* Common component for course learning outcomes section *@
+
+<div class="course-section">
+    <h2>What You'll Learn</h2>
+    <div class="learning-outcomes">
+        @ChildContent
+    </div>
+</div>
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}
+

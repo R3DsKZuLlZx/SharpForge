@@ -1,0 +1,116 @@
+﻿@page "/training/design-patterns/lesson/3"
+<PageTitle>Open/Closed Principle - Design Patterns in C# - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <LessonSidebar 
+        CourseUrl="/training/design-patterns"
+        CourseTitle="Design Patterns in C#"
+        CurrentLesson="3"
+        Lessons="CourseLessons.DesignPatterns" />
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <LessonHeader 
+                LessonNumber="3"
+                Title="Open/Closed Principle"
+                Duration="25 min"
+                Level="Advanced" />
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>The Principle</h2>
+                    <p><strong>"Software entities should be open for extension, but closed for modification."</strong></p>
+                    <p>You should be able to add new functionality without changing existing code.</p>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>❌ Violating OCP</h2>
+                    <pre><code class="language-csharp">public class DiscountCalculator
+{
+    public decimal Calculate(Order order)
+    {
+        switch (order.CustomerType)
+        {
+            case "Regular":
+                return order.Total * 0.1m;
+            case "Premium":
+                return order.Total * 0.2m;
+            case "VIP":
+                return order.Total * 0.3m;
+            // Adding new customer type requires modifying this class!
+            default:
+                return 0;
+        }
+    }
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>✅ Following OCP</h2>
+                    <pre><code class="language-csharp">public interface IDiscountStrategy
+{
+    decimal Calculate(Order order);
+}
+
+public class RegularDiscount : IDiscountStrategy
+{
+    public decimal Calculate(Order order) =&gt; order.Total * 0.1m;
+}
+
+public class PremiumDiscount : IDiscountStrategy
+{
+    public decimal Calculate(Order order) =&gt; order.Total * 0.2m;
+}
+
+public class VipDiscount : IDiscountStrategy
+{
+    public decimal Calculate(Order order) =&gt; order.Total * 0.3m;
+}
+
+// New discounts can be added without modifying existing code!
+public class BlackFridayDiscount : IDiscountStrategy
+{
+    public decimal Calculate(Order order) =&gt; order.Total * 0.5m;
+}
+
+public class DiscountCalculator
+{
+    public decimal Calculate(Order order, IDiscountStrategy strategy)
+        =&gt; strategy.Calculate(order);
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Real-World Example: Payment Processing</h2>
+                    <pre><code class="language-csharp">public interface IPaymentProcessor
+{
+    Task&lt;PaymentResult&gt; ProcessAsync(Payment payment);
+}
+
+public class CreditCardProcessor : IPaymentProcessor { /* ... */ }
+public class PayPalProcessor : IPaymentProcessor { /* ... */ }
+public class StripeProcessor : IPaymentProcessor { /* ... */ }
+
+// Adding Apple Pay? Just create a new class!
+public class ApplePayProcessor : IPaymentProcessor
+{
+    public async Task&lt;PaymentResult&gt; ProcessAsync(Payment payment)
+    {
+        // Apple Pay specific logic
+    }
+}</code></pre>
+                </section>
+
+                <LessonTakeaways>
+                    <LessonTakeaway>Open for extension, closed for modification.</LessonTakeaway>
+                    <LessonTakeaway>Use interfaces and abstract classes for extension points.</LessonTakeaway>
+                    <LessonTakeaway>Switch statements are often a sign of OCP violation.</LessonTakeaway>
+                </LessonTakeaways>
+            </div>
+            <LessonFooter 
+                PreviousUrl="/training/design-patterns/lesson/2" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/design-patterns/lesson/4" 
+                NextText="Next Lesson" />
+        </article>
+    </main>
+</div>

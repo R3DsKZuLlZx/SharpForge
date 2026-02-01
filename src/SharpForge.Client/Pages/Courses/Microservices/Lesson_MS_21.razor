@@ -1,0 +1,85 @@
+﻿@page "/training/microservices/lesson/21"
+<PageTitle>Health Checks and Probes - Microservices with .NET - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <LessonSidebar 
+        CourseUrl="/training/microservices"
+        CourseTitle="Microservices with .NET"
+        CurrentLesson="21"
+        Lessons="CourseLessons.Microservices" />
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <LessonHeader 
+                LessonNumber="21"
+                Title="Health Checks and Probes"
+                Duration="25 min"
+                Level="Advanced" />
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>.NET Health Checks</h2>
+                    <pre><code class="language-csharp">// Program.cs
+builder.Services.AddHealthChecks()
+    .AddSqlServer(connectionString, name: "database")
+    .AddRabbitMQ(rabbitMqConnection, name: "rabbitmq")
+    .AddCheck("self", () =&gt; HealthCheckResult.Healthy());
+
+app.MapHealthChecks("/health/live", new HealthCheckOptions
+{
+    Predicate = check =&gt; check.Name == "self"
+});
+
+app.MapHealthChecks("/health/ready", new HealthCheckOptions
+{
+    Predicate = _ =&gt; true
+});</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Kubernetes Probes</h2>
+                    <pre><code class="language-yaml">spec:
+  containers:
+  - name: order-service
+    livenessProbe:
+      httpGet:
+        path: /health/live
+        port: 80
+      initialDelaySeconds: 10
+      periodSeconds: 10
+    readinessProbe:
+      httpGet:
+        path: /health/ready
+        port: 80
+      initialDelaySeconds: 5
+      periodSeconds: 5
+    startupProbe:
+      httpGet:
+        path: /health/live
+        port: 80
+      failureThreshold: 30
+      periodSeconds: 10</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Probe Types</h2>
+                    <ul>
+                        <li><strong>Liveness:</strong> Is the app running? Restart if fails.</li>
+                        <li><strong>Readiness:</strong> Can the app handle traffic? Remove from load balancer if fails.</li>
+                        <li><strong>Startup:</strong> Has the app finished starting? Runs before liveness/readiness.</li>
+                    </ul>
+                </section>
+
+                <LessonTakeaways>
+                    <LessonTakeaway>Liveness checks if app is alive (restart if not).</LessonTakeaway>
+                    <LessonTakeaway>Readiness checks if app can handle traffic.</LessonTakeaway>
+                    <LessonTakeaway>Use .NET health checks library.</LessonTakeaway>
+                </LessonTakeaways>
+            </div>
+            <LessonFooter 
+                PreviousUrl="/training/microservices/lesson/20" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/microservices/lesson/22" 
+                NextText="Next Lesson" />
+        </article>
+    </main>
+</div>

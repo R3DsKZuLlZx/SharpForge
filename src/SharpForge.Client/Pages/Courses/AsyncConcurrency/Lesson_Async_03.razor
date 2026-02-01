@@ -1,0 +1,109 @@
+﻿@page "/training/async-concurrency/lesson/3"
+<PageTitle>Async and Await Keywords - Async/Await & Concurrency - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <LessonSidebar 
+        CourseUrl="/training/async-concurrency"
+        CourseTitle="Async/Await & Concurrency"
+        CurrentLesson="3"
+        Lessons="CourseLessons.AsyncConcurrency" />
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <LessonHeader 
+                LessonNumber="3"
+                Title="Async and Await Keywords"
+                Duration="35 min"
+                Level="Intermediate" />
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>The async Modifier</h2>
+                    <pre><code class="language-csharp">// async enables the await keyword in the method
+public async Task&lt;string&gt; GetDataAsync()
+{
+    // Can use await here
+    var data = await httpClient.GetStringAsync(url);
+    return data;
+}
+
+// Return types for async methods:
+// - Task         (void equivalent)
+// - Task&lt;T&gt;      (returns T)
+// - ValueTask    (optimization)
+// - ValueTask&lt;T&gt; (optimization with return)
+// - async void   (AVOID - only for event handlers)</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>The await Keyword</h2>
+                    <pre><code class="language-csharp">public async Task ProcessAsync()
+{
+    // await does three things:
+    // 1. Checks if task is complete - if yes, continues synchronously
+    // 2. If not complete, registers continuation and returns
+    // 3. When task completes, resumes execution
+
+    var result = await GetDataAsync();  // Execution pauses here
+    
+    // This code runs after GetDataAsync completes
+    Console.WriteLine(result);
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Multiple Awaits</h2>
+                    <pre><code class="language-csharp">// Sequential - one after another
+public async Task SequentialAsync()
+{
+    var user = await GetUserAsync();      // Wait for this
+    var orders = await GetOrdersAsync();  // Then wait for this
+    // Total time = GetUser + GetOrders
+}
+
+// Concurrent - start both, await both
+public async Task ConcurrentAsync()
+{
+    var userTask = GetUserAsync();        // Start this
+    var ordersTask = GetOrdersAsync();    // Start this immediately
+    
+    var user = await userTask;            // Wait for first
+    var orders = await ordersTask;        // Wait for second
+    // Total time = Max(GetUser, GetOrders)
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>ConfigureAwait</h2>
+                    <pre><code class="language-csharp">// In library code, use ConfigureAwait(false)
+public async Task&lt;string&gt; GetDataAsync()
+{
+    // Don't capture synchronization context
+    var data = await httpClient.GetStringAsync(url)
+        .ConfigureAwait(false);
+    
+    return data;
+}
+
+// In UI/ASP.NET code, usually omit (defaults to true)
+public async Task ButtonClickAsync()
+{
+    var data = await GetDataAsync();  // Returns to UI thread
+    label.Text = data;  // Safe to update UI
+}</code></pre>
+                </section>
+
+                <LessonTakeaways>
+                    <LessonTakeaway>async enables await; await pauses execution.</LessonTakeaway>
+                    <LessonTakeaway>Return Task, not void (except event handlers).</LessonTakeaway>
+                    <LessonTakeaway>Start tasks first, await later for concurrency.</LessonTakeaway>
+                    <LessonTakeaway>Use ConfigureAwait(false) in library code.</LessonTakeaway>
+                </LessonTakeaways>
+            </div>
+            <LessonFooter 
+                PreviousUrl="/training/async-concurrency/lesson/2" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/async-concurrency/lesson/4" 
+                NextText="Next Lesson" />
+        </article>
+    </main>
+</div>

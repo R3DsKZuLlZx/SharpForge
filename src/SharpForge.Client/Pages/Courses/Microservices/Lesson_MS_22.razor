@@ -1,0 +1,82 @@
+﻿@page "/training/microservices/lesson/22"
+<PageTitle>Scaling and Load Balancing - Microservices with .NET - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <LessonSidebar 
+        CourseUrl="/training/microservices"
+        CourseTitle="Microservices with .NET"
+        CurrentLesson="22"
+        Lessons="CourseLessons.Microservices" />
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <LessonHeader 
+                LessonNumber="22"
+                Title="Scaling and Load Balancing"
+                Duration="25 min"
+                Level="Advanced" />
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Manual Scaling</h2>
+                    <pre><code class="language-bash"># Scale deployment
+kubectl scale deployment order-service --replicas=5
+
+# Or update the YAML
+spec:
+  replicas: 5</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Horizontal Pod Autoscaler</h2>
+                    <pre><code class="language-yaml">apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: order-service-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: order-service
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>KEDA (Event-Driven Autoscaling)</h2>
+                    <pre><code class="language-yaml">apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: order-processor-scaler
+spec:
+  scaleTargetRef:
+    name: order-processor
+  minReplicaCount: 1
+  maxReplicaCount: 20
+  triggers:
+  - type: rabbitmq
+    metadata:
+      queueName: orders
+      queueLength: "50"</code></pre>
+                </section>
+
+                <LessonTakeaways>
+                    <LessonTakeaway>HPA scales based on CPU/memory metrics.</LessonTakeaway>
+                    <LessonTakeaway>KEDA scales based on events (queues, etc).</LessonTakeaway>
+                    <LessonTakeaway>Services load balance automatically.</LessonTakeaway>
+                </LessonTakeaways>
+            </div>
+            <LessonFooter 
+                PreviousUrl="/training/microservices/lesson/21" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/microservices/lesson/23" 
+                NextText="Next Lesson" />
+        </article>
+    </main>
+</div>

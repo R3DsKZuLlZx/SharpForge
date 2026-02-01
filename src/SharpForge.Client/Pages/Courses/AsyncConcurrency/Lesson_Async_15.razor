@@ -1,0 +1,108 @@
+﻿@page "/training/async-concurrency/lesson/15"
+<PageTitle>Avoiding Common Pitfalls - Async/Await & Concurrency - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <LessonSidebar 
+        CourseUrl="/training/async-concurrency"
+        CourseTitle="Async/Await & Concurrency"
+        CurrentLesson="15"
+        Lessons="CourseLessons.AsyncConcurrency" />
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <LessonHeader 
+                LessonNumber="15"
+                Title="Avoiding Common Pitfalls"
+                Duration="30 min"
+                Level="Intermediate" />
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>❌ Pitfall 1: async void</h2>
+                    <pre><code class="language-csharp">// ❌ BAD - exceptions are lost, can't be awaited
+async void DoWork()
+{
+    await Task.Delay(100);
+    throw new Exception("Lost forever!");
+}
+
+// ✅ GOOD - return Task
+async Task DoWorkAsync()
+{
+    await Task.Delay(100);
+}
+
+// Exception: Event handlers CAN use async void
+button.Click += async (s, e) =&gt; await HandleClickAsync();</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>❌ Pitfall 2: Blocking on Async (Deadlock!)</h2>
+                    <pre><code class="language-csharp">// ❌ DEADLOCK in UI/ASP.NET apps!
+public string GetData()
+{
+    return GetDataAsync().Result;  // Blocks!
+}
+
+// ❌ Also deadlock
+public string GetData()
+{
+    return GetDataAsync().GetAwaiter().GetResult();
+}
+
+// ✅ GOOD - async all the way
+public async Task&lt;string&gt; GetDataAsync()
+{
+    return await httpClient.GetStringAsync(url);
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>❌ Pitfall 3: Not Using ConfigureAwait</h2>
+                    <pre><code class="language-csharp">// In library code, always use ConfigureAwait(false)
+public async Task&lt;Data&gt; LibraryMethodAsync()
+{
+    // Don't capture sync context
+    var result = await httpClient.GetAsync(url).ConfigureAwait(false);
+    return await result.Content.ReadFromJsonAsync&lt;Data&gt;().ConfigureAwait(false);
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>❌ Pitfall 4: Not Passing CancellationToken</h2>
+                    <pre><code class="language-csharp">// ❌ BAD - ignores cancellation
+public async Task ProcessAsync()
+{
+    await httpClient.GetStringAsync(url);  // Can't cancel!
+}
+
+// ✅ GOOD - accept and pass token
+public async Task ProcessAsync(CancellationToken ct = default)
+{
+    await httpClient.GetStringAsync(url, ct);
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>❌ Pitfall 5: Using Task.Run for I/O</h2>
+                    <pre><code class="language-csharp">// ❌ BAD - wastes a thread pool thread
+var data = await Task.Run(() =&gt; httpClient.GetStringAsync(url));
+
+// ✅ GOOD - just await directly
+var data = await httpClient.GetStringAsync(url);</code></pre>
+                </section>
+
+                <LessonTakeaways>
+                    <LessonTakeaway>Never use async void (except event handlers).</LessonTakeaway>
+                    <LessonTakeaway>Never block on async with .Result or .Wait().</LessonTakeaway>
+                    <LessonTakeaway>Use ConfigureAwait(false) in library code.</LessonTakeaway>
+                    <LessonTakeaway>Always pass CancellationToken through call chains.</LessonTakeaway>
+                </LessonTakeaways>
+            </div>
+            <LessonFooter 
+                PreviousUrl="/training/async-concurrency/lesson/14" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/async-concurrency/lesson/16" 
+                NextText="Next Lesson" />
+        </article>
+    </main>
+</div>

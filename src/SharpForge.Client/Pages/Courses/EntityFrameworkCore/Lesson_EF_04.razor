@@ -1,0 +1,127 @@
+﻿@page "/training/entity-framework-core/lesson/4"
+<PageTitle>Migrations - Entity Framework Core - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <LessonSidebar 
+        CourseUrl="/training/entity-framework-core"
+        CourseTitle="Entity Framework Core"
+        CurrentLesson="4"
+        Lessons="CourseLessons.EntityFrameworkCore" />
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <LessonHeader 
+                LessonNumber="4"
+                Title="Migrations"
+                Duration="30 min"
+                Level="Intermediate" />
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>What Are Migrations?</h2>
+                    <p>Migrations are a way to incrementally update your database schema to keep it in sync with your data model while preserving existing data.</p>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Creating Migrations</h2>
+                    <pre><code class="language-bash"># Create initial migration
+dotnet ef migrations add InitialCreate
+
+# Create migration for new changes
+dotnet ef migrations add AddProductDescription
+
+# Specify project (if multiple projects)
+dotnet ef migrations add AddOrders -p Data -s WebApi</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Migration File Structure</h2>
+                    <pre><code class="language-csharp">public partial class AddProductDescription : Migration
+{
+    protected override void Up(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.AddColumn&lt;string&gt;(
+            name: "Description",
+            table: "Products",
+            type: "nvarchar(500)",
+            maxLength: 500,
+            nullable: true);
+    }
+
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropColumn(
+            name: "Description",
+            table: "Products");
+    }
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Applying Migrations</h2>
+                    <pre><code class="language-bash"># Apply all pending migrations
+dotnet ef database update
+
+# Apply to specific migration
+dotnet ef database update AddProductDescription
+
+# Rollback to previous migration
+dotnet ef database update InitialCreate
+
+# Generate SQL script instead of applying
+dotnet ef migrations script -o migration.sql
+
+# Idempotent script (can run multiple times)
+dotnet ef migrations script --idempotent</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Managing Migrations</h2>
+                    <pre><code class="language-bash"># List migrations
+dotnet ef migrations list
+
+# Remove last migration (if not applied)
+dotnet ef migrations remove
+
+# Check for pending migrations in code
+if (context.Database.GetPendingMigrations().Any())
+{
+    context.Database.Migrate();
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Custom Migration Operations</h2>
+                    <pre><code class="language-csharp">protected override void Up(MigrationBuilder migrationBuilder)
+{
+    // Add column
+    migrationBuilder.AddColumn&lt;string&gt;("Sku", "Products", nullable: true);
+    
+    // Create index
+    migrationBuilder.CreateIndex("IX_Products_Sku", "Products", "Sku");
+    
+    // Execute raw SQL
+    migrationBuilder.Sql("UPDATE Products SET Sku = 'SKU-' + CAST(Id AS VARCHAR)");
+    
+    // Create stored procedure
+    migrationBuilder.Sql(
+        "CREATE PROCEDURE GetProductsByCategoryId " +
+        "@@CategoryId INT AS BEGIN " +
+        "SELECT * FROM Products WHERE CategoryId = @@CategoryId END");
+}</code></pre>
+                </section>
+
+                <LessonTakeaways>
+                    <LessonTakeaway>Migrations track database schema changes over time.</LessonTakeaway>
+                    <LessonTakeaway>Up() applies changes, Down() reverts them.</LessonTakeaway>
+                    <LessonTakeaway>Use scripts for production deployments.</LessonTakeaway>
+                    <LessonTakeaway>Always commit migrations to source control.</LessonTakeaway>
+                </LessonTakeaways>
+            </div>
+            <LessonFooter 
+                PreviousUrl="/training/entity-framework-core/lesson/3" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/entity-framework-core/lesson/5" 
+                NextText="Next Lesson" />
+        </article>
+    </main>
+</div>

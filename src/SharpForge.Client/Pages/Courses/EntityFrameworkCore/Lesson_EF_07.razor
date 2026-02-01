@@ -1,0 +1,140 @@
+﻿@page "/training/entity-framework-core/lesson/7"
+<PageTitle>Relationships - Entity Framework Core - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <LessonSidebar 
+        CourseUrl="/training/entity-framework-core"
+        CourseTitle="Entity Framework Core"
+        CurrentLesson="7"
+        Lessons="CourseLessons.EntityFrameworkCore" />
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <LessonHeader 
+                LessonNumber="7"
+                Title="Relationships"
+                Duration="35 min"
+                Level="Intermediate" />
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>One-to-Many Relationship</h2>
+                    <pre><code class="language-csharp">// Category has many Products
+public class Category
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public ICollection&lt;Product&gt; Products { get; set; } = new List&lt;Product&gt;();
+}
+
+// Product belongs to one Category
+public class Product
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public int CategoryId { get; set; }  // Foreign key
+    public Category Category { get; set; } = null!;  // Navigation property
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>One-to-One Relationship</h2>
+                    <pre><code class="language-csharp">public class User
+{
+    public int Id { get; set; }
+    public string Email { get; set; } = string.Empty;
+    public UserProfile? Profile { get; set; }
+}
+
+public class UserProfile
+{
+    public int Id { get; set; }
+    public string Bio { get; set; } = string.Empty;
+    public int UserId { get; set; }
+    public User User { get; set; } = null!;
+}
+
+// Configuration
+modelBuilder.Entity&lt;User&gt;()
+    .HasOne(u =&gt; u.Profile)
+    .WithOne(p =&gt; p.User)
+    .HasForeignKey&lt;UserProfile&gt;(p =&gt; p.UserId);</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Many-to-Many Relationship</h2>
+                    <pre><code class="language-csharp">// EF Core 5+ - Simple (skip navigation)
+public class Student
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public ICollection&lt;Course&gt; Courses { get; set; } = new List&lt;Course&gt;();
+}
+
+public class Course
+{
+    public int Id { get; set; }
+    public string Title { get; set; } = string.Empty;
+    public ICollection&lt;Student&gt; Students { get; set; } = new List&lt;Student&gt;();
+}
+
+// EF Core creates junction table automatically</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Many-to-Many with Payload</h2>
+                    <pre><code class="language-csharp">// When you need extra data on the relationship
+public class Enrollment
+{
+    public int StudentId { get; set; }
+    public Student Student { get; set; } = null!;
+    public int CourseId { get; set; }
+    public Course Course { get; set; } = null!;
+    public DateTime EnrolledAt { get; set; }
+    public decimal? Grade { get; set; }
+}
+
+// Configuration
+modelBuilder.Entity&lt;Enrollment&gt;()
+    .HasKey(e =&gt; new { e.StudentId, e.CourseId });
+
+modelBuilder.Entity&lt;Enrollment&gt;()
+    .HasOne(e =&gt; e.Student)
+    .WithMany(s =&gt; s.Enrollments)
+    .HasForeignKey(e =&gt; e.StudentId);
+
+modelBuilder.Entity&lt;Enrollment&gt;()
+    .HasOne(e =&gt; e.Course)
+    .WithMany(c =&gt; c.Enrollments)
+    .HasForeignKey(e =&gt; e.CourseId);</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Cascade Delete</h2>
+                    <pre><code class="language-csharp">modelBuilder.Entity&lt;Product&gt;()
+    .HasOne(p =&gt; p.Category)
+    .WithMany(c =&gt; c.Products)
+    .HasForeignKey(p =&gt; p.CategoryId)
+    .OnDelete(DeleteBehavior.Cascade);  // Default for required FK
+
+// Options:
+// Cascade - Delete related entities
+// Restrict - Prevent deletion if related entities exist
+// SetNull - Set FK to null (requires nullable FK)
+// NoAction - No action (database may throw)</code></pre>
+                </section>
+
+                <LessonTakeaways>
+                    <LessonTakeaway>Foreign keys define the relationship in the database.</LessonTakeaway>
+                    <LessonTakeaway>Navigation properties allow traversing relationships.</LessonTakeaway>
+                    <LessonTakeaway>EF Core 5+ simplifies many-to-many relationships.</LessonTakeaway>
+                    <LessonTakeaway>Use Fluent API for complex relationship configurations.</LessonTakeaway>
+                </LessonTakeaways>
+            </div>
+            <LessonFooter 
+                PreviousUrl="/training/entity-framework-core/lesson/6" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/entity-framework-core/lesson/8" 
+                NextText="Next Lesson" />
+        </article>
+    </main>
+</div>

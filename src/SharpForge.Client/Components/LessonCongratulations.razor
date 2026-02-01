@@ -1,0 +1,24 @@
+﻿@* Common component for lesson congratulations section *@
+
+<section class="lesson-section congratulations">
+    <div class="congrats-content">
+        <span class="congrats-icon">🎉</span>
+        <h2>Congratulations!</h2>
+        <p>You've completed the <strong>@CourseTitle</strong> course! You now have comprehensive knowledge of:</p>
+        <ul>
+            @foreach (var item in Topics)
+            {
+                <li>@item</li>
+            }
+        </ul>
+        <p>@((MarkupString)ClosingMessage)</p>
+        <a href="/training" class="btn btn-primary">Explore More Courses</a>
+    </div>
+</section>
+
+@code {
+    [Parameter] public string CourseTitle { get; set; } = "";
+    [Parameter] public List<string> Topics { get; set; } = [];
+    [Parameter] public string ClosingMessage { get; set; } = "<strong>What's next?</strong> Continue your journey with more courses!";
+}
+

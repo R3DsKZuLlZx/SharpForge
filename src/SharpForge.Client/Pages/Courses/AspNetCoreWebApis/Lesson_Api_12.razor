@@ -1,0 +1,88 @@
+﻿@page "/training/aspnet-core-web-apis/lesson/12"
+<PageTitle>Error Handling - ASP.NET Core Web APIs - SharpForge</PageTitle>
+<CodeHighlighter />
+<div class="lesson-layout">
+    <LessonSidebar 
+        CourseUrl="/training/aspnet-core-web-apis"
+        CourseTitle="ASP.NET Core Web APIs"
+        CurrentLesson="12"
+        Lessons="CourseLessons.AspNetCoreWebApis" />
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <LessonHeader 
+                LessonNumber="12"
+                Title="Error Handling"
+                Duration="30 min"
+                Level="Intermediate" />
+            <div class="lesson-body">
+                <section class="lesson-section"><h2>Global Exception Handling</h2><pre><code class="language-csharp">// Use exception handler middleware
+if (app.Environment.IsDevelopment())
+    app.UseDeveloperExceptionPage();
+else
+    app.UseExceptionHandler("/error");</code></pre></section>
+                <section class="lesson-section"><h2>Problem Details</h2><pre><code class="language-csharp">builder.Services.AddProblemDetails();
+
+// Custom error endpoint
+app.MapGet("/error", (HttpContext context) =>
+{
+    var exception = context.Features.Get&lt;IExceptionHandlerFeature&gt;()?.Error;
+    return Results.Problem(
+        title: "An error occurred",
+        statusCode: 500,
+        detail: app.Environment.IsDevelopment() ? exception?.Message : null);
+});</code></pre></section>
+                <section class="lesson-section"><h2>Custom Exception Middleware</h2><pre><code class="language-csharp">public class ExceptionMiddleware
+{
+    private readonly RequestDelegate _next;
+    private readonly ILogger&lt;ExceptionMiddleware&gt; _logger;
+
+    public ExceptionMiddleware(RequestDelegate next, ILogger&lt;ExceptionMiddleware&gt; logger)
+    {
+        _next = next; _logger = logger;
+    }
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        try { await _next(context); }
+        catch (NotFoundException ex)
+        {
+            context.Response.StatusCode = 404;
+            await context.Response.WriteAsJsonAsync(new { error = ex.Message });
+        }
+        catch (ValidationException ex)
+        {
+            context.Response.StatusCode = 400;
+            await context.Response.WriteAsJsonAsync(new { errors = ex.Errors });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Unhandled exception");
+            context.Response.StatusCode = 500;
+            await context.Response.WriteAsJsonAsync(new { error = "Internal server error" });
+        }
+    }
+}</code></pre></section>
+                <section class="lesson-section"><h2>Custom Exceptions</h2><pre><code class="language-csharp">public class NotFoundException : Exception
+{
+    public NotFoundException(string message) : base(message) { }
+}
+
+public class ValidationException : Exception
+{
+    public IDictionary&lt;string, string[]&gt; Errors { get; }
+    public ValidationException(IDictionary&lt;string, string[]&gt; errors) => Errors = errors;
+}</code></pre></section>
+                <LessonTakeaways>
+                    <LessonTakeaway>Use middleware for centralized error handling.</LessonTakeaway>
+                    <LessonTakeaway>Return Problem Details format for consistency.</LessonTakeaway>
+                    <LessonTakeaway>Never expose stack traces in production.</LessonTakeaway>
+                </LessonTakeaways>
+            </div>
+            <LessonFooter 
+                PreviousUrl="/training/aspnet-core-web-apis/lesson/11" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/aspnet-core-web-apis/lesson/13" 
+                NextText="Next Lesson" />
+        </article>
+    </main>
+</div>

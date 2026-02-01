@@ -1,0 +1,116 @@
+﻿@page "/training/design-patterns/lesson/7"
+<PageTitle>Singleton Pattern - Design Patterns in C# - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <LessonSidebar 
+        CourseUrl="/training/design-patterns"
+        CourseTitle="Design Patterns in C#"
+        CurrentLesson="7"
+        Lessons="CourseLessons.DesignPatterns" />
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <LessonHeader 
+                LessonNumber="7"
+                Title="Singleton Pattern"
+                Duration="25 min"
+                Level="Advanced" />
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Intent</h2>
+                    <p>Ensure a class has only one instance and provide a global point of access to it.</p>
+                    <div class="info-box">
+                        <div class="info-box-header"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span>Category</span></div>
+                        <p>Creational Pattern</p>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Thread-Safe Singleton (Lazy)</h2>
+                    <pre><code class="language-csharp">public sealed class Logger
+{
+    private static readonly Lazy&lt;Logger&gt; _instance = 
+        new(() =&gt; new Logger());
+
+    public static Logger Instance =&gt; _instance.Value;
+
+    private Logger() 
+    {
+        // Private constructor prevents external instantiation
+    }
+
+    public void Log(string message)
+    {
+        Console.WriteLine($"[{DateTime.Now}] {message}");
+    }
+}
+
+// Usage
+Logger.Instance.Log("Application started");</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Alternative: Static Initialization</h2>
+                    <pre><code class="language-csharp">public sealed class Configuration
+{
+    // Eager initialization - thread-safe by CLR guarantee
+    private static readonly Configuration _instance = new();
+
+    public static Configuration Instance =&gt; _instance;
+
+    private Configuration()
+    {
+        // Load configuration
+    }
+
+    public string ConnectionString { get; private set; }
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Modern Approach: Use DI Container</h2>
+                    <pre><code class="language-csharp">// Register as singleton in DI
+builder.Services.AddSingleton&lt;ILogger, Logger&gt;();
+builder.Services.AddSingleton&lt;IConfiguration&gt;(config);
+
+// Inject where needed - no static access!
+public class OrderService
+{
+    private readonly ILogger _logger;
+
+    public OrderService(ILogger logger)
+    {
+        _logger = logger;
+    }
+}</code></pre>
+                    <div class="info-box">
+                        <div class="info-box-header"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span>Best Practice</span></div>
+                        <p>In modern .NET, prefer using the DI container's singleton lifetime over implementing the pattern manually.</p>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>When to Use</h2>
+                    <ul>
+                        <li>Configuration settings</li>
+                        <li>Logging services</li>
+                        <li>Database connection pools</li>
+                        <li>Caches</li>
+                    </ul>
+                </section>
+
+                <LessonTakeaways>
+                    <LessonTakeaway>Singleton ensures only one instance exists.</LessonTakeaway>
+                    <LessonTakeaway>Use Lazy&lt;T&gt; for thread-safe lazy initialization.</LessonTakeaway>
+                    <LessonTakeaway>Prefer DI container's singleton registration.</LessonTakeaway>
+                    <LessonTakeaway>Be cautious—singletons can make testing harder.</LessonTakeaway>
+                </LessonTakeaways>
+            </div>
+            <LessonFooter 
+                PreviousUrl="/training/design-patterns/lesson/6" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/design-patterns/lesson/8" 
+                NextText="Next Lesson" />
+        </article>
+    </main>
+</div>

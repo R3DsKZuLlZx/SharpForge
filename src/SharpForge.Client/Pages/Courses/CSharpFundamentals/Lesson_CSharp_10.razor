@@ -1,0 +1,638 @@
+﻿@page "/training/csharp-fundamentals/lesson/10"
+
+<PageTitle>OOP: Inheritance and Polymorphism - C# Fundamentals - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <LessonSidebar 
+        CourseUrl="/training/csharp-fundamentals"
+        CourseTitle="C# Fundamentals"
+        CurrentLesson="10"
+        Lessons="CourseLessons.CSharpFundamentals" />
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <LessonHeader 
+                LessonNumber="10"
+                Title="OOP: Inheritance and Polymorphism"
+                Duration="35 min"
+                Level="Beginner" />
+
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>Building on Existing Classes</h2>
+                    <p>In the previous lesson, you learned how to create classes. Now we'll explore two powerful OOP concepts: <strong>Inheritance</strong> (creating new classes based on existing ones) and <strong>Polymorphism</strong> (treating objects of different types uniformly).</p>
+                    
+                    <p>These concepts help you write more reusable, maintainable, and flexible code.</p>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Inheritance</h2>
+                    <p><strong>Inheritance</strong> allows a class to inherit members (properties, methods) from another class. The class being inherited from is called the <strong>base class</strong> (or parent), and the inheriting class is the <strong>derived class</strong> (or child).</p>
+
+                    <div class="inheritance-diagram">
+                        <div class="diagram-box base">
+                            <div class="box-header">Animal (Base Class)</div>
+                            <div class="box-content">
+                                <span>Name</span>
+                                <span>Age</span>
+                                <span>Eat()</span>
+                                <span>Sleep()</span>
+                            </div>
+                        </div>
+                        <div class="diagram-arrows">
+                            <span>↙</span>
+                            <span>↓</span>
+                            <span>↘</span>
+                        </div>
+                        <div class="diagram-derived">
+                            <div class="diagram-box derived">
+                                <div class="box-header">Dog</div>
+                                <div class="box-content">
+                                    <span>Bark()</span>
+                                </div>
+                            </div>
+                            <div class="diagram-box derived">
+                                <div class="box-header">Cat</div>
+                                <div class="box-content">
+                                    <span>Meow()</span>
+                                </div>
+                            </div>
+                            <div class="diagram-box derived">
+                                <div class="box-header">Bird</div>
+                                <div class="box-content">
+                                    <span>Fly()</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <pre><code class="language-csharp">// Base class
+class Animal
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+    
+    public void Eat()
+    {
+        Console.WriteLine($"{Name} is eating.");
+    }
+    
+    public void Sleep()
+    {
+        Console.WriteLine($"{Name} is sleeping.");
+    }
+}
+
+// Derived class - inherits from Animal using ':'
+class Dog : Animal
+{
+    public string Breed { get; set; }
+    
+    public void Bark()
+    {
+        Console.WriteLine($"{Name} says: Woof!");
+    }
+}
+
+// Usage
+Dog dog = new Dog();
+dog.Name = "Buddy";    // Inherited from Animal
+dog.Age = 3;           // Inherited from Animal
+dog.Breed = "Labrador"; // Defined in Dog
+
+dog.Eat();   // Inherited: Buddy is eating.
+dog.Sleep(); // Inherited: Buddy is sleeping.
+dog.Bark();  // Dog-specific: Buddy says: Woof!</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>The base Keyword</h2>
+                    <p>Use <code>base</code> to access members of the base class, especially in constructors:</p>
+
+                    <pre><code class="language-csharp">class Animal
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+    
+    public Animal(string name, int age)
+    {
+        Name = name;
+        Age = age;
+    }
+    
+    public virtual void MakeSound()
+    {
+        Console.WriteLine("Some generic animal sound");
+    }
+}
+
+class Dog : Animal
+{
+    public string Breed { get; set; }
+    
+    // Call base class constructor
+    public Dog(string name, int age, string breed) : base(name, age)
+    {
+        Breed = breed;
+    }
+    
+    public void Bark()
+    {
+        Console.WriteLine($"{Name} says: Woof!");
+    }
+}
+
+// Now we must provide all parameters
+Dog dog = new Dog("Buddy", 3, "Labrador");</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Method Overriding</h2>
+                    <p>Derived classes can <strong>override</strong> methods from the base class to provide specialized behavior. The base method must be marked <code>virtual</code>, and the derived method uses <code>override</code>:</p>
+
+                    <pre><code class="language-csharp">class Animal
+{
+    public string Name { get; set; }
+    
+    // Mark as virtual to allow overriding
+    public virtual void MakeSound()
+    {
+        Console.WriteLine("Some generic animal sound");
+    }
+}
+
+class Dog : Animal
+{
+    // Override the base method
+    public override void MakeSound()
+    {
+        Console.WriteLine($"{Name} says: Woof! Woof!");
+    }
+}
+
+class Cat : Animal
+{
+    public override void MakeSound()
+    {
+        Console.WriteLine($"{Name} says: Meow!");
+    }
+}
+
+class Cow : Animal
+{
+    public override void MakeSound()
+    {
+        // Can still call the base version if needed
+        base.MakeSound();
+        Console.WriteLine($"{Name} says: Moo!");
+    }
+}
+
+// Usage
+Dog dog = new Dog { Name = "Buddy" };
+Cat cat = new Cat { Name = "Whiskers" };
+
+dog.MakeSound();  // Buddy says: Woof! Woof!
+cat.MakeSound();  // Whiskers says: Meow!</code></pre>
+
+                    <div class="keyword-table">
+                        <div class="keyword-row header">
+                            <span>Keyword</span>
+                            <span>Used In</span>
+                            <span>Purpose</span>
+                        </div>
+                        <div class="keyword-row">
+                            <code>virtual</code>
+                            <span>Base class</span>
+                            <span>Allows method to be overridden</span>
+                        </div>
+                        <div class="keyword-row">
+                            <code>override</code>
+                            <span>Derived class</span>
+                            <span>Replaces the base implementation</span>
+                        </div>
+                        <div class="keyword-row">
+                            <code>base</code>
+                            <span>Derived class</span>
+                            <span>Accesses base class members</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Polymorphism</h2>
+                    <p><strong>Polymorphism</strong> means "many forms." It allows you to treat objects of derived classes as objects of the base class:</p>
+
+                    <pre><code class="language-csharp">// All animals can be stored as Animal type
+Animal myPet = new Dog { Name = "Buddy" };
+myPet.MakeSound();  // Buddy says: Woof! Woof! (calls Dog's version!)
+
+// Array of different animals
+Animal[] animals = new Animal[]
+{
+    new Dog { Name = "Buddy" },
+    new Cat { Name = "Whiskers" },
+    new Dog { Name = "Max" },
+    new Cat { Name = "Luna" }
+};
+
+// Same method call, different behavior!
+foreach (Animal animal in animals)
+{
+    animal.MakeSound();
+}
+// Output:
+// Buddy says: Woof! Woof!
+// Whiskers says: Meow!
+// Max says: Woof! Woof!
+// Luna says: Meow!</code></pre>
+
+                    <div class="info-box">
+                        <div class="info-box-header">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="16" x2="12" y2="12"/>
+                                <line x1="12" y1="8" x2="12.01" y2="8"/>
+                            </svg>
+                            <span>Why Polymorphism Matters</span>
+                        </div>
+                        <p>Polymorphism lets you write code that works with the base type but automatically uses the correct derived behavior. This makes your code more flexible and extensible.</p>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Abstract Classes</h2>
+                    <p>An <strong>abstract class</strong> cannot be instantiated directly. It serves as a base class and can contain abstract methods that derived classes must implement:</p>
+
+                    <pre><code class="language-csharp">// Abstract class - can't create instances directly
+abstract class Shape
+{
+    public string Color { get; set; }
+    
+    // Abstract method - no implementation, MUST be overridden
+    public abstract double GetArea();
+    
+    // Abstract property
+    public abstract string ShapeName { get; }
+    
+    // Regular method - inherited as-is
+    public void Describe()
+    {
+        Console.WriteLine($"A {Color} {ShapeName} with area {GetArea():F2}");
+    }
+}
+
+class Circle : Shape
+{
+    public double Radius { get; set; }
+    
+    public override string ShapeName =&gt; "Circle";
+    
+    public override double GetArea()
+    {
+        return Math.PI * Radius * Radius;
+    }
+}
+
+class Rectangle : Shape
+{
+    public double Width { get; set; }
+    public double Height { get; set; }
+    
+    public override string ShapeName =&gt; "Rectangle";
+    
+    public override double GetArea()
+    {
+        return Width * Height;
+    }
+}
+
+// Usage
+// Shape shape = new Shape();  // Error! Can't instantiate abstract class
+
+Circle circle = new Circle { Color = "Red", Radius = 5 };
+Rectangle rect = new Rectangle { Color = "Blue", Width = 4, Height = 6 };
+
+circle.Describe();  // A Red Circle with area 78.54
+rect.Describe();    // A Blue Rectangle with area 24.00
+
+// Polymorphism works with abstract classes too
+Shape[] shapes = { circle, rect };
+foreach (Shape shape in shapes)
+{
+    Console.WriteLine($"{shape.ShapeName}: {shape.GetArea():F2}");
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Interfaces</h2>
+                    <p>An <strong>interface</strong> defines a contract that classes must follow. It specifies what a class must do, but not how:</p>
+
+                    <pre><code class="language-csharp">// Interface - defines a contract
+interface IPlayable
+{
+    void Play();
+    void Pause();
+    void Stop();
+    bool IsPlaying { get; }
+}
+
+interface IRecordable
+{
+    void Record();
+    void StopRecording();
+}
+
+// Class implementing an interface
+class MusicPlayer : IPlayable
+{
+    public bool IsPlaying { get; private set; }
+    
+    public void Play()
+    {
+        IsPlaying = true;
+        Console.WriteLine("Music playing...");
+    }
+    
+    public void Pause()
+    {
+        IsPlaying = false;
+        Console.WriteLine("Music paused.");
+    }
+    
+    public void Stop()
+    {
+        IsPlaying = false;
+        Console.WriteLine("Music stopped.");
+    }
+}
+
+// Class implementing multiple interfaces
+class VideoRecorder : IPlayable, IRecordable
+{
+    public bool IsPlaying { get; private set; }
+    public bool IsRecording { get; private set; }
+    
+    public void Play() { IsPlaying = true; }
+    public void Pause() { IsPlaying = false; }
+    public void Stop() { IsPlaying = false; }
+    
+    public void Record() { IsRecording = true; }
+    public void StopRecording() { IsRecording = false; }
+}</code></pre>
+
+                    <pre><code class="language-csharp">// Using interfaces for polymorphism
+void StartMedia(IPlayable media)
+{
+    media.Play();
+}
+
+MusicPlayer mp3 = new MusicPlayer();
+VideoRecorder vcr = new VideoRecorder();
+
+StartMedia(mp3);  // Works!
+StartMedia(vcr);  // Works too! Both implement IPlayable</code></pre>
+
+                    <div class="comparison-box">
+                        <div class="comparison-item">
+                            <h4>Abstract Class</h4>
+                            <ul>
+                                <li>Can have implementation</li>
+                                <li>Can have fields</li>
+                                <li>Single inheritance only</li>
+                                <li>Use for "is-a" relationships</li>
+                            </ul>
+                        </div>
+                        <div class="comparison-item">
+                            <h4>Interface</h4>
+                            <ul>
+                                <li>No implementation (usually)</li>
+                                <li>No fields (only properties)</li>
+                                <li>Multiple implementation allowed</li>
+                                <li>Use for "can-do" capabilities</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Sealed Classes</h2>
+                    <p>A <strong>sealed</strong> class cannot be inherited from. Use it to prevent further derivation:</p>
+
+                    <pre><code class="language-csharp">sealed class FinalClass
+{
+    public void DoSomething() { }
+}
+
+// This would cause an error:
+// class ChildClass : FinalClass { }  // Error! Cannot inherit from sealed class
+
+// You can also seal specific methods
+class Animal
+{
+    public virtual void MakeSound() { }
+}
+
+class Dog : Animal
+{
+    // Seal this method - no further overriding allowed
+    public sealed override void MakeSound()
+    {
+        Console.WriteLine("Woof!");
+    }
+}
+
+class Poodle : Dog
+{
+    // Error! Cannot override sealed method
+    // public override void MakeSound() { }
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Type Checking and Casting</h2>
+                    <p>When working with inheritance, you sometimes need to check types or cast objects:</p>
+
+                    <pre><code class="language-csharp">Animal animal = new Dog { Name = "Buddy" };
+
+// 'is' keyword - check if object is of a type
+if (animal is Dog)
+{
+    Console.WriteLine("It's a dog!");
+}
+
+// 'is' with pattern matching (modern C#)
+if (animal is Dog dog)
+{
+    dog.Bark();  // Now we can use Dog-specific methods
+}
+
+// 'as' keyword - cast or return null
+Dog? maybeDog = animal as Dog;
+if (maybeDog != null)
+{
+    maybeDog.Bark();
+}
+
+// Direct cast (throws if wrong type)
+Dog definitelyDog = (Dog)animal;
+definitelyDog.Bark();
+
+// Switch with type patterns
+string GetAnimalInfo(Animal animal) =&gt; animal switch
+{
+    Dog d =&gt; $"Dog: {d.Name}, Breed: {d.Breed}",
+    Cat c =&gt; $"Cat: {c.Name}",
+    _ =&gt; $"Unknown animal: {animal.Name}"
+};</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Complete Example</h2>
+                    <pre><code class="language-csharp">// Base class
+abstract class Employee
+{
+    public string Name { get; set; }
+    public int Id { get; set; }
+    
+    public Employee(string name, int id)
+    {
+        Name = name;
+        Id = id;
+    }
+    
+    // Abstract - each type calculates differently
+    public abstract decimal CalculatePay();
+    
+    public virtual void DisplayInfo()
+    {
+        Console.WriteLine($"ID: {Id}, Name: {Name}");
+    }
+}
+
+// Salaried employee
+class SalariedEmployee : Employee
+{
+    public decimal AnnualSalary { get; set; }
+    
+    public SalariedEmployee(string name, int id, decimal salary) 
+        : base(name, id)
+    {
+        AnnualSalary = salary;
+    }
+    
+    public override decimal CalculatePay()
+    {
+        return AnnualSalary / 12;  // Monthly pay
+    }
+    
+    public override void DisplayInfo()
+    {
+        base.DisplayInfo();
+        Console.WriteLine($"Type: Salaried, Annual: {AnnualSalary:C}");
+    }
+}
+
+// Hourly employee
+class HourlyEmployee : Employee
+{
+    public decimal HourlyRate { get; set; }
+    public int HoursWorked { get; set; }
+    
+    public HourlyEmployee(string name, int id, decimal rate) 
+        : base(name, id)
+    {
+        HourlyRate = rate;
+    }
+    
+    public override decimal CalculatePay()
+    {
+        return HourlyRate * HoursWorked;
+    }
+    
+    public override void DisplayInfo()
+    {
+        base.DisplayInfo();
+        Console.WriteLine($"Type: Hourly, Rate: {HourlyRate:C}/hr");
+    }
+}
+
+// Usage with polymorphism
+List&lt;Employee&gt; employees = new()
+{
+    new SalariedEmployee("Alice", 1, 75000),
+    new HourlyEmployee("Bob", 2, 25) { HoursWorked = 160 },
+    new SalariedEmployee("Charlie", 3, 85000)
+};
+
+decimal totalPayroll = 0;
+foreach (Employee emp in employees)
+{
+    emp.DisplayInfo();
+    decimal pay = emp.CalculatePay();
+    Console.WriteLine($"Pay: {pay:C}\n");
+    totalPayroll += pay;
+}
+Console.WriteLine($"Total Payroll: {totalPayroll:C}");</code></pre>
+                </section>
+
+                <LessonTakeaways>
+                    <LessonTakeaway>Inheritance lets classes reuse and extend functionality from base classes.</LessonTakeaway>
+                    <LessonTakeaway>Use <code>virtual</code> and <code>override</code> to customize inherited behavior.</LessonTakeaway>
+                    <LessonTakeaway>Polymorphism lets you treat different types uniformly through a common base.</LessonTakeaway>
+                    <LessonTakeaway>Abstract classes define contracts with some implementation; interfaces define pure contracts.</LessonTakeaway>
+                    <LessonTakeaway>Use <code>is</code> and <code>as</code> for safe type checking and casting.</LessonTakeaway>
+                </LessonTakeaways>
+
+                <LessonExercises>
+                    <LessonExercise Title="Exercise 10.1: Vehicle Hierarchy">
+                        <p>Create a <code>Vehicle</code> base class with <code>Brand</code>, <code>Model</code>, and a virtual <code>DisplayInfo()</code> method. Create derived classes:</p>
+                        <ul>
+                            <li><code>Car</code> with NumberOfDoors</li>
+                            <li><code>Motorcycle</code> with HasSidecar</li>
+                            <li><code>Truck</code> with PayloadCapacity</li>
+                        </ul>
+                        <p>Override DisplayInfo() in each to show specific details.</p>
+                    </LessonExercise>
+
+                    <LessonExercise Title="Exercise 10.2: Shape Calculator">
+                        <p>Create an abstract <code>Shape</code> class with abstract methods <code>GetArea()</code> and <code>GetPerimeter()</code>. Implement:</p>
+                        <ul>
+                            <li><code>Circle</code> (radius)</li>
+                            <li><code>Rectangle</code> (width, height)</li>
+                            <li><code>Triangle</code> (base, height, sides)</li>
+                        </ul>
+                        <p>Create an array of shapes and calculate total area.</p>
+                    </LessonExercise>
+
+                    <LessonExercise Title="Exercise 10.3: Payment System">
+                        <p>Create an <code>IPayable</code> interface with a <code>ProcessPayment(decimal amount)</code> method. Implement it in:</p>
+                        <ul>
+                            <li><code>CreditCard</code></li>
+                            <li><code>PayPal</code></li>
+                            <li><code>BankTransfer</code></li>
+                        </ul>
+                        <p>Write a method that accepts any <code>IPayable</code> and processes a payment.</p>
+                    </LessonExercise>
+
+                    <LessonExercise Title="Exercise 10.4: Game Characters">
+                        <p>Create a game character system:</p>
+                        <ul>
+                            <li>Abstract <code>Character</code> class with Health, Name, and abstract <code>Attack()</code></li>
+                            <li><code>Warrior</code> class with Strength</li>
+                            <li><code>Mage</code> class with ManaPoints</li>
+                            <li><code>Archer</code> class with Arrows</li>
+                        </ul>
+                        <p>Each should have unique attack messages and damage calculations.</p>
+                    </LessonExercise>
+                </LessonExercises>
+            </div>
+
+            <LessonFooter 
+                PreviousUrl="/training/csharp-fundamentals/lesson/9" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/csharp-fundamentals/lesson/11" 
+                NextText="Next Lesson" />
+        </article>
+    </main>
+</div>

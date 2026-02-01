@@ -1,0 +1,155 @@
+﻿@page "/training/blazor-webassembly/lesson/12"
+<PageTitle>JavaScript Interop - Blazor WebAssembly - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <LessonSidebar 
+        CourseUrl="/training/blazor-webassembly"
+        CourseTitle="Blazor WebAssembly"
+        CurrentLesson="12"
+        Lessons="CourseLessons.BlazorWebAssembly" />
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <LessonHeader 
+                LessonNumber="12"
+                Title="JavaScript Interop"
+                Duration="25 min"
+                Level="Intermediate" />
+            <div class="lesson-body">
+                <section class="lesson-section">
+                    <h2>When to Use JS Interop</h2>
+                    <ul>
+                        <li>Access browser APIs (localStorage, geolocation, clipboard)</li>
+                        <li>Use existing JavaScript libraries (charts, maps, editors)</li>
+                        <li>Manipulate the DOM directly (focus, scroll, animations)</li>
+                        <li>Access features not yet available in Blazor</li>
+                    </ul>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Calling JavaScript from C#</h2>
+                    <pre><code class="language-javascript">// wwwroot/js/interop.js
+window.showAlert = (message) =&gt; {
+    alert(message);
+};
+
+window.getWindowWidth = () =&gt; {
+    return window.innerWidth;
+};
+
+window.focusElement = (element) =&gt; {
+    element.focus();
+};</code></pre>
+                    <pre><code class="language-html">&lt;!-- Add to index.html --&gt;
+&lt;script src="js/interop.js"&gt;&lt;/script&gt;</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>IJSRuntime</h2>
+                    <pre><code class="language-razor">@@inject IJSRuntime JS
+
+&lt;button @@onclick="ShowAlert"&gt;Show Alert&lt;/button&gt;
+&lt;button @@onclick="GetWidth"&gt;Get Window Width&lt;/button&gt;
+&lt;p&gt;Width: @@width&lt;/p&gt;
+
+@@code {
+    private int width;
+
+    private async Task ShowAlert()
+    {
+        await JS.InvokeVoidAsync("showAlert", "Hello from Blazor!");
+    }
+
+    private async Task GetWidth()
+    {
+        width = await JS.InvokeAsync&lt;int&gt;("getWindowWidth");
+    }
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Element References</h2>
+                    <pre><code class="language-razor">&lt;input @@ref="inputElement" /&gt;
+&lt;button @@onclick="FocusInput"&gt;Focus Input&lt;/button&gt;
+
+@@code {
+    private ElementReference inputElement;
+
+    private async Task FocusInput()
+    {
+        await JS.InvokeVoidAsync("focusElement", inputElement);
+        // Or use built-in:
+        await inputElement.FocusAsync();
+    }
+}</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Calling C# from JavaScript</h2>
+                    <pre><code class="language-csharp">// Static method
+[JSInvokable]
+public static string GetGreeting(string name)
+{
+    return $"Hello, {name}!";
+}
+
+// Instance method
+[JSInvokable]
+public void UpdateCounter(int value)
+{
+    counter = value;
+    StateHasChanged();
+}</code></pre>
+                    <pre><code class="language-javascript">// Call static method
+const greeting = await DotNet.invokeMethodAsync(
+    'MyBlazorApp',  // Assembly name
+    'GetGreeting',
+    'World'
+);
+
+// Call instance method (requires reference)
+dotNetReference.invokeMethodAsync('UpdateCounter', 42);</code></pre>
+                </section>
+
+                <section class="lesson-section">
+                    <h2>Passing .NET Reference to JS</h2>
+                    <pre><code class="language-razor">@@code {
+    private DotNetObjectReference&lt;MyComponent&gt;? dotNetRef;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            dotNetRef = DotNetObjectReference.Create(this);
+            await JS.InvokeVoidAsync("registerCallback", dotNetRef);
+        }
+    }
+
+    [JSInvokable]
+    public void OnJsCallback(string data)
+    {
+        // Called from JavaScript
+    }
+
+    public void Dispose()
+    {
+        dotNetRef?.Dispose();
+    }
+}</code></pre>
+                </section>
+
+                <LessonTakeaways>
+                    <LessonTakeaway>Use IJSRuntime to call JavaScript from C#.</LessonTakeaway>
+                    <LessonTakeaway>InvokeVoidAsync for no return, InvokeAsync&lt;T&gt; for return value.</LessonTakeaway>
+                    <LessonTakeaway>[JSInvokable] exposes C# methods to JavaScript.</LessonTakeaway>
+                    <LessonTakeaway>Dispose DotNetObjectReference to prevent memory leaks.</LessonTakeaway>
+                </LessonTakeaways>
+            </div>
+            <LessonFooter 
+                PreviousUrl="/training/blazor-webassembly/lesson/11" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/blazor-webassembly/lesson/13" 
+                NextText="Next Lesson" />
+        </article>
+    </main>
+</div>
