@@ -454,11 +454,8 @@ catch (SpecificException ex)
                     <LessonTakeaway>Never swallow exceptions silently – always log or re-throw.</LessonTakeaway>
                 </LessonTakeaways>
 
-                <section class="lesson-section">
-                    <h2>Practice Exercises</h2>
-                    
-                    <div class="exercise-box">
-                        <h4>Exercise 11.1: Safe Calculator</h4>
+                <LessonExercises>
+                    <LessonExercise Title="Exercise 11.1: Safe Calculator">
                         <p>Create a calculator that asks for two numbers and an operation (+, -, *, /). Handle:</p>
                         <ul>
                             <li>Invalid number format</li>
@@ -466,10 +463,9 @@ catch (SpecificException ex)
                             <li>Invalid operation</li>
                         </ul>
                         <p>Keep asking until the user enters "quit".</p>
-                    </div>
+                    </LessonExercise>
 
-                    <div class="exercise-box">
-                        <h4>Exercise 11.2: File Reader</h4>
+                    <LessonExercise Title="Exercise 11.2: File Reader">
                         <p>Create a program that reads a file and displays its contents. Handle:</p>
                         <ul>
                             <li>File not found</li>
@@ -477,25 +473,23 @@ catch (SpecificException ex)
                             <li>Any other IO errors</li>
                         </ul>
                         <p>Use a <code>finally</code> block or <code>using</code> statement for cleanup.</p>
-                    </div>
+                    </LessonExercise>
 
-                    <div class="exercise-box">
-                        <h4>Exercise 11.3: Custom Exception</h4>
+                    <LessonExercise Title="Exercise 11.3: Custom Exception">
                         <p>Create a <code>PasswordTooWeakException</code> that includes:</p>
                         <ul>
                             <li>The attempted password</li>
                             <li>A list of requirements that weren't met</li>
                         </ul>
                         <p>Create a <code>ValidatePassword</code> method that throws this exception.</p>
-                    </div>
+                    </LessonExercise>
 
-                    <div class="exercise-box">
-                        <h4>Exercise 11.4: Retry Logic</h4>
+                    <LessonExercise Title="Exercise 11.4: Retry Logic">
                         <p>Create a method that retries an operation up to 3 times before giving up:</p>
                         <pre><code class="language-csharp">void RetryOperation(Action operation, int maxRetries = 3)</code></pre>
                         <p>Log each attempt and the final success or failure.</p>
-                    </div>
-                </section>
+                    </LessonExercise>
+                </LessonExercises>
             </div>
 
             <LessonFooter 
