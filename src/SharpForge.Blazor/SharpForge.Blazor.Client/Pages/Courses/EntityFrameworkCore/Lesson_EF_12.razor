@@ -128,25 +128,20 @@ options.UseLoggerFactory(LoggerFactory.Create(builder => builder
                     <LessonTakeaway>Always check generated SQL for complex queries.</LessonTakeaway>
                 </LessonTakeaways>
 
-                <section class="lesson-section congratulations">
-                    <div class="congrats-box">
-                        <h2>🎉 Congratulations!</h2>
-                        <p>You've completed the "Entity Framework Core" course! You now have comprehensive knowledge of:</p>
-                        <ul>
-                            <li>Setting up DbContext and configuring database providers</li>
-                            <li>Defining entity models with Data Annotations and Fluent API</li>
-                            <li>Creating and applying database migrations</li>
-                            <li>Performing CRUD operations and writing LINQ queries</li>
-                            <li>Configuring entity relationships (1:1, 1:N, N:N)</li>
-                            <li>Loading strategies: eager, lazy, and explicit loading</li>
-                            <li>Change tracking and entity states</li>
-                            <li>Transactions and concurrency handling</li>
-                            <li>Performance optimization techniques</li>
-                        </ul>
-                        <p>You're now ready to build efficient data access layers with Entity Framework Core!</p>
-                        <a href="/training" class="btn btn-primary">Explore More Courses</a>
-                    </div>
-                </section>
+                <LessonCongratulations 
+                    CourseTitle="Entity Framework Core"
+                    Topics="@(new List<string> {
+                        "Setting up DbContext and configuring database providers",
+                        "Defining entity models with Data Annotations and Fluent API",
+                        "Creating and applying database migrations",
+                        "Performing CRUD operations and writing LINQ queries",
+                        "Configuring entity relationships (1:1, 1:N, N:N)",
+                        "Loading strategies: eager, lazy, and explicit loading",
+                        "Change tracking and entity states",
+                        "Transactions and concurrency handling",
+                        "Performance optimization techniques"
+                    })"
+                    ClosingMessage="<strong>What's next?</strong> You're now ready to build efficient data access layers with Entity Framework Core!" />
             </div>
             <LessonFooter 
                 PreviousUrl="/training/entity-framework-core/lesson/11" 

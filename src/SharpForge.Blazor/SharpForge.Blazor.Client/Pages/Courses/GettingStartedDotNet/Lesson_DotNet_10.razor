@@ -264,22 +264,17 @@ sudo systemctl status myapp</code></pre>
                     <LessonTakeaway>Consider Native AOT for the best startup performance.</LessonTakeaway>
                 </LessonTakeaways>
 
-                <section class="lesson-section congratulations">
-                    <div class="congrats-box">
-                        <h2>🎉 Congratulations!</h2>
-                        <p>You've completed the "Getting Started with .NET" course! You now have a solid foundation in:</p>
-                        <ul>
-                            <li>The .NET platform and ecosystem</li>
-                            <li>The .NET CLI and project structure</li>
-                            <li>NuGet package management</li>
-                            <li>Building console and web applications</li>
-                            <li>Configuration and debugging</li>
-                            <li>Publishing and deployment</li>
-                        </ul>
-                        <p>You're ready to dive deeper into specific areas like ASP.NET Core, Blazor, or Entity Framework Core!</p>
-                        <a href="/training" class="btn btn-primary">Explore More Courses</a>
-                    </div>
-                </section>
+                <LessonCongratulations 
+                    CourseTitle="Getting Started with .NET"
+                    Topics="@(new List<string> {
+                        "The .NET platform and ecosystem",
+                        "The .NET CLI and project structure",
+                        "NuGet package management",
+                        "Building console and web applications",
+                        "Configuration and debugging",
+                        "Publishing and deployment"
+                    })"
+                    ClosingMessage="<strong>What's next?</strong> You're ready to dive deeper into specific areas like ASP.NET Core, Blazor, or Entity Framework Core!" />
             </div>
 
             <LessonFooter 

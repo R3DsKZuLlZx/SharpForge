@@ -547,24 +547,18 @@ foreach (var customer in report)
                     </LessonExercise>
                 </LessonExercises>
 
-                <section class="lesson-section congratulations">
-                    <div class="congrats-content">
-                        <span class="congrats-icon">🎉</span>
-                        <h2>Congratulations!</h2>
-                        <p>You've completed the <strong>C# Fundamentals</strong> course! You now have a solid foundation in C# programming, including:</p>
-                        <ul>
-                            <li>Variables, data types, and operators</li>
-                            <li>Control flow with conditionals and loops</li>
-                            <li>Methods and parameters</li>
-                            <li>Arrays and collections</li>
-                            <li>Object-oriented programming</li>
-                            <li>Exception handling</li>
-                            <li>LINQ for data querying</li>
-                        </ul>
-                        <p><strong>What's next?</strong> Continue your journey with our intermediate courses on ASP.NET Core, Blazor, or Entity Framework!</p>
-                        <a href="/training" class="btn btn-primary">Explore More Courses</a>
-                    </div>
-                </section>
+                <LessonCongratulations 
+                    CourseTitle="C# Fundamentals"
+                    Topics="@(new List<string> {
+                        "Variables, data types, and operators",
+                        "Control flow with conditionals and loops",
+                        "Methods and parameters",
+                        "Arrays and collections",
+                        "Object-oriented programming",
+                        "Exception handling",
+                        "LINQ for data querying"
+                    })"
+                    ClosingMessage="<strong>What's next?</strong> Continue your journey with our intermediate courses on ASP.NET Core, Blazor, or Entity Framework!" />
             </div>
 
             <LessonFooter 

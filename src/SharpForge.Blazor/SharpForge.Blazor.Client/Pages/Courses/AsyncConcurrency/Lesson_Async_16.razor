@@ -101,25 +101,20 @@ dotnet trace collect --process-id &lt;pid&gt; --duration 00:00:30
                     <LessonTakeaway>Watch for thread pool starvation signs.</LessonTakeaway>
                 </LessonTakeaways>
 
-                <section class="lesson-section congratulations">
-                    <div class="congrats-box">
-                        <h2>🎉 Congratulations!</h2>
-                        <p>You've completed the "Async/Await & Concurrency" course! You now have comprehensive knowledge of:</p>
-                        <ul>
-                            <li>Tasks and the Task-Based Asynchronous Pattern</li>
-                            <li>Async/await syntax and best practices</li>
-                            <li>ValueTask for performance optimization</li>
-                            <li>Cancellation, progress reporting, and exception handling</li>
-                            <li>Parallel programming with Parallel.For, PLINQ, and TPL Dataflow</li>
-                            <li>Thread synchronization and concurrent collections</li>
-                            <li>Channels for producer-consumer patterns</li>
-                            <li>Common pitfalls and how to avoid them</li>
-                            <li>Debugging and profiling async applications</li>
-                        </ul>
-                        <p>You're now ready to build high-performance, responsive .NET applications!</p>
-                        <a href="/training" class="btn btn-primary">Explore More Courses</a>
-                    </div>
-                </section>
+                <LessonCongratulations 
+                    CourseTitle="Async/Await & Concurrency"
+                    Topics="@(new List<string> {
+                        "Tasks and the Task-Based Asynchronous Pattern",
+                        "Async/await syntax and best practices",
+                        "ValueTask for performance optimization",
+                        "Cancellation, progress reporting, and exception handling",
+                        "Parallel programming with Parallel.For, PLINQ, and TPL Dataflow",
+                        "Thread synchronization and concurrent collections",
+                        "Channels for producer-consumer patterns",
+                        "Common pitfalls and how to avoid them",
+                        "Debugging and profiling async applications"
+                    })"
+                    ClosingMessage="<strong>What's next?</strong> You're now ready to build high-performance, responsive .NET applications!" />
             </div>
             <LessonFooter 
                 PreviousUrl="/training/async-concurrency/lesson/15" 

@@ -94,24 +94,19 @@ builder.WebHost.ConfigureKestrel(options =>
                     <LessonTakeaway>Use environment variables for production config.</LessonTakeaway>
                 </LessonTakeaways>
 
-                <section class="lesson-section congratulations">
-                    <div class="congrats-box">
-                        <h2>🎉 Congratulations!</h2>
-                        <p>You've completed the "ASP.NET Core Web APIs" course! You now have comprehensive knowledge of:</p>
-                        <ul>
-                            <li>Building RESTful APIs with controllers and minimal APIs</li>
-                            <li>Routing, model binding, and validation</li>
-                            <li>Dependency injection and middleware</li>
-                            <li>Entity Framework Core and the Repository pattern</li>
-                            <li>JWT authentication and authorization policies</li>
-                            <li>Error handling, logging, and monitoring</li>
-                            <li>API versioning and Swagger documentation</li>
-                            <li>Testing and Docker deployment</li>
-                        </ul>
-                        <p>You're now ready to build production-ready APIs with ASP.NET Core!</p>
-                        <a href="/training" class="btn btn-primary">Explore More Courses</a>
-                    </div>
-                </section>
+                <LessonCongratulations 
+                    CourseTitle="ASP.NET Core Web APIs"
+                    Topics="@(new List<string> {
+                        "Building RESTful APIs with controllers and minimal APIs",
+                        "Routing, model binding, and validation",
+                        "Dependency injection and middleware",
+                        "Entity Framework Core and the Repository pattern",
+                        "JWT authentication and authorization policies",
+                        "Error handling, logging, and monitoring",
+                        "API versioning and Swagger documentation",
+                        "Testing and Docker deployment"
+                    })"
+                    ClosingMessage="<strong>What's next?</strong> You're now ready to build production-ready APIs with ASP.NET Core!" />
             </div>
             <LessonFooter 
                 PreviousUrl="/training/aspnet-core-web-apis/lesson/17" 

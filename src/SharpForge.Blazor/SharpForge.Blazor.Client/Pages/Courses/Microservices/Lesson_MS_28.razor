@@ -94,24 +94,19 @@ services:
                     <LessonTakeaway>Use sagas for distributed transactions.</LessonTakeaway>
                 </LessonTakeaways>
 
-                <section class="lesson-section congratulations">
-                    <div class="congrats-box">
-                        <h2>🎉 Congratulations!</h2>
-                        <p>You've completed the "Microservices with .NET" course! You now have comprehensive knowledge of:</p>
-                        <ul>
-                            <li>Microservices architecture and DDD</li>
-                            <li>Docker and container orchestration</li>
-                            <li>Service communication (HTTP, gRPC, messaging)</li>
-                            <li>Data management and saga patterns</li>
-                            <li>API Gateway with YARP</li>
-                            <li>Kubernetes deployment and scaling</li>
-                            <li>Observability (logging, tracing, metrics)</li>
-                            <li>Resilience patterns with Polly</li>
-                        </ul>
-                        <p>You're now ready to design and build production-ready distributed systems!</p>
-                        <a href="/training" class="btn btn-primary">Explore More Courses</a>
-                    </div>
-                </section>
+                <LessonCongratulations 
+                    CourseTitle="Microservices with .NET"
+                    Topics="@(new List<string> {
+                        "Microservices architecture and DDD",
+                        "Docker and container orchestration",
+                        "Service communication (HTTP, gRPC, messaging)",
+                        "Data management and saga patterns",
+                        "API Gateway with YARP",
+                        "Kubernetes deployment and scaling",
+                        "Observability (logging, tracing, metrics)",
+                        "Resilience patterns with Polly"
+                    })"
+                    ClosingMessage="<strong>What's next?</strong> You're now ready to design and build production-ready distributed systems!" />
             </div>
             <LessonFooter 
                 PreviousUrl="/training/microservices/lesson/27" 

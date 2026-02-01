@@ -162,22 +162,17 @@ public class EmailNotificationHandler : IEventHandler&lt;OrderCreatedEvent&gt;
                     <LessonTakeaway>Don't force patterns—use when they add value.</LessonTakeaway>
                 </LessonTakeaways>
 
-                <section class="lesson-section congratulations">
-                    <div class="congrats-box">
-                        <h2>🎉 Congratulations!</h2>
-                        <p>You've completed the "Design Patterns in C#" course! You now have comprehensive knowledge of:</p>
-                        <ul>
-                            <li>All 5 SOLID principles</li>
-                            <li>Creational patterns: Singleton, Factory, Abstract Factory, Builder, Prototype</li>
-                            <li>Structural patterns: Adapter, Decorator, Facade, Proxy, Composite</li>
-                            <li>Behavioral patterns: Strategy, Observer, Command, State, Template Method, Chain of Responsibility</li>
-                            <li>Clean Architecture principles</li>
-                            <li>How to combine patterns in real applications</li>
-                        </ul>
-                        <p>You're now equipped to write maintainable, flexible, and professional C# code!</p>
-                        <a href="/training" class="btn btn-primary">Explore More Courses</a>
-                    </div>
-                </section>
+                <LessonCongratulations 
+                    CourseTitle="Design Patterns in C#"
+                    Topics="@(new List<string> {
+                        "All 5 SOLID principles",
+                        "Creational patterns: Singleton, Factory, Abstract Factory, Builder, Prototype",
+                        "Structural patterns: Adapter, Decorator, Facade, Proxy, Composite",
+                        "Behavioral patterns: Strategy, Observer, Command, State, Template Method, Chain of Responsibility",
+                        "Clean Architecture principles",
+                        "How to combine patterns in real applications"
+                    })"
+                    ClosingMessage="<strong>What's next?</strong> You're now equipped to write maintainable, flexible, and professional C# code!" />
             </div>
             <LessonFooter 
                 PreviousUrl="/training/design-patterns/lesson/23" 

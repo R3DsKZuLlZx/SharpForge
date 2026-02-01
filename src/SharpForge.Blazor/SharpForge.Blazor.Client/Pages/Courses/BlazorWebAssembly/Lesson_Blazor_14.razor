@@ -162,25 +162,20 @@ dotnet new blazorwasm -n MyApp --pwa</code></pre>
                     <LessonTakeaway>Add PWA support for installable offline apps.</LessonTakeaway>
                 </LessonTakeaways>
 
-                <section class="lesson-section congratulations">
-                    <div class="congrats-box">
-                        <h2>🎉 Congratulations!</h2>
-                        <p>You've completed the "Blazor WebAssembly" course! You now have comprehensive knowledge of:</p>
-                        <ul>
-                            <li>Creating and structuring Blazor WebAssembly projects</li>
-                            <li>Building reusable Razor components</li>
-                            <li>Component parameters, events, and data binding</li>
-                            <li>Component lifecycle and state management</li>
-                            <li>Routing, forms, and validation</li>
-                            <li>Calling REST APIs with HttpClient</li>
-                            <li>JavaScript interoperability</li>
-                            <li>Authentication and authorization</li>
-                            <li>Deployment to Azure, GitHub Pages, and Docker</li>
-                        </ul>
-                        <p>You're now ready to build full-featured web applications with Blazor WebAssembly!</p>
-                        <a href="/training" class="btn btn-primary">Explore More Courses</a>
-                    </div>
-                </section>
+                <LessonCongratulations 
+                    CourseTitle="Blazor WebAssembly"
+                    Topics="@(new List<string> {
+                        "Creating and structuring Blazor WebAssembly projects",
+                        "Building reusable Razor components",
+                        "Component parameters, events, and data binding",
+                        "Component lifecycle and state management",
+                        "Routing, forms, and validation",
+                        "Calling REST APIs with HttpClient",
+                        "JavaScript interoperability",
+                        "Authentication and authorization",
+                        "Deployment to Azure, GitHub Pages, and Docker"
+                    })"
+                    ClosingMessage="<strong>What's next?</strong> You're now ready to build full-featured web applications with Blazor WebAssembly!" />
             </div>
             <LessonFooter 
                 PreviousUrl="/training/blazor-webassembly/lesson/13" 
