@@ -1,4 +1,4 @@
-﻿@page "/training/entity-framework-core/lesson/1"
+@page "/training/entity-framework-core/lesson/1"
 <PageTitle>Introduction to EF Core - Entity Framework Core - SharpForge</PageTitle>
 <CodeHighlighter />
 
@@ -129,10 +129,11 @@ dotnet tool install --global dotnet-ef</code></pre>
                     </div>
                 </section>
             </div>
-            <nav class="lesson-navigation">
-                <div></div>
-                <a href="/training/entity-framework-core/lesson/2" class="btn btn-primary">Next: Setting Up DbContext<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></a>
-            </nav>
+            <LessonFooter 
+                PreviousUrl="/training/entity-framework-core" 
+                PreviousText="Course Overview"
+                NextUrl="/training/entity-framework-core/lesson/2" 
+                NextText="Next Lesson" />
         </article>
     </main>
 </div>
