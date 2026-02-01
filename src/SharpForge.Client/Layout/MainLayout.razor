@@ -34,29 +34,21 @@
                 </a>
             </div>
             
-            <button class="mobile-menu-toggle" @onclick="ToggleMobileMenu">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    @if (_mobileMenuOpen)
-                    {
-                        <path d="M6 18L18 6M6 6l12 12"/>
-                    }
-                    else
-                    {
-                        <path d="M4 6h16M4 12h16M4 18h16"/>
-                    }
-                </svg>
+            <button class="mobile-menu-toggle" @onclick="ToggleMobileMenu" aria-label="Toggle menu">
+                <span class="hamburger-icon @(_mobileMenuOpen ? "open" : "")">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
             </button>
         </div>
         
-        @if (_mobileMenuOpen)
-        {
-            <div class="mobile-menu">
-                <NavLink class="mobile-nav-link" href="" Match="NavLinkMatch.All" @onclick="CloseMobileMenu">Home</NavLink>
-                <NavLink class="mobile-nav-link" href="training" @onclick="CloseMobileMenu">Training</NavLink>
-                <NavLink class="mobile-nav-link" href="blog" @onclick="CloseMobileMenu">Blog</NavLink>
-                <NavLink class="mobile-nav-link" href="projects" @onclick="CloseMobileMenu">Projects</NavLink>
-            </div>
-        }
+        <div class="mobile-menu @(_mobileMenuOpen ? "open" : "")">
+            <NavLink class="mobile-nav-link" href="" Match="NavLinkMatch.All" @onclick="CloseMobileMenu">Home</NavLink>
+            <NavLink class="mobile-nav-link" href="training" @onclick="CloseMobileMenu">Training</NavLink>
+            <NavLink class="mobile-nav-link" href="blog" @onclick="CloseMobileMenu">Blog</NavLink>
+            <NavLink class="mobile-nav-link" href="projects" @onclick="CloseMobileMenu">Projects</NavLink>
+        </div>
     </header>
 
     <main class="main-content">
