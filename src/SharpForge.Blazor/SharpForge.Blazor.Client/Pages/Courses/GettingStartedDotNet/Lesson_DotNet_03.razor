@@ -1,4 +1,4 @@
-﻿@page "/training/getting-started-dotnet/lesson/3"
+@page "/training/getting-started-dotnet/lesson/3"
 
 <PageTitle>The .NET CLI - Getting Started with .NET - SharpForge</PageTitle>
 <CodeHighlighter />
@@ -397,20 +397,11 @@ dotnet publish -c Release -r win-x64 --self-contained -p:PublishSingleFile=true<
                 </section>
             </div>
 
-            <nav class="lesson-navigation">
-                <a href="/training/getting-started-dotnet/lesson/2" class="btn btn-secondary">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="15 18 9 12 15 6"/>
-                    </svg>
-                    Previous: Installing the .NET SDK
-                </a>
-                <a href="/training/getting-started-dotnet/lesson/4" class="btn btn-primary">
-                    Next: Project Structure and Files
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="9 18 15 12 9 6"/>
-                    </svg>
-                </a>
-            </nav>
+            <LessonFooter 
+                PreviousUrl="/training/getting-started-dotnet/lesson/2" 
+                PreviousText="Previous Lesson"
+                NextUrl="/training/getting-started-dotnet/lesson/4" 
+                NextText="Next Lesson" />
         </article>
     </main>
 </div>
