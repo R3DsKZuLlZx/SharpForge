@@ -250,6 +250,7 @@
 
     .featured-preview {
         order: -1;
+        min-width: -webkit-fill-available;
     }
 }
 
