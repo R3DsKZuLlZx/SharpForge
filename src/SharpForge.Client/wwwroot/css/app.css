@@ -1244,6 +1244,129 @@ input, textarea, select {
     gap: 0.5rem;
 }
 
+/* Lesson Pages - Responsive */
+@media (max-width: 1024px) {
+    .lesson-layout {
+        grid-template-columns: 240px 1fr;
+    }
+    
+    .lesson-content {
+        padding: 2rem 2rem 4rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .lesson-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .lesson-sidebar {
+        position: fixed;
+        left: -100%;
+        top: 4rem;
+        width: 280px;
+        height: calc(100vh - 4rem);
+        z-index: 100;
+        transition: left 0.3s ease;
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .lesson-sidebar.open {
+        left: 0;
+    }
+    
+    .lesson-content {
+        padding: 1.5rem 1rem 3rem;
+    }
+    
+    .lesson-header h1 {
+        font-size: 1.75rem;
+    }
+    
+    .lesson-meta {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .lesson-nav-buttons {
+        flex-direction: column;
+    }
+    
+    .lesson-nav-buttons .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .concept-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .use-cases {
+        grid-template-columns: 1fr;
+    }
+    
+    .tool-options {
+        grid-template-columns: 1fr;
+    }
+    
+    .comparison-box {
+        grid-template-columns: 1fr;
+    }
+    
+    .type-row,
+    .operator-row,
+    .command-row {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    
+    .type-row.header,
+    .operator-row.header {
+        display: none;
+    }
+}
+
+/* Mobile sidebar toggle button */
+.mobile-lesson-toggle {
+    display: none;
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    cursor: pointer;
+    z-index: 99;
+    box-shadow: var(--shadow-lg);
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .mobile-lesson-toggle {
+        display: flex;
+    }
+}
+
+/* Mobile sidebar overlay */
+.lesson-sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 4rem;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+}
+
+.lesson-sidebar-overlay.show {
+    display: block;
+}
+
 /* Code Explanation */
 .code-explanation {
     display: flex;
@@ -2707,17 +2830,30 @@ input, textarea, select {
 @media (max-width: 1024px) {
     .course-layout {
         grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
     }
 
     .course-sidebar {
         position: static;
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1.5rem;
+        gap: 1rem;
+        order: -1; /* Move sidebar above main content */
+        margin-bottom: 1rem;
+    }
+
+    .course-main {
+        order: 1;
     }
 
     .sidebar-card {
         margin-bottom: 0;
+        padding: 1.25rem;
+    }
+
+    .course-content {
+        padding: 0.5rem 0 1.5rem;
     }
 
     .oop-pillars {

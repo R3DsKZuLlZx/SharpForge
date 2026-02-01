@@ -1,6 +1,11 @@
 ﻿@* Common component for lesson sidebar navigation *@
 
-<aside class="lesson-sidebar">
+@if (_isOpen)
+{
+    <div class="lesson-sidebar-overlay show" @onclick="CloseSidebar"></div>
+}
+
+<aside class="lesson-sidebar @(_isOpen ? "open" : "")">
     <div class="sidebar-header">
         <a href="@CourseUrl" class="back-link">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -14,7 +19,7 @@
         @foreach (var lesson in Lessons)
         {
             var isActive = lesson.Number == CurrentLesson;
-            <a href="@lesson.Url" class="lesson-nav-item @(isActive ? "active" : "")">
+            <a href="@lesson.Url" class="lesson-nav-item @(isActive ? "active" : "")" @onclick="CloseSidebar">
                 <span class="lesson-num">@lesson.Number</span>
                 <span>@lesson.Title</span>
             </a>
@@ -22,10 +27,40 @@
     </nav>
 </aside>
 
+<button class="mobile-lesson-toggle" @onclick="ToggleSidebar" title="Toggle lesson menu">
+    @if (_isOpen)
+    {
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+    }
+    else
+    {
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+    }
+</button>
+
 @code {
     [Parameter] public string CourseUrl { get; set; } = "#";
     [Parameter] public string CourseTitle { get; set; } = "";
     [Parameter] public int CurrentLesson { get; set; } = 1;
     [Parameter] public List<CourseLessons.LessonInfo> Lessons { get; set; } = [];
+
+    private bool _isOpen = false;
+
+    private void ToggleSidebar()
+    {
+        _isOpen = !_isOpen;
+    }
+
+    private void CloseSidebar()
+    {
+        _isOpen = false;
+    }
 }
 
