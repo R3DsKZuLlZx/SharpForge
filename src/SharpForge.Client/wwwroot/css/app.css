@@ -233,6 +233,33 @@ pre {
     -webkit-overflow-scrolling: touch;
 }
 
+/* Custom scrollbar for code blocks */
+pre::-webkit-scrollbar {
+    height: 8px;
+    background: transparent;
+}
+
+pre::-webkit-scrollbar-track {
+    background: var(--bg-tertiary);
+    border-radius: 4px;
+    margin: 0 0.5rem;
+}
+
+pre::-webkit-scrollbar-thumb {
+    background: var(--text-tertiary);
+    border-radius: 4px;
+}
+
+pre::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+/* Firefox scrollbar */
+pre {
+    scrollbar-width: thin;
+    scrollbar-color: var(--text-tertiary) var(--bg-tertiary);
+}
+
 pre code {
     background: none !important;
     border: none;
