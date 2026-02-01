@@ -33,25 +33,16 @@ jobs:
       - name: Publish
         run: dotnet publish src/SharpForge.Client/SharpForge.Client.csproj -c Release -o release --nologo
 
-      # Blazor WASM needs a custom 404.html for SPA routing on GitHub Pages
-      - name: Create 404.html with SPA redirect
+      # Update base href for GitHub Pages (repo name becomes the base path)
+      - name: Update base href
         run: |
-          cat > release/wwwroot/404.html << 'EOF'
-          <!DOCTYPE html>
-          <html>
-          <head>
-            <meta charset="utf-8">
-            <title>Redirecting...</title>
-            <script>
-              // Store the attempted URL and redirect to home
-              sessionStorage.redirect = location.href;
-              location.replace(location.pathname.split('/').slice(0, 2).join('/') + '/');
-            </script>
-          </head>
-          <body>
-          </body>
-          </html>
-          EOF
+          sed -i 's|<base href="/"/>|<base href="/${{ github.event.repository.name }}/"/>|g' release/wwwroot/index.html
+          echo "Updated base href to: /${{ github.event.repository.name }}/"
+          grep -i "base href" release/wwwroot/index.html
+
+      # Blazor WASM needs 404.html to be the same as index.html for SPA routing
+      - name: Copy index.html to 404.html
+        run: cp release/wwwroot/index.html release/wwwroot/404.html
 
       # Add .nojekyll to prevent GitHub Pages from ignoring files starting with _
       - name: Add .nojekyll
@@ -64,13 +55,6 @@ jobs:
           ls -la release/wwwroot/
           echo "=== _framework contents ==="
           ls -la release/wwwroot/_framework/ | head -20
-
-      # Update base href for GitHub Pages (repo name becomes the base path)
-      - name: Update base href
-        run: |
-          sed -i 's|<base href="/"|<base href="/${{ github.event.repository.name }}/"|g' release/wwwroot/index.html
-          echo "Updated base href to: /${{ github.event.repository.name }}/"
-          grep -i "base href" release/wwwroot/index.html
 
 
       - name: Upload artifact
