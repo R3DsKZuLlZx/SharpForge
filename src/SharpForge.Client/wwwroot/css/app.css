@@ -756,6 +756,14 @@ input, textarea, select {
     margin: 0;
 }
 
+.table-comparison {
+    text-align: left;
+    
+    td {
+        padding-right: 3rem;
+    }
+}
+
 @media (max-width: 1024px) {
     .blog-post .post-content-wrapper {
         grid-template-columns: 1fr;
