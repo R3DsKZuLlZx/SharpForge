@@ -213,30 +213,30 @@
 
                 <h2>Lifecycle Diagram</h2>
                 <pre><code>Component Created
-       ?
+       ↓
 SetParametersAsync
-       ?
-OnInitialized(Async)  ? First time only
-       ?
-OnParametersSet(Async) ? Every parameter update
-       ?
+       ↓
+OnInitialized(Async)  ← First time only
+       ↓
+OnParametersSet(Async) ← Every parameter update
+       ↓
   BuildRenderTree
-       ?
+       ↓
 OnAfterRender(Async)
-       ?
+       ↓
   [User Interaction]
-       ?
+       ↓
   StateHasChanged
-       ?
+       ↓
    ShouldRender?
-    ? Yes    ? No
+    ↓ Yes    ↓ No
 BuildRenderTree  Stop
-       ?
+       ↓
 OnAfterRender(Async)
        .
        .
-       ?
-  Dispose(Async)  ? Component removed</code></pre>
+       ↓
+  Dispose(Async)  ← Component removed</code></pre>
 
                 <h2>Best Practices</h2>
                 <ul>

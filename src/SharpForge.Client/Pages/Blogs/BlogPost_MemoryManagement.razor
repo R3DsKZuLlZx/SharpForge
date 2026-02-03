@@ -75,14 +75,14 @@ GCSettings.LargeObjectHeapCompactionMode =
                 <h2 id="memory-optimization">Memory Optimization Techniques</h2>
 
                 <h3>1. Use Structs for Small Data</h3>
-                <pre><code>// ? Class - heap allocation
+                <pre><code>// ❌ Class - heap allocation
 public class PointClass
 {
     public int X { get; set; }
     public int Y { get; set; }
 }
 
-// ? Struct - stack allocation
+// ✅ Struct - stack allocation
 public struct PointStruct
 {
     public int X { get; set; }

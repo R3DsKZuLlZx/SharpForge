@@ -186,13 +186,13 @@ public class EmailService
 
                 <h2 id="avoiding-pitfalls">Avoiding Common Pitfalls</h2>
                 <h3>Captive Dependencies</h3>
-                <pre><code>// ? BAD: Singleton captures Scoped service
+                <pre><code>// ❌ BAD: Singleton captures Scoped service
 public class SingletonService
 {
     private readonly IScopedService _scoped; // Will cause issues!
 }
 
-// ? GOOD: Use IServiceScopeFactory
+// ✅ GOOD: Use IServiceScopeFactory
 public class SingletonService
 {
     private readonly IServiceScopeFactory _scopeFactory;
@@ -212,7 +212,7 @@ public class SingletonService
 }</code></pre>
 
                 <h3>Service Locator Anti-Pattern</h3>
-                <pre><code>// ? BAD: Service Locator
+                <pre><code>// ❌ BAD: Service Locator
 public class BadService
 {
     private readonly IServiceProvider _provider;
@@ -223,7 +223,7 @@ public class BadService
     }
 }
 
-// ? GOOD: Constructor Injection
+// ✅ GOOD: Constructor Injection
 public class GoodService
 {
     private readonly IMyService _service;
@@ -292,4 +292,3 @@ public class GoodService
         </div>
     </div>
 </article>
-
