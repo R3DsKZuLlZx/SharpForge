@@ -38,7 +38,7 @@
                     <li><code>Dispose</code> / <code>DisposeAsync</code></li>
                 </ol>
 
-                <h2>SetParametersAsync</h2>
+                <h2 id="setparametersasync">SetParametersAsync</h2>
                 <p>Called when parameters are set or updated. Rarely overridden directly.</p>
 
                 <pre><code>public override async Task SetParametersAsync(ParameterView parameters)
@@ -53,7 +53,7 @@
     await base.SetParametersAsync(parameters);
 }</code></pre>
 
-                <h2>OnInitialized / OnInitializedAsync</h2>
+                <h2 id="oninitialized">OnInitialized / OnInitializedAsync</h2>
                 <p>Called once when the component is first created. Perfect for initial data loading.</p>
 
                 <pre><code>@@code {
@@ -80,7 +80,7 @@
                     <li>For Blazor Server, called twice during prerendering (use <code>OnAfterRenderAsync</code> for one-time operations)</li>
                 </ul>
 
-                <h2>OnParametersSet / OnParametersSetAsync</h2>
+                <h2 id="onparametersset">OnParametersSet / OnParametersSetAsync</h2>
                 <p>Called after parameters are set, both initially and on updates.</p>
 
                 <pre><code>@@code {
@@ -101,7 +101,7 @@
     }
 }</code></pre>
 
-                <h2>OnAfterRender / OnAfterRenderAsync</h2>
+                <h2 id="onafterrender">OnAfterRender / OnAfterRenderAsync</h2>
                 <p>Called after the component has rendered. Use for DOM interactions and JavaScript interop.</p>
 
                 <pre><code>@@inject IJSRuntime JS
@@ -151,7 +151,7 @@
     }
 }</code></pre>
 
-                <h2>StateHasChanged</h2>
+                <h2 id="statehaschanged">StateHasChanged</h2>
                 <p>Manually triggers a re-render. Needed when state changes outside of Blazor's event handlers.</p>
 
                 <pre><code>@@implements IDisposable
@@ -177,7 +177,7 @@
     }
 }</code></pre>
 
-                <h2>IDisposable / IAsyncDisposable</h2>
+                <h2 id="idisposable">IDisposable / IAsyncDisposable</h2>
                 <p>Clean up resources when the component is removed.</p>
 
                 <pre><code>@@implements IAsyncDisposable
@@ -211,7 +211,7 @@
     }
 }</code></pre>
 
-                <h2>Lifecycle Diagram</h2>
+                <h2 id="lifecycle-diagram">Lifecycle Diagram</h2>
                 <pre><code>Component Created
        ↓
 SetParametersAsync
@@ -229,7 +229,7 @@ OnAfterRender(Async)
   StateHasChanged
        ↓
    ShouldRender?
-    ↓ Yes    ↓ No
+    ↓ Yes          ↓ No
 BuildRenderTree  Stop
        ↓
 OnAfterRender(Async)
@@ -261,11 +261,14 @@ OnAfterRender(Async)
                     <h4>Table of Contents</h4>
                     <ul>
                         <li><a href="#lifecycle-overview">Overview</a></li>
+                        <li><a href="#setparametersasync">SetParametersAsync</a></li>
                         <li><a href="#oninitialized">OnInitialized</a></li>
                         <li><a href="#onparametersset">OnParametersSet</a></li>
                         <li><a href="#onafterrender">OnAfterRender</a></li>
                         <li><a href="#shouldrender">ShouldRender</a></li>
+                        <li><a href="#statehaschanged">StateHasChanged</a></li>
                         <li><a href="#idisposable">IDisposable</a></li>
+                        <li><a href="#lifecycle-diagram">Lifecycle Diagram</a></li>
                     </ul>
                 </div>
 
