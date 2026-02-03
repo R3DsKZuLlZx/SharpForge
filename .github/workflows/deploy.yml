@@ -32,9 +32,6 @@ jobs:
       - name: Publish
         run: dotnet publish src/SharpForge.Client/SharpForge.Client.csproj -c Release -o release --nologo
 
-      - name: Update base href for GitHub Pages
-        run: sed -i 's|<base href="/"/>|<base href="/SharpForge/"/>|g' release/wwwroot/index.html
-
       - name: Copy index.html to 404.html for SPA routing
         run: cp release/wwwroot/index.html release/wwwroot/404.html
 
