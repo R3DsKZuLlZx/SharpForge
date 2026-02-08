@@ -7,8 +7,8 @@
     Title="ASP.NET Core Web APIs"
     Description="Build production-ready REST APIs with ASP.NET Core. Master routing, middleware, dependency injection, authentication, Entity Framework Core, and deployment strategies."
     LessonCount="18"
-    Duration="8 Hours"
-    StudentCount="2,847"
+    Duration="3 hours"
+    StudentCount="47"
     StartUrl="training/aspnet-core-web-apis/lesson/1">
     <IconContent>
         <svg viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -50,7 +50,7 @@
             <CourseSidebar 
                 CourseId="aspnet-core-web-apis"
                 TotalLessons="18"
-                Duration="8 hours"
+                Duration="3 hours"
                 ExerciseCount="10"
                 ProjectDescription="Complete API project"
                 StartUrl="training/aspnet-core-web-apis/lesson/1" />
@@ -61,24 +61,24 @@
 @code {
     private readonly List<CourseCurriculum.CourseLessonInfo> _lessons =
     [
-        new(1, "Introduction to ASP.NET Core", "Understand the ASP.NET Core framework, its architecture, and how it differs from ASP.NET Framework.", "25 min"),
-        new(2, "Creating Your First API", "Set up a new Web API project and create your first endpoint using controllers.", "30 min"),
-        new(3, "Routing Fundamentals", "Master attribute routing, route templates, and route constraints.", "30 min"),
-        new(4, "Controllers and Actions", "Learn about controller conventions, action methods, and return types.", "35 min"),
-        new(5, "Model Binding and Validation", "Bind request data to models and implement validation with Data Annotations and FluentValidation.", "35 min"),
-        new(6, "Dependency Injection", "Understand the built-in DI container, service lifetimes, and best practices.", "30 min"),
-        new(7, "Middleware Pipeline", "Create custom middleware and understand the request/response pipeline.", "30 min"),
-        new(8, "Entity Framework Core Basics", "Set up EF Core, create models, and perform CRUD operations.", "40 min"),
-        new(9, "Repository Pattern", "Implement the repository pattern for cleaner data access code.", "30 min"),
-        new(10, "Authentication with JWT", "Implement JSON Web Token authentication for securing your APIs.", "40 min"),
-        new(11, "Authorization Policies", "Create role-based and policy-based authorization rules.", "30 min"),
-        new(12, "Error Handling", "Implement global exception handling and return consistent error responses.", "25 min"),
-        new(13, "Logging and Monitoring", "Add structured logging with Serilog and monitor your API health.", "30 min"),
-        new(14, "API Versioning", "Implement URL, query string, and header-based API versioning.", "25 min"),
-        new(15, "Swagger and OpenAPI", "Document your API with Swagger UI and OpenAPI specifications.", "25 min"),
-        new(16, "Minimal APIs", "Build lightweight APIs using the minimal API approach in .NET 6+.", "30 min"),
-        new(17, "Testing Your APIs", "Write unit tests and integration tests for your API endpoints.", "35 min"),
-        new(18, "Deployment and Docker", "Deploy your API to Azure App Service and containerize with Docker.", "40 min")
+        new(1, "Introduction to ASP.NET Core", "Understand the ASP.NET Core framework, its architecture, and how it differs from ASP.NET Framework.", "8 min"),
+        new(2, "Creating Your First API", "Set up a new Web API project and create your first endpoint using controllers.", "12 min"),
+        new(3, "Routing Fundamentals", "Master attribute routing, route templates, and route constraints.", "10 min"),
+        new(4, "Controllers and Actions", "Learn about controller conventions, action methods, and return types.", "12 min"),
+        new(5, "Model Binding and Validation", "Bind request data to models and implement validation with Data Annotations and FluentValidation.", "12 min"),
+        new(6, "Dependency Injection", "Understand the built-in DI container, service lifetimes, and best practices.", "8 min"),
+        new(7, "Middleware Pipeline", "Create custom middleware and understand the request/response pipeline.", "8 min"),
+        new(8, "Entity Framework Core Basics", "Set up EF Core, create models, and perform CRUD operations.", "18 min"),
+        new(9, "Repository Pattern", "Implement the repository pattern for cleaner data access code.", "10 min"),
+        new(10, "Authentication with JWT", "Implement JSON Web Token authentication for securing your APIs.", "6 min"),
+        new(11, "Authorization Policies", "Create role-based and policy-based authorization rules.", "8 min"),
+        new(12, "Error Handling", "Implement global exception handling and return consistent error responses.", "6 min"),
+        new(13, "Logging and Monitoring", "Add structured logging with Serilog and monitor your API health.", "8 min"),
+        new(14, "API Versioning", "Implement URL, query string, and header-based API versioning.", "6 min"),
+        new(15, "Swagger and OpenAPI", "Document your API with Swagger UI and OpenAPI specifications.", "6 min"),
+        new(16, "Minimal APIs", "Build lightweight APIs using the minimal API approach in .NET 6+.", "10 min"),
+        new(17, "Testing Your APIs", "Write unit tests and integration tests for your API endpoints.", "12 min"),
+        new(18, "Deployment and Docker", "Deploy your API to Azure App Service and containerize with Docker.", "15 min")
     ];
 
     private readonly List<string> _prerequisites =
