@@ -59,13 +59,13 @@ var result = await httpClient.GetAsync(url, cts.Token);</code></pre>
                     <p>Discussion and ASCII diagram showing how bulkheads isolate capacity to avoid a failure in one area taking down the whole system.</p>
                     <pre><code class="language-text">Isolate resources to prevent cascade failures:
 
-┌─────────────────────────────────────┐
-│           Service                   │
-│  ┌──────────┐  ┌──────────┐        │
-│  │ API Pool │  │ DB Pool  │        │
-│  │  (10)    │  │   (20)   │        │
-│  └──────────┘  └──────────┘        │
-└─────────────────────────────────────┘
+┌───────────────────────────────────────┐
+│                Service                │
+│  ┌──────────────┐    ┌─────────────┐  │
+│  │   API Pool   │    │   DB Pool   │  │
+│  │    (10)      │    │     (20)    │  │
+│  └──────────────┘    └─────────────┘  │
+└───────────────────────────────────────┘
 
 If API pool exhausted, DB operations continue</code></pre>
                 </section>

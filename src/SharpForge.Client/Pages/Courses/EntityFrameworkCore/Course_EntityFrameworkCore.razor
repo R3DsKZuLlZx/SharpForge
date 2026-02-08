@@ -7,7 +7,7 @@
     Title="Entity Framework Core"
     Description="Master database access with Entity Framework Core. Learn about DbContext, migrations, relationships, LINQ queries, and performance optimization for production applications."
     LessonCount="12"
-    Duration="5 Hours"
+    Duration="4 Hours"
     StudentCount="2,156"
     StartUrl="training/entity-framework-core/lesson/1">
     <IconContent>
@@ -51,7 +51,7 @@
             <CourseSidebar 
                 CourseId="entity-framework-core"
                 TotalLessons="12"
-                Duration="5 hours"
+                Duration="4 hours"
                 ExerciseCount="6"
                 ProjectDescription="Complete data layer project"
                 StartUrl="training/entity-framework-core/lesson/1" />
@@ -62,18 +62,18 @@
 @code {
     private readonly List<CourseCurriculum.CourseLessonInfo> _lessons =
     [
-        new(1, "Introduction to EF Core", "Understand what Entity Framework Core is, its architecture, and how it compares to other ORMs.", "25 min"),
-        new(2, "Setting Up DbContext", "Create and configure your DbContext, connection strings, and database providers.", "25 min"),
-        new(3, "Defining Entity Models", "Create entity classes with proper conventions, data annotations, and Fluent API configuration.", "30 min"),
-        new(4, "Migrations", "Create, apply, and manage database migrations for schema changes.", "30 min"),
-        new(5, "Basic CRUD Operations", "Perform Create, Read, Update, and Delete operations with EF Core.", "25 min"),
-        new(6, "Querying with LINQ", "Write efficient LINQ queries including filtering, sorting, grouping, and projections.", "35 min"),
-        new(7, "Relationships", "Configure one-to-one, one-to-many, and many-to-many relationships between entities.", "35 min"),
-        new(8, "Loading Related Data", "Understand eager loading, lazy loading, and explicit loading strategies.", "25 min"),
-        new(9, "Change Tracking", "Master how EF Core tracks changes and optimize save operations.", "25 min"),
-        new(10, "Transactions", "Implement database transactions for data integrity.", "20 min"),
-        new(11, "Concurrency Handling", "Handle concurrent updates with optimistic concurrency tokens.", "25 min"),
-        new(12, "Performance Optimization", "Optimize queries, use raw SQL, and implement caching strategies.", "30 min")
+        new(1, "Introduction to EF Core", "Understand what Entity Framework Core is, its architecture, and how it compares to other ORMs.", "16 min"),
+        new(2, "Setting Up DbContext", "Create and configure your DbContext, connection strings, and database providers.", "18 min"),
+        new(3, "Defining Entity Models", "Create entity classes with proper conventions, data annotations, and Fluent API configuration.", "18 min"),
+        new(4, "Migrations", "Create, apply, and manage database migrations for schema changes.", "16 min"),
+        new(5, "Basic CRUD Operations", "Perform Create, Read, Update, and Delete operations with EF Core.", "18 min"),
+        new(6, "Querying with LINQ", "Write efficient LINQ queries including filtering, sorting, grouping, and projections.", "21 min"),
+        new(7, "Relationships", "Configure one-to-one, one-to-many, and many-to-many relationships between entities.", "21 min"),
+        new(8, "Loading Related Data", "Understand eager loading, lazy loading, and explicit loading strategies.", "18 min"),
+        new(9, "Change Tracking", "Master how EF Core tracks changes and optimize save operations.", "16 min"),
+        new(10, "Transactions", "Implement database transactions for data integrity.", "16 min"),
+        new(11, "Concurrency Handling", "Handle concurrent updates with optimistic concurrency tokens.", "16 min"),
+        new(12, "Performance Optimization", "Optimize queries, use raw SQL, and implement caching strategies.", "21 min")
     ];
 
     private readonly List<string> _prerequisites =
