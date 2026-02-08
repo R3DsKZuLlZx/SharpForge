@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>One-to-Many Relationship</h2>
+                    <p>Defines a one-to-many relationship: a Category has many Products. The FK property (<code>CategoryId</code>) and navigation properties enable EF Core to map the relationship.</p>
                     <pre><code class="language-csharp">// Category has many Products
 public class Category
 {
@@ -38,6 +39,7 @@ public class Product
 
                 <section class="lesson-section">
                     <h2>One-to-One Relationship</h2>
+                    <p>Configure a one-to-one relationship with a foreign key on the dependent entity; Fluent API can explicitly define which side is principal/dependent.</p>
                     <pre><code class="language-csharp">public class User
 {
     public int Id { get; set; }
@@ -62,6 +64,7 @@ modelBuilder.Entity&lt;User&gt;()
 
                 <section class="lesson-section">
                     <h2>Many-to-Many Relationship</h2>
+                    <p>EF Core 5+ supports many-to-many relationships without explicitly defining the join table; EF Core will create a junction table automatically for simple cases.</p>
                     <pre><code class="language-csharp">// EF Core 5+ - Simple (skip navigation)
 public class Student
 {
@@ -82,6 +85,7 @@ public class Course
 
                 <section class="lesson-section">
                     <h2>Many-to-Many with Payload</h2>
+                    <p>When the relationship needs extra data (payload), define an explicit join entity (Enrollment) and configure composite keys and navigation properties.</p>
                     <pre><code class="language-csharp">// When you need extra data on the relationship
 public class Enrollment
 {
@@ -110,6 +114,7 @@ modelBuilder.Entity&lt;Enrollment&gt;()
 
                 <section class="lesson-section">
                     <h2>Cascade Delete</h2>
+                    <p>Configure delete behavior (<code>OnDelete</code>) to control what happens to dependent entities when a principal is deleted.</p>
                     <pre><code class="language-csharp">modelBuilder.Entity&lt;Product&gt;()
     .HasOne(p =&gt; p.Category)
     .WithMany(c =&gt; c.Products)

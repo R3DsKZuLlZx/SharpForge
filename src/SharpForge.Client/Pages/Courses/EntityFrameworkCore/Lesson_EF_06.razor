@@ -18,48 +18,51 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>Filtering with Where</h2>
+                    <p>Use <code>Where</code> to apply filters that translate to SQL WHERE clauses; combine expressions for complex filters.</p>
                     <pre><code class="language-csharp">// Simple filter
 var expensiveProducts = await context.Products
-    .Where(p =&gt; p.Price &gt; 100)
+    .Where(p => p.Price > 100)
     .ToListAsync();
 
 // Multiple conditions
 var activeExpensive = await context.Products
-    .Where(p =&gt; p.Price &gt; 100 &amp;&amp; p.IsActive)
+    .Where(p => p.Price > 100 && p.IsActive)
     .ToListAsync();
 
 // String operations
 var laptops = await context.Products
-    .Where(p =&gt; p.Name.Contains("Laptop"))
+    .Where(p => p.Name.Contains("Laptop"))
     .ToListAsync();</code></pre>
                 </section>
 
                 <section class="lesson-section">
                     <h2>Sorting</h2>
+                    <p>Use <code>OrderBy</code> and <code>ThenBy</code> for sorting; EF Core translates these to ORDER BY in SQL.</p>
                     <pre><code class="language-csharp">// Ascending
 var byName = await context.Products
-    .OrderBy(p =&gt; p.Name)
+    .OrderBy(p => p.Name)
     .ToListAsync();
 
 // Descending
 var byPriceDesc = await context.Products
-    .OrderByDescending(p =&gt; p.Price)
+    .OrderByDescending(p => p.Price)
     .ToListAsync();
 
 // Multiple sort criteria
 var sorted = await context.Products
-    .OrderBy(p =&gt; p.Category.Name)
-    .ThenByDescending(p =&gt; p.Price)
+    .OrderBy(p => p.Category.Name)
+    .ThenByDescending(p => p.Price)
     .ToListAsync();</code></pre>
                 </section>
 
                 <section class="lesson-section">
                     <h2>Pagination</h2>
+                    <p>Implement pagination with <code>Skip</code> and <code>Take</code>; always apply a deterministic order before paging.</p>
                     <pre><code class="language-csharp">int page = 1;
 int pageSize = 10;
 
 var pagedProducts = await context.Products
-    .OrderBy(p =&gt; p.Name)
+    .OrderBy(p => p.Name)
     .Skip((page - 1) * pageSize)
     .Take(pageSize)
     .ToListAsync();
@@ -69,14 +72,15 @@ var totalCount = await context.Products.CountAsync();</code></pre>
 
                 <section class="lesson-section">
                     <h2>Projection with Select</h2>
+                    <p>Use <code>Select</code> to project only the columns you need (more efficient) and to map results to DTOs directly in the query.</p>
                     <pre><code class="language-csharp">// Select specific columns (more efficient)
 var productNames = await context.Products
-    .Select(p =&gt; p.Name)
+    .Select(p => p.Name)
     .ToListAsync();
 
 // Project to DTO
 var productDtos = await context.Products
-    .Select(p =&gt; new ProductDto
+    .Select(p => new ProductDto
     {
         Id = p.Id,
         Name = p.Name,
@@ -87,43 +91,45 @@ var productDtos = await context.Products
 
 // Anonymous type
 var summary = await context.Products
-    .Select(p =&gt; new { p.Name, p.Price })
+    .Select(p => new { p.Name, p.Price })
     .ToListAsync();</code></pre>
                 </section>
 
                 <section class="lesson-section">
                     <h2>Grouping and Aggregates</h2>
+                    <p>Group results for reporting and use aggregate methods (Count, Sum, Average) which translate to SQL aggregates.</p>
                     <pre><code class="language-csharp">// Group by category
 var byCategory = await context.Products
-    .GroupBy(p =&gt; p.CategoryId)
-    .Select(g =&gt; new
+    .GroupBy(p => p.CategoryId)
+    .Select(g => new
     {
         CategoryId = g.Key,
         Count = g.Count(),
-        TotalValue = g.Sum(p =&gt; p.Price),
-        AveragePrice = g.Average(p =&gt; p.Price)
+        TotalValue = g.Sum(p => p.Price),
+        AveragePrice = g.Average(p => p.Price)
     })
     .ToListAsync();
 
 // Aggregates
-var maxPrice = await context.Products.MaxAsync(p =&gt; p.Price);
-var minPrice = await context.Products.MinAsync(p =&gt; p.Price);
+var maxPrice = await context.Products.MaxAsync(p => p.Price);
+var minPrice = await context.Products.MinAsync(p => p.Price);
 var count = await context.Products.CountAsync();
-var sum = await context.Products.SumAsync(p =&gt; p.Stock);</code></pre>
+var sum = await context.Products.SumAsync(p => p.Stock);</code></pre>
                 </section>
 
                 <section class="lesson-section">
                     <h2>Query vs Method Syntax</h2>
+                    <p>Method syntax (fluent LINQ) is most common in EF Core, but query syntax can be useful for complex SQL-like queries—both get translated to SQL.</p>
                     <pre><code class="language-csharp">// Method syntax (more common)
 var products = await context.Products
-    .Where(p =&gt; p.Price &gt; 100)
-    .OrderBy(p =&gt; p.Name)
+    .Where(p => p.Price > 100)
+    .OrderBy(p => p.Name)
     .ToListAsync();
 
 // Query syntax (SQL-like)
 var products = await (
     from p in context.Products
-    where p.Price &gt; 100
+    where p.Price > 100
     orderby p.Name
     select p
 ).ToListAsync();</code></pre>

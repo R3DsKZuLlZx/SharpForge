@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>Creating a DbContext</h2>
+                    <p>This example shows a basic <code>DbContext</code> with <code>DbSet</code> properties that represent tables; the constructor accepts <code>DbContextOptions</code> which are configured in startup.</p>
                     <pre><code class="language-csharp">public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions&lt;AppDbContext&gt; options) 
@@ -33,6 +34,7 @@
 
                 <section class="lesson-section">
                     <h2>Registering in ASP.NET Core</h2>
+                    <p>Register your context with DI and configure the connection string; this example shows SQL Server and the typical appsettings.json entry for a connection string.</p>
                     <pre><code class="language-csharp">// Program.cs
 builder.Services.AddDbContext&lt;AppDbContext&gt;(options =&gt;
     options.UseSqlServer(
@@ -47,6 +49,7 @@ builder.Services.AddDbContext&lt;AppDbContext&gt;(options =&gt;
 
                 <section class="lesson-section">
                     <h2>Different Database Providers</h2>
+                    <p>Switch providers by calling the appropriate extension method on the options builder; pick the provider that matches your database.</p>
                     <pre><code class="language-csharp">// SQL Server
 options.UseSqlServer(connectionString);
 
@@ -62,6 +65,7 @@ options.UseInMemoryDatabase("TestDb");</code></pre>
 
                 <section class="lesson-section">
                     <h2>OnModelCreating</h2>
+                    <p>Use <code>OnModelCreating</code> to configure entity mappings with the Fluent API and to seed initial data; this keeps mapping details out of entity classes.</p>
                     <pre><code class="language-csharp">public class AppDbContext : DbContext
 {
     // ... constructor and DbSets

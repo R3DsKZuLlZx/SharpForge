@@ -28,6 +28,7 @@
 
                 <section class="lesson-section">
                     <h2>Projection (Select Only What You Need)</h2>
+                    <p>Project only the columns you need to avoid over-fetching. The left example loads entire entities then projects in memory (inefficient); prefer projecting in the query so SQL only returns required columns.</p>
                     <pre><code class="language-csharp">// ❌ Bad - loads entire entity
 var products = await context.Products.ToListAsync();
 var names = products.Select(p => p.Name);
@@ -45,6 +46,7 @@ var dtos = await context.Products
 
                 <section class="lesson-section">
                     <h2>No-Tracking for Read-Only</h2>
+                    <p>No-tracking queries skip change tracking overhead. Use <code>AsNoTrackingWithIdentityResolution()</code> when you still need stable identity for included entities.</p>
                     <pre><code class="language-csharp">// ✅ No tracking overhead for read-only queries
 var products = await context.Products
     .AsNoTracking()
@@ -59,6 +61,7 @@ var products = await context.Products
 
                 <section class="lesson-section">
                     <h2>Compiled Queries</h2>
+                    <p>Compile frequently-used queries to avoid expression tree re-processing and improve performance for repeated executions.</p>
                     <pre><code class="language-csharp">// Pre-compile frequently used queries
 private static readonly Func&lt;AppDbContext, int, Task&lt;Product?&gt;&gt; GetProductById =
     EF.CompileAsyncQuery((AppDbContext context, int id) =>
@@ -70,6 +73,7 @@ var product = await GetProductById(context, 42);</code></pre>
 
                 <section class="lesson-section">
                     <h2>Raw SQL and Stored Procedures</h2>
+                    <p>Use raw SQL for very complex queries or to reuse existing stored procedures; prefer parameterized or interpolated APIs provided by EF Core to avoid SQL injection.</p>
                     <pre><code class="language-csharp">// Raw SQL for complex queries
 var products = await context.Products
     .FromSqlRaw("SELECT * FROM Products WHERE Price > {0}", minPrice)
@@ -87,6 +91,7 @@ await context.Database
 
                 <section class="lesson-section">
                     <h2>Bulk Operations</h2>
+                    <p>Avoid per-entity saves in loops—batch inserts/updates/delete with AddRange or the bulk APIs (EF Core 7+) to reduce round trips to the database.</p>
                     <pre><code class="language-csharp">// ❌ Slow - individual inserts
 foreach (var product in products)
 {
@@ -110,6 +115,7 @@ await context.Products
 
                 <section class="lesson-section">
                     <h2>Logging Generated SQL</h2>
+                    <p>Log generated SQL to analyze and optimize queries; <code>EnableSensitiveDataLogging()</code> shows parameter values but avoid enabling it in production.</p>
                     <pre><code class="language-csharp">// In Program.cs
 options.UseSqlServer(connectionString)
     .LogTo(Console.WriteLine, LogLevel.Information)

@@ -18,7 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>Implicit Transactions</h2>
-                    <p>SaveChangesAsync wraps all changes in a single transaction automatically.</p>
+                    <p>By default, <code>SaveChangesAsync</code> runs inside a transaction so all operations that are part of the save either succeed or fail together.</p>
                     <pre><code class="language-csharp">// All operations succeed or fail together
 context.Orders.Add(order);
 context.OrderItems.AddRange(items);
@@ -28,6 +28,7 @@ await context.SaveChangesAsync();  // Single transaction</code></pre>
 
                 <section class="lesson-section">
                     <h2>Explicit Transactions</h2>
+                    <p>Use explicit transactions (<code>BeginTransactionAsync</code>) when you need multiple SaveChanges calls or to coordinate work that must be atomic and where you need fine-grained commit/rollback control.</p>
                     <pre><code class="language-csharp">using var transaction = await context.Database.BeginTransactionAsync();
 
 try
@@ -61,6 +62,7 @@ catch
 
                 <section class="lesson-section">
                     <h2>Savepoints</h2>
+                    <p>Savepoints allow partial rollback inside a larger transaction—useful when a subset of operations might fail and you want to continue.</p>
                     <pre><code class="language-csharp">using var transaction = await context.Database.BeginTransactionAsync();
 
 try
@@ -91,6 +93,7 @@ catch
 
                 <section class="lesson-section">
                     <h2>TransactionScope</h2>
+                    <p><code>TransactionScope</code> enables ambient transactions that can span multiple DbContext instances or other resource managers; enable async flow and be mindful of distributed transaction implications.</p>
                     <pre><code class="language-csharp">using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
 // Multiple DbContext operations

@@ -23,6 +23,7 @@
 
                 <section class="lesson-section">
                     <h2>Creating Migrations</h2>
+                    <p>Use the CLI <code>dotnet ef migrations add</code> to scaffold a migration that captures schema changes; specify project/ startup projects when working in multi-project solutions.</p>
                     <pre><code class="language-bash"># Create initial migration
 dotnet ef migrations add InitialCreate
 
@@ -35,6 +36,7 @@ dotnet ef migrations add AddOrders -p Data -s WebApi</code></pre>
 
                 <section class="lesson-section">
                     <h2>Migration File Structure</h2>
+                    <p>This shows an auto-generated migration class: <code>Up()</code> applies schema changes and <code>Down()</code> reverts them.</p>
                     <pre><code class="language-csharp">public partial class AddProductDescription : Migration
 {
     protected override void Up(MigrationBuilder migrationBuilder)
@@ -58,6 +60,7 @@ dotnet ef migrations add AddOrders -p Data -s WebApi</code></pre>
 
                 <section class="lesson-section">
                     <h2>Applying Migrations</h2>
+                    <p>Apply migrations to the database with <code>dotnet ef database update</code>, target a specific migration for rollbacks, or generate SQL scripts for review and production deployments.</p>
                     <pre><code class="language-bash"># Apply all pending migrations
 dotnet ef database update
 
@@ -76,6 +79,7 @@ dotnet ef migrations script --idempotent</code></pre>
 
                 <section class="lesson-section">
                     <h2>Managing Migrations</h2>
+                    <p>Use the CLI to list or remove migrations during development, and use <code>context.Database.Migrate()</code> to apply pending migrations at runtime if needed.</p>
                     <pre><code class="language-bash"># List migrations
 dotnet ef migrations list
 

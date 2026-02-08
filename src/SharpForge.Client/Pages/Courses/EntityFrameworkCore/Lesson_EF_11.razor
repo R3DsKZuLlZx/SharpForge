@@ -23,6 +23,7 @@
 
                 <section class="lesson-section">
                     <h2>Concurrency Tokens</h2>
+                    <p>Use concurrency tokens (like <code>[ConcurrencyCheck]</code>) to detect when specific properties conflict between updates from different users.</p>
                     <pre><code class="language-csharp">public class Product
 {
     public int Id { get; set; }
@@ -41,6 +42,7 @@ modelBuilder.Entity&lt;Product&gt;()
 
                 <section class="lesson-section">
                     <h2>RowVersion (Recommended)</h2>
+                    <p>RowVersion (a timestamp/rowversion column) is the recommended approach: the database updates it automatically and EF Core checks it on update to detect conflicts.</p>
                     <pre><code class="language-csharp">public class Product
 {
     public int Id { get; set; }
@@ -59,6 +61,7 @@ modelBuilder.Entity&lt;Product&gt;()
 
                 <section class="lesson-section">
                     <h2>Handling Conflicts</h2>
+                    <p>When <code>DbUpdateConcurrencyException</code> is thrown, inspect <code>entry.GetDatabaseValuesAsync()</code> to decide whether to let the database win, overwrite, merge, or present a UI for the user to resolve.</p>
                     <pre><code class="language-csharp">try
 {
     await context.SaveChangesAsync();

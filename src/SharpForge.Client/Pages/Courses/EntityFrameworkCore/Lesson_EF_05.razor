@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>Create (Insert)</h2>
+                    <p>Use <code>Add</code>/<code>AddRange</code> for tracked inserts and call <code>SaveChangesAsync</code> to persist; new entity keys are populated after saving.</p>
                     <pre><code class="language-csharp">// Single entity
 var product = new Product { Name = "Laptop", Price = 999.99m };
 context.Products.Add(product);
@@ -36,6 +37,7 @@ await context.SaveChangesAsync();</code></pre>
 
                 <section class="lesson-section">
                     <h2>Read (Query)</h2>
+                    <p>Use <code>FindAsync</code> for primary key lookups and LINQ methods for conditional queries; prefer async variants to avoid blocking threads.</p>
                     <pre><code class="language-csharp">// Get all
 var allProducts = await context.Products.ToListAsync();
 
@@ -56,6 +58,7 @@ var exists = await context.Products.AnyAsync(p =&gt; p.Id == id);</code></pre>
 
                 <section class="lesson-section">
                     <h2>Update</h2>
+                    <p>Modify tracked entities directly and call <code>SaveChangesAsync</code>; for disconnected scenarios use <code>Update</code> or attach the entity and mark specific properties modified.</p>
                     <pre><code class="language-csharp">// Tracked entity (recommended)
 var product = await context.Products.FindAsync(id);
 if (product != null)
@@ -78,6 +81,7 @@ context.Entry(product).Property(p =&gt; p.Price).IsModified = true;</code></pre>
 
                 <section class="lesson-section">
                     <h2>Delete</h2>
+                    <p>Remove tracked entities or use bulk delete APIs (EF Core 7+) for efficient server-side deletions without loading entities.</p>
                     <pre><code class="language-csharp">// With tracking
 var product = await context.Products.FindAsync(id);
 if (product != null)
@@ -99,6 +103,7 @@ await context.Products
 
                 <section class="lesson-section">
                     <h2>Bulk Update (EF Core 7+)</h2>
+                    <p>Use <code>ExecuteUpdateAsync</code> to perform server-side bulk updates efficiently without loading entities into memory.</p>
                     <pre><code class="language-csharp">// Update all products in category
 await context.Products
     .Where(p =&gt; p.CategoryId == categoryId)

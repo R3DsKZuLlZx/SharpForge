@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>Entity States</h2>
+                    <p>Examples of entity states tracked by EF Core: Detached (not tracked), Added, Unchanged, Modified, Deleted — these determine what SaveChanges will do.</p>
                     <pre><code class="language-csharp">// Detached - Not tracked by the context
 var product = new Product { Name = "Widget" };
 
@@ -36,6 +37,7 @@ context.Products.Remove(loaded);  // State = Deleted</code></pre>
 
                 <section class="lesson-section">
                     <h2>Checking Entity State</h2>
+                    <p>Use <code>context.Entry(entity).State</code> to inspect an entity's tracking state and iterate <code>entry.Properties</code> to see which properties changed.</p>
                     <pre><code class="language-csharp">var entry = context.Entry(product);
 Console.WriteLine(entry.State);  // EntityState enum
 
@@ -54,6 +56,7 @@ if (entry.State == EntityState.Modified)
 
                 <section class="lesson-section">
                     <h2>No-Tracking Queries</h2>
+                    <p>For read-only queries, use <code>AsNoTracking()</code> to improve performance because change tracking is skipped.</p>
                     <pre><code class="language-csharp">// Read-only queries (better performance)
 var products = await context.Products
     .AsNoTracking()
@@ -74,6 +77,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder options)
 
                 <section class="lesson-section">
                     <h2>Attaching Entities</h2>
+                    <p>Attach disconnected entities when you have DTOs or objects from other tiers; choose Update to mark the whole entity modified or set specific properties as modified to avoid unintended updates.</p>
                     <pre><code class="language-csharp">// Attach disconnected entity (State = Unchanged)
 context.Products.Attach(product);
 
@@ -87,6 +91,7 @@ context.Entry(product).Property(p => p.Price).IsModified = true;</code></pre>
 
                 <section class="lesson-section">
                     <h2>ChangeTracker Debugging</h2>
+                    <p>Use the ChangeTracker's debug view to inspect what entities are currently tracked — helpful when diagnosing unexpected updates.</p>
                     <pre><code class="language-csharp">// View all tracked entities
 Console.WriteLine(context.ChangeTracker.DebugView.LongView);
 

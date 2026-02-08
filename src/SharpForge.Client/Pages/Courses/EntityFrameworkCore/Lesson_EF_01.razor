@@ -32,6 +32,7 @@
 
                 <section class="lesson-section">
                     <h2>How EF Core Works</h2>
+                    <p>This snippet shows how a LINQ query in C# is translated by EF Core into SQL; it's an example of how developers write expressive C# while EF Core generates the SQL behind the scenes.</p>
                     <pre><code class="language-csharp">// Your C# code
 var products = await context.Products
     .Where(p => p.Price > 100)
@@ -82,6 +83,7 @@ var products = await context.Products
 
                 <section class="lesson-section">
                     <h2>Installing EF Core</h2>
+                    <p>Install the core EF package, a provider for your database, and the design-time tools used for migrations and scaffolding. The CLI tool <code>dotnet-ef</code> is handy for migrations.</p>
                     <pre><code class="language-bash"># Core package
 dotnet add package Microsoft.EntityFrameworkCore
 

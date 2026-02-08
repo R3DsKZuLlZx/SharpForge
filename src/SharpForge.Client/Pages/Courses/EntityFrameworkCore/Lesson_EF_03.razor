@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>Basic Entity Class</h2>
+                    <p>This is a plain C# POCO entity class; EF Core maps properties to database columns by convention (Id => primary key).</p>
                     <pre><code class="language-csharp">public class Product
 {
     public int Id { get; set; }  // Convention: primary key
@@ -32,6 +33,7 @@
 
                 <section class="lesson-section">
                     <h2>Data Annotations</h2>
+                    <p>Data annotations provide a quick way to configure mapping rules directly on entity properties (required, max length, column type, computed/not mapped, etc.).</p>
                     <pre><code class="language-csharp">using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -63,6 +65,7 @@ public class Product
 
                 <section class="lesson-section">
                     <h2>Fluent API Configuration</h2>
+                    <p>Use the Fluent API in <code>OnModelCreating</code> for advanced mapping scenarios; this example shows common property configuration and indexing.</p>
                     <pre><code class="language-csharp">protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder.Entity&lt;Product&gt;(entity =&gt;
@@ -89,6 +92,7 @@ public class Product
 
                 <section class="lesson-section">
                     <h2>Entity Configuration Classes</h2>
+                    <p>Split configuration into classes that implement <code>IEntityTypeConfiguration&lt;T&gt;</code> to keep the <code>DbContext</code> tidy and modular.</p>
                     <pre><code class="language-csharp">public class ProductConfiguration : IEntityTypeConfiguration&lt;Product&gt;
 {
     public void Configure(EntityTypeBuilder&lt;Product&gt; builder)
@@ -112,6 +116,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
                 <section class="lesson-section">
                     <h2>Value Conversions</h2>
+                    <p>Value conversions map CLR types to database representations (e.g., enums to strings or lists to CSV); use them when the CLR type doesn't map directly to a DB type.</p>
                     <pre><code class="language-csharp">public enum ProductStatus { Draft, Active, Discontinued }
 
 public class Product
