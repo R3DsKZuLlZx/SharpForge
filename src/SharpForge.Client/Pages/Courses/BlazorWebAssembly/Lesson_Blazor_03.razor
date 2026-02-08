@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>Anatomy of a Razor Component</h2>
+                    <p>Below is a minimal component file showing common top-level directives (routing, usings, injection), markup, and an @@code block for component state.</p>
                     <pre><code class="language-razor">@@* Directives at the top *@@
 @@page "/my-component"
 @@using MyApp.Models
@@ -42,6 +43,7 @@
 
                 <section class="lesson-section">
                     <h2>Razor Syntax Basics</h2>
+                    <p>The examples below demonstrate Razor syntax used inside .razor components: inline expressions, explicit expressions, code blocks, conditionals, and loops. They show how C# and markup interleave in a component.</p>
                     <pre><code class="language-razor">@@* Implicit expressions *@@
 &lt;p&gt;Hello, @@name!&lt;/p&gt;
 &lt;p&gt;Count: @@items.Count&lt;/p&gt;
@@ -75,6 +77,7 @@ else
 
                 <section class="lesson-section">
                     <h2>Creating Reusable Components</h2>
+                    <p>This component example shows a ProductCard component using a <code>[Parameter]</code> to accept data and an event handler to respond to user actions, useful as a starting point for reusable UI pieces.</p>
                     <pre><code class="language-razor">@@* Components/ProductCard.razor *@@
 &lt;div class="product-card"&gt;
     &lt;h3&gt;@@Product.Name&lt;/h3&gt;
@@ -91,6 +94,7 @@ else
         // Add to cart logic
     }
 }</code></pre>
+                    <p>This shows how the component is used from a parent: pass the product instance via the <code>Product</code> parameter.</p>
                     <pre><code class="language-razor">@@* Using the component *@@
 &lt;ProductCard Product="@@myProduct" /&gt;</code></pre>
                 </section>

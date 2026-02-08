@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>Publishing for Production</h2>
+                    <p>The commands below show how to publish a Blazor WebAssembly app to static files, enable trimming or AOT, and prepare artifacts for hosting (Azure Static Web Apps, GitHub Pages, Docker). Review trimming/AOT tradeoffs before enabling them in production.</p>
                     <pre><code class="language-bash"># Publish with Release configuration
 dotnet publish -c Release -o publish
 
@@ -27,6 +28,7 @@ dotnet publish -c Release -o publish
 
                 <section class="lesson-section">
                     <h2>Optimizing Bundle Size</h2>
+                    <p>This snippet shows .csproj properties to enable trimming, AOT, and compression. These reduce download size or startup time but require testing because trimming can break reflection-based libraries.</p>
                     <pre><code class="language-xml">&lt;!-- In .csproj --&gt;
 &lt;PropertyGroup&gt;
   &lt;!-- Enable trimming to reduce size --&gt;
@@ -42,6 +44,7 @@ dotnet publish -c Release -o publish
 
                 <section class="lesson-section">
                     <h2>Azure Static Web Apps</h2>
+                    <p>The workflow below publishes and deploys the built static files to Azure Static Web Apps using GitHub Actions.</p>
                     <pre><code class="language-yaml"># .github/workflows/azure-static-web-apps.yml
 name: Deploy to Azure Static Web Apps
 
@@ -73,6 +76,7 @@ jobs:
 
                 <section class="lesson-section">
                     <h2>GitHub Pages</h2>
+                    <p>For GitHub Pages hosting you may need to set a base path and copy index.html to 404.html to support SPA routing; the workflow below automates that publish step.</p>
                     <pre><code class="language-xml">&lt;!-- Set base path in index.html --&gt;
 &lt;base href="/your-repo-name/" /&gt;</code></pre>
                     <pre><code class="language-yaml"># .github/workflows/deploy.yml
@@ -107,6 +111,7 @@ jobs:
 
                 <section class="lesson-section">
                     <h2>Docker Deployment</h2>
+                    <p>This Dockerfile shows building and serving the published static files with nginx; adjust nginx config to support SPA routing (fallback to index.html).</p>
                     <pre><code class="language-dockerfile"># Dockerfile
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
@@ -117,6 +122,7 @@ FROM nginx:alpine
 COPY --from=build /app/publish/wwwroot /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 EXPOSE 80</code></pre>
+                    <p>nginx.conf example that returns index.html for unknown routes to support client-side routing.</p>
                     <pre><code class="language-nginx"># nginx.conf - Handle SPA routing
 events { }
 http {
@@ -135,8 +141,10 @@ http {
 
                 <section class="lesson-section">
                     <h2>PWA Support</h2>
+                    <p>Use the PWA template to scaffold service worker and manifest files enabling installable apps and basic offline support.</p>
                     <pre><code class="language-bash"># Create with PWA template
 dotnet new blazorwasm -n MyApp --pwa</code></pre>
+                    <p>This is an example <code>manifest.json</code> used for PWA metadata.</p>
                     <pre><code class="language-json">// wwwroot/manifest.json
 {
   "name": "My Blazor App",
@@ -156,7 +164,7 @@ dotnet new blazorwasm -n MyApp --pwa</code></pre>
                 </section>
 
                 <LessonTakeaways>
-                    <LessonTakeaway>Blazor WASM publishes to static files—host anywhere!</LessonTakeaway>
+                    <LessonTakeaway>Blazor WASM publishes to static files - host anywhere!</LessonTakeaway>
                     <LessonTakeaway>Enable trimming and compression to reduce size.</LessonTakeaway>
                     <LessonTakeaway>Configure server for SPA routing (404 → index.html).</LessonTakeaway>
                     <LessonTakeaway>Add PWA support for installable offline apps.</LessonTakeaway>

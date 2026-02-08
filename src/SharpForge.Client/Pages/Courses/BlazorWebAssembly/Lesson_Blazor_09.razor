@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>EditForm Basics</h2>
+                    <p>This snippet demonstrates <code>EditForm</code> with <code>DataAnnotationsValidator</code> to perform model-based validation, plus Input components and <code>ValidationMessage</code> for per-field errors. Use this pattern for server/ client validation integration.</p>
                     <pre><code class="language-razor">&lt;EditForm Model="@@product" OnValidSubmit="HandleSubmit"&gt;
     &lt;DataAnnotationsValidator /&gt;
     &lt;ValidationSummary /&gt;
@@ -43,6 +44,7 @@
 
                 <section class="lesson-section">
                     <h2>Model with Validation</h2>
+                    <p>This model shows how to use DataAnnotation attributes to declare validation rules directly on properties which are used by <code>EditForm</code> and server-side model binding.</p>
                     <pre><code class="language-csharp">public class Product
 {
     [Required(ErrorMessage = "Name is required")]
@@ -63,6 +65,7 @@
 
                 <section class="lesson-section">
                     <h2>Input Components</h2>
+                    <p>Use Blazor's built-in <code>Input*</code> components for typed input binding and validation integration; they work with <code>EditForm</code> and show validation state.</p>
                     <pre><code class="language-razor">@@* Text input *@@
 &lt;InputText @@bind-Value="model.Name" /&gt;
 
@@ -95,6 +98,7 @@
 
                 <section class="lesson-section">
                     <h2>Form Events</h2>
+                    <p>The snippets below show the different <code>EditForm</code> callbacks: <code>OnValidSubmit</code>, <code>OnInvalidSubmit</code>, and <code>OnSubmit</code> so you can handle submission according to validation state.</p>
                     <pre><code class="language-razor">@@* OnValidSubmit - fires only if validation passes *@@
 &lt;EditForm Model="@@model" OnValidSubmit="HandleValid"&gt;
 
@@ -121,6 +125,7 @@
 
                 <section class="lesson-section">
                     <h2>Custom Validation</h2>
+                    <p>Create a custom <code>ValidationAttribute</code> for reusable, declarative checks that integrate with DataAnnotations-based validation.</p>
                     <pre><code class="language-csharp">public class FutureDateAttribute : ValidationAttribute
 {
     protected override ValidationResult? IsValid(
@@ -137,6 +142,7 @@
 
                 <section class="lesson-section">
                     <h2>Displaying Validation Errors</h2>
+                    <p>Use <code>ValidationSummary</code> for top-level errors and <code>ValidationMessage</code> for per-field messaging; combine with CSS for custom styling.</p>
                     <pre><code class="language-razor">@@* Show all errors at top *@@
 &lt;ValidationSummary /&gt;
 

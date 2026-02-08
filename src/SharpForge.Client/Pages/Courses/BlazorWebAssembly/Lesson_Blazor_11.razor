@@ -28,6 +28,7 @@
 
                 <section class="lesson-section">
                     <h2>State Container Service</h2>
+                    <p>This code shows a simple state container providing methods to mutate state and an <code>OnChange</code> event so components can subscribe to updates.</p>
                     <pre><code class="language-csharp">// Services/AppState.cs
 public class AppState
 {
@@ -57,6 +58,7 @@ builder.Services.AddSingleton&lt;AppState&gt;();</code></pre>
 
                 <section class="lesson-section">
                     <h2>Using State in Components</h2>
+                    <p>The snippet below shows injecting the state service into a component and subscribing to <code>OnChange</code> to call <code>StateHasChanged</code> when state updates.</p>
                     <pre><code class="language-razor">@@inject AppState State
 @@implements IDisposable
 
@@ -77,9 +79,12 @@ builder.Services.AddSingleton&lt;AppState&gt;();</code></pre>
 
                 <section class="lesson-section">
                     <h2>Browser Storage</h2>
+                    <p>Install and register a local storage package to persist small pieces of client-side state.</p>
                     <pre><code class="language-bash">dotnet add package Blazored.LocalStorage</code></pre>
+                    <p>Register the service in <code>Program.cs</code> so it is available via DI.</p>
                     <pre><code class="language-csharp">// Program.cs
 builder.Services.AddBlazoredLocalStorage();</code></pre>
+                    <p>Example usage inside a component to load and save values.</p>
                     <pre><code class="language-razor">@@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
 
 @@code {

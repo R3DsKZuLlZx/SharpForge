@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>Handling DOM Events</h2>
+                    <p>The following examples show how to subscribe to DOM events (click, keyboard, focus) in Blazor and how to receive event arguments. They also show the <code>EventCallback&lt;T&gt;</code> pattern for bubbling events from child components to parents.</p>
                     <pre><code class="language-razor">@@* Click events *@@
 &lt;button @@onclick="HandleClick"&gt;Click me&lt;/button&gt;
 &lt;button @@onclick="() =&gt; count++"&gt;Increment&lt;/button&gt;
@@ -41,6 +42,7 @@
 
                 <section class="lesson-section">
                     <h2>Common Event Types</h2>
+                    <p>These snippets show common event handlers (mouse, keyboard, focus, form events) and how to access event data via event argument types like <code>KeyboardEventArgs</code>.</p>
                     <pre><code class="language-razor">@@* Mouse events *@@
 &lt;div @@onclick="OnClick" @@onmouseover="OnHover"&gt;...&lt;/div&gt;
 
@@ -64,6 +66,7 @@
 
                 <section class="lesson-section">
                     <h2>Preventing Default and Stopping Propagation</h2>
+                    <p>Use the <code>:preventDefault</code> and <code>:stopPropagation</code> modifiers to control browser default behavior and event bubbling for specific handlers.</p>
                     <pre><code class="language-razor">@@* Prevent default action *@@
 &lt;a href="/other" @@onclick="HandleClick" @@onclick:preventDefault&gt;
     Won't navigate
@@ -79,6 +82,7 @@
 
                 <section class="lesson-section">
                     <h2>Custom Component Events (EventCallback)</h2>
+                    <p>This example shows a child component exposing an <code>EventCallback&lt;T&gt;</code> that parents can subscribe to, useful for emitting events (like rating changes) back to the parent.</p>
                     <pre><code class="language-razor">@@* RatingComponent.razor *@@
 &lt;div class="rating"&gt;
     @@for (int i = 1; i &lt;= 5; i++)
@@ -109,6 +113,7 @@
 
                 <section class="lesson-section">
                     <h2>Async Event Handlers</h2>
+                    <p>Event handlers can be asynchronous (returning <code>Task</code>) so you can await I/O operations; disable UI while awaiting to prevent duplicate actions.</p>
                     <pre><code class="language-razor">&lt;button @@onclick="LoadDataAsync" disabled="@@isLoading"&gt;
     @@(isLoading ? "Loading..." : "Load Data")
 &lt;/button&gt;

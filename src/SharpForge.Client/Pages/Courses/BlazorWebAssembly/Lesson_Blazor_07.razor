@@ -31,6 +31,7 @@
 
                 <section class="lesson-section">
                     <h2>OnInitialized / OnInitializedAsync</h2>
+                    <p>This example demonstrates lifecycle methods used to initialize a component. Use <code>OnInitializedAsync</code> for asynchronous initial work (e.g., loading data). Use <code>IDisposable</code> to release resources like timers or event subscriptions.</p>
                     <pre><code class="language-csharp">@@code {
     private List&lt;Product&gt;? products;
 
@@ -50,6 +51,7 @@
 
                 <section class="lesson-section">
                     <h2>OnParametersSet / OnParametersSetAsync</h2>
+                    <p>Use <code>OnParametersSetAsync</code> to react to changes in component parameters (e.g., reloading data when an input parameter changes).</p>
                     <pre><code class="language-csharp">@@code {
     [Parameter]
     public int ProductId { get; set; }
@@ -67,6 +69,7 @@
 
                 <section class="lesson-section">
                     <h2>OnAfterRender / OnAfterRenderAsync</h2>
+                    <p><code>OnAfterRenderAsync</code> runs after the component has rendered; check the <code>firstRender</code> flag for one-time initialization that needs the DOM (e.g., JS interop or focusing an element).</p>
                     <pre><code class="language-csharp">@@code {
     private ElementReference inputElement;
 
@@ -88,6 +91,7 @@
 
                 <section class="lesson-section">
                     <h2>ShouldRender</h2>
+                    <p>Override <code>ShouldRender</code> to prevent unnecessary re-renders when state updates but UI doesn't need to change; return false to skip rendering.</p>
                     <pre><code class="language-csharp">@@code {
     private bool shouldRender = true;
 
@@ -101,6 +105,7 @@
 
                 <section class="lesson-section">
                     <h2>IDisposable - Cleanup</h2>
+                    <p>Implement <code>IDisposable</code> (or <code>IAsyncDisposable</code>) to clean up timers, event handlers, or other unmanaged resources to avoid leaks.</p>
                     <pre><code class="language-csharp">@@implements IDisposable
 
 @@code {
@@ -130,6 +135,7 @@
 
                 <section class="lesson-section">
                     <h2>StateHasChanged</h2>
+                    <p>Call <code>StateHasChanged</code> when you need to force a re-render (for example, after external events or timers); use <code>InvokeAsync</code> when called from non-UI threads.</p>
                     <pre><code class="language-csharp">@@code {
     private int count = 0;
 
@@ -151,7 +157,7 @@
                 <LessonTakeaways>
                     <LessonTakeaway>OnInitializedAsync is best for loading initial data.</LessonTakeaway>
                     <LessonTakeaway>OnParametersSetAsync runs when parameters change.</LessonTakeaway>
-                    <LessonTakeaway>OnAfterRenderAsync has DOM access—check firstRender.</LessonTakeaway>
+                    <LessonTakeaway>OnAfterRenderAsync has DOM access - check firstRender.</LessonTakeaway>
                     <LessonTakeaway>Implement IDisposable to clean up resources.</LessonTakeaway>
                 </LessonTakeaways>
             </div>

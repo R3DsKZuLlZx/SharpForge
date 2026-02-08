@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>Authentication Setup</h2>
+                    <p>This code shows how to register authentication infrastructure for a Blazor WASM app, and a custom <code>AuthenticationStateProvider</code>. It demonstrates storing a token (e.g., JWT) and updating authentication state so UI components can react to login/logout.</p>
                     <pre><code class="language-bash">dotnet add package Microsoft.AspNetCore.Components.WebAssembly.Authentication</code></pre>
                     <pre><code class="language-csharp">// Program.cs
 builder.Services.AddAuthorizationCore();
@@ -70,6 +71,7 @@ builder.Services.AddScoped&lt;AuthenticationStateProvider, CustomAuthStateProvid
 
                 <section class="lesson-section">
                     <h2>CascadingAuthenticationState</h2>
+                    <p>Wrap the app with <code>CascadingAuthenticationState</code> so authentication state flows to all components; <code>AuthorizeRouteView</code> enforces per-route authorization and renders a <code>NotAuthorized</code> fragment when access is denied.</p>
                     <pre><code class="language-razor">@@* App.razor *@@
 &lt;CascadingAuthenticationState&gt;
     &lt;Router AppAssembly="@@typeof(App).Assembly"&gt;
@@ -87,6 +89,7 @@ builder.Services.AddScoped&lt;AuthenticationStateProvider, CustomAuthStateProvid
 
                 <section class="lesson-section">
                     <h2>AuthorizeView Component</h2>
+                    <p><code>AuthorizeView</code> renders different UI for authorized vs not-authorized users; you can scope content by roles or policies. Use it for inline UI gating without redirecting users.</p>
                     <pre><code class="language-razor">&lt;AuthorizeView&gt;
     &lt;Authorized&gt;
         &lt;p&gt;Hello, @@context.User.Identity?.Name!&lt;/p&gt;
@@ -110,6 +113,7 @@ builder.Services.AddScoped&lt;AuthenticationStateProvider, CustomAuthStateProvid
 
                 <section class="lesson-section">
                     <h2>Protecting Pages</h2>
+                    <p>Use the <code>[Authorize]</code> attribute on pages or components to require authentication; pass roles or policies for finer control. Unauthenticated users will be redirected depending on your authentication setup.</p>
                     <pre><code class="language-razor">@@page "/admin"
 @@attribute [Authorize]
 
@@ -124,6 +128,7 @@ builder.Services.AddScoped&lt;AuthenticationStateProvider, CustomAuthStateProvid
 
                 <section class="lesson-section">
                     <h2>Login Flow</h2>
+                    <p>This login flow example posts credentials to an API, stores a JWT in <code>localStorage</code> (convenient but has XSS risk), notifies the <code>AuthenticationStateProvider</code>, and navigates the user on success. Consider using secure HttpOnly cookies if you need to mitigate XSS.</p>
                     <pre><code class="language-razor">@@page "/login"
 @@inject HttpClient Http
 @@inject ILocalStorageService LocalStorage

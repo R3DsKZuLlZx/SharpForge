@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>HttpClient Setup</h2>
+                    <p>This section shows configuring <code>HttpClient</code> for API calls and performing common HTTP operations (GET/POST/PUT/DELETE). It also illustrates basic error handling patterns you'll commonly need in a Blazor app.</p>
                     <pre><code class="language-csharp">// Program.cs - already configured in template
 builder.Services.AddScoped(sp =&gt; 
     new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
@@ -29,6 +30,7 @@ builder.Services.AddHttpClient&lt;IProductService, ProductService&gt;(client =&g
 
                 <section class="lesson-section">
                     <h2>GET Requests</h2>
+                    <p>This example shows using <code>HttpClient.GetFromJsonAsync</code> to load data during <code>OnInitializedAsync</code> and render it in markup with conditional loading state.</p>
                     <pre><code class="language-razor">@@inject HttpClient Http
 
 @@if (products == null)
@@ -55,6 +57,7 @@ else
 
                 <section class="lesson-section">
                     <h2>POST Requests</h2>
+                    <p>Use <code>PostAsJsonAsync</code> to send an object as JSON; check the response and read the created resource if the API returns it.</p>
                     <pre><code class="language-csharp">private async Task CreateProduct()
 {
     var newProduct = new Product { Name = "Widget", Price = 9.99m };
@@ -71,6 +74,7 @@ else
 
                 <section class="lesson-section">
                     <h2>PUT and DELETE</h2>
+                    <p>Examples for update and delete operations using <code>PutAsJsonAsync</code> and <code>DeleteAsync</code>, including simple success checks.</p>
                     <pre><code class="language-csharp">// UPDATE
 private async Task UpdateProduct(Product product)
 {
@@ -91,6 +95,7 @@ private async Task DeleteProduct(int id)
 
                 <section class="lesson-section">
                     <h2>Error Handling</h2>
+                    <p>Show patterns for try/catch and manual status-code checks. Prefer friendly error messages and centralized logging in services.</p>
                     <pre><code class="language-csharp">private string? errorMessage;
 
 private async Task LoadProducts()
@@ -127,6 +132,7 @@ private async Task LoadProductSafe()
 
                 <section class="lesson-section">
                     <h2>Creating a Service</h2>
+                    <p>Wrap API calls in a typed service to centralize HTTP concerns (base URLs, headers, retries) and make testing easier.</p>
                     <pre><code class="language-csharp">public class ProductService
 {
     private readonly HttpClient _http;
