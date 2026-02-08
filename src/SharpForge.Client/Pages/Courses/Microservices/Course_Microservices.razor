@@ -7,7 +7,7 @@
     Title="Microservices with .NET"
     Description="Build distributed systems with microservices architecture. Learn about Docker, Kubernetes, message queues, API gateways, and service-to-service communication patterns."
     LessonCount="28"
-    Duration="12 Hours"
+    Duration="6 Hours"
     StudentCount="756"
     StartUrl="training/microservices/lesson/1">
     <IconContent>
@@ -54,7 +54,7 @@
             <CourseSidebar 
                 CourseId="microservices"
                 TotalLessons="28"
-                Duration="12 hours"
+                Duration="6 hours"
                 ExerciseCount="15"
                 ProjectDescription="Complete e-commerce microservices project"
                 StartUrl="training/microservices/lesson/1" />
@@ -66,50 +66,50 @@
     private readonly List<CourseCurriculum.CourseLessonInfo> _lessons =
     [
         // Foundations
-        new(1, "Introduction to Microservices", "Understand microservices architecture, benefits, challenges, and when to use it.", "25 min"),
-        new(2, "Monolith to Microservices", "Learn strategies for decomposing monolithic applications.", "30 min"),
-        new(3, "Domain-Driven Design Basics", "Apply DDD concepts to identify service boundaries.", "30 min"),
+        new(1, "Introduction to Microservices", "Understand microservices architecture, benefits, challenges, and when to use it.", "12 min"),
+        new(2, "Monolith to Microservices", "Learn strategies for decomposing monolithic applications.", "12 min"),
+        new(3, "Domain-Driven Design Basics", "Apply DDD concepts to identify service boundaries.", "12 min"),
         
         // Docker
-        new(4, "Docker Fundamentals", "Learn Docker concepts: images, containers, volumes, and networks.", "30 min"),
-        new(5, "Dockerizing .NET Applications", "Create optimized Dockerfiles for .NET applications.", "30 min"),
-        new(6, "Docker Compose", "Orchestrate multi-container applications locally.", "25 min"),
+        new(4, "Docker Fundamentals", "Learn Docker concepts: images, containers, volumes, and networks.", "13 min"),
+        new(5, "Dockerizing .NET Applications", "Create optimized Dockerfiles for .NET applications.", "13 min"),
+        new(6, "Docker Compose", "Orchestrate multi-container applications locally.", "10 min"),
         
         // Service Communication
-        new(7, "Synchronous Communication with HTTP", "Design REST APIs for service-to-service communication.", "25 min"),
-        new(8, "gRPC in .NET", "Build high-performance services with Protocol Buffers and gRPC.", "35 min"),
-        new(9, "Asynchronous Messaging Patterns", "Understand event-driven architecture and messaging patterns.", "30 min"),
-        new(10, "RabbitMQ with MassTransit", "Implement message queues with RabbitMQ and MassTransit.", "40 min"),
-        new(11, "Event Sourcing and CQRS", "Apply event sourcing and command query responsibility segregation.", "35 min"),
+        new(7, "Synchronous Communication with HTTP", "Design REST APIs for service-to-service communication.", "10 min"),
+        new(8, "gRPC in .NET", "Build high-performance services with Protocol Buffers and gRPC.", "13 min"),
+        new(9, "Asynchronous Messaging Patterns", "Understand event-driven architecture and messaging patterns.", "12 min"),
+        new(10, "RabbitMQ with MassTransit", "Implement message queues with RabbitMQ and MassTransit.", "14 min"),
+        new(11, "Event Sourcing and CQRS", "Apply event sourcing and command query responsibility segregation.", "13 min"),
         
         // Data Management
-        new(12, "Database per Service Pattern", "Manage data in distributed systems.", "25 min"),
-        new(13, "Saga Pattern", "Handle distributed transactions with sagas.", "35 min"),
-        new(14, "Outbox Pattern", "Ensure reliable message publishing with the outbox pattern.", "25 min"),
+        new(12, "Database per Service Pattern", "Manage data in distributed systems.", "10 min"),
+        new(13, "Saga Pattern", "Handle distributed transactions with sagas.", "14 min"),
+        new(14, "Outbox Pattern", "Ensure reliable message publishing with the outbox pattern.", "10 min"),
         
         // API Gateway
-        new(15, "API Gateway Pattern", "Understand the role of API gateways in microservices.", "25 min"),
-        new(16, "YARP Reverse Proxy", "Build API gateways with YARP in .NET.", "30 min"),
-        new(17, "Authentication and Authorization", "Implement centralized auth with IdentityServer.", "35 min"),
+        new(15, "API Gateway Pattern", "Understand the role of API gateways in microservices.", "10 min"),
+        new(16, "YARP Reverse Proxy", "Build API gateways with YARP in .NET.", "12 min"),
+        new(17, "Authentication and Authorization", "Implement centralized auth with IdentityServer.", "14 min"),
         
         // Kubernetes
-        new(18, "Kubernetes Fundamentals", "Learn Kubernetes concepts: pods, services, deployments.", "35 min"),
-        new(19, "Deploying .NET to Kubernetes", "Create Kubernetes manifests for .NET services.", "30 min"),
-        new(20, "ConfigMaps and Secrets", "Manage configuration in Kubernetes.", "25 min"),
-        new(21, "Health Checks and Probes", "Implement liveness and readiness probes.", "25 min"),
-        new(22, "Scaling and Load Balancing", "Configure horizontal pod autoscaling.", "25 min"),
+        new(18, "Kubernetes Fundamentals", "Learn Kubernetes concepts: pods, services, deployments.", "13 min"),
+        new(19, "Deploying .NET to Kubernetes", "Create Kubernetes manifests for .NET services.", "12 min"),
+        new(20, "ConfigMaps and Secrets", "Manage configuration in Kubernetes.", "10 min"),
+        new(21, "Health Checks and Probes", "Implement liveness and readiness probes.", "10 min"),
+        new(22, "Scaling and Load Balancing", "Configure horizontal pod autoscaling.", "12 min"),
         
         // Observability
-        new(23, "Centralized Logging with Serilog", "Aggregate logs from multiple services.", "25 min"),
-        new(24, "Distributed Tracing with OpenTelemetry", "Trace requests across service boundaries.", "30 min"),
-        new(25, "Metrics and Monitoring", "Monitor services with Prometheus and Grafana.", "30 min"),
+        new(23, "Centralized Logging with Serilog", "Aggregate logs from multiple services.", "11 min"),
+        new(24, "Distributed Tracing with OpenTelemetry", "Trace requests across service boundaries.", "12 min"),
+        new(25, "Metrics and Monitoring", "Monitor services with Prometheus and Grafana.", "12 min"),
         
         // Resilience
-        new(26, "Resilience Patterns", "Implement retry, circuit breaker, and timeout patterns.", "30 min"),
-        new(27, "Polly for .NET", "Use Polly for resilience and transient fault handling.", "30 min"),
+        new(26, "Resilience Patterns", "Implement retry, circuit breaker, and timeout patterns.", "12 min"),
+        new(27, "Polly for .NET", "Use Polly for resilience and transient fault handling.", "11 min"),
         
         // Putting It Together
-        new(28, "Building a Complete Microservices System", "Build an e-commerce system with all patterns applied.", "45 min")
+        new(28, "Building a Complete Microservices System", "Build an e-commerce system with all patterns applied.", "14 min")
     ];
 
     private readonly List<string> _prerequisites =
