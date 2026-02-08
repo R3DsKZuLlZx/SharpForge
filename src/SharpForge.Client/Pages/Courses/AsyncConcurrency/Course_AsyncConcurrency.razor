@@ -7,7 +7,7 @@
     Title="Async/Await & Concurrency"
     Description="Deep dive into asynchronous programming, Task Parallel Library, and concurrency patterns in C#. Master async/await, parallel processing, and thread-safe code."
     LessonCount="16"
-    Duration="8 Hours"
+    Duration="4 Hours"
     StudentCount="987"
     StartUrl="training/async-concurrency/lesson/1">
     <IconContent>
@@ -55,7 +55,7 @@
             <CourseSidebar 
                 CourseId="async-concurrency"
                 TotalLessons="16"
-                Duration="8 hours"
+                Duration="4 hours"
                 ExerciseCount="10"
                 ProjectDescription="Concurrent application project"
                 StartUrl="training/async-concurrency/lesson/1" />
@@ -67,30 +67,30 @@
     private readonly List<CourseCurriculum.CourseLessonInfo> _lessons =
     [
         // Async Fundamentals
-        new(1, "Introduction to Asynchronous Programming", "Understand why async matters and how it differs from parallel programming.", "30 min"),
-        new(2, "Tasks and the Task-Based Asynchronous Pattern", "Learn about Task, Task<T>, and how the TAP pattern works.", "30 min"),
-        new(3, "Async and Await Keywords", "Master the syntax and mechanics of async/await in C#.", "35 min"),
-        new(4, "ValueTask for Performance", "Use ValueTask to reduce allocations in hot paths.", "25 min"),
+        new(1, "Introduction to Asynchronous Programming", "Understand why async matters and how it differs from parallel programming.", "12 min"),
+        new(2, "Tasks and the Task-Based Asynchronous Pattern", "Learn about Task, Task<T>, and how the TAP pattern works.", "15 min"),
+        new(3, "Async and Await Keywords", "Master the syntax and mechanics of async/await in C#.", "15 min"),
+        new(4, "ValueTask for Performance", "Use ValueTask to reduce allocations in hot paths.", "10 min"),
         
         // Advanced Async Patterns
-        new(5, "Task Combinators", "Work with Task.WhenAll, Task.WhenAny, and custom combinators.", "30 min"),
-        new(6, "Cancellation Tokens", "Implement cooperative cancellation in async operations.", "30 min"),
-        new(7, "Progress Reporting", "Report progress from long-running async operations.", "25 min"),
-        new(8, "Exception Handling in Async Code", "Handle exceptions properly in async methods and aggregated exceptions.", "30 min"),
+        new(5, "Task Combinators", "Work with Task.WhenAll, Task.WhenAny, and custom combinators.", "15 min"),
+        new(6, "Cancellation Tokens", "Implement cooperative cancellation in async operations.", "15 min"),
+        new(7, "Progress Reporting", "Report progress from long-running async operations.", "10 min"),
+        new(8, "Exception Handling in Async Code", "Handle exceptions properly in async methods and aggregated exceptions.", "15 min"),
         
         // Parallel Programming
-        new(9, "Parallel.For and Parallel.ForEach", "Process collections in parallel with the TPL.", "30 min"),
-        new(10, "PLINQ - Parallel LINQ", "Execute LINQ queries in parallel for data-intensive operations.", "30 min"),
-        new(11, "Dataflow with TPL Dataflow", "Build producer-consumer pipelines with TPL Dataflow blocks.", "35 min"),
+        new(9, "Parallel.For and Parallel.ForEach", "Process collections in parallel with the TPL.", "15 min"),
+        new(10, "PLINQ - Parallel LINQ", "Execute LINQ queries in parallel for data-intensive operations.", "15 min"),
+        new(11, "Dataflow with TPL Dataflow", "Build producer-consumer pipelines with TPL Dataflow blocks.", "20 min"),
         
         // Synchronization
-        new(12, "Thread Synchronization Primitives", "Use locks, Monitor, Mutex, and Semaphore for thread safety.", "35 min"),
-        new(13, "Concurrent Collections", "Work with ConcurrentDictionary, ConcurrentQueue, and other thread-safe collections.", "30 min"),
-        new(14, "Channels", "Implement producer-consumer patterns with System.Threading.Channels.", "30 min"),
+        new(12, "Thread Synchronization Primitives", "Use locks, Monitor, Mutex, and Semaphore for thread safety.", "20 min"),
+        new(13, "Concurrent Collections", "Work with ConcurrentDictionary, ConcurrentQueue, and other thread-safe collections.", "15 min"),
+        new(14, "Channels", "Implement producer-consumer patterns with System.Threading.Channels.", "15 min"),
         
         // Best Practices
-        new(15, "Avoiding Common Pitfalls", "Avoid deadlocks, async void, and other common mistakes.", "30 min"),
-        new(16, "Debugging and Profiling Async Code", "Use tools to diagnose issues in concurrent applications.", "35 min")
+        new(15, "Avoiding Common Pitfalls", "Avoid deadlocks, async void, and other common mistakes.", "10 min"),
+        new(16, "Debugging and Profiling Async Code", "Use tools to diagnose issues in concurrent applications.", "18 min")
     ];
 
     private readonly List<string> _prerequisites =
