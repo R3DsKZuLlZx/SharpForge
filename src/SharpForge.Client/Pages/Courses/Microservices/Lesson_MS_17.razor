@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>Centralized Identity</h2>
+                    <p>Diagrams and short text showing clients obtaining tokens from an identity provider and forwarding them to services.</p>
                     <pre><code class="language-text">Client → Identity Server → JWT Token → API Gateway → Services
 
 All services validate tokens from the same identity provider</code></pre>
@@ -25,6 +26,7 @@ All services validate tokens from the same identity provider</code></pre>
 
                 <section class="lesson-section">
                     <h2>JWT Validation in Services</h2>
+                    <p>Program.cs example showing JWT Bearer authentication setup and a sample authorization policy for scopes/claims.</p>
                     <pre><code class="language-csharp">// Program.cs
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =&gt;

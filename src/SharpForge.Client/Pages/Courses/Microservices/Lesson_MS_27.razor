@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>.NET 8+ Resilience (Polly v8)</h2>
+                    <p>Example showing how to add the built-in standard resilience handler to an HttpClient for retries, circuit breaker and timeouts.</p>
                     <pre><code class="language-csharp">// Program.cs
 builder.Services.AddHttpClient&lt;IInventoryClient, InventoryClient&gt;()
     .AddStandardResilienceHandler();  // Retry + CB + Timeout built-in!</code></pre>
@@ -25,6 +26,7 @@ builder.Services.AddHttpClient&lt;IInventoryClient, InventoryClient&gt;()
 
                 <section class="lesson-section">
                     <h2>Custom Resilience Pipeline</h2>
+                    <p>Configure a custom pipeline with retry, circuit breaker and timeout parameters for a specific client.</p>
                     <pre><code class="language-csharp">builder.Services.AddHttpClient&lt;IOrderClient, OrderClient&gt;()
     .AddResilienceHandler("orders", builder =&gt;
     {
@@ -49,6 +51,7 @@ builder.Services.AddHttpClient&lt;IInventoryClient, InventoryClient&gt;()
 
                 <section class="lesson-section">
                     <h2>Fallback</h2>
+                    <p>Fallback strategy returns a cached or default response if all resilience steps fail.</p>
                     <pre><code class="language-csharp">var pipeline = new ResiliencePipelineBuilder&lt;HttpResponseMessage&gt;()
     .AddFallback(new FallbackStrategyOptions&lt;HttpResponseMessage&gt;
     {

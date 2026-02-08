@@ -42,6 +42,7 @@
 
                 <section class="lesson-section">
                     <h2>Messaging Patterns</h2>
+                    <p>Short summary of point-to-point and pub/sub messaging patterns and when to use each (commands vs events).</p>
                     <pre><code class="language-text">Point-to-Point (Queue):
 - One producer, one consumer
 - Each message processed once
@@ -55,6 +56,7 @@ Publish-Subscribe (Topic):
 
                 <section class="lesson-section">
                     <h2>Event Types</h2>
+                    <p>Examples of domain events, integration events, and commands used to decouple microservices.</p>
                     <pre><code class="language-csharp">// Domain Event - something happened
 public record OrderPlaced(Guid OrderId, Guid CustomerId, decimal Total);
 

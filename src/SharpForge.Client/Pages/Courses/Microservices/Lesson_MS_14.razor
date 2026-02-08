@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>The Problem</h2>
+                    <p>Shows the non-atomic issue when saving data and publishing messages separately - if the broker is down you may lose events.</p>
                     <pre><code class="language-csharp">// ❌ Not atomic - what if message broker fails?
 await _dbContext.SaveChangesAsync();        // ✅ Saved
 await _messagebus.PublishAsync(event);      // ❌ Broker down = lost event!</code></pre>
@@ -25,6 +26,7 @@ await _messagebus.PublishAsync(event);      // ❌ Broker down = lost event!</co
 
                 <section class="lesson-section">
                     <h2>Outbox Solution</h2>
+                    <p>Outline of the outbox pattern: persist both data and outbox message in the same DB transaction, then a background worker reliably publishes outbox entries to the broker.</p>
                     <pre><code class="language-text">1. Save entity + outbox message in SAME transaction
 2. Background process reads outbox table
 3. Publishes messages to broker
@@ -46,6 +48,7 @@ await _messagebus.PublishAsync(event);      // ❌ Broker down = lost event!</co
 
                 <section class="lesson-section">
                     <h2>MassTransit Outbox</h2>
+                    <p>MassTransit offers an EF Core outbox integration that saves messages with your DbContext transaction and later flushes them to the bus.</p>
                     <pre><code class="language-csharp">// Program.cs
 builder.Services.AddMassTransit(x =&gt;
 {

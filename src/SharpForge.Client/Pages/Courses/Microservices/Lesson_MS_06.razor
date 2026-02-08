@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>docker-compose.yml</h2>
+                    <p>Example compose file defining multiple services (order, inventory, db, rabbitmq) and shared volumes.</p>
                     <pre><code class="language-yaml">version: '3.8'
 
 services:
@@ -60,6 +61,7 @@ volumes:
 
                 <section class="lesson-section">
                     <h2>Commands</h2>
+                    <p>Common docker-compose commands to bring up, rebuild, view logs, and tear down the development environment.</p>
                     <pre><code class="language-bash"># Start all services
 docker-compose up -d
 
@@ -78,6 +80,7 @@ docker-compose down -v</code></pre>
 
                 <section class="lesson-section">
                     <h2>Health Checks</h2>
+                    <p>Compose supports healthchecks; this example shows how to declare checks and use depends_on with condition for startup ordering during development (not a production-ready init strategy).</p>
                     <pre><code class="language-yaml">services:
   orderservice:
     build: ./src/OrderService

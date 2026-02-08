@@ -28,6 +28,7 @@
 
                 <section class="lesson-section">
                     <h2>Essential Commands</h2>
+                    <p>Common Docker commands for pulling images, running containers, building images, and viewing logs.</p>
                     <pre><code class="language-bash"># Pull an image
 docker pull mcr.microsoft.com/dotnet/aspnet:8.0
 
@@ -51,6 +52,7 @@ docker logs myapp -f</code></pre>
 
                 <section class="lesson-section">
                     <h2>Volumes</h2>
+                    <p>Examples showing how to persist data using named volumes or bind mounts, and a typical pattern for SQL Server containers.</p>
                     <pre><code class="language-bash"># Named volume (Docker managed)
 docker run -v mydata:/app/data myimage
 
@@ -67,6 +69,7 @@ docker run -v sqldata:/var/opt/mssql \
 
                 <section class="lesson-section">
                     <h2>Networks</h2>
+                    <p>Commands to create a network and run containers on the same network so they can address each other by name (handy for local compose setups).</p>
                     <pre><code class="language-bash"># Create network
 docker network create mynetwork
 

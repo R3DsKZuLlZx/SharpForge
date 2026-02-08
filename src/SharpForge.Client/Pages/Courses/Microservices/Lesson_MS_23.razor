@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>Serilog Setup</h2>
+                    <p>Program.cs example showing how to configure Serilog sinks and enrichers, and how to write structured log messages.</p>
                     <pre><code class="language-csharp">// Program.cs
 builder.Host.UseSerilog((context, config) =&gt;
 {
@@ -36,6 +37,7 @@ _logger.LogInformation("Order {OrderId} placed for {CustomerId}", order.Id, orde
 
                 <section class="lesson-section">
                     <h2>Structured Logging</h2>
+                    <p>Demonstrates why structured logging is preferred over string interpolation so log aggregators can index fields for search and correlation.</p>
                     <pre><code class="language-csharp">// ✅ Good - structured properties
 _logger.LogInformation("Processing order {OrderId} with {ItemCount} items", 
     order.Id, order.Items.Count);
@@ -46,6 +48,7 @@ _logger.LogInformation($"Processing order {order.Id}");</code></pre>
 
                 <section class="lesson-section">
                     <h2>Correlation IDs</h2>
+                    <p>Middleware example that injects a correlation ID into the logging context and response headers to trace requests across services.</p>
                     <pre><code class="language-csharp">// Middleware to add correlation ID
 app.Use(async (context, next) =&gt;
 {

@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>Manual Scaling</h2>
+                    <p>Simple kubectl command to scale a deployment and the corresponding YAML replicas field to update desired replica count.</p>
                     <pre><code class="language-bash"># Scale deployment
 kubectl scale deployment order-service --replicas=5
 
@@ -28,6 +29,7 @@ spec:
 
                 <section class="lesson-section">
                     <h2>Horizontal Pod Autoscaler</h2>
+                    <p>HPA manifest scales pods based on metrics such as CPU utilization - set minimum/maximum replicas and target metrics.</p>
                     <pre><code class="language-yaml">apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -50,6 +52,7 @@ spec:
 
                 <section class="lesson-section">
                     <h2>KEDA (Event-Driven Autoscaling)</h2>
+                    <p>KEDA enables event-driven autoscaling (e.g., scale based on queue length) - useful for workloads driven by messaging systems.</p>
                     <pre><code class="language-yaml">apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:

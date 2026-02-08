@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>OpenTelemetry Setup</h2>
+                    <p>Shows how to register OpenTelemetry tracing in a .NET app and export spans to an OTLP-compatible backend like Jaeger.</p>
                     <pre><code class="language-csharp">// Program.cs
 builder.Services.AddOpenTelemetry()
     .WithTracing(tracing =&gt;
@@ -36,6 +37,7 @@ builder.Services.AddOpenTelemetry()
 
                 <section class="lesson-section">
                     <h2>Custom Spans</h2>
+                    <p>Example showing how to create a custom activity/span for a business operation and add tags and events for richer trace context.</p>
                     <pre><code class="language-csharp">public class OrderService
 {
     private static readonly ActivitySource Source = new("OrderService");

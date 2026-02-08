@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>YARP Configuration</h2>
+                    <p>appsettings.json example showing route matching and cluster destination addresses for YARP reverse proxy.</p>
                     <pre><code class="language-json">// appsettings.json
 {
   "ReverseProxy": {
@@ -49,6 +50,7 @@
 
                 <section class="lesson-section">
                     <h2>Program.cs Setup</h2>
+                    <p>Basic minimal hosting example showing how to load YARP configuration and map the reverse proxy middleware.</p>
                     <pre><code class="language-csharp">var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddReverseProxy()

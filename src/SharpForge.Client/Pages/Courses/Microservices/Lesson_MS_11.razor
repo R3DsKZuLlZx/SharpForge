@@ -18,7 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>Event Sourcing</h2>
-                    <p>Store state as a sequence of events rather than current state.</p>
+                    <p>Event examples and an aggregate that rebuilds state by applying events - event sourcing stores a sequence of immutable events and replays them to reconstruct state.</p>
                     <pre><code class="language-csharp">// Events are immutable facts
 public record OrderCreated(Guid OrderId, Guid CustomerId, DateTime CreatedAt);
 public record ItemAdded(Guid OrderId, Guid ProductId, int Quantity, decimal Price);
@@ -39,6 +39,7 @@ public class Order
 
                 <section class="lesson-section">
                     <h2>CQRS Pattern</h2>
+                    <p>Diagram showing separation of commands (writes) and queries (reads); CQRS often works with event sourcing to project read models.</p>
                     <pre><code class="language-text">CQRS = Command Query Responsibility Segregation
 
 Commands (Write)          Queries (Read)
@@ -58,6 +59,7 @@ Commands (Write)          Queries (Read)
 
                 <section class="lesson-section">
                     <h2>Projections</h2>
+                    <p>Read model example and a projection handler that updates the read model in response to events, projections optimize reads for a specific query shape.</p>
                     <pre><code class="language-csharp">// Read model - optimized for queries
 public class OrderSummary
 {

@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>ConfigMap</h2>
+                    <p>Example ConfigMap that stores non-sensitive configuration like appsettings.json and environment name; can be mounted as a file or injected as environment variables.</p>
                     <pre><code class="language-yaml">apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -33,6 +34,7 @@ data:
 
                 <section class="lesson-section">
                     <h2>Secret</h2>
+                    <p>Store sensitive values in Kubernetes Secrets (base64-encoded) and mount them as environment variables or files in pods.</p>
                     <pre><code class="language-yaml">apiVersion: v1
 kind: Secret
 metadata:
@@ -44,6 +46,7 @@ stringData:
 
                 <section class="lesson-section">
                     <h2>Using in Deployment</h2>
+                    <p>Example of mounting ConfigMap and Secret into a deployment via envFrom and volume mounts so the app can read configuration and secrets at runtime.</p>
                     <pre><code class="language-yaml">spec:
   containers:
   - name: order-service

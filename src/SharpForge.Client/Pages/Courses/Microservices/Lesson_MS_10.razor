@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>MassTransit Setup</h2>
+                    <p>Shows how to register MassTransit, add consumers, and configure the RabbitMQ host and endpoint auto-configuration.</p>
                     <pre><code class="language-csharp">// Install packages
 // dotnet add package MassTransit.RabbitMQ
 
@@ -41,6 +42,7 @@ builder.Services.AddMassTransit(x =&gt;
 
                 <section class="lesson-section">
                     <h2>Publishing Events</h2>
+                    <p>Publish integration events via MassTransit's <code>IPublishEndpoint</code> after persisting state to ensure reliable publication.</p>
                     <pre><code class="language-csharp">public record OrderPlaced(Guid OrderId, Guid CustomerId, decimal Total);
 
 public class OrderService
@@ -62,6 +64,8 @@ public class OrderService
 
                 <section class="lesson-section">
                     <h2>Consuming Events</h2>
+                    <p>Implement <code>IConsumer&lt;T&gt;</code> in MassTransit to handle incoming messages; DI is available in the consumer.
+</p>
                     <pre><code class="language-csharp">public class OrderPlacedConsumer : IConsumer&lt;OrderPlaced&gt;
 {
     private readonly IInventoryService _inventory;
@@ -80,6 +84,7 @@ public class OrderService
 
                 <section class="lesson-section">
                     <h2>Request-Response</h2>
+                    <p>MassTransit supports request/response via a request client that waits for a typed response; consumers respond using <code>RespondAsync</code>.</p>
                     <pre><code class="language-csharp">// Request
 public record CheckInventory(Guid ProductId, int Quantity);
 public record InventoryResult(bool InStock, int Available);

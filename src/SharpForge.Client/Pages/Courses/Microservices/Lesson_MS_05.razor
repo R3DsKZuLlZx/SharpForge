@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>Multi-Stage Dockerfile</h2>
+                    <p>Multi-stage build example: build and publish your app in the SDK stage, then copy the published output into a smaller runtime image.</p>
                     <pre><code class="language-dockerfile"># Build stage
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
@@ -42,6 +43,7 @@ ENTRYPOINT ["dotnet", "OrderService.dll"]</code></pre>
 
                 <section class="lesson-section">
                     <h2>Optimized Layer Caching</h2>
+                    <p>Demonstrates how ordering COPY commands improves Docker layer caching for faster iterative builds.</p>
                     <pre><code class="language-dockerfile"># Copy only project files first (cached unless changed)
 COPY ["src/OrderService/*.csproj", "src/OrderService/"]
 COPY ["src/SharedKernel/*.csproj", "src/SharedKernel/"]
@@ -56,6 +58,7 @@ RUN dotnet publish</code></pre>
 
                 <section class="lesson-section">
                     <h2>.dockerignore</h2>
+                    <p>Typical .dockerignore entries to keep builds small and avoid copying unnecessary files into the image.</p>
                     <pre><code class="language-text">**/.git
 **/bin
 **/obj
@@ -68,6 +71,7 @@ RUN dotnet publish</code></pre>
 
                 <section class="lesson-section">
                     <h2>Running as Non-Root</h2>
+                    <p>Security best practice: create a non-root user in the image and run your app under that user.</p>
                     <pre><code class="language-dockerfile">FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 

@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>Typed HttpClient</h2>
+                    <p>Example of a typed HttpClient implementation wrapping HttpClient to provide a clean, testable interface for calling the inventory service.</p>
                     <pre><code class="language-csharp">// Client interface
 public interface IInventoryClient
 {
@@ -46,6 +47,7 @@ public class InventoryClient : IInventoryClient
 
                 <section class="lesson-section">
                     <h2>Registration</h2>
+                    <p>Register typed HttpClient with the DI container and attach a retry policy via Polly for transient faults.</p>
                     <pre><code class="language-csharp">// Program.cs
 builder.Services.AddHttpClient&lt;IInventoryClient, InventoryClient&gt;(client =&gt;
 {
@@ -58,6 +60,7 @@ builder.Services.AddHttpClient&lt;IInventoryClient, InventoryClient&gt;(client =
 
                 <section class="lesson-section">
                     <h2>Refit (Type-Safe Client)</h2>
+                    <p>Refit provides a declarative, type-safe REST client from an interface decorated with attributes.</p>
                     <pre><code class="language-csharp">// Define API as interface
 public interface IInventoryApi
 {

@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>Retry Pattern</h2>
+                    <p>Explains retry with exponential backoff and jitter for transient failures; do not retry non-idempotent operations without safeguards.</p>
                     <pre><code class="language-text">Request → Fail → Wait → Retry → Fail → Wait longer → Retry → Success!
 
 Exponential backoff:
@@ -29,6 +30,7 @@ Exponential backoff:
 
                 <section class="lesson-section">
                     <h2>Circuit Breaker Pattern</h2>
+                    <p>Diagram showing circuit breaker states to prevent cascading failures by short-circuiting calls when error rates are high.</p>
                     <pre><code class="language-text">States:
 ┌────────┐   Failures exceed    ┌────────┐
 │ CLOSED │ ──────────────────► │  OPEN  │
@@ -46,6 +48,7 @@ Exponential backoff:
 
                 <section class="lesson-section">
                     <h2>Timeout Pattern</h2>
+                    <p>Show how to apply a timeout using a CancellationTokenSource to avoid long-hanging requests consuming resources.</p>
                     <pre><code class="language-csharp">// Don't wait forever!
 using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
 var result = await httpClient.GetAsync(url, cts.Token);</code></pre>
@@ -53,6 +56,7 @@ var result = await httpClient.GetAsync(url, cts.Token);</code></pre>
 
                 <section class="lesson-section">
                     <h2>Bulkhead Pattern</h2>
+                    <p>Discussion and ASCII diagram showing how bulkheads isolate capacity to avoid a failure in one area taking down the whole system.</p>
                     <pre><code class="language-text">Isolate resources to prevent cascade failures:
 
 ┌─────────────────────────────────────┐

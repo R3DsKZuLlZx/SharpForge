@@ -18,7 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>Bounded Contexts</h2>
-                    <p>A bounded context defines the boundary within which a domain model applies. Different contexts can have different models for the same concept.</p>
+                    <p>Shows how the same concept (Customer) can appear differently in different bounded contexts, use bounded contexts to design clear service models.</p>
                     <pre><code class="language-csharp">// In Sales Context
 public class Customer
 {
@@ -39,6 +39,7 @@ public class Customer
 
                 <section class="lesson-section">
                     <h2>Aggregates</h2>
+                    <p>Example aggregate root showing encapsulation of business rules and how to mutate state only through methods on the aggregate.</p>
                     <pre><code class="language-csharp">// Aggregate Root - the only entry point
 public class Order
 {
@@ -65,6 +66,7 @@ public class OrderItem
 
                 <section class="lesson-section">
                     <h2>Domain Events</h2>
+                    <p>Domain event example: raise events from aggregates to notify other parts of the system of important state changes.</p>
                     <pre><code class="language-csharp">public record OrderPlaced(Guid OrderId, Guid CustomerId, decimal Total);
 
 public class Order

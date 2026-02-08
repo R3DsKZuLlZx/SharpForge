@@ -23,6 +23,7 @@
 
                 <section class="lesson-section">
                     <h2>Choreography vs Orchestration</h2>
+                    <p>Examples showing how choreographed sagas rely on events between services while orchestrated sagas use a central coordinator to issue commands.</p>
                     <div class="comparison-grid">
                         <div class="comparison-card">
                             <h4>Choreography</h4>
@@ -39,6 +40,7 @@
 
                 <section class="lesson-section">
                     <h2>MassTransit Saga State Machine</h2>
+                    <p>MassTransit state machines define saga states, events, transitions, and actions (including compensating actions). This example shows a simple order saga flow.</p>
                     <pre><code class="language-csharp">public class OrderSaga : MassTransitStateMachine&lt;OrderSagaState&gt;
 {
     public State Submitted { get; private set; }

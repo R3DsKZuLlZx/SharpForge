@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>Prometheus Metrics</h2>
+                    <p>Example registering OpenTelemetry metrics and exposing the /metrics endpoint for Prometheus to scrape.</p>
                     <pre><code class="language-csharp">// Program.cs
 builder.Services.AddOpenTelemetry()
     .WithMetrics(metrics =&gt;
@@ -34,6 +35,7 @@ app.MapPrometheusScrapingEndpoint();  // /metrics</code></pre>
 
                 <section class="lesson-section">
                     <h2>Custom Metrics</h2>
+                    <p>Example of defining counters and histograms for domain-specific metrics such as orders placed and processing time.</p>
                     <pre><code class="language-csharp">public class OrderMetrics
 {
     private readonly Counter&lt;int&gt; _ordersPlaced;

@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>Deployment Manifest</h2>
+                    <p>Kubernetes Deployment example that runs multiple replicas of the service and configures resource requests/limits.</p>
                     <pre><code class="language-yaml">apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -48,6 +49,7 @@ spec:
 
                 <section class="lesson-section">
                     <h2>Service Manifest</h2>
+                    <p>Service manifest exposes the deployment internally within the cluster using a stable DNS name.</p>
                     <pre><code class="language-yaml">apiVersion: v1
 kind: Service
 metadata:
@@ -63,6 +65,7 @@ spec:
 
                 <section class="lesson-section">
                     <h2>Ingress</h2>
+                    <p>Ingress manifest maps external host/path to internal services - requires an ingress controller in the cluster (NGINX, Traefik, etc.).</p>
                     <pre><code class="language-yaml">apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:

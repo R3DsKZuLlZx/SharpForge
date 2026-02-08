@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>.NET Health Checks</h2>
+                    <p>Example shows registering health checks for database and broker and mapping separate endpoints for liveness and readiness probes.</p>
                     <pre><code class="language-csharp">// Program.cs
 builder.Services.AddHealthChecks()
     .AddSqlServer(connectionString, name: "database")
@@ -37,6 +38,7 @@ app.MapHealthChecks("/health/ready", new HealthCheckOptions
 
                 <section class="lesson-section">
                     <h2>Kubernetes Probes</h2>
+                    <p>YAML example demonstrating how to wire Kubernetes liveness, readiness, and startup probes to the app's health endpoints.</p>
                     <pre><code class="language-yaml">spec:
   containers:
   - name: order-service

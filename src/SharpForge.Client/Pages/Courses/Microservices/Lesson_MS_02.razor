@@ -18,7 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>The Strangler Fig Pattern</h2>
-                    <p>Gradually replace parts of the monolith with microservices, like a strangler fig tree.</p>
+                    <p>Step-by-step checklist for incrementally extracting functionality from a monolith - route traffic gradually to ensure stability.</p>
                     <pre><code class="language-text">1. Identify module to extract
 2. Create new microservice
 3. Route traffic to new service (via API Gateway)
@@ -28,6 +28,7 @@
 
                 <section class="lesson-section">
                     <h2>Identifying Service Boundaries</h2>
+                    <p>Checklist to help find natural service boundaries - use these signals to split responsibilities.</p>
                     <pre><code class="language-text">Look for:
 - Business capabilities (Orders, Inventory, Shipping)
 - Data ownership (who owns this data?)
@@ -38,6 +39,7 @@
 
                 <section class="lesson-section">
                     <h2>Anti-Corruption Layer</h2>
+                    <p>This example shows an adapter pattern that shields the new service from legacy models by transforming legacy DTOs into the new domain model.</p>
                     <pre><code class="language-csharp">// Protect new service from legacy data models
 public class LegacyOrderAdapter
 {
@@ -61,6 +63,7 @@ public class LegacyOrderAdapter
 
                 <section class="lesson-section">
                     <h2>Database Decomposition</h2>
+                    <p>Common strategies for splitting a shared database into per-service stores, choose based on risk and effort.</p>
                     <pre><code class="language-text">Strategies:
 1. Shared database (temporary) → start here
 2. Database views → read from new, write to old
