@@ -7,7 +7,7 @@
     Title="Getting Started with .NET"
     Description="Learn the fundamentals of the .NET platform. Understand the runtime, SDK, project structure, and build your first applications across web, console, and API projects."
     LessonCount="10"
-    Duration="5 Hours"
+    Duration="2 Hours"
     StudentCount="1,523"
     StartUrl="training/getting-started-dotnet/lesson/1">
     <IconContent>
@@ -49,7 +49,7 @@
             <CourseSidebar 
                 CourseId="getting-started-dotnet"
                 TotalLessons="10"
-                Duration="5 hours"
+                Duration="2 hours"
                 ExerciseCount="20"
                 StartUrl="training/getting-started-dotnet/lesson/1" />
         </div>
@@ -59,16 +59,16 @@
 @code {
     private readonly List<CourseCurriculum.CourseLessonInfo> _lessons =
     [
-        new(1, "What is .NET?", "Understand the .NET platform, its history, and the different versions and implementations.", "25 min"),
-        new(2, "Installing the .NET SDK", "Download, install, and verify your .NET development environment on any operating system.", "20 min"),
-        new(3, "The .NET CLI", "Master the command-line interface for creating, building, running, and publishing .NET projects.", "30 min"),
-        new(4, "Project Structure and Files", "Understand .csproj files, solution files, and how .NET projects are organized.", "30 min"),
-        new(5, "NuGet Package Management", "Learn to find, install, update, and manage third-party packages in your projects.", "35 min"),
-        new(6, "Building Console Applications", "Create interactive console apps with user input, output formatting, and command-line arguments.", "35 min"),
-        new(7, "Configuration and Settings", "Work with appsettings.json, environment variables, and the Options pattern.", "30 min"),
-        new(8, "Introduction to ASP.NET Core", "Get started with web development using ASP.NET Core and understand the request pipeline.", "40 min"),
-        new(9, "Debugging and Troubleshooting", "Use Visual Studio and VS Code debugging tools to find and fix issues in your code.", "30 min"),
-        new(10, "Publishing and Deployment", "Package your application for deployment and understand the different publishing options.", "35 min")
+        new(1, "What is .NET?", "Understand the .NET platform, its history, and the different versions and implementations.", "8 min"),
+        new(2, "Installing the .NET SDK", "Download, install, and verify your .NET development environment on any operating system.", "8 min"),
+        new(3, "The .NET CLI", "Master the command-line interface for creating, building, running, and publishing .NET projects.", "12 min"),
+        new(4, "Project Structure and Files", "Understand .csproj files, solution files, and how .NET projects are organized.", "10 min"),
+        new(5, "NuGet Package Management", "Learn to find, install, update, and manage third-party packages in your projects.", "10 min"),
+        new(6, "Building Console Applications", "Create interactive console apps with user input, output formatting, and command-line arguments.", "12 min"),
+        new(7, "Configuration and Settings", "Work with appsettings.json, environment variables, and the Options pattern.", "10 min"),
+        new(8, "Introduction to ASP.NET Core", "Get started with web development using ASP.NET Core and understand the request pipeline.", "15 min"),
+        new(9, "Debugging and Troubleshooting", "Use Visual Studio and VS Code debugging tools to find and fix issues in your code.", "10 min"),
+        new(10, "Publishing and Deployment", "Package your application for deployment and understand the different publishing options.", "15 min")
     ];
 
     private readonly List<string> _prerequisites =
