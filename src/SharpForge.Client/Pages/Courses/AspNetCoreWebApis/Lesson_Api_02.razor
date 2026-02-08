@@ -20,7 +20,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>Creating a Web API Project</h2>
-                    <p>Let's create your first ASP.NET Core Web API project using the CLI:</p>
+                    <p>Use the .NET CLI to scaffold a new Web API project. The template includes controllers, routing, and Swagger support so you can run and test quickly.</p>
 
                     <pre><code class="language-bash"># Create a new Web API project with controllers
 dotnet new webapi -n ProductsApi --use-controllers
@@ -62,7 +62,7 @@ public class WeatherForecastController : ControllerBase
 
                 <section class="lesson-section">
                     <h2>Creating a Products API</h2>
-                    <p>Let's build a complete Products API. First, create the model:</p>
+                    <p>Create a simple <code>Product</code> model to represent the API's domain. Keep models small and use DTOs for public API surface when needed.</p>
 
                     <pre><code class="language-csharp">// Models/Product.cs
 public class Product
@@ -78,6 +78,8 @@ public class Product
 
                 <section class="lesson-section">
                     <h2>Creating the Controller</h2>
+                    <p>The controller below implements in-memory storage to keep the example simple. In production you'd use a database and services injected via DI.</p>
+
                     <pre><code class="language-csharp">// Controllers/ProductsController.cs
 using Microsoft.AspNetCore.Mvc;
 
@@ -151,6 +153,7 @@ public class ProductsController : ControllerBase
 
                 <section class="lesson-section">
                     <h2>Testing with curl</h2>
+                    <p>Use curl to exercise the API from the command line. The examples below show common operations including creating and updating resources.</p>
                     <pre><code class="language-bash"># Get all products
 curl https://localhost:5001/api/products
 

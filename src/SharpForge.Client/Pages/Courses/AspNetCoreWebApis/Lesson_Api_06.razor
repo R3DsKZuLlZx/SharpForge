@@ -21,6 +21,7 @@
                 </section>
                 <section class="lesson-section">
                     <h2>Service Lifetimes</h2>
+                    <p>Pick the correct lifetime for a service based on how it's used: transient for stateless small services, scoped for per-request services like DbContext, and singleton for shared long-lived services.</p>
                     <pre><code class="language-csharp">// Transient: New instance every time
 builder.Services.AddTransient&lt;IEmailService, EmailService&gt;();
 
@@ -33,6 +34,7 @@ builder.Services.AddSingleton&lt;ICacheService, CacheService&gt;();</code></pre>
                 </section>
                 <section class="lesson-section">
                     <h2>Registering Services</h2>
+                    <p>Register services and framework components in <code>Program.cs</code>. Use typed registration for interfaces so you can replace implementations in tests.</p>
                     <pre><code class="language-csharp">// Program.cs
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,6 +52,7 @@ builder.Services.AddHttpClient&lt;IExternalApiService, ExternalApiService&gt;();
                 </section>
                 <section class="lesson-section">
                     <h2>Constructor Injection</h2>
+                    <p>Constructor injection is the recommended approach for controllers and services. It makes dependencies explicit and works well with the built-in DI container.</p>
                     <pre><code class="language-csharp">public class ProductsController : ControllerBase
 {
     private readonly IProductService _productService;

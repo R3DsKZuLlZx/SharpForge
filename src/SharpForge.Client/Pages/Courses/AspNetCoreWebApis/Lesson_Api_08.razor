@@ -15,9 +15,9 @@
                 Duration="40 min"
                 Level="Intermediate" />
             <div class="lesson-body">
-                <section class="lesson-section"><h2>Setting Up EF Core</h2><pre><code class="language-bash">dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+                <section class="lesson-section"><h2>Setting Up EF Core</h2><p>Install the EF Core packages for your database provider; here we use SQL Server. The Design package is useful for migrations and tooling.</p><pre><code class="language-bash">dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 dotnet add package Microsoft.EntityFrameworkCore.Design</code></pre></section>
-                <section class="lesson-section"><h2>Creating the DbContext</h2><pre><code class="language-csharp">public class AppDbContext : DbContext
+                <section class="lesson-section"><h2>Creating the DbContext</h2><p>Define a DbContext that exposes DbSet properties for each aggregate. Configure keys, relationships, and property constraints in <code>OnModelCreating</code> so the model and migrations are consistent.</p><pre><code class="language-csharp">public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions&lt;AppDbContext&gt; options) : base(options) { }
     
@@ -37,9 +37,9 @@ dotnet add package Microsoft.EntityFrameworkCore.Design</code></pre></section>
         });
     }
 }</code></pre></section>
-                <section class="lesson-section"><h2>Register in Program.cs</h2><pre><code class="language-csharp">builder.Services.AddDbContext&lt;AppDbContext&gt;(options =>
+                <section class="lesson-section"><h2>Register in Program.cs</h2><p>Register the DbContext with the DI container. <code>AddDbContext</code> registers it as scoped by default so a single instance is used per request.</p><pre><code class="language-csharp">builder.Services.AddDbContext&lt;AppDbContext&gt;(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));</code></pre></section>
-                <section class="lesson-section"><h2>Migrations</h2><pre><code class="language-bash"># Create migration
+                <section class="lesson-section"><h2>Migrations</h2><p>Use EF Core migrations to evolve the database schema. Keep migrations small and review generated SQL before applying to production databases.</p><pre><code class="language-bash"># Create migration
 dotnet ef migrations add InitialCreate
 
 # Apply migration
@@ -47,7 +47,7 @@ dotnet ef database update
 
 # Remove last migration
 dotnet ef migrations remove</code></pre></section>
-                <section class="lesson-section"><h2>CRUD Operations</h2><pre><code class="language-csharp">[ApiController]
+                <section class="lesson-section"><h2>CRUD Operations</h2><p>When using EF Core in controllers, prefer async queries and include related data explicitly. Avoid tracking issues by considering DTOs and attaching detached entities correctly.</p><pre><code class="language-csharp">[ApiController]
 [Route("api/[controller]")]
 public class ProductsController : ControllerBase
 {

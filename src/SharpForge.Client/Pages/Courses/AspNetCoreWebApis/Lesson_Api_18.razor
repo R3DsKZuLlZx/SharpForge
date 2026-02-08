@@ -15,7 +15,7 @@
                 Duration="35 min"
                 Level="Intermediate" />
             <div class="lesson-body">
-                <section class="lesson-section"><h2>Dockerfile for ASP.NET Core</h2><pre><code class="language-dockerfile">FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+                <section class="lesson-section"><h2>Dockerfile for ASP.NET Core</h2><p>Use a multi-stage Dockerfile to build and publish your app in the SDK image, then copy the published output into a smaller runtime image for production.</p><pre><code class="language-dockerfile">FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 COPY *.csproj ./
@@ -32,7 +32,7 @@ EXPOSE 8080
 ENV ASPNETCORE_URLS=http://+:8080
 
 ENTRYPOINT ["dotnet", "MyApi.dll"]</code></pre></section>
-                <section class="lesson-section"><h2>Docker Compose</h2><pre><code class="language-yaml">version: '3.8'
+                <section class="lesson-section"><h2>Docker Compose</h2><p>Compose lets you define and run multi-container apps (API + database). Keep secrets out of compose files in production; use environment-specific secret stores instead.</p><pre><code class="language-yaml">version: '3.8'
 services:
   api:
     build: .
@@ -56,7 +56,7 @@ services:
 
 volumes:
   sqldata:</code></pre></section>
-                <section class="lesson-section"><h2>Build and Run</h2><pre><code class="language-bash"># Build the image
+                <section class="lesson-section"><h2>Build and Run</h2><p>Build images locally for testing, and prefer CI pipelines for production builds and image publishing to a registry.</p><pre><code class="language-bash"># Build the image
 docker build -t myapi .
 
 # Run the container
@@ -67,7 +67,7 @@ docker-compose up -d
 
 # View logs
 docker-compose logs -f api</code></pre></section>
-                <section class="lesson-section"><h2>Health Checks</h2><pre><code class="language-csharp">builder.Services.AddHealthChecks()
+                <section class="lesson-section"><h2>Health Checks</h2><p>Expose health endpoints so orchestration systems (Kubernetes, Docker Swarm) can probe readiness and liveness; include checks for critical dependencies like the database.</p><pre><code class="language-csharp">builder.Services.AddHealthChecks()
     .AddDbContextCheck&lt;AppDbContext&gt;()
     .AddCheck("custom", () => HealthCheckResult.Healthy());
 
@@ -76,7 +76,7 @@ app.MapHealthChecks("/health/ready", new HealthCheckOptions
 {
     Predicate = check => check.Tags.Contains("ready")
 });</code></pre></section>
-                <section class="lesson-section"><h2>Production Configuration</h2><pre><code class="language-csharp">// Use environment variables in production
+                <section class="lesson-section"><h2>Production Configuration</h2><p>Prefer environment variables and external secret stores for production configuration. Configure Kestrel limits to protect resources and set sensible defaults for request sizes.</p><pre><code class="language-csharp">// Use environment variables in production
 builder.Configuration
     .AddJsonFile("appsettings.json")
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)

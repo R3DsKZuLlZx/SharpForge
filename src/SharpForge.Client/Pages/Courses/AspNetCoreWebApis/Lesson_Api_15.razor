@@ -15,7 +15,7 @@
                 Duration="25 min"
                 Level="Intermediate" />
             <div class="lesson-body">
-                <section class="lesson-section"><h2>Setup Swagger</h2><pre><code class="language-csharp">builder.Services.AddEndpointsApiExplorer();
+                <section class="lesson-section"><h2>Setup Swagger</h2><p>Enable OpenAPI generation and the Swagger UI so consumers can explore and test your API. Configure document metadata like title and version.</p><pre><code class="language-csharp">builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo 
@@ -32,7 +32,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }</code></pre></section>
-                <section class="lesson-section"><h2>XML Documentation</h2><pre><code class="language-xml">&lt;!-- In .csproj --&gt;
+                <section class="lesson-section"><h2>XML Documentation</h2><p>Include XML comments from your project to enrich Swagger docs with method summaries and response descriptions. Enable XML docs in the project file first.</p><pre><code class="language-xml">&lt;!-- In .csproj --&gt;
 &lt;PropertyGroup&gt;
   &lt;GenerateDocumentationFile&gt;true&lt;/GenerateDocumentationFile&gt;
 &lt;/PropertyGroup&gt;</code></pre><pre><code class="language-csharp">builder.Services.AddSwaggerGen(c =>
@@ -49,7 +49,7 @@ if (app.Environment.IsDevelopment())
 [HttpGet]
 [ProducesResponseType(typeof(IEnumerable&lt;Product&gt;), StatusCodes.Status200OK)]
 public async Task&lt;ActionResult&lt;IEnumerable&lt;Product&gt;&gt;&gt; GetAll() { }</code></pre></section>
-                <section class="lesson-section"><h2>JWT Authentication in Swagger</h2><pre><code class="language-csharp">builder.Services.AddSwaggerGen(c =>
+                <section class="lesson-section"><h2>JWT Authentication in Swagger</h2><p>Configure a security scheme so the Swagger UI can accept a bearer token and call protected endpoints; this mirrors how clients authenticate.</p><pre><code class="language-csharp">builder.Services.AddSwaggerGen(c =>
 {
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {

@@ -16,8 +16,8 @@
                 Level="Intermediate" />
             <div class="lesson-body">
                 <section class="lesson-section"><h2>What is JWT?</h2><p>JSON Web Tokens (JWT) are a compact, URL-safe way to represent claims between parties. They're commonly used for API authentication.</p></section>
-                <section class="lesson-section"><h2>Setup</h2><pre><code class="language-bash">dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer</code></pre></section>
-                <section class="lesson-section"><h2>Configure JWT Authentication</h2><pre><code class="language-csharp">// Program.cs
+                <section class="lesson-section"><h2>Setup</h2><p>Install the JWT bearer authentication package to validate tokens issued by your auth server.</p><pre><code class="language-bash">dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer</code></pre></section>
+                <section class="lesson-section"><h2>Configure JWT Authentication</h2><p>Configure token validation parameters to validate issuer, audience, signature, and lifetime. Store keys in secure configuration (e.g., Azure Key Vault) in production.</p><pre><code class="language-csharp">// Program.cs
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -37,7 +37,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 // Add middleware
 app.UseAuthentication();
 app.UseAuthorization();</code></pre></section>
-                <section class="lesson-section"><h2>Generate JWT Token</h2><pre><code class="language-csharp">public class AuthService
+                <section class="lesson-section"><h2>Generate JWT Token</h2><p>Generate tokens with the required claims and a secure signing key. Keep token lifetimes balanced between usability and security.</p><pre><code class="language-csharp">public class AuthService
 {
     private readonly IConfiguration _config;
     public AuthService(IConfiguration config) => _config = config;
@@ -64,7 +64,7 @@ app.UseAuthorization();</code></pre></section>
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }</code></pre></section>
-                <section class="lesson-section"><h2>Protect Endpoints</h2><pre><code class="language-csharp">[Authorize]  // Requires authentication
+                <section class="lesson-section"><h2>Protect Endpoints</h2><p>Use authorization attributes to protect endpoints. Roles and policies let you restrict access to specific operations.</p><pre><code class="language-csharp">[Authorize]  // Requires authentication
 [HttpGet]
 public ActionResult&lt;IEnumerable&lt;Product&gt;&gt; GetAll() { }
 

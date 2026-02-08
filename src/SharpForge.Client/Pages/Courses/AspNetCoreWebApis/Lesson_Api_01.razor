@@ -91,6 +91,8 @@
                         <div class="pipeline-step">Endpoint</div>
                     </div>
 
+                    <p>The snippet below shows the typical order middleware is registered. Order matters: authentication should run before authorization, and endpoint mapping should be last.</p>
+
                     <pre><code class="language-csharp">var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
@@ -106,6 +108,8 @@ app.Run();</code></pre>
                 <section class="lesson-section">
                     <h2>Project Structure</h2>
                     <p>A typical ASP.NET Core Web API project structure:</p>
+
+                    <p>The layout below shows common folders and their responsibilities so you can find controllers, models, services, and configuration quickly.</p>
 
                     <pre><code class="language-bash">MyApi/
 ├── Controllers/           # API endpoints
@@ -124,6 +128,8 @@ app.Run();</code></pre>
                 <section class="lesson-section">
                     <h2>The Program.cs File</h2>
                     <p>Modern ASP.NET Core uses a simplified Program.cs with top-level statements:</p>
+
+                    <p>The code below demonstrates the two-phase startup: first register services on the builder, then build the app and configure the middleware pipeline.</p>
 
                     <pre><code class="language-csharp">var builder = WebApplication.CreateBuilder(args);
 
@@ -180,6 +186,8 @@ app.Run();</code></pre>
                             <span class="desc">Remove resources</span>
                         </div>
                     </div>
+
+                    <p>The example below shows common RESTful URL patterns and the HTTP methods you should use for each operation.</p>
 
                     <pre><code class="language-bash"># RESTful URL patterns
 GET    /api/products         # Get all products

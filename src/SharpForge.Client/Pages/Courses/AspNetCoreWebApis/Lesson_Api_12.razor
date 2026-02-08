@@ -15,15 +15,15 @@
                 Duration="30 min"
                 Level="Intermediate" />
             <div class="lesson-body">
-                <section class="lesson-section"><h2>Global Exception Handling</h2><pre><code class="language-csharp">// Use exception handler middleware
+                <section class="lesson-section"><h2>Global Exception Handling</h2><p>Use centralized exception handling middleware so you can consistently format error responses and avoid leaking implementation details.</p><pre><code class="language-csharp">// Use exception handler middleware
 if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 else
     app.UseExceptionHandler("/error");</code></pre></section>
-                <section class="lesson-section"><h2>Problem Details</h2><pre><code class="language-csharp">builder.Services.AddProblemDetails();
+                <section class="lesson-section"><h2>Problem Details</h2><p>Problem Details (RFC 7807) is the preferred error response shape for APIs. Register the service and map a custom error endpoint to return this standardized payload.</p><pre><code class="language-csharp">builder.Services.AddProblemDetails();
 
 // Custom error endpoint
-app.MapGet("/error", (HttpContext context) =>
+app.MapGet("/error", (HttpContext context) =&gt;
 {
     var exception = context.Features.Get&lt;IExceptionHandlerFeature&gt;()?.Error;
     return Results.Problem(
@@ -31,7 +31,7 @@ app.MapGet("/error", (HttpContext context) =>
         statusCode: 500,
         detail: app.Environment.IsDevelopment() ? exception?.Message : null);
 });</code></pre></section>
-                <section class="lesson-section"><h2>Custom Exception Middleware</h2><pre><code class="language-csharp">public class ExceptionMiddleware
+                <section class="lesson-section"><h2>Custom Exception Middleware</h2><p>Implement custom middleware to translate domain exceptions into appropriate HTTP responses. Keep the middleware focused on mapping exceptions to statuses and payloads.</p><pre><code class="language-csharp">public class ExceptionMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly ILogger&lt;ExceptionMiddleware&gt; _logger;
@@ -62,7 +62,7 @@ app.MapGet("/error", (HttpContext context) =>
         }
     }
 }</code></pre></section>
-                <section class="lesson-section"><h2>Custom Exceptions</h2><pre><code class="language-csharp">public class NotFoundException : Exception
+                <section class="lesson-section"><h2>Custom Exceptions</h2><p>Define lightweight domain exceptions for common error scenarios so middleware can handle them consistently.</p><pre><code class="language-csharp">public class NotFoundException : Exception
 {
     public NotFoundException(string message) : base(message) { }
 }

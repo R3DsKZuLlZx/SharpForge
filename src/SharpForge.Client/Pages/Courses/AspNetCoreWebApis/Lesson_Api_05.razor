@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>Data Annotations Validation</h2>
+                    <p>Data annotations provide a simple, declarative way to validate incoming DTOs at the model level. Use attributes like <code>[Required]</code>, <code>[StringLength]</code>, and <code>[Range]</code> to enforce rules that run during model binding on the server.</p>
                     <pre><code class="language-csharp">public class CreateProductDto
 {
     [Required(ErrorMessage = "Name is required")]
@@ -48,7 +49,8 @@
 
                 <section class="lesson-section">
                     <h2>Automatic Validation with [ApiController]</h2>
-                    <p>With <code>[ApiController]</code>, validation happens automatically:</p>
+                    <p>Applying <code>[ApiController]</code> to a controller enables automatic model validation: if a bound model fails validation, ASP.NET Core short-circuits and returns a 400 with a Problem Details payload. This lets your action methods assume the model is valid and keep handler code focused on business logic.</p>
+                    <p>If you need custom behavior (for example, a different error shape or logging), override the default response by configuring <code>InvalidModelStateResponseFactory</code> or write a custom filter.</p>
                     <pre><code class="language-csharp">[HttpPost]
 public ActionResult&lt;Product&gt; Create(CreateProductDto dto)
 {
@@ -63,6 +65,8 @@ public ActionResult&lt;Product&gt; Create(CreateProductDto dto)
 
                 <section class="lesson-section">
                     <h2>Custom Validation Attributes</h2>
+                    <p>For validation logic that doesn't fit built-in attributes, create a custom <code>ValidationAttribute</code>. This keeps validation close to the model and is evaluated during model binding like other data annotations.</p>
+                    <p>Keep custom attributes simple and side-effect free; for complex or stateful validation prefer a separate validator class so logic stays testable.</p>
                     <pre><code class="language-csharp">public class FutureDateAttribute : ValidationAttribute
 {
     protected override ValidationResult? IsValid(object? value, ValidationContext context)
@@ -88,6 +92,8 @@ public class CreateEventDto
 
                 <section class="lesson-section">
                     <h2>FluentValidation</h2>
+                    <p>FluentValidation is a popular external library that provides a fluent API for expressive, testable validation rules. It is useful when validation requires complex conditional logic or multiple related rules.</p>
+                    <p>Register validator types with the DI container so they integrate with the ASP.NET Core pipeline and produce model validation errors automatically.</p>
                     <pre><code class="language-bash">dotnet add package FluentValidation.AspNetCore</code></pre>
 
                     <pre><code class="language-csharp">public class CreateProductDtoValidator : AbstractValidator&lt;CreateProductDto&gt;
@@ -117,6 +123,8 @@ builder.Services.AddValidatorsFromAssemblyContaining&lt;CreateProductDtoValidato
 
                 <section class="lesson-section">
                     <h2>Problem Details Response</h2>
+                    <p>When validation fails the framework returns a Problem Details response (RFC 7807) that includes a top-level error title, status, and an <code>errors</code> map listing each invalid field and its messages. This standardized shape makes API errors easier for clients to parse.</p>
+                    <p>You can customize the contents or mapping of validation errors by providing a custom <code>ProblemDetailsFactory</code> or by transforming the model state in a filter or middleware.</p>
                     <pre><code class="language-json">{
   "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
   "title": "One or more validation errors occurred.",

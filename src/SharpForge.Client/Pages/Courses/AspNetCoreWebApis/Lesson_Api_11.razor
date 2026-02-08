@@ -16,7 +16,7 @@
                 Level="Intermediate" />
             <div class="lesson-body">
                 <section class="lesson-section"><h2>Policy-Based Authorization</h2><p>Policies provide flexible authorization based on claims, roles, or custom requirements.</p></section>
-                <section class="lesson-section"><h2>Defining Policies</h2><pre><code class="language-csharp">builder.Services.AddAuthorization(options =>
+                <section class="lesson-section"><h2>Defining Policies</h2><p>Define policies centrally during service registration so they can be reused across controllers and endpoints.</p><pre><code class="language-csharp">builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
     
@@ -31,14 +31,14 @@
             context.User.IsInRole("Admin") ||
             context.User.HasClaim("permission", "edit_products")));
 });</code></pre></section>
-                <section class="lesson-section"><h2>Using Policies</h2><pre><code class="language-csharp">[Authorize(Policy = "AdminOnly")]
+                <section class="lesson-section"><h2>Using Policies</h2><p>Apply policies with the <code>[Authorize]</code> attribute to enforce rules declaratively on endpoints.</p><pre><code class="language-csharp">[Authorize(Policy = "AdminOnly")]
 [HttpDelete("{id}")]
 public IActionResult Delete(int id) { }
 
 [Authorize(Policy = "CanEditProducts")]
 [HttpPut("{id}")]
 public IActionResult Update(int id, ProductDto dto) { }</code></pre></section>
-                <section class="lesson-section"><h2>Custom Requirements</h2><pre><code class="language-csharp">public class MinimumAgeRequirement : IAuthorizationRequirement
+                <section class="lesson-section"><h2>Custom Requirements</h2><p>Create requirement and handler types to implement complex authorization checks that depend on application state or claims.</p><pre><code class="language-csharp">public class MinimumAgeRequirement : IAuthorizationRequirement
 {
     public int MinimumAge { get; }
     public MinimumAgeRequirement(int age) => MinimumAge = age;

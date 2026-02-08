@@ -19,6 +19,7 @@
                 <section class="lesson-section">
                     <h2>Controller Fundamentals</h2>
                     <p>Controllers group related actions together. API controllers inherit from <code>ControllerBase</code> (not <code>Controller</code> which adds View support).</p>
+                    <p>Annotate controllers with <code>[ApiController]</code> and a route to enable API behaviors and routing conventions.</p>
                     <pre><code class="language-csharp">[ApiController]
 [Route("api/[controller]")]
 public class ProductsController : ControllerBase
@@ -39,6 +40,7 @@ public class ProductsController : ControllerBase
 
                 <section class="lesson-section">
                     <h2>Action Return Types</h2>
+                    <p>Choose the right return type for clarity and client expectations. Use concrete types when you always return data, <code>ActionResult&lt;T&gt;</code> when you need to return different status codes, and <code>IActionResult</code> for flexible responses.</p>
                     <pre><code class="language-csharp">// Specific type - always returns 200
 [HttpGet]
 public IEnumerable&lt;Product&gt; GetAll() => _products;
@@ -71,6 +73,7 @@ public async Task&lt;ActionResult&lt;IEnumerable&lt;Product&gt;&gt;&gt; GetAllAs
 
                 <section class="lesson-section">
                     <h2>Parameter Binding Attributes</h2>
+                    <p>Use explicit binding attributes to control where values come from: body, route, query, header, or services. This improves readability and avoids accidental binding mistakes.</p>
                     <pre><code class="language-csharp">[HttpPost]
 public ActionResult Create(
     [FromBody] CreateProductDto dto,      // From request body
@@ -85,7 +88,7 @@ public ActionResult Create(
 
                 <section class="lesson-section">
                     <h2>DTOs (Data Transfer Objects)</h2>
-                    <p>Use DTOs to control what data is exposed and accepted:</p>
+                    <p>Use DTOs to control what data is exposed and accepted. Keep input DTOs focused on what the client can send and output DTOs focused on what you want to return.</p>
                     <pre><code class="language-csharp">// Input DTO
 public record CreateProductDto(
     string Name,
@@ -122,6 +125,7 @@ public ActionResult&lt;ProductDto&gt; Create(CreateProductDto dto)
 
                 <section class="lesson-section">
                     <h2>Async Best Practices</h2>
+                    <p>Prefer async/await for I/O-bound work. Avoid blocking on tasks (for example calling <code>.Result</code>) as it can cause thread starvation or deadlocks in some hosting scenarios.</p>
                     <pre><code class="language-csharp">// ✅ Good - async all the way
 [HttpGet]
 public async Task&lt;ActionResult&lt;IEnumerable&lt;Product&gt;&gt;&gt; GetAll()

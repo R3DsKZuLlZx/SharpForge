@@ -16,7 +16,7 @@
                 Level="Intermediate" />
             <div class="lesson-body">
                 <section class="lesson-section"><h2>Why Version APIs?</h2><p>Versioning allows you to evolve your API without breaking existing clients. Add new features, change behavior, or deprecate endpoints while maintaining backward compatibility.</p></section>
-                <section class="lesson-section"><h2>Setup</h2><pre><code class="language-bash">dotnet add package Asp.Versioning.Mvc</code></pre><pre><code class="language-csharp">builder.Services.AddApiVersioning(options =>
+                <section class="lesson-section"><h2>Setup</h2><p>Use the ASP.NET API versioning package to read versions from URL segments, headers, or query strings and to expose available versions to clients.</p><pre><code class="language-bash">dotnet add package Asp.Versioning.Mvc</code></pre><pre><code class="language-csharp">builder.Services.AddApiVersioning(options =>
 {
     options.DefaultApiVersion = new ApiVersion(1, 0);
     options.AssumeDefaultVersionWhenUnspecified = true;
@@ -30,7 +30,7 @@
     options.GroupNameFormat = "'v'VVV";
     options.SubstituteApiVersionInUrl = true;
 });</code></pre></section>
-                <section class="lesson-section"><h2>URL Versioning</h2><pre><code class="language-csharp">[ApiController]
+                <section class="lesson-section"><h2>URL Versioning</h2><p>URL versioning embeds the version in the path which is easy for clients to consume and for routing to resolve; keep controllers separate per version when responses differ significantly.</p><pre><code class="language-csharp">[ApiController]
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
 public class ProductsV1Controller : ControllerBase
@@ -47,7 +47,7 @@ public class ProductsV2Controller : ControllerBase
     [HttpGet]
     public IEnumerable&lt;ProductV2Dto&gt; Get() => // V2 response with new fields
 }</code></pre></section>
-                <section class="lesson-section"><h2>Deprecating Versions</h2><pre><code class="language-csharp">[ApiVersion("1.0", Deprecated = true)]
+                <section class="lesson-section"><h2>Deprecating Versions</h2><p>Mark old versions as deprecated so clients have a migration window; communicate removal timelines in API docs and release notes.</p><pre><code class="language-csharp">[ApiVersion("1.0", Deprecated = true)]
 [ApiController]
 public class ProductsV1Controller : ControllerBase { }</code></pre></section>
                 <LessonTakeaways>

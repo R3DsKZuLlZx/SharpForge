@@ -1,4 +1,4 @@
- @page "/training/aspnet-core-web-apis/lesson/3"
+@page "/training/aspnet-core-web-apis/lesson/3"
 <PageTitle>Routing Fundamentals - ASP.NET Core Web APIs - SharpForge</PageTitle>
 <CodeHighlighter />
 
@@ -23,6 +23,7 @@
 
                 <section class="lesson-section">
                     <h2>Route Templates</h2>
+                    <p>Route templates define how controller and action names map to URLs. Use controller-level templates for common prefixes and action-level templates for specific paths.</p>
                     <pre><code class="language-csharp">// Controller-level route
 [Route("api/[controller]")]  // api/products
 public class ProductsController : ControllerBase
@@ -36,6 +37,7 @@ public class ProductsController : ControllerBase
 
                 <section class="lesson-section">
                     <h2>Route Parameters</h2>
+                    <p>Parameters in the route template bind values from the URL into your action method parameters. You can make parameters optional, provide defaults, or accept multiple parameters.</p>
                     <pre><code class="language-csharp">// Required parameter
 [HttpGet("{id}")]
 public ActionResult Get(int id) { }
@@ -55,6 +57,7 @@ public ActionResult Get(string category, int id) { }</code></pre>
 
                 <section class="lesson-section">
                     <h2>Route Constraints</h2>
+                    <p>Constraints validate and parse route parameters (for example ensuring an <code>id</code> is an integer) before the action is invoked. Use them to reduce invalid requests and simplify action code.</p>
                     <pre><code class="language-csharp">// Integer constraint
 [HttpGet("{id:int}")]
 public ActionResult GetById(int id) { }
@@ -86,6 +89,7 @@ public ActionResult GetByName(string name) { }</code></pre>
 
                 <section class="lesson-section">
                     <h2>Query String Parameters</h2>
+                    <p>Query string parameters are bound with <code>[FromQuery]</code> by default for simple types when not present in the route. Use them for paging, filtering, and search parameters.</p>
                     <pre><code class="language-csharp">// GET api/products?page=1&pageSize=10&search=laptop
 [HttpGet]
 public ActionResult GetAll(
@@ -96,9 +100,9 @@ public ActionResult GetAll(
     // page = 1, pageSize = 10, search = "laptop"
 }</code></pre>
                 </section>
-
                 <section class="lesson-section">
                     <h2>Route Prefixes</h2>
+                    <p>Use versioned prefixes or base routes to group related controllers. Absolute routes (starting with '/') ignore the controller prefix.</p>
                     <pre><code class="language-csharp">// Base controller with common prefix
 [Route("api/v1/[controller]")]
 public class ProductsController : ControllerBase { }

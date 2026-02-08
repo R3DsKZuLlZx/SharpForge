@@ -16,7 +16,7 @@
                 Level="Intermediate" />
             <div class="lesson-body">
                 <section class="lesson-section"><h2>Understanding Middleware</h2><p>Middleware are components that process HTTP requests and responses. Each middleware can perform operations before and after the next component.</p></section>
-                <section class="lesson-section"><h2>The Pipeline</h2><pre><code class="language-csharp">var app = builder.Build();
+                <section class="lesson-section"><h2>The Pipeline</h2><p>The order you register middleware determines request/response behavior — register error handling early and endpoint mapping last.</p><pre><code class="language-csharp">var app = builder.Build();
 
 // Order matters!
 app.UseExceptionHandler("/error");  // 1. Handle exceptions
@@ -30,7 +30,7 @@ app.UseAuthorization();              // 8. Can you access this?
 app.MapControllers();                // 9. Execute endpoint
 
 app.Run();</code></pre></section>
-                <section class="lesson-section"><h2>Creating Custom Middleware</h2><pre><code class="language-csharp">public class RequestTimingMiddleware
+                <section class="lesson-section"><h2>Creating Custom Middleware</h2><p>Custom middleware is useful for cross-cutting concerns like logging, metrics, or request transformation. Keep middleware focused and avoid heavy logic.</p><pre><code class="language-csharp">public class RequestTimingMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly ILogger&lt;RequestTimingMiddleware&gt; _logger;
