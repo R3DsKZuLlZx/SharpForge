@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>Basic Exception Handling</h2>
+                    <p>Use try/catch around awaited calls to handle exceptions as you would with synchronous code; handle cancellations and specific exceptions like <code>HttpRequestException</code> explicitly.</p>
                     <pre><code class="language-csharp">try
 {
     var result = await GetDataAsync();
@@ -36,6 +37,7 @@ catch (OperationCanceledException)
 
                 <section class="lesson-section">
                     <h2>AggregateException with WhenAll</h2>
+                    <p><code>Task.WhenAll</code> throws when any task faults; the returned task captures all exceptions in <code>Exception.InnerExceptions</code> - iterate them to log all failures.</p>
                     <pre><code class="language-csharp">var tasks = urls.Select(url =&gt; httpClient.GetStringAsync(url));
 var allTask = Task.WhenAll(tasks);
 
@@ -59,6 +61,7 @@ catch (Exception)
 
                 <section class="lesson-section">
                     <h2>Exception Filters</h2>
+                    <p>Use exception filters (<code>when</code>) to conditionally handle exceptions based on state - useful to distinguish between expected cancellations and unexpected errors.</p>
                     <pre><code class="language-csharp">try
 {
     await DoWorkAsync(cancellationToken);
@@ -85,6 +88,7 @@ catch (HttpRequestException ex)
 
                 <section class="lesson-section">
                     <h2>Fire-and-Forget Safety</h2>
+                    <p>Always handle exceptions in fire-and-forget tasks by capturing them and logging inside a wrapper to prevent silent failures.</p>
                     <pre><code class="language-csharp">// ❌ Dangerous - exceptions are lost
 _ = DoWorkAsync();  // Fire and forget
 

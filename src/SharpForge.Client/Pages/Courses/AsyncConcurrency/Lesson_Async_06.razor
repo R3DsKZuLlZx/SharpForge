@@ -18,7 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>Cooperative Cancellation</h2>
-                    <p>CancellationToken enables cooperative cancellation—operations must check for cancellation and stop gracefully.</p>
+                    <p>Demonstrates creating a <code>CancellationTokenSource</code>, cancelling after a timeout, and passing the token to async methods for cooperative cancellation.</p>
                     <pre><code class="language-csharp">// Create a cancellation token source
 using var cts = new CancellationTokenSource();
 
@@ -34,6 +34,7 @@ await DoWorkAsync(cts.Token);</code></pre>
 
                 <section class="lesson-section">
                     <h2>Responding to Cancellation</h2>
+                    <p>Examples show checking the token for cancellation, throwing for cooperative cancellation, and passing the token downstream.</p>
                     <pre><code class="language-csharp">public async Task ProcessAsync(CancellationToken cancellationToken)
 {
     foreach (var item in items)
@@ -56,6 +57,7 @@ await DoWorkAsync(cts.Token);</code></pre>
 
                 <section class="lesson-section">
                     <h2>Timeout Pattern</h2>
+                    <p>Wrap the operation with a token that cancels after a timeout and transform the cancellation into a timeout-specific exception for clearer semantics.</p>
                     <pre><code class="language-csharp">public async Task&lt;Data&gt; GetWithTimeoutAsync(TimeSpan timeout)
 {
     using var cts = new CancellationTokenSource(timeout);
@@ -73,6 +75,7 @@ await DoWorkAsync(cts.Token);</code></pre>
 
                 <section class="lesson-section">
                     <h2>Linked Cancellation</h2>
+                    <p>Combine external and internal cancellation sources so the operation cancels if either source requests cancellation.</p>
                     <pre><code class="language-csharp">// Combine multiple cancellation sources
 public async Task ProcessAsync(CancellationToken externalToken)
 {

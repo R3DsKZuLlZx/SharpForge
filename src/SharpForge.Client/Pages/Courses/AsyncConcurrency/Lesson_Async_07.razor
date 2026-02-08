@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>IProgress&lt;T&gt; Interface</h2>
+                    <p>Show how to report progress from a library method by accepting an optional <code>IProgress&lt;int&gt;</code> and calling <code>Report</code> to notify callers.</p>
                     <pre><code class="language-csharp">// Method that reports progress
 public async Task ProcessFilesAsync(
     IEnumerable&lt;string&gt; files,
@@ -39,6 +40,7 @@ public async Task ProcessFilesAsync(
 
                 <section class="lesson-section">
                     <h2>Progress&lt;T&gt; Class</h2>
+                    <p>In UI code, use <code>Progress&lt;T&gt;</code> which captures the synchronization context and invokes callbacks on the UI thread safely.</p>
                     <pre><code class="language-csharp">// In UI code
 var progress = new Progress&lt;int&gt;(percent =&gt;
 {
@@ -51,6 +53,7 @@ await ProcessFilesAsync(files, progress, cts.Token);</code></pre>
 
                 <section class="lesson-section">
                     <h2>Custom Progress Data</h2>
+                    <p>Create a progress record type to include richer information (filename, bytes, percent) and report it from download loops to update UI progressively.</p>
                     <pre><code class="language-csharp">public record DownloadProgress(
     string FileName,
     long BytesDownloaded,

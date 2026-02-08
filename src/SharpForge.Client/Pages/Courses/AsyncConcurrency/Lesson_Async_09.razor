@@ -27,6 +27,7 @@
 
                 <section class="lesson-section">
                     <h2>Parallel.For</h2>
+                    <p>Parallel.For executes iterations in parallel across multiple threads. Use for CPU-bound work and avoid shared mutable state unless synchronized.</p>
                     <pre><code class="language-csharp">// Sequential
 for (int i = 0; i &lt; 1000; i++)
 {
@@ -42,6 +43,7 @@ Parallel.For(0, 1000, i =&gt;
 
                 <section class="lesson-section">
                     <h2>Parallel.ForEach</h2>
+                    <p>Parallel.ForEach processes collections in parallel; ensure thread-safety for any shared resources when using parallel loops.</p>
                     <pre><code class="language-csharp">var files = Directory.GetFiles(path, "*.jpg");
 
 // Process all files in parallel
@@ -55,6 +57,7 @@ Parallel.ForEach(files, file =&gt;
 
                 <section class="lesson-section">
                     <h2>ParallelOptions</h2>
+                    <p>Use <code>ParallelOptions</code> to set max degree of parallelism and cancellation support for parallel loops.</p>
                     <pre><code class="language-csharp">var options = new ParallelOptions
 {
     MaxDegreeOfParallelism = Environment.ProcessorCount,
@@ -76,6 +79,7 @@ catch (OperationCanceledException)
 
                 <section class="lesson-section">
                     <h2>Parallel.ForEachAsync (.NET 6+)</h2>
+                    <p>Use <code>Parallel.ForEachAsync</code> when you need to perform asynchronous operations with controlled concurrency in .NET 6 and later.</p>
                     <pre><code class="language-csharp">// For async operations with controlled concurrency
 await Parallel.ForEachAsync(urls, 
     new ParallelOptions { MaxDegreeOfParallelism = 10 },

@@ -18,7 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>Task.WhenAll</h2>
-                    <p>Wait for all tasks to complete. Returns when ALL are done.</p>
+                    <p>Run several tasks concurrently and await all of them; useful when you need every result and want to parallelize independent operations.</p>
                     <pre><code class="language-csharp">// Run multiple operations concurrently
 var userTask = GetUserAsync(userId);
 var ordersTask = GetOrdersAsync(userId);
@@ -40,7 +40,7 @@ string[] results = await Task.WhenAll(tasks);</code></pre>
 
                 <section class="lesson-section">
                     <h2>Task.WhenAny</h2>
-                    <p>Returns when ANY task completes. Useful for timeouts and racing.</p>
+                    <p>Use <code>WhenAny</code> to await the first completed task which is handy for timeouts or racing multiple sources.</p>
                     <pre><code class="language-csharp">// Timeout pattern
 var dataTask = GetDataAsync();
 var timeoutTask = Task.Delay(TimeSpan.FromSeconds(5));
@@ -55,6 +55,7 @@ var result = await dataTask;  // Get the actual result</code></pre>
 
                 <section class="lesson-section">
                     <h2>First Successful Result</h2>
+                    <p>Pattern to try multiple sources and return the first successful result while ignoring failures from others.</p>
                     <pre><code class="language-csharp">// Try multiple sources, use first success
 public async Task&lt;Data&gt; GetFromAnySourceAsync()
 {
@@ -86,6 +87,7 @@ public async Task&lt;Data&gt; GetFromAnySourceAsync()
 
                 <section class="lesson-section">
                     <h2>Throttling Concurrent Operations</h2>
+                    <p>Use a <code>SemaphoreSlim</code> to limit concurrency when processing many items to avoid overloading resources.</p>
                     <pre><code class="language-csharp">// Process with limited concurrency
 public async Task ProcessAllAsync(IEnumerable&lt;string&gt; urls, int maxConcurrency = 10)
 {

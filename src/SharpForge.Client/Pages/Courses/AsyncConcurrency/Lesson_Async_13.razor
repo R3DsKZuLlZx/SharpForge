@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>ConcurrentDictionary</h2>
+                    <p>Thread-safe dictionary with atomic operations like <code>GetOrAdd</code> and <code>AddOrUpdate</code> which is good for caches.</p>
                     <pre><code class="language-csharp">var cache = new ConcurrentDictionary&lt;string, Data&gt;();
 
 // Thread-safe add or update
@@ -38,6 +39,7 @@ if (cache.TryGetValue("key", out var data))
 
                 <section class="lesson-section">
                     <h2>ConcurrentQueue and ConcurrentStack</h2>
+                    <p>Non-blocking FIFO/LIFO collections suitable for producer-consumer scenarios without explicit locks.</p>
                     <pre><code class="language-csharp">var queue = new ConcurrentQueue&lt;WorkItem&gt;();
 
 // Producer
@@ -57,6 +59,7 @@ stack.TryPop(out var popped);</code></pre>
 
                 <section class="lesson-section">
                     <h2>ConcurrentBag</h2>
+                    <p>Optimized for scenarios where the same thread both adds and removes frequently and provides thread-local storage for fast operations.</p>
                     <pre><code class="language-csharp">// Thread-local storage optimized for add/take from same thread
 var bag = new ConcurrentBag&lt;Result&gt;();
 
@@ -72,6 +75,7 @@ var allResults = bag.ToArray();</code></pre>
 
                 <section class="lesson-section">
                     <h2>BlockingCollection</h2>
+                    <p>Provides a bounded or unbounded blocking queue; producers block when full and consumers block when empty which is great for classic producer-consumer patterns.</p>
                     <pre><code class="language-csharp">using var collection = new BlockingCollection&lt;WorkItem&gt;(boundedCapacity: 100);
 
 // Producer

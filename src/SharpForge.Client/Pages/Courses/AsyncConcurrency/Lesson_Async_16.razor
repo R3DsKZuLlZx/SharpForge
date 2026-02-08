@@ -28,7 +28,7 @@
 
                 <section class="lesson-section">
                     <h2>Tasks Window</h2>
-                    <p>Debug &gt; Windows &gt; Tasks (Ctrl+Shift+D, K)</p>
+                    <p>Example output from the Tasks window showing task IDs, status, and description - useful to identify active vs waiting tasks while debugging.</p>
                     <pre><code class="language-text">ID    Status          Description
 1     Waiting         GetDataAsync
 2     Running         ProcessItemAsync  
@@ -37,6 +37,7 @@
 
                 <section class="lesson-section">
                     <h2>Async Stack Traces</h2>
+                    <p>Enable full debug symbols or use tools like Ben.Demystifier to get clearer async stack traces that show the logical call path across awaits.</p>
                     <pre><code class="language-csharp">// Enable better async stack traces
 &lt;PropertyGroup&gt;
     &lt;DebugType&gt;full&lt;/DebugType&gt;
@@ -55,6 +56,7 @@ catch (Exception ex)
 
                 <section class="lesson-section">
                     <h2>Detecting Thread Pool Starvation</h2>
+                    <p>Collect ThreadPool metrics such as available threads vs max to detect starvation; low available threads and timeouts indicate pressure.</p>
                     <pre><code class="language-csharp">// Monitor thread pool
 ThreadPool.GetMinThreads(out int workerMin, out int ioMin);
 ThreadPool.GetMaxThreads(out int workerMax, out int ioMax);
@@ -70,6 +72,7 @@ Console.WriteLine($"Workers: {workerMax - workerAvail}/{workerMax}");
 
                 <section class="lesson-section">
                     <h2>dotnet-counters</h2>
+                    <p>Commands to install and monitor runtime counters like thread pool and queue lengths; useful for live diagnostics during load testing.</p>
                     <pre><code class="language-bash"># Install
 dotnet tool install -g dotnet-counters
 

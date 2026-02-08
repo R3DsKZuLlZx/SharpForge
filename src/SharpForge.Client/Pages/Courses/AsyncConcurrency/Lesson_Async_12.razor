@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>lock Statement</h2>
+                    <p>Use <code>lock</code> for simple mutual exclusion; avoid locking on public objects or <code>this</code> to prevent deadlocks.</p>
                     <pre><code class="language-csharp">private readonly object _lock = new();
 private int _counter;
 
@@ -36,6 +37,7 @@ lock (typeof(MyClass)) { }  // Bad!</code></pre>
 
                 <section class="lesson-section">
                     <h2>SemaphoreSlim</h2>
+                    <p><code>SemaphoreSlim</code> is async-friendly for throttling concurrent access; always release the semaphore in a finally block.</p>
                     <pre><code class="language-csharp">// Limit concurrent access
 private readonly SemaphoreSlim _semaphore = new(initialCount: 3);
 
@@ -55,6 +57,7 @@ public async Task ProcessAsync()
 
                 <section class="lesson-section">
                     <h2>ReaderWriterLockSlim</h2>
+                    <p>Reader-writer locks allow multiple concurrent readers or a single writer; useful for caches with many readers and fewer writers.</p>
                     <pre><code class="language-csharp">private readonly ReaderWriterLockSlim _rwLock = new();
 private Dictionary&lt;string, Data&gt; _cache = new();
 
@@ -87,6 +90,7 @@ public void Write(string key, Data data)
 
                 <section class="lesson-section">
                     <h2>Interlocked</h2>
+                    <p>Use <code>Interlocked</code> for atomic integer operations without locking - efficient for simple counters.</p>
                     <pre><code class="language-csharp">private int _counter;
 
 // Atomic operations - no lock needed

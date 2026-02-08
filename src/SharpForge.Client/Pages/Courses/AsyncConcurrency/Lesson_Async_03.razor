@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>The async Modifier</h2>
+                    <p>Mark methods <code>async</code> to enable <code>await</code>; prefer returning <code>Task</code> or <code>Task&lt;T&gt;</code> (avoid async void except for event handlers).</p>
                     <pre><code class="language-csharp">// async enables the await keyword in the method
 public async Task&lt;string&gt; GetDataAsync()
 {
@@ -36,6 +37,7 @@ public async Task&lt;string&gt; GetDataAsync()
 
                 <section class="lesson-section">
                     <h2>The await Keyword</h2>
+                    <p><code>await</code> checks for completion and either continues synchronously or registers a continuation - it's the key primitive for composing asynchronous operations.</p>
                     <pre><code class="language-csharp">public async Task ProcessAsync()
 {
     // await does three things:
@@ -52,6 +54,7 @@ public async Task&lt;string&gt; GetDataAsync()
 
                 <section class="lesson-section">
                     <h2>Multiple Awaits</h2>
+                    <p>Start independent tasks before awaiting them to run them concurrently; sequential awaits wait for each task before starting the next.</p>
                     <pre><code class="language-csharp">// Sequential - one after another
 public async Task SequentialAsync()
 {
@@ -74,6 +77,7 @@ public async Task ConcurrentAsync()
 
                 <section class="lesson-section">
                     <h2>ConfigureAwait</h2>
+                    <p>Use <code>ConfigureAwait(false)</code> in library code to avoid capturing synchronization context, improving performance and avoiding deadlocks in some hosting models.</p>
                     <pre><code class="language-csharp">// In library code, use ConfigureAwait(false)
 public async Task&lt;string&gt; GetDataAsync()
 {

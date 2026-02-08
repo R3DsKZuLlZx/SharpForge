@@ -18,7 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>What is a Task?</h2>
-                    <p>A Task represents an asynchronous operation that may or may not return a value.</p>
+                    <p>Tasks represent asynchronous operations; a <code>Task</code> doesn't return a value, while <code>Task&lt;T&gt;</code> does - await them to get results.</p>
                     <pre><code class="language-csharp">// Task - no return value
 Task task = DoSomethingAsync();
 
@@ -29,6 +29,7 @@ string result = await taskWithResult;</code></pre>
 
                 <section class="lesson-section">
                     <h2>Task States</h2>
+                    <p>Inspect task state and status properties to diagnose or monitor task lifecycle (running, completed, faulted, canceled).</p>
                     <pre><code class="language-csharp">var task = DoWorkAsync();
 
 Console.WriteLine(task.Status);        // Running, WaitingForActivation, etc.
@@ -40,6 +41,7 @@ Console.WriteLine(task.IsCanceled);    // true if canceled</code></pre>
 
                 <section class="lesson-section">
                     <h2>Creating Tasks</h2>
+                    <p>Different ways to create tasks: completed tasks, Task.Run for CPU-bound work, and wrapping async lambdas for background operations.</p>
                     <pre><code class="language-csharp">// 1. Return completed task
 Task&lt;int&gt; completed = Task.FromResult(42);
 

@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>AsParallel()</h2>
+                    <p>Turn a LINQ query into a parallel one with <code>AsParallel()</code> for CPU-bound operations; keep in mind PLINQ parallelizes the query pipeline across threads.</p>
                     <pre><code class="language-csharp">// Sequential LINQ
 var results = numbers
     .Where(n =&gt; n % 2 == 0)
@@ -34,6 +35,7 @@ var results = numbers
 
                 <section class="lesson-section">
                     <h2>Controlling Parallelism</h2>
+                    <p>Use <code>WithDegreeOfParallelism</code> to limit threads and <code>WithCancellation</code> to support cancellation in PLINQ queries.</p>
                     <pre><code class="language-csharp">var results = data
     .AsParallel()
     .WithDegreeOfParallelism(4)  // Max 4 threads
@@ -45,6 +47,7 @@ var results = numbers
 
                 <section class="lesson-section">
                     <h2>Preserving Order</h2>
+                    <p>By default PLINQ may return results out of order for speed; use <code>AsOrdered()</code> if you need to preserve original sequence at cost of some performance.</p>
                     <pre><code class="language-csharp">// Order NOT preserved by default (faster)
 var unordered = data.AsParallel().Select(Process).ToList();
 
@@ -58,6 +61,7 @@ var ordered = data
 
                 <section class="lesson-section">
                     <h2>ForAll for Side Effects</h2>
+                    <p>Use <code>ForAll</code> to perform side-effecting actions in parallel without materializing a collection; don't rely on ordering with ForAll.</p>
                     <pre><code class="language-csharp">// Don't use ToList() just for side effects
 data
     .AsParallel()

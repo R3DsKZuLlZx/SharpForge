@@ -21,12 +21,13 @@
                     <p>Asynchronous programming allows your application to remain responsive while waiting for I/O operations like network requests, file access, or database queries.</p>
                     <div class="info-box">
                         <div class="info-box-header"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span>Key Insight</span></div>
-                        <p>Async doesn't make things faster—it makes better use of resources while waiting.</p>
+                        <p>Async doesn't make things faster, it makes better use of resources while waiting.</p>
                     </div>
                 </section>
 
                 <section class="lesson-section">
                     <h2>Synchronous vs Asynchronous</h2>
+                    <p>The examples below contrast blocking synchronous calls with non-blocking async methods - prefer the async pattern to avoid thread starvation and keep applications responsive.</p>
                     <pre><code class="language-csharp">// Synchronous - blocks the thread while waiting
 public string GetData()
 {
@@ -70,6 +71,7 @@ public async Task&lt;string&gt; GetDataAsync()
 
                 <section class="lesson-section">
                     <h2>The Thread Pool</h2>
+                    <p>This snippet demonstrates how awaiting returns the thread to the pool and that continuations may run on a different thread, don't rely on thread affinity unless you capture a synchronization context.</p>
                     <pre><code class="language-csharp">// When you await, the thread returns to the pool
 // When the operation completes, a thread continues execution
 public async Task ProcessAsync()

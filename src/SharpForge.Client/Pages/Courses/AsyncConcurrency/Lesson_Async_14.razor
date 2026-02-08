@@ -23,6 +23,7 @@
 
                 <section class="lesson-section">
                     <h2>Creating Channels</h2>
+                    <p>Examples showing unbounded and bounded channels; choose bounded channels with a policy to control backpressure in production systems.</p>
                     <pre><code class="language-csharp">// Unbounded channel (unlimited capacity)
 var unbounded = Channel.CreateUnbounded&lt;Message&gt;();
 
@@ -41,6 +42,7 @@ var bounded = Channel.CreateBounded&lt;Message&gt;(new BoundedChannelOptions(100
 
                 <section class="lesson-section">
                     <h2>Producer-Consumer Pattern</h2>
+                    <p>Classic producer-consumer usage: producers write to the channel, consumers read with <code>ReadAllAsync</code> using <code>await foreach</code>.</p>
                     <pre><code class="language-csharp">var channel = Channel.CreateBounded&lt;WorkItem&gt;(100);
 
 // Producer
@@ -70,6 +72,7 @@ await Task.WhenAll(
 
                 <section class="lesson-section">
                     <h2>Multiple Consumers</h2>
+                    <p>Start multiple consumer tasks to increase throughput for independent processing of items from the same channel.</p>
                     <pre><code class="language-csharp">var channel = Channel.CreateUnbounded&lt;WorkItem&gt;();
 
 // Start multiple consumers
@@ -86,6 +89,7 @@ await Task.WhenAll(consumers);</code></pre>
 
                 <section class="lesson-section">
                     <h2>Real-World: Background Processing</h2>
+                    <p>BackgroundService that queues jobs to a bounded channel and processes them in ExecuteAsync using <code>ReadAllAsync</code>.</p>
                     <pre><code class="language-csharp">public class BackgroundProcessor : BackgroundService
 {
     private readonly Channel&lt;Job&gt; _channel;

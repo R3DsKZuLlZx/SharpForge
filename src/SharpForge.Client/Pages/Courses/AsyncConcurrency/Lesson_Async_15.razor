@@ -18,6 +18,7 @@
             <div class="lesson-body">
                 <section class="lesson-section">
                     <h2>❌ Pitfall 1: async void</h2>
+                    <p>Illustrates why <code>async void</code> is dangerous (exceptions lost and cannot be awaited), and shows correct patterns and the exception where async void is acceptable (event handlers).</p>
                     <pre><code class="language-csharp">// ❌ BAD - exceptions are lost, can't be awaited
 async void DoWork()
 {
@@ -37,6 +38,7 @@ button.Click += async (s, e) =&gt; await HandleClickAsync();</code></pre>
 
                 <section class="lesson-section">
                     <h2>❌ Pitfall 2: Blocking on Async (Deadlock!)</h2>
+                    <p>Examples that cause deadlocks when blocking on async code in contexts with synchronization contexts (UI/ASP.NET classic); advocate "async all the way" instead.</p>
                     <pre><code class="language-csharp">// ❌ DEADLOCK in UI/ASP.NET apps!
 public string GetData()
 {
@@ -58,6 +60,7 @@ public async Task&lt;string&gt; GetDataAsync()
 
                 <section class="lesson-section">
                     <h2>❌ Pitfall 3: Not Using ConfigureAwait</h2>
+                    <p>Use <code>ConfigureAwait(false)</code> in library code to avoid capturing the synchronization context and improve compatibility/performance across hosting models.</p>
                     <pre><code class="language-csharp">// In library code, always use ConfigureAwait(false)
 public async Task&lt;Data&gt; LibraryMethodAsync()
 {
@@ -69,6 +72,7 @@ public async Task&lt;Data&gt; LibraryMethodAsync()
 
                 <section class="lesson-section">
                     <h2>❌ Pitfall 4: Not Passing CancellationToken</h2>
+                    <p>Show why accepting and passing cancellation tokens is important for cooperative cancellation and resource management.</p>
                     <pre><code class="language-csharp">// ❌ BAD - ignores cancellation
 public async Task ProcessAsync()
 {
@@ -84,6 +88,7 @@ public async Task ProcessAsync(CancellationToken ct = default)
 
                 <section class="lesson-section">
                     <h2>❌ Pitfall 5: Using Task.Run for I/O</h2>
+                    <p>Don't offload I/O-bound work to the thread pool with <code>Task.Run</code>, instead await async I/O directly to avoid wasting threads.</p>
                     <pre><code class="language-csharp">// ❌ BAD - wastes a thread pool thread
 var data = await Task.Run(() =&gt; httpClient.GetStringAsync(url));
 
