@@ -7,7 +7,7 @@
     Title="Design Patterns in C#"
     Description="Learn Gang of Four patterns, SOLID principles, and clean architecture. Write maintainable, testable, and scalable code that stands the test of time."
     LessonCount="24"
-    Duration="10 Hours"
+    Duration="5 Hours"
     StudentCount="1,432"
     StartUrl="training/design-patterns/lesson/1">
     <IconContent>
@@ -53,7 +53,7 @@
             <CourseSidebar 
                 CourseId="design-patterns"
                 TotalLessons="24"
-                Duration="10 hours"
+                Duration="5 hours"
                 ExerciseCount="12"
                 ProjectDescription="Refactor a real application"
                 StartUrl="training/design-patterns/lesson/1" />
@@ -65,38 +65,38 @@
     private readonly List<CourseCurriculum.CourseLessonInfo> _lessons =
     [
         // SOLID Principles
-        new(1, "Introduction to Design Patterns", "Understand what design patterns are, their history, and why they matter.", "25 min"),
-        new(2, "Single Responsibility Principle", "Learn the S in SOLID - one class, one responsibility.", "25 min"),
-        new(3, "Open/Closed Principle", "Classes should be open for extension, closed for modification.", "25 min"),
-        new(4, "Liskov Substitution Principle", "Subtypes must be substitutable for their base types.", "25 min"),
-        new(5, "Interface Segregation Principle", "Many specific interfaces are better than one general interface.", "25 min"),
-        new(6, "Dependency Inversion Principle", "Depend on abstractions, not concretions.", "25 min"),
+        new(1, "Introduction to Design Patterns", "Understand what design patterns are, their history, and why they matter.", "10 min"),
+        new(2, "Single Responsibility Principle", "Learn the S in SOLID - one class, one responsibility.", "12 min"),
+        new(3, "Open/Closed Principle", "Classes should be open for extension, closed for modification.", "12 min"),
+        new(4, "Liskov Substitution Principle", "Subtypes must be substitutable for their base types.", "12 min"),
+        new(5, "Interface Segregation Principle", "Many specific interfaces are better than one general interface.", "10 min"),
+        new(6, "Dependency Inversion Principle", "Depend on abstractions, not concretions.", "12 min"),
         
         // Creational Patterns
-        new(7, "Singleton Pattern", "Ensure a class has only one instance with global access.", "25 min"),
-        new(8, "Factory Method Pattern", "Define an interface for creating objects, let subclasses decide which class to instantiate.", "30 min"),
-        new(9, "Abstract Factory Pattern", "Create families of related objects without specifying concrete classes.", "30 min"),
-        new(10, "Builder Pattern", "Separate construction of complex objects from their representation.", "30 min"),
-        new(11, "Prototype Pattern", "Create new objects by cloning existing ones.", "20 min"),
+        new(7, "Singleton Pattern", "Ensure a class has only one instance with global access.", "8 min"),
+        new(8, "Factory Method Pattern", "Define an interface for creating objects, let subclasses decide which class to instantiate.", "12 min"),
+        new(9, "Abstract Factory Pattern", "Create families of related objects without specifying concrete classes.", "12 min"),
+        new(10, "Builder Pattern", "Separate construction of complex objects from their representation.", "12 min"),
+        new(11, "Prototype Pattern", "Create new objects by cloning existing ones.", "8 min"),
         
         // Structural Patterns
-        new(12, "Adapter Pattern", "Convert the interface of a class into another interface clients expect.", "25 min"),
-        new(13, "Decorator Pattern", "Attach additional responsibilities to objects dynamically.", "30 min"),
-        new(14, "Facade Pattern", "Provide a unified interface to a set of interfaces in a subsystem.", "25 min"),
-        new(15, "Proxy Pattern", "Provide a surrogate or placeholder for another object.", "25 min"),
-        new(16, "Composite Pattern", "Compose objects into tree structures to represent part-whole hierarchies.", "25 min"),
+        new(12, "Adapter Pattern", "Convert the interface of a class into another interface clients expect.", "10 min"),
+        new(13, "Decorator Pattern", "Attach additional responsibilities to objects dynamically.", "12 min"),
+        new(14, "Facade Pattern", "Provide a unified interface to a set of interfaces in a subsystem.", "10 min"),
+        new(15, "Proxy Pattern", "Provide a surrogate or placeholder for another object.", "10 min"),
+        new(16, "Composite Pattern", "Compose objects into tree structures to represent part-whole hierarchies.", "12 min"),
         
         // Behavioral Patterns
-        new(17, "Strategy Pattern", "Define a family of algorithms and make them interchangeable.", "25 min"),
-        new(18, "Observer Pattern", "Define a one-to-many dependency between objects.", "30 min"),
-        new(19, "Command Pattern", "Encapsulate a request as an object.", "25 min"),
-        new(20, "State Pattern", "Allow an object to alter its behavior when its internal state changes.", "25 min"),
-        new(21, "Template Method Pattern", "Define the skeleton of an algorithm, deferring steps to subclasses.", "25 min"),
-        new(22, "Chain of Responsibility", "Pass requests along a chain of handlers.", "25 min"),
+        new(17, "Strategy Pattern", "Define a family of algorithms and make them interchangeable.", "12 min"),
+        new(18, "Observer Pattern", "Define a one-to-many dependency between objects.", "14 min"),
+        new(19, "Command Pattern", "Encapsulate a request as an object.", "12 min"),
+        new(20, "State Pattern", "Allow an object to alter its behavior when its internal state changes.", "12 min"),
+        new(21, "Template Method Pattern", "Define the skeleton of an algorithm, deferring steps to subclasses.", "12 min"),
+        new(22, "Chain of Responsibility", "Pass requests along a chain of handlers.", "12 min"),
         
         // Architecture
-        new(23, "Clean Architecture", "Organize code into layers with clear dependencies.", "35 min"),
-        new(24, "Putting It All Together", "Apply multiple patterns in a real-world application.", "40 min")
+        new(23, "Clean Architecture", "Organize code into layers with clear dependencies.", "20 min"),
+        new(24, "Putting It All Together", "Apply multiple patterns in a real-world application.", "22 min")
     ];
 
     private readonly List<string> _prerequisites =
