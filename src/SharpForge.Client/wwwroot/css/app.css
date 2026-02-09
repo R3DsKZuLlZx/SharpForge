@@ -1054,6 +1054,34 @@ input, textarea, select {
     font-size: 0.9375rem;
 }
 
+/* Warning Box - added to match info-box styling with warning colors */
+.warning-box {
+    background: var(--bg-secondary);
+    border-left: 4px solid #eab308; /* warning color */
+    border-radius: 0 0.5rem 0.5rem 0;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+}
+
+.warning-box-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.warning-box-header svg {
+    color: #eab308;
+}
+
+.warning-box p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+}
+
 /* Syntax Box */
 .syntax-box {
     background: var(--accent-light);
