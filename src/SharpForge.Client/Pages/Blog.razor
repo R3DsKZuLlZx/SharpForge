@@ -126,8 +126,8 @@
 @code {
     private int CurrentPage { get; set; } = 1;
     private int PageSize { get; set; } = 6;
-    private string? SelectedCategory { get; set; } = null;
-    
+    private string? SelectedCategory { get; set; }
+
     private BlogPost FeaturedPost { get; } = new()
     {
         Title = "What's New in .NET 10: A Complete Overview",
@@ -137,8 +137,9 @@
         Url = "blog/whats-new-in-dotnet-10"
     };
 
-    private List<BlogPost> AllPosts { get; } = new()
-    {
+    private List<BlogPost> AllPosts { get; } =
+    [
+        new() { Title = "MediatR Replacements: Wolverine & Mediator.SourceGenerators", Excerpt = "Compare Wolverine and Mediator.SourceGenerators as alternatives to MediatR; when to use each, minimal examples, and migration tips.", Date = "February 11, 2026", Category = "Architecture", Url = "blog/mediatR-replacements" },
         new() { Title = "Blazor Render Modes & Hosting Models", Excerpt = "Compare Blazor render modes (WASM, Server, prerendering) and hosting models (Standalone WASM, ASP.NET Core hosted).", Date = "February 3, 2026", Category = "Blazor", Url = "blog/blazor-render-modes" },
 
         new() { Title = "Building Real-Time Apps with Blazor and SignalR", Excerpt = "Learn how to create interactive real-time applications using Blazor WebAssembly and SignalR for seamless client-server communication.", Date = "January 22, 2026", Category = "Blazor", Url = "blog/blazor-signalr-realtime" },
@@ -161,7 +162,7 @@
         new() { Title = "Docker for .NET Developers", Excerpt = "Containerize your .NET applications with Docker. Learn about multi-stage builds, optimization, and Docker Compose.", Date = "November 1, 2025", Category = "DevOps", Url = "blog/docker-for-dotnet-developers" },
         new() { Title = "gRPC Services in .NET", Excerpt = "Build high-performance microservices with gRPC. Covers protobuf, streaming, and integration with ASP.NET Core.", Date = "October 25, 2025", Category = "ASP.NET Core", Url = "blog/grpc-services-dotnet" },
         new() { Title = "Minimal APIs in .NET", Excerpt = "Build lightweight APIs with minimal code using .NET Minimal APIs. Perfect for microservices and simple endpoints.", Date = "October 20, 2025", Category = "ASP.NET Core", Url = "blog/minimal-apis-dotnet" }
-    };
+    ];
 
     private int TotalPages => (int)Math.Ceiling((double)FilteredPosts.Count() / PageSize);
 
