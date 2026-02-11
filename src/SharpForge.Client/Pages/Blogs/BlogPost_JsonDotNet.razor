@@ -42,7 +42,7 @@ var user2 = JsonSerializer.Deserialize&lt;User&gt;(json);
 var options = new JsonSerializerOptions { WriteIndented = true };
 string prettyJson = JsonSerializer.Serialize(user, options);</code></pre>
 
-                <h2>Common Options</h2>
+                <h2 id="options">Common Options</h2>
                 <pre><code>var options = new JsonSerializerOptions
 {
     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -240,16 +240,7 @@ var results = jObject.SelectTokens("$.users[?(@@.age > 25)]");</code></pre>
                     </ul>
                 </div>
 
-                <div class="sidebar-section author">
-                    <h4>About the Author</h4>
-                    <div class="author-info">
-                        <div class="author-avatar">SF</div>
-                        <div>
-                            <strong>SharpForge Team</strong>
-                            <p>Passionate about C# and .NET development</p>
-                        </div>
-                    </div>
-                </div>
+                <BlogAuthor />
             </aside>
         </div>
     </div>

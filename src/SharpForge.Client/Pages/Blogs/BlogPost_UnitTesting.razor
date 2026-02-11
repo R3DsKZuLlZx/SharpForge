@@ -204,7 +204,7 @@ public void GetActiveUsers_ReturnsOnlyActiveUsers()
     Assert.DoesNotContain(result, u =&gt; u.Id == 2);
 }</code></pre>
 
-                <h2>Fixtures and Shared Context</h2>
+                <h2 id="fixtures">Fixtures and Shared Context</h2>
                 <pre><code>// Shared setup across tests in a class
 public class DatabaseTests : IClassFixture&lt;DatabaseFixture&gt;
 {
@@ -270,16 +270,7 @@ public class DatabaseFixture : IDisposable
                     </ul>
                 </div>
 
-                <div class="sidebar-section author">
-                    <h4>About the Author</h4>
-                    <div class="author-info">
-                        <div class="author-avatar">SF</div>
-                        <div>
-                            <strong>SharpForge Team</strong>
-                            <p>Passionate about C# and .NET development</p>
-                        </div>
-                    </div>
-                </div>
+                <BlogAuthor />
             </aside>
         </div>
     </div>

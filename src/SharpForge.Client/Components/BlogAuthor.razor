@@ -1,0 +1,22 @@
+<div class="sidebar-section author">
+    <h4>About the Author</h4>
+    <div class="author-info">
+        <div class="author-avatar">@AvatarText</div>
+        <div>
+            <strong>@AuthorName</strong>
+            <p>@Bio</p>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string AvatarText { get; set; } = "SF";
+
+    [Parameter]
+    public string AuthorName { get; set; } = "SharpForge Team";
+
+    [Parameter]
+    public string Bio { get; set; } = "Passionate about C# and .NET development";
+}
+

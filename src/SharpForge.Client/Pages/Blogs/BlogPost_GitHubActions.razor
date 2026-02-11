@@ -27,7 +27,7 @@
             <div class="post-body">
                 <p>GitHub Actions provides a powerful platform for automating your .NET build, test, and deployment workflows. This guide walks you through setting up a complete CI/CD pipeline.</p>
 
-                <h2>Basic Build Workflow</h2>
+                <h2 id="basic-build">Basic Build Workflow</h2>
                 <p>Create a file at <code>.github/workflows/build.yml</code>:</p>
 
                 <pre><code>name: Build and Test
@@ -95,7 +95,7 @@ jobs:
         dotnet build --configuration Release
         dotnet test --configuration Release</code></pre>
 
-                <h2>Publishing NuGet Packages</h2>
+                <h2 id="nuget">Publishing NuGet Packages</h2>
                 <pre><code>name: Publish NuGet Package
 
 on:
@@ -156,7 +156,7 @@ jobs:
           myapp:latest
           myapp:${{ github.sha }}</code></pre>
 
-                <h2>Deploy to Azure App Service</h2>
+                <h2 id="azure">Deploy to Azure App Service</h2>
                 <pre><code>name: Deploy to Azure
 
 on:
@@ -316,18 +316,8 @@ jobs:
                     </ul>
                 </div>
 
-                <div class="sidebar-section author">
-                    <h4>About the Author</h4>
-                    <div class="author-info">
-                        <div class="author-avatar">SF</div>
-                        <div>
-                            <strong>SharpForge Team</strong>
-                            <p>Passionate about C# and .NET development</p>
-                        </div>
-                    </div>
-                </div>
+                <BlogAuthor />
             </aside>
         </div>
     </div>
 </article>
-
