@@ -4,23 +4,12 @@
 <CodeHighlighter />
 
 <article class="blog-post">
-    <header class="post-header">
-        <div class="container">
-            <a href="blog" class="back-link">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="15 18 9 12 15 6"/>
-                </svg>
-                Back to Blog
-            </a>
-            <div class="post-meta">
-                <span class="post-category">Performance</span>
-                <span class="post-date">December 1, 2025</span>
-                <span class="post-read-time">8 min read</span>
-            </div>
-            <h1>LINQ Performance Tips</h1>
-            <p class="post-excerpt">Optimize your LINQ queries with these practical tips. Learn about deferred execution, materialization, and common pitfalls.</p>
-        </div>
-    </header>
+    <BlogHeader
+        Category="Performance"
+        Date="December 1, 2025"
+        ReadTime="8 min read"
+        Title="LINQ Performance Tips"
+        Excerpt="Optimize your LINQ queries with these practical tips. Learn about deferred execution, materialization, and common pitfalls." />
 
     <div class="container">
         <div class="post-content-wrapper">
@@ -90,7 +79,7 @@ var product = list.Find(p =&gt; p.Id == 5);
 // Also fine
 var product2 = list.FirstOrDefault(p =&gt; p.Id == 5);</code></pre>
 
-                <h2>Avoid Allocations</h2>
+                <h2 id="avoid-allocations">Avoid Allocations</h2>
 
                 <h3>Use Span-based Methods</h3>
                 <pre><code>// ❌ Allocates array

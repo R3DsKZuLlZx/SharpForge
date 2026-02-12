@@ -4,23 +4,12 @@
 <CodeHighlighter />
 
 <article class="blog-post">
-    <header class="post-header">
-        <div class="container">
-            <a href="blog" class="back-link">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="15 18 9 12 15 6"/>
-                </svg>
-                Back to Blog
-            </a>
-            <div class="post-meta">
-                <span class="post-category">Blazor</span>
-                <span class="post-date">February 3, 2026</span>
-                <span class="post-read-time">8 min read</span>
-            </div>
-            <h1>Understanding Blazor Render Modes and Hosting Models</h1>
-            <p class="post-excerpt">Blazor provides several ways to render components and to host applications. This post explains the trade-offs between render modes (WASM, Server, and automatic/prerendering options) and the common hosting models (Standalone WebAssembly vs ASP.NET Core hosted Web App).</p>
-        </div>
-    </header>
+    <BlogHeader
+        Category="Blazor" 
+        Date="February 3, 2026" 
+        ReadTime="8 min read" 
+        Title="Understanding Blazor Render Modes and Hosting Models" 
+        Excerpt="Blazor provides several ways to render components and to host applications. This post explains the trade-offs between render modes (WASM, Server, and automatic/prerendering options) and the common hosting models (Standalone WebAssembly vs ASP.NET Core hosted Web App)."/>
 
     <div class="container">
         <div class="post-content-wrapper">

@@ -1,0 +1,41 @@
+<header class="post-header">
+    <div class="container">
+        <a href="@BackUrl" class="back-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6" />
+            </svg>
+            Back to Blog
+        </a>
+
+        <div class="post-meta">
+            @if (!string.IsNullOrWhiteSpace(Category))
+            {
+                <span class="post-category">@Category</span>
+            }
+            @if (!string.IsNullOrWhiteSpace(Date))
+            {
+                <span class="post-date">@Date</span>
+            }
+            @if (!string.IsNullOrWhiteSpace(ReadTime))
+            {
+                <span class="post-read-time">@ReadTime</span>
+            }
+        </div>
+
+        <h1>@Title</h1>
+
+        @if (!string.IsNullOrWhiteSpace(Excerpt))
+        {
+            <p class="post-excerpt">@Excerpt</p>
+        }
+    </div>
+</header>
+
+@code {
+    [Parameter] public string BackUrl { get; set; } = "blog";
+    [Parameter] public string Category { get; set; } = string.Empty;
+    [Parameter] public string Date { get; set; } = string.Empty;
+    [Parameter] public string ReadTime { get; set; } = string.Empty;
+    [Parameter] public string Title { get; set; } = string.Empty;
+    [Parameter] public string Excerpt { get; set; } = string.Empty;
+}
