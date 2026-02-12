@@ -91,12 +91,7 @@ var user = await mediator.Send(new GetUser(42));
                 <h2 id="conclusion">Conclusion</h2>
                 <p>There's no one-size-fits-all replacement for MediatR. Wolverine and Mediator.SourceGenerators solve different problems - one focuses on rich messaging/runtime features, the other on compile-time performance and low runtime overhead. Choose based on whether you need durable, distributed messaging or lean, high-performance in-process dispatch.</p>
 
-                <p class="post-tags">
-                    <span class="tag">MediatR</span>
-                    <span class="tag">Wolverine</span>
-                    <span class="tag">Source Generators</span>
-                    <span class="tag">CQRS</span>
-                </p>
+                <BlogTags Tags="@(new[] { "MediatR", "Wolverine", "Source Generators", "CQRS" })" />
             </div>
 
             <aside class="post-sidebar">

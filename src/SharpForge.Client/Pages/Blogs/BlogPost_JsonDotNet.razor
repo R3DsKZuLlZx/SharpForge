@@ -208,12 +208,7 @@ var results = jObject.SelectTokens("$.users[?(@@.age > 25)]");</code></pre>
                 <h2>Conclusion</h2>
                 <p>System.Text.Json is the recommended choice for most .NET applications. It's fast, built-in, and supports AOT compilation. Use Newtonsoft.Json when you need its advanced features.</p>
 
-                <div class="post-tags">
-                    <span class="tag">JSON</span>
-                    <span class="tag">System.Text.Json</span>
-                    <span class="tag">Serialization</span>
-                    <span class="tag">.NET</span>
-                </div>
+                <BlogTags Tags="@(new[] { "JSON", "System.Text.Json", "Serialization", ".NET" })" />
             </div>
 
             <aside class="post-sidebar">
