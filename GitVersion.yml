@@ -1,0 +1,24 @@
+﻿mode: ContinuousDeployment
+next-version: 1.0.0
+tag-prefix: v
+branches:
+  main:
+    regex: ^main$
+    mode: ContinuousDeployment
+    tag: ''
+    increment: Patch
+  release:
+    regex: ^release[/-]
+    mode: ContinuousDelivery
+    tag: ''
+    increment: Major
+  feature:
+    regex: ^feature[/-]
+    mode: ContinuousDelivery
+    tag: '{BranchName}'
+    increment: Minor
+  pull-request:
+    regex: ^(pull|pull\-requests|pr)[/-]
+    mode: ContinuousDelivery
+    tag: PullRequest
+    increment: Inherit
