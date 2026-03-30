@@ -1,0 +1,26 @@
+﻿name: CI
+
+on:
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore src/SharpForge.Client/SharpForge.Client.csproj
+
+      - name: Build
+        run: dotnet build src/SharpForge.Client/SharpForge.Client.csproj -c Release --no-restore
