@@ -1,24 +1,24 @@
-﻿mode: ContinuousDeployment
+﻿workflow: GitHubFlow/v1
 next-version: 1.0.0
 tag-prefix: v
 branches:
   main:
     regex: ^main$
     mode: ContinuousDeployment
-    tag: ''
+    label: ''
     increment: Patch
   release:
     regex: ^release[/-]
     mode: ContinuousDelivery
-    tag: ''
+    label: ''
     increment: Major
   feature:
     regex: ^feature[/-]
     mode: ContinuousDelivery
-    tag: '{BranchName}'
+    label: '{BranchName}'
     increment: Minor
   pull-request:
     regex: ^(pull|pull\-requests|pr)[/-]
     mode: ContinuousDelivery
-    tag: PullRequest
+    label: PullRequest
     increment: Inherit
