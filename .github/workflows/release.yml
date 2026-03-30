@@ -1,4 +1,4 @@
-﻿name: Create Release
+name: Create Release
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
           echo "Valid SemVer tag: $TAG"
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
