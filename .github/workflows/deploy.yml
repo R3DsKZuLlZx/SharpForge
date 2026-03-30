@@ -35,6 +35,23 @@ jobs:
       - name: Copy index.html to 404.html for SPA routing
         run: cp release/wwwroot/index.html release/wwwroot/404.html
 
+      - name: Generate sitemap.xml
+        run: |
+          BASE_URL="https://sharpforge.co.uk"
+          OUT="release/wwwroot/sitemap.xml"
+
+          {
+            echo '<?xml version="1.0" encoding="UTF-8"?>'
+            echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+            grep -rh '^@page "' src/SharpForge.Client/Pages --include="*.razor" \
+              | sed 's/@page "\(.*\)"/\1/' \
+              | grep -v '^/not-found$' \
+              | sort -u \
+              | sed 's|.*|  <url><loc>'${BASE_URL}'&</loc></url>|'
+            echo '</urlset>'
+          } > "$OUT"
+          echo "Generated $(grep -c '<url>' "$OUT") URLs → $OUT"
+
       - name: Add .nojekyll
         run: touch release/wwwroot/.nojekyll
 
@@ -53,4 +70,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
