@@ -43,7 +43,8 @@ jobs:
           {
             echo '<?xml version="1.0" encoding="UTF-8"?>'
             echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
-            grep -rh '@page "' src/SharpForge.Client/Pages --include="*.razor" \
+            find src/SharpForge.Client/Pages -name "*.razor" -exec sed 's/^\xEF\xBB\xBF//' {} \; \
+              | grep '^@page "/' \
               | sed 's/@page "\(.*\)"/\1/' \
               | grep -v '^/not-found$' \
               | sort -u \
