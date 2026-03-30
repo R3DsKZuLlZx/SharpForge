@@ -47,7 +47,7 @@ jobs:
               | sed 's/@page "\(.*\)"/\1/' \
               | grep -v '^/not-found$' \
               | sort -u \
-              | sed 's|.*|  <url><loc>'${BASE_URL}'&</loc></url>|'
+              | sed 's|.*|  <url><loc>'"${BASE_URL}"'&</loc></url>|'
             echo '</urlset>'
           } > "$OUT"
           echo "Generated $(grep -c '<url>' "$OUT") URLs → $OUT"
