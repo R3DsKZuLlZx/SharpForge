@@ -1,4 +1,8 @@
-﻿# CLAUDE.md — SharpForge Blog Post Authoring Guide
+﻿# CLAUDE.md — SharpForge Project Instructions
+
+## Commit messages
+
+See `.github/copilot-instructions.md` for Conventional Commits rules. Follow them for all commits.
 
 ## Project overview
 
