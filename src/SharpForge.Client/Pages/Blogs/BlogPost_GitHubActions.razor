@@ -284,24 +284,18 @@ jobs:
                 <h2>Conclusion</h2>
                 <p>GitHub Actions provides everything you need for .NET CI/CD. Start simple and gradually add more automation as your project grows.</p>
 
-                <BlogTags Tags="@(new[] { "GitHub Actions", "CI/CD", "DevOps", ".NET" })" />
+                <BlogTags Tags="@(["GitHub Actions", "CI/CD", "DevOps", ".NET"])" />
             </div>
 
-            <aside class="post-sidebar">
-                <div class="sidebar-section toc">
-                    <h4>Table of Contents</h4>
-                    <ul>
-                        <li><a href="#basic-build">Basic Build</a></li>
-                        <li><a href="#code-coverage">Code Coverage</a></li>
-                        <li><a href="#multi-platform">Multi-Platform</a></li>
-                        <li><a href="#nuget">NuGet Publishing</a></li>
-                        <li><a href="#docker">Docker Build</a></li>
-                        <li><a href="#azure">Azure Deploy</a></li>
-                    </ul>
-                </div>
-
-                <BlogAuthor />
-            </aside>
+            <BlogSidebar Items="@(
+               [
+                   new BlogSidebarItem("#basic-build", "Basic Build"),
+                   new BlogSidebarItem("#code-coverage", "Code Coverage"),
+                   new BlogSidebarItem("#multi-platform", "Multi-Platform"),
+                   new BlogSidebarItem("#nuget", "NuGet Publishing"),
+                   new BlogSidebarItem("#docker", "Docker Build"),
+                   new BlogSidebarItem("#azure", "Azure Deploy")
+               ])"/>
         </div>
     </div>
 </article>

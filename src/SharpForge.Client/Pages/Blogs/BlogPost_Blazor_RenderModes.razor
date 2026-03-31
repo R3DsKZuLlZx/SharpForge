@@ -97,22 +97,16 @@ app.Run();</code></pre>
 
                 <p>If you're deciding for a new project, make a small spike: measure initial load, memory, server costs and developer experience. That data will guide a confident choice.</p>
 
-                <BlogTags Tags="@(new[] { "Blazor", "WebAssembly", "Hosting" })" />
+                <BlogTags Tags="@(["Blazor", "WebAssembly", "Hosting"])" />
             </div>
 
-            <aside class="post-sidebar">
-                <div class="sidebar-section toc">
-                    <h4>Table of Contents</h4>
-                    <ul>
-                        <li><a href="#render-modes">Render modes</a></li>
-                        <li><a href="#hosting-models">Hosting models</a></li>
-                        <li><a href="#tradeoffs-and-guidance">Trade-offs</a></li>
-                        <li><a href="#examples">Examples</a></li>
-                    </ul>
-                </div>
-
-                <BlogAuthor />
-            </aside>
+            <BlogSidebar Items="@(
+               [
+                   new BlogSidebarItem("#render-modes", "Render modes"),
+                   new BlogSidebarItem("#hosting-models", "Hosting models"),
+                   new BlogSidebarItem("#tradeoffs-and-guidance", "Trade-offs"),
+                   new BlogSidebarItem("#examples", "Examples")
+               ])"/>
         </div>
     </div>
 </article>

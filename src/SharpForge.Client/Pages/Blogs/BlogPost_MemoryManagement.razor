@@ -207,24 +207,18 @@ dotnet-dump analyze &lt;dump-file&gt;
                 <h2>Conclusion</h2>
                 <p>Understanding .NET memory management helps you write more efficient applications. Use the tools and techniques described here to identify and fix memory issues, and always profile before optimizing.</p>
 
-                <BlogTags Tags="@(new[] { "Memory Management", "Garbage Collection", "Performance", ".NET" })" />
+                <BlogTags Tags="@(["Memory Management", "Garbage Collection", "Performance", ".NET"])" />
             </div>
 
-            <aside class="post-sidebar">
-                <div class="sidebar-section toc">
-                    <h4>Table of Contents</h4>
-                    <ul>
-                        <li><a href="#the-net-memory-model">Memory Model</a></li>
-                        <li><a href="#garbage-collection-generations">GC Generations</a></li>
-                        <li><a href="#large-object-heap">Large Object Heap</a></li>
-                        <li><a href="#memory-optimization">Optimization Techniques</a></li>
-                        <li><a href="#detecting-memory-issues">Detecting Issues</a></li>
-                        <li><a href="#idisposable-pattern">IDisposable Pattern</a></li>
-                    </ul>
-                </div>
-
-                <BlogAuthor />
-            </aside>
+            <BlogSidebar Items="@(
+               [
+                   new BlogSidebarItem("#the-net-memory-model", "Memory Model"),
+                   new BlogSidebarItem("#garbage-collection-generations", "GC Generations"),
+                   new BlogSidebarItem("#large-object-heap", "Large Object Heap"),
+                   new BlogSidebarItem("#memory-optimization", "Optimization Techniques"),
+                   new BlogSidebarItem("#detecting-memory-issues", "Detecting Issues"),
+                   new BlogSidebarItem("#idisposable-pattern", "IDisposable Pattern")
+               ])"/>
         </div>
     </div>
 </article>

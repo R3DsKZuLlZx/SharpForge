@@ -119,24 +119,18 @@ dotnet run</code></pre>
 
                 <p>Whether you're building web APIs, desktop applications, or cloud-native microservices, .NET 10 has something to offer. We encourage you to try it out and explore the new features for yourself.</p>
 
-                <BlogTags Tags="@(new[] { ".NET 10", "C# 13", "ASP.NET Core", "Performance" })" />
+                <BlogTags Tags="@([".NET 10", "C# 13", "ASP.NET Core", "Performance"])" />
             </div>
 
-            <aside class="post-sidebar">
-                <div class="sidebar-section toc">
-                    <h4>Table of Contents</h4>
-                    <ul>
-                        <li><a href="#performance-improvements">Performance Improvements</a></li>
-                        <li><a href="#c-13-language-features">C# 13 Language Features</a></li>
-                        <li><a href="#aspnet-core-10">ASP.NET Core 10</a></li>
-                        <li><a href="#entity-framework-core-10">Entity Framework Core 10</a></li>
-                        <li><a href="#getting-started">Getting Started</a></li>
-                        <li><a href="#conclusion">Conclusion</a></li>
-                    </ul>
-                </div>
-
-                <BlogAuthor />
-            </aside>
+            <BlogSidebar Items="@(
+               [
+                   new BlogSidebarItem("#performance-improvements", "Performance Improvements"),
+                   new BlogSidebarItem("#c-13-language-features", "C# 13 Language Features"),
+                   new BlogSidebarItem("#aspnet-core-10", "ASP.NET Core 10"),
+                   new BlogSidebarItem("#entity-framework-core-10", "Entity Framework Core 10"),
+                   new BlogSidebarItem("#getting-started", "Getting Started"),
+                   new BlogSidebarItem("#conclusion", "Conclusion")
+               ])"/>
         </div>
     </div>
 </article>

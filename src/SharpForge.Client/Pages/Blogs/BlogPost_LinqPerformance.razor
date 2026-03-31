@@ -197,20 +197,14 @@ public class LinqBenchmarks
                 <BlogTags Tags="@(["LINQ", "Performance", "C#", "Best Practices"])"/>
             </div>
 
-            <aside class="post-sidebar">
-                <div class="sidebar-section toc">
-                    <h4>Table of Contents</h4>
-                    <ul>
-                        <li><a href="#deferred-execution">Deferred Execution</a></li>
-                        <li><a href="#use-right-method">Right Methods</a></li>
-                        <li><a href="#avoid-allocations">Avoid Allocations</a></li>
-                        <li><a href="#database-queries">Database Queries</a></li>
-                        <li><a href="#plinq">PLINQ</a></li>
-                    </ul>
-                </div>
-
-                <BlogAuthor />
-            </aside>
+            <BlogSidebar Items="@(
+               [
+                   new BlogSidebarItem("#deferred-execution", "Deferred Execution"),
+                   new BlogSidebarItem("#use-right-method", "Right Methods"),
+                   new BlogSidebarItem("#avoid-allocations", "Avoid Allocations"),
+                   new BlogSidebarItem("#database-queries", "Database Queries"),
+                   new BlogSidebarItem("#plinq", "PLINQ")
+               ])"/>
         </div>
     </div>
 </article>

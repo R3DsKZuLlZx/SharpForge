@@ -91,23 +91,17 @@ var user = await mediator.Send(new GetUser(42));
                 <h2 id="conclusion">Conclusion</h2>
                 <p>There's no one-size-fits-all replacement for MediatR. Wolverine and Mediator.SourceGenerators solve different problems - one focuses on rich messaging/runtime features, the other on compile-time performance and low runtime overhead. Choose based on whether you need durable, distributed messaging or lean, high-performance in-process dispatch.</p>
 
-                <BlogTags Tags="@(new[] { "MediatR", "Wolverine", "Source Generators", "CQRS" })" />
+                <BlogTags Tags="@(["MediatR", "Wolverine", "Source Generators", "CQRS"])" />
             </div>
 
-            <aside class="post-sidebar">
-                <div class="sidebar-section toc">
-                    <h4>Table of Contents</h4>
-                    <ul>
-                        <li><a href="#quick-compare">Quick comparison</a></li>
-                        <li><a href="#wolverine-example">Wolverine example</a></li>
-                        <li><a href="#mediator-sourcegenerators-example">Mediator.SourceGenerators example</a></li>
-                        <li><a href="#side-by-side">Side-by-side</a></li>
-                        <li><a href="#migration-tips">Migration tips</a></li>
-                    </ul>
-                </div>
-
-                <BlogAuthor />
-            </aside>
+            <BlogSidebar Items="@(
+               [
+                   new BlogSidebarItem("#quick-compare", "Quick comparison"),
+                   new BlogSidebarItem("#wolverine-example", "Wolverine example"),
+                   new BlogSidebarItem("#mediator-sourcegenerators-example", "Mediator.SourceGenerators example"),
+                   new BlogSidebarItem("#side-by-side", "Side-by-side"),
+                   new BlogSidebarItem("#migration-tips", "Migration tips")
+               ])"/>
         </div>
     </div>
 </article>

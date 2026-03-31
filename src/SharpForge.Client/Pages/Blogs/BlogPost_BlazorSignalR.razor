@@ -202,24 +202,18 @@ hubConnection.Closed += error =&gt;
                 <h2 id="conclusion">Conclusion</h2>
                 <p>Blazor and SignalR make an excellent combination for building real-time web applications. With minimal setup, you can create interactive experiences that update instantly across all connected clients. Whether you're building a chat application, a live dashboard, or a collaborative tool, these technologies provide the foundation you need.</p>
 
-                <BlogTags Tags="@(new[] { "Blazor", "SignalR", "Real-Time", "WebAssembly" })" />
+                <BlogTags Tags="@(["Blazor", "SignalR", "Real-Time", "WebAssembly"])" />
             </div>
 
-            <aside class="post-sidebar">
-                <div class="sidebar-section toc">
-                    <h4>Table of Contents</h4>
-                    <ul>
-                        <li><a href="#what-is-signalr">What is SignalR?</a></li>
-                        <li><a href="#setting-up-the-project">Setting Up the Project</a></li>
-                        <li><a href="#building-the-client">Building the Client</a></li>
-                        <li><a href="#advanced-features">Advanced Features</a></li>
-                        <li><a href="#best-practices">Best Practices</a></li>
-                        <li><a href="#conclusion">Conclusion</a></li>
-                    </ul>
-                </div>
-
-                <BlogAuthor />
-            </aside>
+            <BlogSidebar Items="@(
+               [
+                   new BlogSidebarItem("#what-is-signalr", "What is SignalR?"),
+                   new BlogSidebarItem("#setting-up-the-project", "Setting Up the Project"),
+                   new BlogSidebarItem("#building-the-client", "Building the Client"),
+                   new BlogSidebarItem("#advanced-features", "Advanced Features"),
+                   new BlogSidebarItem("#best-practices", "Best Practices"),
+                   new BlogSidebarItem("#conclusion", "Conclusion")
+               ])"/>
         </div>
     </div>
 </article>

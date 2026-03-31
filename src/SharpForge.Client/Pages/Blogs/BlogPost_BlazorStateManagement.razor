@@ -274,23 +274,17 @@ builder.Services.AddBlazoredLocalStorage();</code></pre>
                     <li>Persist important state to browser storage</li>
                 </ul>
 
-                <BlogTags Tags="@(new[] { "Blazor", "State Management", "Fluxor" })" />
+                <BlogTags Tags="@(["Blazor", "State Management", "Fluxor"])" />
             </div>
 
-            <aside class="post-sidebar">
-                <div class="sidebar-section toc">
-                    <h4>Table of Contents</h4>
-                    <ul>
-                        <li><a href="#component-state">Component State</a></li>
-                        <li><a href="#cascading-values">Cascading Values</a></li>
-                        <li><a href="#state-container">State Container</a></li>
-                        <li><a href="#flux-redux">Flux/Redux</a></li>
-                        <li><a href="#browser-storage">Browser Storage</a></li>
-                    </ul>
-                </div>
-
-                <BlogAuthor />
-            </aside>
+            <BlogSidebar Items="@(
+               [
+                   new BlogSidebarItem("#component-state", "Component State"),
+                   new BlogSidebarItem("#cascading-values", "Cascading Values"),
+                   new BlogSidebarItem("#state-container", "State Container"),
+                   new BlogSidebarItem("#flux-redux", "Flux/Redux"),
+                   new BlogSidebarItem("#browser-storage", "Browser Storage")
+               ])"/>
         </div>
     </div>
 </article>

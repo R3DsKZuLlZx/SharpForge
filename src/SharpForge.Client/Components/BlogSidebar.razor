@@ -1,0 +1,22 @@
+﻿@namespace SharpForge.Client.Components
+
+<aside class="post-sidebar">
+    <div class="sidebar-section toc">
+        <h4>Table of Contents</h4>
+        @if (Items is not null && Items.Any())
+        {
+            <ul>
+                @foreach (var it in Items)
+                {
+                    <BlogTocItem Href="@it.Href" Text="@it.Text" />
+                }
+            </ul>
+        }
+        else
+        {
+            @ChildContent
+        }
+    </div>
+
+    <BlogAuthor />
+</aside>

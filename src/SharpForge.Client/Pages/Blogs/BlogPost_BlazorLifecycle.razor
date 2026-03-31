@@ -237,27 +237,21 @@ OnAfterRender(Async)
                     <li>Avoid expensive operations in <code>ShouldRender</code></li>
                 </ul>
 
-                <BlogTags Tags="@(new []{"Blazor", "Components", "Lifecycle", ".NET"})"/>
+                <BlogTags Tags="@(["Blazor", "Components", "Lifecycle", ".NET"])"/>
             </div>
 
-            <aside class="post-sidebar">
-                <div class="sidebar-section toc">
-                    <h4>Table of Contents</h4>
-                    <ul>
-                        <li><a href="#lifecycle-overview">Overview</a></li>
-                        <li><a href="#setparametersasync">SetParametersAsync</a></li>
-                        <li><a href="#oninitialized">OnInitialized</a></li>
-                        <li><a href="#onparametersset">OnParametersSet</a></li>
-                        <li><a href="#onafterrender">OnAfterRender</a></li>
-                        <li><a href="#shouldrender">ShouldRender</a></li>
-                        <li><a href="#statehaschanged">StateHasChanged</a></li>
-                        <li><a href="#idisposable">IDisposable</a></li>
-                        <li><a href="#lifecycle-diagram">Lifecycle Diagram</a></li>
-                    </ul>
-                </div>
-
-                <BlogAuthor />
-            </aside>
+            <BlogSidebar Items="@(
+               [
+                   new BlogSidebarItem("#lifecycle-overview", "Overview"),
+                   new BlogSidebarItem("#setparametersasync", "SetParametersAsync"),
+                   new BlogSidebarItem("#oninitialized", "OnInitialized"),
+                   new BlogSidebarItem("#onparametersset", "OnParametersSet"),
+                   new BlogSidebarItem("#onafterrender", "OnAfterRender"),
+                   new BlogSidebarItem("#shouldrender", "ShouldRender"),
+                   new BlogSidebarItem("#statehaschanged", "StateHasChanged"),
+                   new BlogSidebarItem("#idisposable", "IDisposable"),
+                   new BlogSidebarItem("#lifecycle-diagram", "Lifecycle Diagram")
+               ])"/>
         </div>
     </div>
 </article>
