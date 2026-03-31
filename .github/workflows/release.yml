@@ -1,0 +1,121 @@
+﻿name: Generate Release
+
+on:
+  push:
+    branches: [ main ]
+    tags-ignore:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: "release"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      semVer: ${{ steps.gitversion.outputs.semVer }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v3
+        with:
+          versionSpec: '6.x'
+
+      - name: Determine Version
+        id: gitversion
+        uses: gittools/actions/gitversion/execute@v3
+
+      - name: Display Version
+        run: |
+          echo "SemVer: ${{ steps.gitversion.outputs.semVer }}"
+          echo "InformationalVersion: ${{ steps.gitversion.outputs.informationalVersion }}"
+
+      - name: Restore dependencies
+        run: dotnet restore src/SharpForge.Client/SharpForge.Client.csproj
+
+      - name: Publish
+        run: >
+          dotnet publish src/SharpForge.Client/SharpForge.Client.csproj
+          -c Release
+          -o release
+          --nologo
+          /p:Version=${{ steps.gitversion.outputs.semVer }}
+          /p:InformationalVersion=${{ steps.gitversion.outputs.informationalVersion }}
+
+      - name: Copy index.html to 404.html for SPA routing
+        run: cp release/wwwroot/index.html release/wwwroot/404.html
+
+      - name: Generate sitemap.xml
+        run: |
+          BASE_URL="https://sharpforge.co.uk"
+          OUT="release/wwwroot/sitemap.xml"
+
+          {
+            echo '<?xml version="1.0" encoding="UTF-8"?>'
+            echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+            find src/SharpForge.Client/Pages -name "*.razor" -exec sed 's/^\xEF\xBB\xBF//' {} \; \
+              | grep '^@page "/' \
+              | sed 's/@page "\(.*\)"/\1/' \
+              | grep -v '^/not-found$' \
+              | sort -u \
+              | sed 's|.*|  <url><loc>'"${BASE_URL}"'&</loc></url>|'
+            echo '</urlset>'
+          } > "$OUT"
+          echo "Generated $(grep -c '<url>' "$OUT") URLs → $OUT"
+
+      - name: Add .nojekyll
+        run: touch release/wwwroot/.nojekyll
+
+      - name: Create wwwroot archive
+        run: tar -czf wwwroot.tar.gz -C release/wwwroot .
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: wwwroot
+          path: wwwroot.tar.gz
+
+  tag:
+    runs-on: ubuntu-latest
+    needs: [ build ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Download wwwroot artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: wwwroot
+
+      - name: Create and push tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="v${{ needs.build.outputs.semVer }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "$TAG" -m "Release $TAG" "${{ github.sha }}"
+          git push origin "$TAG"
+
+      - name: Create GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="v${{ needs.build.outputs.semVer }}"
+          gh release create "$TAG" wwwroot.tar.gz \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "$TAG" \
+            --generate-notes
