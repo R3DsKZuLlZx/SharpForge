@@ -1,26 +1,31 @@
-@page "/blog/docker-for-dotnet-developers"
+﻿---
+title: "Docker for .NET Developers"
+category: "DevOps"
+date: "November 1, 2025"
+readTime: "10 min read"
+excerpt: "Containerize your .NET applications with Docker. Learn about multi-stage builds, optimization, and Docker Compose."
+tags: ["Docker", "Containers", ".NET", "DevOps"]
+sidebar:
+  - href: "#basic-dockerfile"
+    text: "Basic Dockerfile"
+  - href: "#optimized-multi-stage-build"
+    text: "Multi-Stage Builds"
+  - href: "#docker-compose"
+    text: "Docker Compose"
+  - href: "#health-checks"
+    text: "Health Checks"
+  - href: "#image-size-optimization"
+    text: "Optimization"
+  - href: "#best-practices"
+    text: "Best Practices"
+---
 
-<BlogPostLayout
-    Title="Docker for .NET Developers"
-    Category="DevOps"
-    Date="November 1, 2025"
-    ReadTime="10 min read"
-    Excerpt="Containerize your .NET applications with Docker. Learn about multi-stage builds, optimization, and Docker Compose."
-    Tags="@(["Docker", "Containers", ".NET", "DevOps"])"
-    SidebarItems="@(
-       [
-           new BlogSidebarItem("#basic-dockerfile", "Basic Dockerfile"),
-           new BlogSidebarItem("#multi-stage", "Multi-Stage Builds"),
-           new BlogSidebarItem("#docker-compose", "Docker Compose"),
-           new BlogSidebarItem("#health-checks", "Health Checks"),
-           new BlogSidebarItem("#optimization", "Optimization"),
-           new BlogSidebarItem("#best-practices", "Best Practices")
-       ])">
+Docker enables consistent deployment across environments. This guide covers containerizing .NET applications effectively.
 
-                <p>Docker enables consistent deployment across environments. This guide covers containerizing .NET applications effectively.</p>
+## Basic Dockerfile
 
-                <h2 id="basic-dockerfile">Basic Dockerfile</h2>
-                <pre><code>FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
+```dockerfile
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
 WORKDIR /app
 EXPOSE 8080
 
@@ -37,10 +42,13 @@ RUN dotnet publish -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "MyApp.dll"]</code></pre>
+ENTRYPOINT ["dotnet", "MyApp.dll"]
+```
 
-                <h2>Optimized Multi-Stage Build</h2>
-                <pre><code># Build stage
+## Optimized Multi-Stage Build
+
+```dockerfile
+# Build stage
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
@@ -72,10 +80,13 @@ RUN adduser -D appuser
 USER appuser
 
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "MyApp.Api.dll"]</code></pre>
+ENTRYPOINT ["dotnet", "MyApp.Api.dll"]
+```
 
-                <h2>Native AOT Dockerfile</h2>
-                <pre><code>FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+## Native AOT Dockerfile
+
+```dockerfile
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
 COPY ["MyApp.csproj", "."]
@@ -90,10 +101,13 @@ RUN dotnet publish -c Release -o /app/publish \
 FROM mcr.microsoft.com/dotnet/runtime-deps:10.0-alpine AS final
 WORKDIR /app
 COPY --from=build /app/publish .
-ENTRYPOINT ["./MyApp"]</code></pre>
+ENTRYPOINT ["./MyApp"]
+```
 
-                <h2>.dockerignore</h2>
-                <pre><code>**/.vs
+## .dockerignore
+
+```
+**/.vs
 **/.vscode
 **/bin
 **/obj
@@ -105,10 +119,13 @@ ENTRYPOINT ["./MyApp"]</code></pre>
 **/.dockerignore
 **/docker-compose*
 **/*.user
-**/*.sln.docstates</code></pre>
+**/*.sln.docstates
+```
 
-                <h2 id="docker-compose">Docker Compose</h2>
-                <pre><code># docker-compose.yml
+## Docker Compose
+
+```yaml
+# docker-compose.yml
 version: '3.8'
 
 services:
@@ -151,10 +168,13 @@ networks:
     driver: bridge
 
 volumes:
-  sqldata:</code></pre>
+  sqldata:
+```
 
-                <h3>Development Override</h3>
-                <pre><code># docker-compose.override.yml
+### Development Override
+
+```yaml
+# docker-compose.override.yml
 version: '3.8'
 
 services:
@@ -166,39 +186,50 @@ services:
       - ~/.nuget/packages:/root/.nuget/packages:ro
     environment:
       - DOTNET_USE_POLLING_FILE_WATCHER=1
-    command: dotnet watch run --project src/MyApp.Api</code></pre>
+    command: dotnet watch run --project src/MyApp.Api
+```
 
-                <h2 id="health-checks">Health Checks</h2>
-                <pre><code>FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
+## Health Checks
+
+```dockerfile
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 WORKDIR /app
 
 # Install curl for health checks
-RUN apt-get update &amp;&amp; apt-get install -y curl &amp;&amp; rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
 COPY --from=publish /app/publish .
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:8080/health || exit 1
 
-ENTRYPOINT ["dotnet", "MyApp.dll"]</code></pre>
+ENTRYPOINT ["dotnet", "MyApp.dll"]
+```
 
-                <h2>Environment Configuration</h2>
-                <pre><code># docker-compose.yml
+## Environment Configuration
+
+```yaml
+# docker-compose.yml
 services:
   api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - Logging__LogLevel__Default=Warning
     env_file:
-      - .env.production</code></pre>
+      - .env.production
+```
 
-                <pre><code># .env.production
+```bash
+# .env.production
 ConnectionStrings__Default=Server=prod-db;Database=MyApp;...
 Redis__ConnectionString=prod-redis:6379
-JWT__Secret=your-production-secret</code></pre>
+JWT__Secret=your-production-secret
+```
 
-                <h2>Useful Commands</h2>
-                <pre><code># Build image
+## Useful Commands
+
+```bash
+# Build image
 docker build -t myapp:latest .
 
 # Run container
@@ -218,32 +249,31 @@ docker-compose build --no-cache  # Rebuild
 
 # Clean up
 docker system prune -a        # Remove unused data
-docker volume prune           # Remove unused volumes</code></pre>
+docker volume prune           # Remove unused volumes
+```
 
-                <h2 id="optimization">Image Size Optimization</h2>
-                <ul>
-                    <li>Use Alpine-based images when possible</li>
-                    <li>Use multi-stage builds</li>
-                    <li>Minimize layers by combining RUN commands</li>
-                    <li>Use .dockerignore to exclude unnecessary files</li>
-                    <li>Consider Native AOT for smallest images</li>
-                </ul>
+## Image Size Optimization
 
-                <pre><code># Image size comparison
+- Use Alpine-based images when possible
+- Use multi-stage builds
+- Minimize layers by combining RUN commands
+- Use .dockerignore to exclude unnecessary files
+- Consider Native AOT for smallest images
+
+```
+# Image size comparison
 mcr.microsoft.com/dotnet/aspnet:10.0         ~220MB
 mcr.microsoft.com/dotnet/aspnet:10.0-alpine  ~110MB
 Native AOT + alpine                          ~30-50MB
-Native AOT + scratch                         ~15-30MB</code></pre>
+Native AOT + scratch                         ~15-30MB
+```
 
-                <h2 id="best-practices">Best Practices</h2>
-                <ul>
-                    <li>Use specific image tags, not <code>latest</code></li>
-                    <li>Run as non-root user</li>
-                    <li>Use multi-stage builds</li>
-                    <li>Order Dockerfile commands for optimal caching</li>
-                    <li>Use health checks</li>
-                    <li>Don't store secrets in images</li>
-                    <li>Scan images for vulnerabilities</li>
-                </ul>
+## Best Practices
 
-</BlogPostLayout>
+- Use specific image tags, not `latest`
+- Run as non-root user
+- Use multi-stage builds
+- Order Dockerfile commands for optimal caching
+- Use health checks
+- Don't store secrets in images
+- Scan images for vulnerabilities

@@ -1,31 +1,37 @@
-@page "/blog/securing-aspnet-core-apis"
+﻿---
+title: "Securing ASP.NET Core APIs"
+category: "ASP.NET Core"
+date: "November 25, 2025"
+readTime: "12 min read"
+excerpt: "Learn practical techniques for protecting your ASP.NET Core APIs. This covers authentication, authorization, token validation, and common pitfalls."
+tags: ["Security", "JWT", "Authentication", "ASP.NET Core"]
+sidebar:
+  - href: "#jwt-authentication"
+    text: "JWT Authentication"
+  - href: "#authorization"
+    text: "Authorization"
+  - href: "#refresh-tokens"
+    text: "Refresh Tokens"
+  - href: "#api-key-authentication"
+    text: "API Key Auth"
+  - href: "#cors-configuration"
+    text: "CORS"
+  - href: "#best-practices"
+    text: "Best Practices"
+---
 
-<BlogPostLayout
-    Title="Securing ASP.NET Core APIs"
-    Category="ASP.NET Core"
-    Date="November 25, 2025"
-    ReadTime="12 min read"
-    Excerpt="Learn practical techniques for protecting your ASP.NET Core APIs. This covers authentication, authorization, token validation, and common pitfalls."
-    Tags="@(["Security", "JWT", "Authentication", "ASP.NET Core"])"
-    SidebarItems="@(
-       [
-           new BlogSidebarItem("#jwt-authentication", "JWT Authentication"),
-           new BlogSidebarItem("#authorization", "Authorization"),
-           new BlogSidebarItem("#refresh-tokens", "Refresh Tokens"),
-           new BlogSidebarItem("#api-key", "API Key Auth"),
-           new BlogSidebarItem("#cors", "CORS"),
-           new BlogSidebarItem("#best-practices", "Best Practices")
-       ])">
+Security is critical for any API. This guide covers implementing robust authentication and authorization in ASP.NET Core applications.
 
-                <p>Security is critical for any API. This guide covers implementing robust authentication and authorization in ASP.NET Core applications.</p>
+## JWT Authentication
 
-                <h2 id="jwt-authentication">JWT Authentication</h2>
-                <p>JSON Web Tokens (JWT) are the most common authentication method for APIs.</p>
+JSON Web Tokens (JWT) are the most common authentication method for APIs.
 
-                <h3>Configuration</h3>
-                <pre><code>// Program.cs
+### Configuration
+
+```csharp
+// Program.cs
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =&gt;
+    .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {
@@ -45,10 +51,13 @@ builder.Services.AddAuthorization();
 var app = builder.Build();
 
 app.UseAuthentication();
-app.UseAuthorization();</code></pre>
+app.UseAuthorization();
+```
 
-                <h3>Generating Tokens</h3>
-                <pre><code>public class TokenService
+### Generating Tokens
+
+```csharp
+public class TokenService
 {
     private readonly IConfiguration _config;
 
@@ -59,7 +68,7 @@ app.UseAuthorization();</code></pre>
 
     public string GenerateToken(User user)
     {
-        var claims = new List&lt;Claim&gt
+        var claims = new List<Claim>
         {
             new(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new(ClaimTypes.Email, user.Email),
@@ -79,52 +88,62 @@ app.UseAuthorization();</code></pre>
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
-}</code></pre>
+}
+```
 
-                <h2>Authorization</h2>
-                <h3>Role-Based Authorization</h3>
-                <pre><code>[Authorize(Roles = "Admin")]
+## Authorization
+
+### Role-Based Authorization
+
+```csharp
+[Authorize(Roles = "Admin")]
 [ApiController]
 [Route("api/[controller]")]
 public class AdminController : ControllerBase
 {
     [HttpGet("dashboard")]
-    public IActionResult GetDashboard() =&gt; Ok("Admin only!");
+    public IActionResult GetDashboard() => Ok("Admin only!");
 
     [Authorize(Roles = "Admin,Manager")]
     [HttpGet("reports")]
-    public IActionResult GetReports() =&gt; Ok("Admin or Manager");
-}</code></pre>
+    public IActionResult GetReports() => Ok("Admin or Manager");
+}
+```
 
-                <h3>Policy-Based Authorization</h3>
-                <pre><code>// Configure policies
-builder.Services.AddAuthorization(options =&gt;
+### Policy-Based Authorization
+
+```csharp
+// Configure policies
+builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("RequireAdmin", policy =&gt;
+    options.AddPolicy("RequireAdmin", policy =>
         policy.RequireRole("Admin"));
 
-    options.AddPolicy("MinimumAge", policy =&gt;
+    options.AddPolicy("MinimumAge", policy =>
         policy.RequireClaim("age")
-              .RequireAssertion(ctx =&gt;
+              .RequireAssertion(ctx =>
               {
                   var age = int.Parse(ctx.User.FindFirst("age")?.Value ?? "0");
-                  return age &gt;= 18;
+                  return age >= 18;
               }));
 
-    options.AddPolicy("CanEditProducts", policy =&gt;
+    options.AddPolicy("CanEditProducts", policy =>
         policy.Requirements.Add(new ProductEditRequirement()));
 });
 
 // Use policy
 [Authorize(Policy = "CanEditProducts")]
 [HttpPut("{id}")]
-public async Task&lt;IActionResult&gt; UpdateProduct(int id, ProductDto dto)</code></pre>
+public async Task<IActionResult> UpdateProduct(int id, ProductDto dto)
+```
 
-                <h3>Custom Authorization Handler</h3>
-                <pre><code>public class ProductEditRequirement : IAuthorizationRequirement { }
+### Custom Authorization Handler
+
+```csharp
+public class ProductEditRequirement : IAuthorizationRequirement { }
 
 public class ProductEditHandler 
-    : AuthorizationHandler&lt;ProductEditRequirement, Product&gt;
+    : AuthorizationHandler<ProductEditRequirement, Product>
 {
     protected override Task HandleRequirementAsync(
         AuthorizationHandlerContext context,
@@ -144,16 +163,19 @@ public class ProductEditHandler
 }
 
 // Register handler
-builder.Services.AddSingleton&lt;IAuthorizationHandler, ProductEditHandler&gt;();</code></pre>
+builder.Services.AddSingleton<IAuthorizationHandler, ProductEditHandler>();
+```
 
-                <h2 id="refresh-tokens">Refresh Tokens</h2>
-                <pre><code>public class AuthService
+## Refresh Tokens
+
+```csharp
+public class AuthService
 {
-    public async Task&lt;TokenResponse&gt; RefreshTokenAsync(string refreshToken)
+    public async Task<TokenResponse> RefreshTokenAsync(string refreshToken)
     {
         var storedToken = await _tokenRepository.GetAsync(refreshToken);
         
-        if (storedToken is null || storedToken.ExpiresAt &lt; DateTime.UtcNow)
+        if (storedToken is null || storedToken.ExpiresAt < DateTime.UtcNow)
         {
             throw new SecurityException("Invalid refresh token");
         }
@@ -176,10 +198,13 @@ builder.Services.AddSingleton&lt;IAuthorizationHandler, ProductEditHandler&gt;()
 
         return new TokenResponse(newAccessToken, newRefreshToken);
     }
-}</code></pre>
+}
+```
 
-                <h2 id="api-key">API Key Authentication</h2>
-                <pre><code>public class ApiKeyMiddleware
+## API Key Authentication
+
+```csharp
+public class ApiKeyMiddleware
 {
     private readonly RequestDelegate _next;
     private const string ApiKeyHeader = "X-API-Key";
@@ -207,12 +232,15 @@ builder.Services.AddSingleton&lt;IAuthorizationHandler, ProductEditHandler&gt;()
 
         await _next(context);
     }
-}</code></pre>
+}
+```
 
-                <h2 id="cors">CORS Configuration</h2>
-                <pre><code>builder.Services.AddCors(options =&gt;
+## CORS Configuration
+
+```csharp
+builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigins", policy =&gt;
+    options.AddPolicy("AllowSpecificOrigins", policy =>
     {
         policy.WithOrigins("https://myapp.com", "https://admin.myapp.com")
               .AllowAnyHeader()
@@ -221,10 +249,13 @@ builder.Services.AddSingleton&lt;IAuthorizationHandler, ProductEditHandler&gt;()
     });
 });
 
-app.UseCors("AllowSpecificOrigins");</code></pre>
+app.UseCors("AllowSpecificOrigins");
+```
 
-                <h2>Security Headers</h2>
-                <pre><code>app.Use(async (context, next) =&gt;
+## Security Headers
+
+```csharp
+app.Use(async (context, next) =>
 {
     context.Response.Headers.Append("X-Content-Type-Options", "nosniff");
     context.Response.Headers.Append("X-Frame-Options", "DENY");
@@ -234,17 +265,15 @@ app.UseCors("AllowSpecificOrigins");</code></pre>
         "default-src 'self'");
     
     await next();
-});</code></pre>
+});
+```
 
-                <h2>Best Practices</h2>
-                <ul>
-                    <li>Always use HTTPS in production</li>
-                    <li>Store secrets securely (Azure Key Vault, etc.)</li>
-                    <li>Use short-lived access tokens with refresh tokens</li>
-                    <li>Implement rate limiting</li>
-                    <li>Log authentication failures</li>
-                    <li>Use strong password policies</li>
-                    <li>Validate and sanitize all input</li>
-                </ul>
+## Best Practices
 
-</BlogPostLayout>
+- Always use HTTPS in production
+- Store secrets securely (Azure Key Vault, etc.)
+- Use short-lived access tokens with refresh tokens
+- Implement rate limiting
+- Log authentication failures
+- Use strong password policies
+- Validate and sanitize all input

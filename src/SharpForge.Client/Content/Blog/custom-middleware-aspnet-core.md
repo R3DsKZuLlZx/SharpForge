@@ -1,27 +1,32 @@
-@page "/blog/custom-middleware"
+﻿---
+title: "Creating Custom Middleware"
+category: "ASP.NET Core"
+date: "November 15, 2025"
+readTime: "8 min read"
+excerpt: "Build custom middleware components for ASP.NET Core to handle cross-cutting concerns like logging, caching, and error handling."
+tags: ["Middleware", "ASP.NET Core", "Pipeline"]
+sidebar:
+  - href: "#middleware-basics"
+    text: "Middleware Basics"
+  - href: "#convention-based-middleware"
+    text: "Convention-Based"
+  - href: "#exception-handling-middleware"
+    text: "Exception Handling"
+  - href: "#response-caching-middleware"
+    text: "Response Caching"
+  - href: "#factory-based-middleware"
+    text: "Factory-Based"
+  - href: "#middleware-order"
+    text: "Middleware Order"
+---
 
-<BlogPostLayout
-    Title="Creating Custom Middleware"
-    Category="ASP.NET Core"
-    Date="November 15, 2025"
-    ReadTime="8 min read"
-    Excerpt="Build custom middleware components for ASP.NET Core to handle cross-cutting concerns like logging, caching, and error handling."
-    Tags="@(["Middleware", "ASP.NET Core", "Pipeline"])"
-    SidebarItems="@(
-       [
-           new BlogSidebarItem("#basics", "Middleware Basics"),
-           new BlogSidebarItem("#convention-based", "Convention-Based"),
-           new BlogSidebarItem("#exception-handling", "Exception Handling"),
-           new BlogSidebarItem("#caching", "Response Caching"),
-           new BlogSidebarItem("#factory-based", "Factory-Based"),
-           new BlogSidebarItem("#order", "Middleware Order")
-       ])">
+Middleware in ASP.NET Core forms the request pipeline. Each middleware component can process requests, modify responses, or short-circuit the pipeline.
 
-                <p>Middleware in ASP.NET Core forms the request pipeline. Each middleware component can process requests, modify responses, or short-circuit the pipeline.</p>
+## Middleware Basics
 
-                <h2 id="basics">Middleware Basics</h2>
-                <pre><code>// Inline middleware
-app.Use(async (context, next) =&gt;
+```csharp
+// Inline middleware
+app.Use(async (context, next) =>
 {
     // Before the next middleware
     Console.WriteLine($"Request: {context.Request.Path}");
@@ -33,20 +38,23 @@ app.Use(async (context, next) =&gt;
 });
 
 // Terminal middleware (doesn't call next)
-app.Run(async context =&gt;
+app.Run(async context =>
 {
     await context.Response.WriteAsync("Hello, World!");
-});</code></pre>
+});
+```
 
-                <h2 id="convention-based">Convention-Based Middleware</h2>
-                <pre><code>public class RequestLoggingMiddleware
+## Convention-Based Middleware
+
+```csharp
+public class RequestLoggingMiddleware
 {
     private readonly RequestDelegate _next;
-    private readonly ILogger&lt;RequestLoggingMiddleware&gt; _logger;
+    private readonly ILogger<RequestLoggingMiddleware> _logger;
 
     public RequestLoggingMiddleware(
         RequestDelegate next,
-        ILogger&lt;RequestLoggingMiddleware&gt; logger)
+        ILogger<RequestLoggingMiddleware> logger)
     {
         _next = next;
         _logger = logger;
@@ -79,22 +87,25 @@ public static class RequestLoggingMiddlewareExtensions
     public static IApplicationBuilder UseRequestLogging(
         this IApplicationBuilder builder)
     {
-        return builder.UseMiddleware&lt;RequestLoggingMiddleware&gt;();
+        return builder.UseMiddleware<RequestLoggingMiddleware>();
     }
 }
 
 // Usage
-app.UseRequestLogging();</code></pre>
+app.UseRequestLogging();
+```
 
-                <h2 id="exception-handling">Exception Handling Middleware</h2>
-                <pre><code>public class GlobalExceptionMiddleware
+## Exception Handling Middleware
+
+```csharp
+public class GlobalExceptionMiddleware
 {
     private readonly RequestDelegate _next;
-    private readonly ILogger&lt;GlobalExceptionMiddleware&gt; _logger;
+    private readonly ILogger<GlobalExceptionMiddleware> _logger;
 
     public GlobalExceptionMiddleware(
         RequestDelegate next,
-        ILogger&lt;GlobalExceptionMiddleware&gt; logger)
+        ILogger<GlobalExceptionMiddleware> logger)
     {
         _next = next;
         _logger = logger;
@@ -135,10 +146,13 @@ app.UseRequestLogging();</code></pre>
 
         await context.Response.WriteAsJsonAsync(response);
     }
-}</code></pre>
+}
+```
 
-                <h2 id="caching">Response Caching Middleware</h2>
-                <pre><code>public class SimpleCacheMiddleware
+## Response Caching Middleware
+
+```csharp
+public class SimpleCacheMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly IMemoryCache _cache;
@@ -183,10 +197,13 @@ app.UseRequestLogging();</code></pre>
         await originalBody.WriteAsync(responseBody);
         context.Response.Body = originalBody;
     }
-}</code></pre>
+}
+```
 
-                <h2>Correlation ID Middleware</h2>
-                <pre><code>public class CorrelationIdMiddleware
+## Correlation ID Middleware
+
+```csharp
+public class CorrelationIdMiddleware
 {
     private readonly RequestDelegate _next;
     private const string CorrelationIdHeader = "X-Correlation-ID";
@@ -204,7 +221,7 @@ app.UseRequestLogging();</code></pre>
         context.Items["CorrelationId"] = correlationId;
         context.Response.Headers[CorrelationIdHeader] = correlationId;
 
-        using (_logger.BeginScope(new Dictionary&lt;string, object&gt;
+        using (_logger.BeginScope(new Dictionary<string, object>
         {
             ["CorrelationId"] = correlationId
         }))
@@ -212,10 +229,13 @@ app.UseRequestLogging();</code></pre>
             await _next(context);
         }
     }
-}</code></pre>
+}
+```
 
-                <h2 id="factory-based">Factory-Based Middleware</h2>
-                <pre><code>public class FactoryMiddleware : IMiddleware
+## Factory-Based Middleware
+
+```csharp
+public class FactoryMiddleware : IMiddleware
 {
     private readonly IUserService _userService;
 
@@ -234,31 +254,37 @@ app.UseRequestLogging();</code></pre>
 }
 
 // Must register as a service
-builder.Services.AddScoped&lt;FactoryMiddleware&gt;();
+builder.Services.AddScoped<FactoryMiddleware>();
 
 // Use with UseMiddleware
-app.UseMiddleware&lt;FactoryMiddleware&gt;();</code></pre>
+app.UseMiddleware<FactoryMiddleware>();
+```
 
-                <h2>Conditional Middleware</h2>
-                <pre><code>// Only apply to specific paths
+## Conditional Middleware
+
+```csharp
+// Only apply to specific paths
 app.UseWhen(
-    context =&gt; context.Request.Path.StartsWithSegments("/api"),
-    appBuilder =&gt;
+    context => context.Request.Path.StartsWithSegments("/api"),
+    appBuilder =>
     {
-        appBuilder.UseMiddleware&lt;ApiAuthMiddleware&gt;();
+        appBuilder.UseMiddleware<ApiAuthMiddleware>();
     });
 
 // Map to specific path
-app.Map("/health", appBuilder =&gt;
+app.Map("/health", appBuilder =>
 {
-    appBuilder.Run(async context =&gt;
+    appBuilder.Run(async context =>
     {
         await context.Response.WriteAsync("Healthy");
     });
-});</code></pre>
+});
+```
 
-                <h2>Middleware Order</h2>
-                <pre><code>// Order matters!
+## Middleware Order
+
+```csharp
+// Order matters!
 app.UseExceptionHandler();    // 1. Catch exceptions
 app.UseHsts();                // 2. Security headers
 app.UseHttpsRedirection();    // 3. HTTPS redirect
@@ -267,16 +293,14 @@ app.UseRouting();             // 5. Route matching
 app.UseCors();                // 6. CORS
 app.UseAuthentication();      // 7. Who are you?
 app.UseAuthorization();       // 8. Are you allowed?
-app.UseEndpoints();           // 9. Execute endpoint</code></pre>
+app.UseEndpoints();           // 9. Execute endpoint
+```
 
-                <h2>Best Practices</h2>
-                <ul>
-                    <li>Keep middleware focused on a single responsibility</li>
-                    <li>Use extension methods for clean registration</li>
-                    <li>Consider middleware order carefully</li>
-                    <li>Use IMiddleware for scoped dependencies</li>
-                    <li>Avoid blocking calls in middleware</li>
-                    <li>Handle exceptions appropriately</li>
-                </ul>
+## Best Practices
 
-</BlogPostLayout>
+- Keep middleware focused on a single responsibility
+- Use extension methods for clean registration
+- Consider middleware order carefully
+- Use IMiddleware for scoped dependencies
+- Avoid blocking calls in middleware
+- Handle exceptions appropriately
