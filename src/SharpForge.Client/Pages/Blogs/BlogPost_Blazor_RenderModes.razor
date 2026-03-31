@@ -1,19 +1,20 @@
 ﻿@page "/blog/blazor-render-modes"
 
-<PageTitle>Blazor Render Modes & Hosting Models - SharpForge</PageTitle>
-<CodeHighlighter />
+<BlogPostLayout
+    Title="Understanding Blazor Render Modes and Hosting Models"
+    Category="Blazor"
+    Date="February 3, 2026"
+    ReadTime="8 min read"
+    Excerpt="Blazor provides several ways to render components and to host applications. This post explains the trade-offs between render modes (WASM, Server, and automatic/prerendering options) and the common hosting models (Standalone WebAssembly vs ASP.NET Core hosted Web App)."
+    Tags="@(["Blazor", "WebAssembly", "Hosting"])"
+    SidebarItems="@(
+       [
+           new BlogSidebarItem("#render-modes", "Render modes"),
+           new BlogSidebarItem("#hosting-models", "Hosting models"),
+           new BlogSidebarItem("#tradeoffs-and-guidance", "Trade-offs"),
+           new BlogSidebarItem("#examples", "Examples")
+       ])">
 
-<article class="blog-post">
-    <BlogHeader
-        Category="Blazor" 
-        Date="February 3, 2026" 
-        ReadTime="8 min read" 
-        Title="Understanding Blazor Render Modes and Hosting Models" 
-        Excerpt="Blazor provides several ways to render components and to host applications. This post explains the trade-offs between render modes (WASM, Server, and automatic/prerendering options) and the common hosting models (Standalone WebAssembly vs ASP.NET Core hosted Web App)."/>
-
-    <div class="container">
-        <div class="post-content-wrapper">
-            <div class="post-body">
                 <p>Blazor offers flexibility: you can run .NET in the browser (WebAssembly), run server-rendered interactive components (Server) or combine approaches that prerender HTML and then hydrate with client-side interactivity. Choosing the right render mode and hosting model depends on performance, deployment, SEO and server resource considerations.</p>
 
                 <h2 id="render-modes">Render modes</h2>
@@ -97,16 +98,4 @@ app.Run();</code></pre>
 
                 <p>If you're deciding for a new project, make a small spike: measure initial load, memory, server costs and developer experience. That data will guide a confident choice.</p>
 
-                <BlogTags Tags="@(["Blazor", "WebAssembly", "Hosting"])" />
-            </div>
-
-            <BlogSidebar Items="@(
-               [
-                   new BlogSidebarItem("#render-modes", "Render modes"),
-                   new BlogSidebarItem("#hosting-models", "Hosting models"),
-                   new BlogSidebarItem("#tradeoffs-and-guidance", "Trade-offs"),
-                   new BlogSidebarItem("#examples", "Examples")
-               ])"/>
-        </div>
-    </div>
-</article>
+</BlogPostLayout>

@@ -1,19 +1,22 @@
 @page "/blog/working-with-json-dotnet"
 
-<PageTitle>Working with JSON in .NET - SharpForge</PageTitle>
-<CodeHighlighter />
+<BlogPostLayout
+    Title="Working with JSON in .NET"
+    Category="Best Practices"
+    Date="December 10, 2025"
+    ReadTime="8 min read"
+    Excerpt="Master System.Text.Json and learn when to use Newtonsoft.Json. Covers serialization, deserialization, and custom converters."
+    Tags="@(["JSON", "System.Text.Json", "Serialization", ".NET"])"
+    SidebarItems="@(
+       [
+           new BlogSidebarItem("#basics", "System.Text.Json Basics"),
+           new BlogSidebarItem("#options", "Common Options"),
+           new BlogSidebarItem("#converters", "Custom Converters"),
+           new BlogSidebarItem("#polymorphic", "Polymorphic Serialization"),
+           new BlogSidebarItem("#jsonnode", "JsonNode"),
+           new BlogSidebarItem("#newtonsoft", "When to Use Newtonsoft")
+       ])">
 
-<article class="blog-post">
-    <BlogHeader
-        Category="Best Practices"
-        Date="December 10, 2025"
-        ReadTime="8 min read"
-        Title="Working with JSON in .NET"
-        Excerpt="Master System.Text.Json and learn when to use Newtonsoft.Json. Covers serialization, deserialization, and custom converters." />
-
-    <div class="container">
-        <div class="post-content-wrapper">
-            <div class="post-body">
                 <p>JSON is the universal data format for web APIs. .NET provides two main libraries for JSON handling: the built-in System.Text.Json and the popular Newtonsoft.Json.</p>
 
                 <h2 id="basics">System.Text.Json Basics</h2>
@@ -208,19 +211,4 @@ var results = jObject.SelectTokens("$.users[?(@@.age > 25)]");</code></pre>
                 <h2>Conclusion</h2>
                 <p>System.Text.Json is the recommended choice for most .NET applications. It's fast, built-in, and supports AOT compilation. Use Newtonsoft.Json when you need its advanced features.</p>
 
-                <BlogTags Tags="@(["JSON", "System.Text.Json", "Serialization", ".NET"])" />
-            </div>
-
-            <BlogSidebar Items="@(
-               [
-                   new BlogSidebarItem("#basics", "System.Text.Json Basics"),
-                   new BlogSidebarItem("#options", "Common Options"),
-                   new BlogSidebarItem("#converters", "Custom Converters"),
-                   new BlogSidebarItem("#polymorphic", "Polymorphic Serialization"),
-                   new BlogSidebarItem("#jsonnode", "JsonNode"),
-                   new BlogSidebarItem("#newtonsoft", "When to Use Newtonsoft")
-               ])"/>
-        </div>
-    </div>
-</article>
-
+</BlogPostLayout>

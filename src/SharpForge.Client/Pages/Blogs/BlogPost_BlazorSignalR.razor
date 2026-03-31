@@ -1,19 +1,22 @@
 @page "/blog/blazor-signalr-realtime"
 
-<PageTitle>Building Real-Time Apps with Blazor and SignalR - SharpForge</PageTitle>
-<CodeHighlighter />
+<BlogPostLayout
+    Title="Building Real-Time Apps with Blazor and SignalR"
+    Category="Blazor"
+    Date="January 22, 2026"
+    ReadTime="10 min read"
+    Excerpt="Learn how to create interactive real-time applications using Blazor WebAssembly and SignalR for seamless client-server communication."
+    Tags="@(["Blazor", "SignalR", "Real-Time", "WebAssembly"])"
+    SidebarItems="@(
+       [
+           new BlogSidebarItem("#what-is-signalr", "What is SignalR?"),
+           new BlogSidebarItem("#setting-up-the-project", "Setting Up the Project"),
+           new BlogSidebarItem("#building-the-client", "Building the Client"),
+           new BlogSidebarItem("#advanced-features", "Advanced Features"),
+           new BlogSidebarItem("#best-practices", "Best Practices"),
+           new BlogSidebarItem("#conclusion", "Conclusion")
+       ])">
 
-<article class="blog-post">
-    <BlogHeader
-        Category="Blazor"
-        Date="January 22, 2026"
-        ReadTime="10 min read"
-        Title="Building Real-Time Apps with Blazor and SignalR"
-        Excerpt="Learn how to create interactive real-time applications using Blazor WebAssembly and SignalR for seamless client-server communication." />
-
-    <div class="container">
-        <div class="post-content-wrapper">
-            <div class="post-body">
                 <p>Real-time functionality has become a staple of modern web applications. From chat applications to live dashboards, users expect instant updates without refreshing the page. In this tutorial, we'll explore how to build real-time features using Blazor WebAssembly and SignalR.</p>
 
                 <h2 id="what-is-signalr">What is SignalR?</h2>
@@ -202,19 +205,4 @@ hubConnection.Closed += error =&gt;
                 <h2 id="conclusion">Conclusion</h2>
                 <p>Blazor and SignalR make an excellent combination for building real-time web applications. With minimal setup, you can create interactive experiences that update instantly across all connected clients. Whether you're building a chat application, a live dashboard, or a collaborative tool, these technologies provide the foundation you need.</p>
 
-                <BlogTags Tags="@(["Blazor", "SignalR", "Real-Time", "WebAssembly"])" />
-            </div>
-
-            <BlogSidebar Items="@(
-               [
-                   new BlogSidebarItem("#what-is-signalr", "What is SignalR?"),
-                   new BlogSidebarItem("#setting-up-the-project", "Setting Up the Project"),
-                   new BlogSidebarItem("#building-the-client", "Building the Client"),
-                   new BlogSidebarItem("#advanced-features", "Advanced Features"),
-                   new BlogSidebarItem("#best-practices", "Best Practices"),
-                   new BlogSidebarItem("#conclusion", "Conclusion")
-               ])"/>
-        </div>
-    </div>
-</article>
-
+</BlogPostLayout>

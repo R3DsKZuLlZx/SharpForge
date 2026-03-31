@@ -1,19 +1,22 @@
 @page "/blog/cicd-dotnet-github-actions"
 
-<PageTitle>CI/CD for .NET with GitHub Actions - SharpForge</PageTitle>
-<CodeHighlighter />
+<BlogPostLayout
+    Title="CI/CD for .NET with GitHub Actions"
+    Category="DevOps"
+    Date="December 20, 2025"
+    ReadTime="10 min read"
+    Excerpt="Set up a complete CI/CD pipeline for your .NET applications using GitHub Actions, including testing, building, and deployment."
+    Tags="@(["GitHub Actions", "CI/CD", "DevOps", ".NET"])"
+    SidebarItems="@(
+       [
+           new BlogSidebarItem("#basic-build", "Basic Build"),
+           new BlogSidebarItem("#code-coverage", "Code Coverage"),
+           new BlogSidebarItem("#multi-platform", "Multi-Platform"),
+           new BlogSidebarItem("#nuget", "NuGet Publishing"),
+           new BlogSidebarItem("#docker", "Docker Build"),
+           new BlogSidebarItem("#azure", "Azure Deploy")
+       ])">
 
-<article class="blog-post">
-    <BlogHeader
-        Category="DevOps"
-        Date="December 20, 2025"
-        ReadTime="10 min read"
-        Title="CI/CD for .NET with GitHub Actions"
-        Excerpt="Set up a complete CI/CD pipeline for your .NET applications using GitHub Actions, including testing, building, and deployment." />
-
-    <div class="container">
-        <div class="post-content-wrapper">
-            <div class="post-body">
                 <p>GitHub Actions provides a powerful platform for automating your .NET build, test, and deployment workflows. This guide walks you through setting up a complete CI/CD pipeline.</p>
 
                 <h2 id="basic-build">Basic Build Workflow</h2>
@@ -284,18 +287,4 @@ jobs:
                 <h2>Conclusion</h2>
                 <p>GitHub Actions provides everything you need for .NET CI/CD. Start simple and gradually add more automation as your project grows.</p>
 
-                <BlogTags Tags="@(["GitHub Actions", "CI/CD", "DevOps", ".NET"])" />
-            </div>
-
-            <BlogSidebar Items="@(
-               [
-                   new BlogSidebarItem("#basic-build", "Basic Build"),
-                   new BlogSidebarItem("#code-coverage", "Code Coverage"),
-                   new BlogSidebarItem("#multi-platform", "Multi-Platform"),
-                   new BlogSidebarItem("#nuget", "NuGet Publishing"),
-                   new BlogSidebarItem("#docker", "Docker Build"),
-                   new BlogSidebarItem("#azure", "Azure Deploy")
-               ])"/>
-        </div>
-    </div>
-</article>
+</BlogPostLayout>

@@ -1,19 +1,25 @@
 @page "/blog/blazor-component-lifecycle"
 
-<PageTitle>Blazor Component Lifecycle - SharpForge</PageTitle>
-<CodeHighlighter />
+<BlogPostLayout
+    Title="Blazor Component Lifecycle"
+    Category="Blazor"
+    Date="December 5, 2025"
+    ReadTime="10 min read"
+    Excerpt="Deep dive into Blazor component lifecycle methods and how to use them effectively in your applications."
+    Tags="@(["Blazor", "Components", "Lifecycle", ".NET"])"
+    SidebarItems="@(
+       [
+           new BlogSidebarItem("#lifecycle-overview", "Overview"),
+           new BlogSidebarItem("#setparametersasync", "SetParametersAsync"),
+           new BlogSidebarItem("#oninitialized", "OnInitialized"),
+           new BlogSidebarItem("#onparametersset", "OnParametersSet"),
+           new BlogSidebarItem("#onafterrender", "OnAfterRender"),
+           new BlogSidebarItem("#shouldrender", "ShouldRender"),
+           new BlogSidebarItem("#statehaschanged", "StateHasChanged"),
+           new BlogSidebarItem("#idisposable", "IDisposable"),
+           new BlogSidebarItem("#lifecycle-diagram", "Lifecycle Diagram")
+       ])">
 
-<article class="blog-post">
-    <BlogHeader
-        Category="Blazor"
-        Date="December 5, 2025"
-        ReadTime="10 min read"
-        Title="Blazor Component Lifecycle"
-        Excerpt="Deep dive into Blazor component lifecycle methods and how to use them effectively in your applications." />
-
-    <div class="container">
-        <div class="post-content-wrapper">
-            <div class="post-body">
                 <p>Understanding the Blazor component lifecycle is essential for building efficient and responsive applications. This guide covers each lifecycle method and when to use them.</p>
 
                 <h2 id="lifecycle-overview">Lifecycle Overview</h2>
@@ -237,22 +243,4 @@ OnAfterRender(Async)
                     <li>Avoid expensive operations in <code>ShouldRender</code></li>
                 </ul>
 
-                <BlogTags Tags="@(["Blazor", "Components", "Lifecycle", ".NET"])"/>
-            </div>
-
-            <BlogSidebar Items="@(
-               [
-                   new BlogSidebarItem("#lifecycle-overview", "Overview"),
-                   new BlogSidebarItem("#setparametersasync", "SetParametersAsync"),
-                   new BlogSidebarItem("#oninitialized", "OnInitialized"),
-                   new BlogSidebarItem("#onparametersset", "OnParametersSet"),
-                   new BlogSidebarItem("#onafterrender", "OnAfterRender"),
-                   new BlogSidebarItem("#shouldrender", "ShouldRender"),
-                   new BlogSidebarItem("#statehaschanged", "StateHasChanged"),
-                   new BlogSidebarItem("#idisposable", "IDisposable"),
-                   new BlogSidebarItem("#lifecycle-diagram", "Lifecycle Diagram")
-               ])"/>
-        </div>
-    </div>
-</article>
-
+</BlogPostLayout>

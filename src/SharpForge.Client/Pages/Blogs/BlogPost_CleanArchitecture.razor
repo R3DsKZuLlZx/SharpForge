@@ -1,19 +1,23 @@
 @page "/blog/clean-architecture-aspnet-core"
 
-<PageTitle>Clean Architecture with ASP.NET Core - SharpForge</PageTitle>
-<CodeHighlighter />
+<BlogPostLayout
+    Title="Clean Architecture with ASP.NET Core"
+    Category="Architecture"
+    Date="January 8, 2026"
+    ReadTime="15 min read"
+    Excerpt="A practical guide to implementing clean architecture in your ASP.NET Core applications for better maintainability and testability."
+    Tags="@(["Clean Architecture", "ASP.NET Core", "CQRS", "MediatR"])"
+    SidebarItems="@(
+       [
+           new BlogSidebarItem("#what-is-clean-architecture", "What is Clean Architecture?"),
+           new BlogSidebarItem("#project-structure", "Project Structure"),
+           new BlogSidebarItem("#domain-layer", "Domain Layer"),
+           new BlogSidebarItem("#application-layer", "Application Layer"),
+           new BlogSidebarItem("#infrastructure-layer", "Infrastructure Layer"),
+           new BlogSidebarItem("#presentation-layer", "Presentation Layer"),
+           new BlogSidebarItem("#benefits", "Benefits")
+       ])">
 
-<article class="blog-post">
-    <BlogHeader
-        Category="Architecture"
-        Date="January 8, 2026"
-        ReadTime="15 min read"
-        Title="Clean Architecture with ASP.NET Core"
-        Excerpt="A practical guide to implementing clean architecture in your ASP.NET Core applications for better maintainability and testability." />
-
-    <div class="container">
-        <div class="post-content-wrapper">
-            <div class="post-body">
                 <p>Clean Architecture, popularized by Robert C. Martin (Uncle Bob), is an architectural pattern that emphasizes separation of concerns and independence from frameworks, databases, and external agencies. In this guide, we'll implement Clean Architecture in an ASP.NET Core application.</p>
 
                 <h2 id="what-is-clean-architecture">What is Clean Architecture?</h2>
@@ -247,20 +251,4 @@ public class ProductsController : ControllerBase
                 <h2>Conclusion</h2>
                 <p>Clean Architecture provides a solid foundation for building maintainable, testable applications. While it requires more initial setup, the benefits become apparent as your application grows. Start with the core domain, build outward, and always keep dependencies pointing inward.</p>
 
-                <BlogTags Tags="@(["Clean Architecture", "ASP.NET Core", "CQRS", "MediatR"])" />
-            </div>
-
-            <BlogSidebar Items="@(
-               [
-                   new BlogSidebarItem("#what-is-clean-architecture", "What is Clean Architecture?"),
-                   new BlogSidebarItem("#project-structure", "Project Structure"),
-                   new BlogSidebarItem("#domain-layer", "Domain Layer"),
-                   new BlogSidebarItem("#application-layer", "Application Layer"),
-                   new BlogSidebarItem("#infrastructure-layer", "Infrastructure Layer"),
-                   new BlogSidebarItem("#presentation-layer", "Presentation Layer"),
-                   new BlogSidebarItem("#benefits", "Benefits")
-               ])"/>
-        </div>
-    </div>
-</article>
-
+            </BlogPostLayout>

@@ -1,19 +1,21 @@
 @page "/blog/blazor-state-management"
 
-<PageTitle>Blazor State Management - SharpForge</PageTitle>
-<CodeHighlighter />
+<BlogPostLayout
+    Title="Blazor State Management"
+    Category="Blazor"
+    Date="November 10, 2025"
+    ReadTime="10 min read"
+    Excerpt="Explore different approaches to state management in Blazor applications, from simple patterns to Flux-like architectures."
+    Tags="@(["Blazor", "State Management", "Fluxor"])"
+    SidebarItems="@(
+       [
+           new BlogSidebarItem("#component-state", "Component State"),
+           new BlogSidebarItem("#cascading-values", "Cascading Values"),
+           new BlogSidebarItem("#state-container", "State Container"),
+           new BlogSidebarItem("#flux-redux", "Flux/Redux"),
+           new BlogSidebarItem("#browser-storage", "Browser Storage")
+       ])">
 
-<article class="blog-post">
-    <BlogHeader
-        Category="Blazor"
-        Date="November 10, 2025"
-        ReadTime="10 min read"
-        Title="Blazor State Management"
-        Excerpt="Explore different approaches to state management in Blazor applications, from simple patterns to Flux-like architectures." />
-
-    <div class="container">
-        <div class="post-content-wrapper">
-            <div class="post-body">
                 <p>As Blazor applications grow, managing state becomes increasingly important. This guide covers various state management approaches from simple to complex.</p>
 
                 <h2 id="component-state">Component State</h2>
@@ -274,18 +276,4 @@ builder.Services.AddBlazoredLocalStorage();</code></pre>
                     <li>Persist important state to browser storage</li>
                 </ul>
 
-                <BlogTags Tags="@(["Blazor", "State Management", "Fluxor"])" />
-            </div>
-
-            <BlogSidebar Items="@(
-               [
-                   new BlogSidebarItem("#component-state", "Component State"),
-                   new BlogSidebarItem("#cascading-values", "Cascading Values"),
-                   new BlogSidebarItem("#state-container", "State Container"),
-                   new BlogSidebarItem("#flux-redux", "Flux/Redux"),
-                   new BlogSidebarItem("#browser-storage", "Browser Storage")
-               ])"/>
-        </div>
-    </div>
-</article>
-
+</BlogPostLayout>

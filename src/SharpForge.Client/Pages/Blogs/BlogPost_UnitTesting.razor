@@ -1,19 +1,22 @@
 @page "/blog/unit-testing-xunit-moq"
 
-<PageTitle>Unit Testing with xUnit and Moq - SharpForge</PageTitle>
-<CodeHighlighter />
+<BlogPostLayout
+    Title="Unit Testing with xUnit and Moq"
+    Category="Testing"
+    Date="December 28, 2025"
+    ReadTime="10 min read"
+    Excerpt="Complete guide to writing effective unit tests in C# using xUnit and Moq, including best practices and real-world examples."
+    Tags="@(["xUnit", "Moq", "Unit Testing", "C#"])"
+    SidebarItems="@(
+       [
+           new BlogSidebarItem("#getting-started", "Getting Started"),
+           new BlogSidebarItem("#writing-your-first-test", "First Test"),
+           new BlogSidebarItem("#mocking-with-moq", "Mocking with Moq"),
+           new BlogSidebarItem("#testing-async-code", "Async Testing"),
+           new BlogSidebarItem("#fixtures", "Fixtures"),
+           new BlogSidebarItem("#best-practices", "Best Practices")
+       ])">
 
-<article class="blog-post">
-    <BlogHeader
-        Category="Testing"
-        Date="December 28, 2025"
-        ReadTime="10 min read"
-        Title="Unit Testing with xUnit and Moq"
-        Excerpt="Complete guide to writing effective unit tests in C# using xUnit and Moq, including best practices and real-world examples." />
-
-    <div class="container">
-        <div class="post-content-wrapper">
-            <div class="post-body">
                 <p>Unit testing is essential for maintaining code quality and catching bugs early. This guide covers xUnit, the most popular testing framework for .NET, along with Moq for mocking dependencies.</p>
 
                 <h2 id="getting-started">Getting Started with xUnit</h2>
@@ -238,19 +241,4 @@ public class DatabaseFixture : IDisposable
                 <h2>Conclusion</h2>
                 <p>Unit testing with xUnit and Moq provides a powerful foundation for ensuring code quality. Start with simple tests and gradually build a comprehensive test suite that gives you confidence in your code.</p>
 
-                <BlogTags Tags="@(["xUnit", "Moq", "Unit Testing", "C#"])" />
-            </div>
-
-            <BlogSidebar Items="@(
-               [
-                   new BlogSidebarItem("#getting-started", "Getting Started"),
-                   new BlogSidebarItem("#writing-your-first-test", "First Test"),
-                   new BlogSidebarItem("#mocking-with-moq", "Mocking with Moq"),
-                   new BlogSidebarItem("#testing-async-code", "Async Testing"),
-                   new BlogSidebarItem("#fixtures", "Fixtures"),
-                   new BlogSidebarItem("#best-practices", "Best Practices")
-               ])"/>
-        </div>
-    </div>
-</article>
-
+</BlogPostLayout>

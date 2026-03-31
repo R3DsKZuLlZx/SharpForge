@@ -1,19 +1,21 @@
 @page "/blog/dependency-injection-deep-dive"
 
-<PageTitle>Dependency Injection Deep Dive - SharpForge</PageTitle>
-<CodeHighlighter />
+<BlogPostLayout
+    Title="Dependency Injection Deep Dive"
+    Category="ASP.NET Core"
+    Date="December 15, 2025"
+    ReadTime="12 min read"
+    Excerpt="Understanding the built-in dependency injection container in ASP.NET Core and advanced patterns for complex scenarios."
+    Tags="@(["Dependency Injection", "ASP.NET Core", "Design Patterns"])"
+    SidebarItems="@(
+       [
+           new BlogSidebarItem("#service-lifetimes", "Service Lifetimes"),
+           new BlogSidebarItem("#registration-patterns", "Registration Patterns"),
+           new BlogSidebarItem("#advanced-patterns", "Advanced Patterns"),
+           new BlogSidebarItem("#options-pattern", "Options Pattern"),
+           new BlogSidebarItem("#avoiding-pitfalls", "Avoiding Pitfalls")
+       ])">
 
-<article class="blog-post">
-    <BlogHeader
-        Category="ASP.NET Core"
-        Date="December 15, 2025"
-        ReadTime="12 min read"
-        Title="Dependency Injection Deep Dive"
-        Excerpt="Understanding the built-in dependency injection container in ASP.NET Core and advanced patterns for complex scenarios." />
-
-    <div class="container">
-        <div class="post-content-wrapper">
-            <div class="post-body">
                 <p>Dependency Injection (DI) is a fundamental pattern in ASP.NET Core. This deep dive explores the built-in container and advanced techniques for real-world applications.</p>
 
                 <h2 id="service-lifetimes">Service Lifetimes</h2>
@@ -248,17 +250,4 @@ public class GoodService
                 <h2>Conclusion</h2>
                 <p>ASP.NET Core's built-in DI container is powerful enough for most applications. Understanding lifetimes, registration patterns, and common pitfalls will help you build maintainable, testable applications.</p>
 
-                <BlogTags Tags="@(["Dependency Injection", "ASP.NET Core", "Design Patterns"])" />
-            </div>
-
-            <BlogSidebar Items="@(
-               [
-                   new BlogSidebarItem("#service-lifetimes", "Service Lifetimes"),
-                   new BlogSidebarItem("#registration-patterns", "Registration Patterns"),
-                   new BlogSidebarItem("#advanced-patterns", "Advanced Patterns"),
-                   new BlogSidebarItem("#options-pattern", "Options Pattern"),
-                   new BlogSidebarItem("#avoiding-pitfalls", "Avoiding Pitfalls")
-               ])"/>
-        </div>
-    </div>
-</article>
+</BlogPostLayout>

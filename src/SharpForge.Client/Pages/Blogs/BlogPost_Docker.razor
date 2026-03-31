@@ -1,19 +1,22 @@
 @page "/blog/docker-for-dotnet-developers"
 
-<PageTitle>Docker for .NET Developers - SharpForge</PageTitle>
-<CodeHighlighter />
+<BlogPostLayout
+    Title="Docker for .NET Developers"
+    Category="DevOps"
+    Date="November 1, 2025"
+    ReadTime="10 min read"
+    Excerpt="Containerize your .NET applications with Docker. Learn about multi-stage builds, optimization, and Docker Compose."
+    Tags="@(["Docker", "Containers", ".NET", "DevOps"])"
+    SidebarItems="@(
+       [
+           new BlogSidebarItem("#basic-dockerfile", "Basic Dockerfile"),
+           new BlogSidebarItem("#multi-stage", "Multi-Stage Builds"),
+           new BlogSidebarItem("#docker-compose", "Docker Compose"),
+           new BlogSidebarItem("#health-checks", "Health Checks"),
+           new BlogSidebarItem("#optimization", "Optimization"),
+           new BlogSidebarItem("#best-practices", "Best Practices")
+       ])">
 
-<article class="blog-post">
-    <BlogHeader
-        Category="DevOps"
-        Date="November 1, 2025"
-        ReadTime="10 min read"
-        Title="Docker for .NET Developers"
-        Excerpt="Containerize your .NET applications with Docker. Learn about multi-stage builds, optimization, and Docker Compose." />
-
-    <div class="container">
-        <div class="post-content-wrapper">
-            <div class="post-body">
                 <p>Docker enables consistent deployment across environments. This guide covers containerizing .NET applications effectively.</p>
 
                 <h2 id="basic-dockerfile">Basic Dockerfile</h2>
@@ -243,18 +246,4 @@ Native AOT + scratch                         ~15-30MB</code></pre>
                     <li>Scan images for vulnerabilities</li>
                 </ul>
 
-                <BlogTags Tags="@(["Docker", "Containers", ".NET", "DevOps"])" />
-            </div>
-
-            <BlogSidebar Items="@(
-               [
-                   new BlogSidebarItem("#basic-dockerfile", "Basic Dockerfile"),
-                   new BlogSidebarItem("#multi-stage", "Multi-Stage Builds"),
-                   new BlogSidebarItem("#docker-compose", "Docker Compose"),
-                   new BlogSidebarItem("#health-checks", "Health Checks"),
-                   new BlogSidebarItem("#optimization", "Optimization"),
-                   new BlogSidebarItem("#best-practices", "Best Practices")
-               ])"/>
-        </div>
-    </div>
-</article>
+</BlogPostLayout>

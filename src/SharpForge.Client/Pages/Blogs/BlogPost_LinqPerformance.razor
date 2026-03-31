@@ -1,19 +1,21 @@
 @page "/blog/linq-performance-tips"
 
-<PageTitle>LINQ Performance Tips - SharpForge</PageTitle>
-<CodeHighlighter />
+<BlogPostLayout
+    Title="LINQ Performance Tips"
+    Category="Performance"
+    Date="December 1, 2025"
+    ReadTime="8 min read"
+    Excerpt="Optimize your LINQ queries with these practical tips. Learn about deferred execution, materialization, and common pitfalls."
+    Tags="@(["LINQ", "Performance", "C#", "Best Practices"])"
+    SidebarItems="@(
+       [
+           new BlogSidebarItem("#deferred-execution", "Deferred Execution"),
+           new BlogSidebarItem("#use-right-method", "Right Methods"),
+           new BlogSidebarItem("#avoid-allocations", "Avoid Allocations"),
+           new BlogSidebarItem("#database-queries", "Database Queries"),
+           new BlogSidebarItem("#plinq", "PLINQ")
+       ])">
 
-<article class="blog-post">
-    <BlogHeader
-        Category="Performance"
-        Date="December 1, 2025"
-        ReadTime="8 min read"
-        Title="LINQ Performance Tips"
-        Excerpt="Optimize your LINQ queries with these practical tips. Learn about deferred execution, materialization, and common pitfalls." />
-
-    <div class="container">
-        <div class="post-content-wrapper">
-            <div class="post-body">
                 <p>LINQ is powerful and expressive, but it can also be a source of performance issues if not used carefully. This guide covers essential tips for writing efficient LINQ queries.</p>
 
                 <h2 id="deferred-execution">Understanding Deferred Execution</h2>
@@ -194,17 +196,4 @@ public class LinqBenchmarks
                     <li>Always benchmark before and after optimization</li>
                 </ul>
 
-                <BlogTags Tags="@(["LINQ", "Performance", "C#", "Best Practices"])"/>
-            </div>
-
-            <BlogSidebar Items="@(
-               [
-                   new BlogSidebarItem("#deferred-execution", "Deferred Execution"),
-                   new BlogSidebarItem("#use-right-method", "Right Methods"),
-                   new BlogSidebarItem("#avoid-allocations", "Avoid Allocations"),
-                   new BlogSidebarItem("#database-queries", "Database Queries"),
-                   new BlogSidebarItem("#plinq", "PLINQ")
-               ])"/>
-        </div>
-    </div>
-</article>
+</BlogPostLayout>

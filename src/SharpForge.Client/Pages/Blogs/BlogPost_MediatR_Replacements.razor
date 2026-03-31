@@ -1,19 +1,21 @@
 @page "/blog/mediatR-replacements"
 
-<PageTitle>MediatR Replacements: Wolverine & Mediator.SourceGenerators - SharpForge</PageTitle>
-<CodeHighlighter />
+<BlogPostLayout
+    Title="MediatR Replacements: Wolverine & Mediator.SourceGenerators"
+    Category="Architecture"
+    Date="February 11, 2026"
+    ReadTime="8 min read"
+    Excerpt="If you like the request/handler pattern from MediatR but want to switch, two modern alternatives worth exploring are Wolverine and Mediator.SourceGenerators. This post compares the approaches and shows minimal examples to get started."
+    Tags="@(["MediatR", "Wolverine", "Source Generators", "CQRS"])"
+    SidebarItems="@(
+       [
+           new BlogSidebarItem("#quick-compare", "Quick comparison"),
+           new BlogSidebarItem("#wolverine-example", "Wolverine example"),
+           new BlogSidebarItem("#mediator-sourcegenerators-example", "Mediator.SourceGenerators example"),
+           new BlogSidebarItem("#side-by-side", "Side-by-side"),
+           new BlogSidebarItem("#migration-tips", "Migration tips")
+       ])">
 
-<article class="blog-post">
-    <BlogHeader 
-        Category="Architecture" 
-        Date="February 11, 2026" 
-        ReadTime="8 min read" 
-        Title="MediatR Replacements: Wolverine & Mediator.SourceGenerators" 
-        Excerpt="If you like the request/handler pattern from MediatR but want to switch, two modern alternatives worth exploring are Wolverine and Mediator.SourceGenerators. This post compares the approaches and shows minimal examples to get started." />
-
-    <div class="container">
-        <div class="post-content-wrapper">
-            <div class="post-body">
                 <p>MediatR popularized the simple request/handler and in-process mediator pattern. Two modern alternatives aim to address different concerns:</p>
                 <ul>
                     <li><strong>Wolverine</strong> - a runtime-first library with a message bus, durable transports, and advanced middleware/outbox features. It's focused on building robust messaging systems and supports both in-process and distributed workflows.</li>
@@ -91,18 +93,4 @@ var user = await mediator.Send(new GetUser(42));
                 <h2 id="conclusion">Conclusion</h2>
                 <p>There's no one-size-fits-all replacement for MediatR. Wolverine and Mediator.SourceGenerators solve different problems - one focuses on rich messaging/runtime features, the other on compile-time performance and low runtime overhead. Choose based on whether you need durable, distributed messaging or lean, high-performance in-process dispatch.</p>
 
-                <BlogTags Tags="@(["MediatR", "Wolverine", "Source Generators", "CQRS"])" />
-            </div>
-
-            <BlogSidebar Items="@(
-               [
-                   new BlogSidebarItem("#quick-compare", "Quick comparison"),
-                   new BlogSidebarItem("#wolverine-example", "Wolverine example"),
-                   new BlogSidebarItem("#mediator-sourcegenerators-example", "Mediator.SourceGenerators example"),
-                   new BlogSidebarItem("#side-by-side", "Side-by-side"),
-                   new BlogSidebarItem("#migration-tips", "Migration tips")
-               ])"/>
-        </div>
-    </div>
-</article>
-
+</BlogPostLayout>

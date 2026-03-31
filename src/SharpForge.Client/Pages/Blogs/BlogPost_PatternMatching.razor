@@ -1,19 +1,22 @@
 @page "/blog/csharp-pattern-matching"
 
-<PageTitle>C# Pattern Matching - SharpForge</PageTitle>
-<CodeHighlighter />
+<BlogPostLayout
+    Title="C# Pattern Matching"
+    Category="C#"
+    Date="November 5, 2025"
+    ReadTime="8 min read"
+    Excerpt="Master pattern matching in C# with practical examples. Covers switch expressions, property patterns, and positional patterns."
+    Tags="@(["C#", "Pattern Matching", "Switch Expressions"])"
+    SidebarItems="@(
+       [
+           new BlogSidebarItem("#type-patterns", "Type Patterns"),
+           new BlogSidebarItem("#property-patterns", "Property Patterns"),
+           new BlogSidebarItem("#relational-patterns", "Relational Patterns"),
+           new BlogSidebarItem("#positional-patterns", "Positional Patterns"),
+           new BlogSidebarItem("#list-patterns", "List Patterns"),
+           new BlogSidebarItem("#when-guards", "When Guards")
+       ])">
 
-<article class="blog-post">
-    <BlogHeader
-        Category="C#"
-        Date="November 5, 2025"
-        ReadTime="8 min read"
-        Title="C# Pattern Matching"
-        Excerpt="Master pattern matching in C# with practical examples. Covers switch expressions, property patterns, and positional patterns." />
-
-    <div class="container">
-        <div class="post-content-wrapper">
-            <div class="post-body">
                 <p>Pattern matching is one of C#'s most powerful features, enabling expressive and concise code for complex conditional logic.</p>
 
                 <h2 id="type-patterns">Type Patterns</h2>
@@ -222,19 +225,4 @@ bool EndsWithZero(int[] arr) =&gt; arr is [.., 0];</code></pre>
                     <li>Combine patterns for expressive code</li>
                 </ul>
 
-                <BlogTags Tags="@(["C#", "Pattern Matching", "Switch Expressions"])" />
-            </div>
-
-            <BlogSidebar Items="@(
-               [
-                   new BlogSidebarItem("#type-patterns", "Type Patterns"),
-                   new BlogSidebarItem("#property-patterns", "Property Patterns"),
-                   new BlogSidebarItem("#relational-patterns", "Relational Patterns"),
-                   new BlogSidebarItem("#positional-patterns", "Positional Patterns"),
-                   new BlogSidebarItem("#list-patterns", "List Patterns"),
-                   new BlogSidebarItem("#when-guards", "When Guards")
-               ])"/>
-        </div>
-    </div>
-</article>
-
+</BlogPostLayout>

@@ -1,19 +1,22 @@
 @page "/blog/securing-aspnet-core-apis"
 
-<PageTitle>Securing ASP.NET Core APIs - SharpForge</PageTitle>
-<CodeHighlighter />
+<BlogPostLayout
+    Title="Securing ASP.NET Core APIs"
+    Category="ASP.NET Core"
+    Date="November 25, 2025"
+    ReadTime="12 min read"
+    Excerpt="Learn practical techniques for protecting your ASP.NET Core APIs. This covers authentication, authorization, token validation, and common pitfalls."
+    Tags="@(["Security", "JWT", "Authentication", "ASP.NET Core"])"
+    SidebarItems="@(
+       [
+           new BlogSidebarItem("#jwt-authentication", "JWT Authentication"),
+           new BlogSidebarItem("#authorization", "Authorization"),
+           new BlogSidebarItem("#refresh-tokens", "Refresh Tokens"),
+           new BlogSidebarItem("#api-key", "API Key Auth"),
+           new BlogSidebarItem("#cors", "CORS"),
+           new BlogSidebarItem("#best-practices", "Best Practices")
+       ])">
 
-<article class="blog-post">
-    <BlogHeader
-        Category="ASP.NET Core"
-        Date="November 25, 2025"
-        ReadTime="12 min read"
-        Title="Securing ASP.NET Core APIs"
-        Excerpt="Learn practical techniques for protecting your ASP.NET Core APIs. This covers authentication, authorization, token validation, and common pitfalls." />
-
-    <div class="container">
-        <div class="post-content-wrapper">
-            <div class="post-body">
                 <p>Security is critical for any API. This guide covers implementing robust authentication and authorization in ASP.NET Core applications.</p>
 
                 <h2 id="jwt-authentication">JWT Authentication</h2>
@@ -56,7 +59,7 @@ app.UseAuthorization();</code></pre>
 
     public string GenerateToken(User user)
     {
-        var claims = new List&lt;Claim&gt;
+        var claims = new List&lt;Claim&gt
         {
             new(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new(ClaimTypes.Email, user.Email),
@@ -244,19 +247,4 @@ app.UseCors("AllowSpecificOrigins");</code></pre>
                     <li>Validate and sanitize all input</li>
                 </ul>
 
-                <BlogTags Tags="@(["Security", "JWT", "Authentication", "ASP.NET Core"])" />
-            </div>
-
-            <BlogSidebar Items="@(
-               [
-                   new BlogSidebarItem("#jwt-authentication", "JWT Authentication"),
-                   new BlogSidebarItem("#authorization", "Authorization"),
-                   new BlogSidebarItem("#refresh-tokens", "Refresh Tokens"),
-                   new BlogSidebarItem("#api-key", "API Key Auth"),
-                   new BlogSidebarItem("#cors", "CORS"),
-                   new BlogSidebarItem("#best-practices", "Best Practices")
-               ])"/>
-        </div>
-    </div>
-</article>
-
+</BlogPostLayout>

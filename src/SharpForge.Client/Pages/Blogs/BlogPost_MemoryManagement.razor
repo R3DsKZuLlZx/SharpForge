@@ -1,19 +1,22 @@
 @page "/blog/memory-management-dotnet"
 
-<PageTitle>Memory Management in .NET: A Deep Dive - SharpForge</PageTitle>
-<CodeHighlighter />
+<BlogPostLayout
+    Title="Memory Management in .NET: A Deep Dive"
+    Category="Performance"
+    Date="January 2, 2026"
+    ReadTime="12 min read"
+    Excerpt="Understanding garbage collection, memory allocation, and optimization techniques for high-performance .NET applications."
+    Tags="@(["Memory Management", "Garbage Collection", "Performance", ".NET"])"
+    SidebarItems="@(
+       [
+           new BlogSidebarItem("#the-net-memory-model", "Memory Model"),
+           new BlogSidebarItem("#garbage-collection-generations", "GC Generations"),
+           new BlogSidebarItem("#large-object-heap", "Large Object Heap"),
+           new BlogSidebarItem("#memory-optimization", "Optimization Techniques"),
+           new BlogSidebarItem("#detecting-memory-issues", "Detecting Issues"),
+           new BlogSidebarItem("#idisposable-pattern", "IDisposable Pattern")
+       ])">
 
-<article class="blog-post">
-    <BlogHeader
-        Category="Performance"
-        Date="January 2, 2026"
-        ReadTime="12 min read"
-        Title="Memory Management in .NET: A Deep Dive"
-        Excerpt="Understanding garbage collection, memory allocation, and optimization techniques for high-performance .NET applications." />
-
-    <div class="container">
-        <div class="post-content-wrapper">
-            <div class="post-body">
                 <p>Memory management is crucial for building high-performance .NET applications. Understanding how the garbage collector works and how to optimize memory usage can significantly improve your application's performance.</p>
 
                 <h2 id="the-net-memory-model">The .NET Memory Model</h2>
@@ -207,18 +210,4 @@ dotnet-dump analyze &lt;dump-file&gt;
                 <h2>Conclusion</h2>
                 <p>Understanding .NET memory management helps you write more efficient applications. Use the tools and techniques described here to identify and fix memory issues, and always profile before optimizing.</p>
 
-                <BlogTags Tags="@(["Memory Management", "Garbage Collection", "Performance", ".NET"])" />
-            </div>
-
-            <BlogSidebar Items="@(
-               [
-                   new BlogSidebarItem("#the-net-memory-model", "Memory Model"),
-                   new BlogSidebarItem("#garbage-collection-generations", "GC Generations"),
-                   new BlogSidebarItem("#large-object-heap", "Large Object Heap"),
-                   new BlogSidebarItem("#memory-optimization", "Optimization Techniques"),
-                   new BlogSidebarItem("#detecting-memory-issues", "Detecting Issues"),
-                   new BlogSidebarItem("#idisposable-pattern", "IDisposable Pattern")
-               ])"/>
-        </div>
-    </div>
-</article>
+</BlogPostLayout>

@@ -1,19 +1,21 @@
 @page "/blog/ef-core-migrations"
 
-<PageTitle>Entity Framework Core Migrations - SharpForge</PageTitle>
-<CodeHighlighter />
+<BlogPostLayout
+    Title="Entity Framework Core Migrations"
+    Category="Entity Framework"
+    Date="November 20, 2025"
+    ReadTime="10 min read"
+    Excerpt="Master database migrations in EF Core. Learn about migration strategies, seeding data, and handling production deployments."
+    Tags="@(["Entity Framework", "Migrations", "Database", ".NET"])"
+    SidebarItems="@(
+       [
+           new BlogSidebarItem("#getting-started", "Getting Started"),
+           new BlogSidebarItem("#custom-migrations", "Custom Migrations"),
+           new BlogSidebarItem("#data-seeding", "Data Seeding"),
+           new BlogSidebarItem("#production-strategies", "Production Strategies"),
+           new BlogSidebarItem("#best-practices", "Best Practices")
+       ])">
 
-<article class="blog-post">
-    <BlogHeader
-        Category="Entity Framework"
-        Date="November 20, 2025"
-        ReadTime="10 min read"
-        Title="Entity Framework Core Migrations"
-        Excerpt="Master database migrations in EF Core. Learn about migration strategies, seeding data, and handling production deployments." />
-
-    <div class="container">
-        <div class="post-content-wrapper">
-            <div class="post-body">
                 <p>Migrations are EF Core's way of keeping your database schema in sync with your model. This guide covers everything from basic migrations to production deployment strategies.</p>
 
                 <h2 id="getting-started">Getting Started</h2>
@@ -216,18 +218,4 @@ dotnet ef migrations list
 # Verbose output for debugging
 dotnet ef database update --verbose</code></pre>
 
-                <BlogTags Tags="@(["Entity Framework", "Migrations", "Database", ".NET"])" />
-            </div>
-
-            <BlogSidebar Items="@(
-               [
-                   new BlogSidebarItem("#getting-started", "Getting Started"),
-                   new BlogSidebarItem("#custom-migrations", "Custom Migrations"),
-                   new BlogSidebarItem("#data-seeding", "Data Seeding"),
-                   new BlogSidebarItem("#production-strategies", "Production Strategies"),
-                   new BlogSidebarItem("#best-practices", "Best Practices")
-               ])"/>
-        </div>
-    </div>
-</article>
-
+</BlogPostLayout>

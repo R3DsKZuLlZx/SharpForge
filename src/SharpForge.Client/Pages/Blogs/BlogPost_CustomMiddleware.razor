@@ -1,19 +1,22 @@
 @page "/blog/custom-middleware"
 
-<PageTitle>Creating Custom Middleware - SharpForge</PageTitle>
-<CodeHighlighter />
+<BlogPostLayout
+    Title="Creating Custom Middleware"
+    Category="ASP.NET Core"
+    Date="November 15, 2025"
+    ReadTime="8 min read"
+    Excerpt="Build custom middleware components for ASP.NET Core to handle cross-cutting concerns like logging, caching, and error handling."
+    Tags="@(["Middleware", "ASP.NET Core", "Pipeline"])"
+    SidebarItems="@(
+       [
+           new BlogSidebarItem("#basics", "Middleware Basics"),
+           new BlogSidebarItem("#convention-based", "Convention-Based"),
+           new BlogSidebarItem("#exception-handling", "Exception Handling"),
+           new BlogSidebarItem("#caching", "Response Caching"),
+           new BlogSidebarItem("#factory-based", "Factory-Based"),
+           new BlogSidebarItem("#order", "Middleware Order")
+       ])">
 
-<article class="blog-post">
-    <BlogHeader
-        Category="ASP.NET Core"
-        Date="November 15, 2025"
-        ReadTime="8 min read"
-        Title="Creating Custom Middleware"
-        Excerpt="Build custom middleware components for ASP.NET Core to handle cross-cutting concerns like logging, caching, and error handling." />
-
-    <div class="container">
-        <div class="post-content-wrapper">
-            <div class="post-body">
                 <p>Middleware in ASP.NET Core forms the request pipeline. Each middleware component can process requests, modify responses, or short-circuit the pipeline.</p>
 
                 <h2 id="basics">Middleware Basics</h2>
@@ -276,19 +279,4 @@ app.UseEndpoints();           // 9. Execute endpoint</code></pre>
                     <li>Handle exceptions appropriately</li>
                 </ul>
 
-                <BlogTags Tags="@(["Middleware", "ASP.NET Core", "Pipeline"])" />
-            </div>
-
-            <BlogSidebar Items="@(
-               [
-                   new BlogSidebarItem("#basics", "Middleware Basics"),
-                   new BlogSidebarItem("#convention-based", "Convention-Based"),
-                   new BlogSidebarItem("#exception-handling", "Exception Handling"),
-                   new BlogSidebarItem("#caching", "Response Caching"),
-                   new BlogSidebarItem("#factory-based", "Factory-Based"),
-                   new BlogSidebarItem("#order", "Middleware Order")
-               ])"/>
-        </div>
-    </div>
-</article>
-
+</BlogPostLayout>

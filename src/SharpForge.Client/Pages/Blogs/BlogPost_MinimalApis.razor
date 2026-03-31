@@ -1,19 +1,22 @@
 @page "/blog/minimal-apis-dotnet"
 
-<PageTitle>Minimal APIs in .NET - SharpForge</PageTitle>
-<CodeHighlighter />
+<BlogPostLayout
+    Title="Minimal APIs in .NET"
+    Category="ASP.NET Core"
+    Date="October 20, 2025"
+    ReadTime="8 min read"
+    Excerpt="Build lightweight APIs with minimal code using .NET Minimal APIs. Perfect for microservices and simple endpoints."
+    Tags="@(["Minimal APIs", "ASP.NET Core", "REST", ".NET"])"
+    SidebarItems="@(
+       [
+           new BlogSidebarItem("#hello-world", "Hello World"),
+           new BlogSidebarItem("#route-handlers", "Route Handlers"),
+           new BlogSidebarItem("#parameter-binding", "Parameter Binding"),
+           new BlogSidebarItem("#route-groups", "Route Groups"),
+           new BlogSidebarItem("#filters", "Endpoint Filters"),
+           new BlogSidebarItem("#openapi", "OpenAPI")
+       ])">
 
-<article class="blog-post">
-    <BlogHeader
-        Category="ASP.NET Core"
-        Date="October 20, 2025"
-        ReadTime="8 min read"
-        Title="Minimal APIs in .NET"
-        Excerpt="Build lightweight APIs with minimal code using .NET Minimal APIs. Perfect for microservices and simple endpoints." />
-
-    <div class="container">
-        <div class="post-content-wrapper">
-            <div class="post-body">
                 <p>Minimal APIs provide a streamlined way to build HTTP APIs with minimal ceremony. They're perfect for microservices, small projects, or when you want less boilerplate.</p>
 
                 <h2 id="hello-world">Hello World</h2>
@@ -261,19 +264,4 @@ app.MapUserEndpoints();</code></pre>
                     <li>Document with OpenAPI attributes</li>
                 </ul>
 
-                <BlogTags Tags="@(["Minimal APIs", "ASP.NET Core", "REST", ".NET"])" />
-            </div>
-
-            <BlogSidebar Items="@(
-               [
-                   new BlogSidebarItem("#hello-world", "Hello World"),
-                   new BlogSidebarItem("#route-handlers", "Route Handlers"),
-                   new BlogSidebarItem("#parameter-binding", "Parameter Binding"),
-                   new BlogSidebarItem("#route-groups", "Route Groups"),
-                   new BlogSidebarItem("#filters", "Endpoint Filters"),
-                   new BlogSidebarItem("#openapi", "OpenAPI")
-               ])"/>
-        </div>
-    </div>
-</article>
-
+</BlogPostLayout>

@@ -1,19 +1,22 @@
 @page "/blog/grpc-services-dotnet"
 
-<PageTitle>gRPC Services in .NET - SharpForge</PageTitle>
-<CodeHighlighter />
+<BlogPostLayout
+    Title="gRPC Services in .NET"
+    Category="ASP.NET Core"
+    Date="October 25, 2025"
+    ReadTime="10 min read"
+    Excerpt="Build high-performance microservices with gRPC. Covers protobuf, streaming, and integration with ASP.NET Core."
+    Tags="@(["gRPC", "Microservices", "Protocol Buffers", "ASP.NET Core"])"
+    SidebarItems="@(
+       [
+           new BlogSidebarItem("#getting-started", "Getting Started"),
+           new BlogSidebarItem("#protobuf", "Defining Services"),
+           new BlogSidebarItem("#implementation", "Implementation"),
+           new BlogSidebarItem("#client", "Creating Clients"),
+           new BlogSidebarItem("#streaming", "Streaming Patterns"),
+           new BlogSidebarItem("#interceptors", "Interceptors")
+       ])">
 
-<article class="blog-post">
-    <BlogHeader
-        Category="ASP.NET Core"
-        Date="October 25, 2025"
-        ReadTime="10 min read"
-        Title="gRPC Services in .NET"
-        Excerpt="Build high-performance microservices with gRPC. Covers protobuf, streaming, and integration with ASP.NET Core." />
-
-    <div class="container">
-        <div class="post-content-wrapper">
-            <div class="post-body">
                 <p>gRPC is a high-performance RPC framework that uses Protocol Buffers for serialization. It's ideal for microservices communication.</p>
 
                 <h2 id="getting-started">Getting Started</h2>
@@ -285,19 +288,4 @@ builder.Services.AddGrpc(options =&gt;
                     <li>Use deadlines for all calls</li>
                 </ul>
 
-                <BlogTags Tags="@(["gRPC", "Microservices", "Protocol Buffers", "ASP.NET Core"])" />
-            </div>
-
-            <BlogSidebar Items="@(
-               [
-                   new BlogSidebarItem("#getting-started", "Getting Started"),
-                   new BlogSidebarItem("#protobuf", "Defining Services"),
-                   new BlogSidebarItem("#implementation", "Implementation"),
-                   new BlogSidebarItem("#client", "Creating Clients"),
-                   new BlogSidebarItem("#streaming", "Streaming Patterns"),
-                   new BlogSidebarItem("#interceptors", "Interceptors")
-               ])"/>
-        </div>
-    </div>
-</article>
-
+</BlogPostLayout>
