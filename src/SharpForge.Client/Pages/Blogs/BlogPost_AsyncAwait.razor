@@ -216,26 +216,17 @@ for (int i = 0; i &lt; 10; i++)
                     <li>Be mindful of closures in async code</li>
                 </ul>
 
-                <BlogTags Tags="@(new []{"C#", "async/await", "Best Practices", "Performance"})"/>
+                <BlogTags Tags="@(["C#", "async/await", "Best Practices", "Performance"])"/>
             </div>
 
-            <aside class="post-sidebar">
-                <div class="sidebar-section toc">
-                    <h4>Table of Contents</h4>
-                    <ul>
-                        <li><a href="#1-async-all-the-way">Async All the Way</a></li>
-                        <li><a href="#2-use-configureawait">ConfigureAwait</a></li>
-                        <li><a href="#3-avoid-async-void">Avoid Async Void</a></li>
-                        <li><a href="#4-use-valuetask">Use ValueTask</a></li>
-                        <li><a href="#5-cancellation-tokens">Cancellation Tokens</a></li>
-                        <li><a href="#6-parallel-operations">Parallel Operations</a></li>
-                        <li><a href="#7-iasyncenumerable">IAsyncEnumerable</a></li>
-                        <li><a href="#8-exception-handling">Exception Handling</a></li>
-                    </ul>
-                </div>
-
-                <BlogAuthor />
-            </aside>
+            <BlogSidebar Items="@(
+               [
+                   new BlogSidebarItem("#async-basics", "Basics"),
+                   new BlogSidebarItem("#await-ing", "Awaiting"),
+                   new BlogSidebarItem("#configureawait", "ConfigureAwait"),
+                   new BlogSidebarItem("#exceptions", "Exceptions"),
+                   new BlogSidebarItem("#best-practices", "Best Practices")
+               ])"/>
         </div>
     </div>
 </article>

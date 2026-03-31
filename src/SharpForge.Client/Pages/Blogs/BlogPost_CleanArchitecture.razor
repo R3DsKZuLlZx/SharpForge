@@ -247,25 +247,19 @@ public class ProductsController : ControllerBase
                 <h2>Conclusion</h2>
                 <p>Clean Architecture provides a solid foundation for building maintainable, testable applications. While it requires more initial setup, the benefits become apparent as your application grows. Start with the core domain, build outward, and always keep dependencies pointing inward.</p>
 
-                <BlogTags Tags="@(new[] { "Clean Architecture", "ASP.NET Core", "CQRS", "MediatR" })" />
+                <BlogTags Tags="@(["Clean Architecture", "ASP.NET Core", "CQRS", "MediatR"])" />
             </div>
 
-            <aside class="post-sidebar">
-                <div class="sidebar-section toc">
-                    <h4>Table of Contents</h4>
-                    <ul>
-                        <li><a href="#what-is-clean-architecture">What is Clean Architecture?</a></li>
-                        <li><a href="#project-structure">Project Structure</a></li>
-                        <li><a href="#domain-layer">Domain Layer</a></li>
-                        <li><a href="#application-layer">Application Layer</a></li>
-                        <li><a href="#infrastructure-layer">Infrastructure Layer</a></li>
-                        <li><a href="#presentation-layer">Presentation Layer</a></li>
-                        <li><a href="#benefits">Benefits</a></li>
-                    </ul>
-                </div>
-
-                <BlogAuthor />
-            </aside>
+            <BlogSidebar Items="@(
+               [
+                   new BlogSidebarItem("#what-is-clean-architecture", "What is Clean Architecture?"),
+                   new BlogSidebarItem("#project-structure", "Project Structure"),
+                   new BlogSidebarItem("#domain-layer", "Domain Layer"),
+                   new BlogSidebarItem("#application-layer", "Application Layer"),
+                   new BlogSidebarItem("#infrastructure-layer", "Infrastructure Layer"),
+                   new BlogSidebarItem("#presentation-layer", "Presentation Layer"),
+                   new BlogSidebarItem("#benefits", "Benefits")
+               ])"/>
         </div>
     </div>
 </article>

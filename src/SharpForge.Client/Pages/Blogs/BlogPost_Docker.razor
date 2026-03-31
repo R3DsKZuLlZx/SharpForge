@@ -243,24 +243,18 @@ Native AOT + scratch                         ~15-30MB</code></pre>
                     <li>Scan images for vulnerabilities</li>
                 </ul>
 
-                <BlogTags Tags="@(new[] { "Docker", "Containers", ".NET", "DevOps" })" />
+                <BlogTags Tags="@(["Docker", "Containers", ".NET", "DevOps"])" />
             </div>
 
-            <aside class="post-sidebar">
-                <div class="sidebar-section toc">
-                    <h4>Table of Contents</h4>
-                    <ul>
-                        <li><a href="#basic-dockerfile">Basic Dockerfile</a></li>
-                        <li><a href="#multi-stage">Multi-Stage Builds</a></li>
-                        <li><a href="#docker-compose">Docker Compose</a></li>
-                        <li><a href="#health-checks">Health Checks</a></li>
-                        <li><a href="#optimization">Optimization</a></li>
-                        <li><a href="#best-practices">Best Practices</a></li>
-                    </ul>
-                </div>
-
-                <BlogAuthor />
-            </aside>
+            <BlogSidebar Items="@(
+               [
+                   new BlogSidebarItem("#basic-dockerfile", "Basic Dockerfile"),
+                   new BlogSidebarItem("#multi-stage", "Multi-Stage Builds"),
+                   new BlogSidebarItem("#docker-compose", "Docker Compose"),
+                   new BlogSidebarItem("#health-checks", "Health Checks"),
+                   new BlogSidebarItem("#optimization", "Optimization"),
+                   new BlogSidebarItem("#best-practices", "Best Practices")
+               ])"/>
         </div>
     </div>
 </article>

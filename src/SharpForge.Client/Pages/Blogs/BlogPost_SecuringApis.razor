@@ -244,24 +244,18 @@ app.UseCors("AllowSpecificOrigins");</code></pre>
                     <li>Validate and sanitize all input</li>
                 </ul>
 
-                <BlogTags Tags="@(new[] { "Security", "JWT", "Authentication", "ASP.NET Core" })" />
+                <BlogTags Tags="@(["Security", "JWT", "Authentication", "ASP.NET Core"])" />
             </div>
 
-            <aside class="post-sidebar">
-                <div class="sidebar-section toc">
-                    <h4>Table of Contents</h4>
-                    <ul>
-                        <li><a href="#jwt-authentication">JWT Authentication</a></li>
-                        <li><a href="#authorization">Authorization</a></li>
-                        <li><a href="#refresh-tokens">Refresh Tokens</a></li>
-                        <li><a href="#api-key">API Key Auth</a></li>
-                        <li><a href="#cors">CORS</a></li>
-                        <li><a href="#best-practices">Best Practices</a></li>
-                    </ul>
-                </div>
-
-                <BlogAuthor />
-            </aside>
+            <BlogSidebar Items="@(
+               [
+                   new BlogSidebarItem("#jwt-authentication", "JWT Authentication"),
+                   new BlogSidebarItem("#authorization", "Authorization"),
+                   new BlogSidebarItem("#refresh-tokens", "Refresh Tokens"),
+                   new BlogSidebarItem("#api-key", "API Key Auth"),
+                   new BlogSidebarItem("#cors", "CORS"),
+                   new BlogSidebarItem("#best-practices", "Best Practices")
+               ])"/>
         </div>
     </div>
 </article>

@@ -238,24 +238,18 @@ public class DatabaseFixture : IDisposable
                 <h2>Conclusion</h2>
                 <p>Unit testing with xUnit and Moq provides a powerful foundation for ensuring code quality. Start with simple tests and gradually build a comprehensive test suite that gives you confidence in your code.</p>
 
-                <BlogTags Tags="@(new[] { "xUnit", "Moq", "Unit Testing", "C#" })" />
+                <BlogTags Tags="@(["xUnit", "Moq", "Unit Testing", "C#"])" />
             </div>
 
-            <aside class="post-sidebar">
-                <div class="sidebar-section toc">
-                    <h4>Table of Contents</h4>
-                    <ul>
-                        <li><a href="#getting-started">Getting Started</a></li>
-                        <li><a href="#writing-your-first-test">First Test</a></li>
-                        <li><a href="#mocking-with-moq">Mocking with Moq</a></li>
-                        <li><a href="#testing-async-code">Async Testing</a></li>
-                        <li><a href="#fixtures">Fixtures</a></li>
-                        <li><a href="#best-practices">Best Practices</a></li>
-                    </ul>
-                </div>
-
-                <BlogAuthor />
-            </aside>
+            <BlogSidebar Items="@(
+               [
+                   new BlogSidebarItem("#getting-started", "Getting Started"),
+                   new BlogSidebarItem("#writing-your-first-test", "First Test"),
+                   new BlogSidebarItem("#mocking-with-moq", "Mocking with Moq"),
+                   new BlogSidebarItem("#testing-async-code", "Async Testing"),
+                   new BlogSidebarItem("#fixtures", "Fixtures"),
+                   new BlogSidebarItem("#best-practices", "Best Practices")
+               ])"/>
         </div>
     </div>
 </article>

@@ -276,24 +276,18 @@ app.UseEndpoints();           // 9. Execute endpoint</code></pre>
                     <li>Handle exceptions appropriately</li>
                 </ul>
 
-                <BlogTags Tags="@(new[] { "Middleware", "ASP.NET Core", "Pipeline" })" />
+                <BlogTags Tags="@(["Middleware", "ASP.NET Core", "Pipeline"])" />
             </div>
 
-            <aside class="post-sidebar">
-                <div class="sidebar-section toc">
-                    <h4>Table of Contents</h4>
-                    <ul>
-                        <li><a href="#basics">Middleware Basics</a></li>
-                        <li><a href="#convention-based">Convention-Based</a></li>
-                        <li><a href="#exception-handling">Exception Handling</a></li>
-                        <li><a href="#caching">Response Caching</a></li>
-                        <li><a href="#factory-based">Factory-Based</a></li>
-                        <li><a href="#order">Middleware Order</a></li>
-                    </ul>
-                </div>
-
-                <BlogAuthor />
-            </aside>
+            <BlogSidebar Items="@(
+               [
+                   new BlogSidebarItem("#basics", "Middleware Basics"),
+                   new BlogSidebarItem("#convention-based", "Convention-Based"),
+                   new BlogSidebarItem("#exception-handling", "Exception Handling"),
+                   new BlogSidebarItem("#caching", "Response Caching"),
+                   new BlogSidebarItem("#factory-based", "Factory-Based"),
+                   new BlogSidebarItem("#order", "Middleware Order")
+               ])"/>
         </div>
     </div>
 </article>

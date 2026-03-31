@@ -261,24 +261,18 @@ app.MapUserEndpoints();</code></pre>
                     <li>Document with OpenAPI attributes</li>
                 </ul>
 
-                <BlogTags Tags="@(new[] { "Minimal APIs", "ASP.NET Core", "REST", ".NET" })" />
+                <BlogTags Tags="@(["Minimal APIs", "ASP.NET Core", "REST", ".NET"])" />
             </div>
 
-            <aside class="post-sidebar">
-                <div class="sidebar-section toc">
-                    <h4>Table of Contents</h4>
-                    <ul>
-                        <li><a href="#hello-world">Hello World</a></li>
-                        <li><a href="#route-handlers">Route Handlers</a></li>
-                        <li><a href="#parameter-binding">Parameter Binding</a></li>
-                        <li><a href="#route-groups">Route Groups</a></li>
-                        <li><a href="#filters">Endpoint Filters</a></li>
-                        <li><a href="#openapi">OpenAPI</a></li>
-                    </ul>
-                </div>
-
-                <BlogAuthor />
-            </aside>
+            <BlogSidebar Items="@(
+               [
+                   new BlogSidebarItem("#hello-world", "Hello World"),
+                   new BlogSidebarItem("#route-handlers", "Route Handlers"),
+                   new BlogSidebarItem("#parameter-binding", "Parameter Binding"),
+                   new BlogSidebarItem("#route-groups", "Route Groups"),
+                   new BlogSidebarItem("#filters", "Endpoint Filters"),
+                   new BlogSidebarItem("#openapi", "OpenAPI")
+               ])"/>
         </div>
     </div>
 </article>

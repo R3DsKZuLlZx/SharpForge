@@ -216,23 +216,17 @@ dotnet ef migrations list
 # Verbose output for debugging
 dotnet ef database update --verbose</code></pre>
 
-                <BlogTags Tags="@(new[] { "Entity Framework", "Migrations", "Database", ".NET" })" />
+                <BlogTags Tags="@(["Entity Framework", "Migrations", "Database", ".NET"])" />
             </div>
 
-            <aside class="post-sidebar">
-                <div class="sidebar-section toc">
-                    <h4>Table of Contents</h4>
-                    <ul>
-                        <li><a href="#getting-started">Getting Started</a></li>
-                        <li><a href="#custom-migrations">Custom Migrations</a></li>
-                        <li><a href="#data-seeding">Data Seeding</a></li>
-                        <li><a href="#production-strategies">Production Strategies</a></li>
-                        <li><a href="#best-practices">Best Practices</a></li>
-                    </ul>
-                </div>
-
-                <BlogAuthor />
-            </aside>
+            <BlogSidebar Items="@(
+               [
+                   new BlogSidebarItem("#getting-started", "Getting Started"),
+                   new BlogSidebarItem("#custom-migrations", "Custom Migrations"),
+                   new BlogSidebarItem("#data-seeding", "Data Seeding"),
+                   new BlogSidebarItem("#production-strategies", "Production Strategies"),
+                   new BlogSidebarItem("#best-practices", "Best Practices")
+               ])"/>
         </div>
     </div>
 </article>

@@ -222,24 +222,18 @@ bool EndsWithZero(int[] arr) =&gt; arr is [.., 0];</code></pre>
                     <li>Combine patterns for expressive code</li>
                 </ul>
 
-                <BlogTags Tags="@(new[] { "C#", "Pattern Matching", "Switch Expressions" })" />
+                <BlogTags Tags="@(["C#", "Pattern Matching", "Switch Expressions"])" />
             </div>
 
-            <aside class="post-sidebar">
-                <div class="sidebar-section toc">
-                    <h4>Table of Contents</h4>
-                    <ul>
-                        <li><a href="#type-patterns">Type Patterns</a></li>
-                        <li><a href="#property-patterns">Property Patterns</a></li>
-                        <li><a href="#relational-patterns">Relational Patterns</a></li>
-                        <li><a href="#positional-patterns">Positional Patterns</a></li>
-                        <li><a href="#list-patterns">List Patterns</a></li>
-                        <li><a href="#when-guards">When Guards</a></li>
-                    </ul>
-                </div>
-
-                <BlogAuthor />
-            </aside>
+            <BlogSidebar Items="@(
+               [
+                   new BlogSidebarItem("#type-patterns", "Type Patterns"),
+                   new BlogSidebarItem("#property-patterns", "Property Patterns"),
+                   new BlogSidebarItem("#relational-patterns", "Relational Patterns"),
+                   new BlogSidebarItem("#positional-patterns", "Positional Patterns"),
+                   new BlogSidebarItem("#list-patterns", "List Patterns"),
+                   new BlogSidebarItem("#when-guards", "When Guards")
+               ])"/>
         </div>
     </div>
 </article>
