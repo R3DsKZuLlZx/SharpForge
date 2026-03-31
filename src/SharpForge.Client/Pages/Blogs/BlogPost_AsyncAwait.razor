@@ -1,19 +1,21 @@
 @page "/blog/async-await-best-practices"
 
-<PageTitle>Async/Await Best Practices in C# 13 - SharpForge</PageTitle>
-<CodeHighlighter />
+<BlogPostLayout
+    Title="Async/Await Best Practices in C# 13"
+    Category="Best Practices"
+    Date="January 15, 2026"
+    ReadTime="8 min read"
+    Excerpt="Master asynchronous programming with these essential tips, patterns, and common pitfalls to avoid in modern C# development."
+    Tags="@(["C#", "async/await", "Best Practices", "Performance"])"
+    SidebarItems="@(
+       [
+           new BlogSidebarItem("#async-basics", "Basics"),
+           new BlogSidebarItem("#await-ing", "Awaiting"),
+           new BlogSidebarItem("#configureawait", "ConfigureAwait"),
+           new BlogSidebarItem("#exceptions", "Exceptions"),
+           new BlogSidebarItem("#best-practices", "Best Practices")
+       ])">
 
-<article class="blog-post">
-    <BlogHeader
-        Category="Best Practices"
-        Date="January 15, 2026"
-        ReadTime="8 min read"
-        Title="Async/Await Best Practices in C# 13"
-        Excerpt="Master asynchronous programming with these essential tips, patterns, and common pitfalls to avoid in modern C# development." />
-
-    <div class="container">
-        <div class="post-content-wrapper">
-            <div class="post-body">
                 <p>Asynchronous programming is essential for building responsive applications in .NET. However, it comes with its own set of challenges and gotchas. In this article, we'll explore best practices for using async/await effectively in C# 13.</p>
 
                 <h2 id="1-async-all-the-way">1. Async All the Way</h2>
@@ -216,18 +218,4 @@ for (int i = 0; i &lt; 10; i++)
                     <li>Be mindful of closures in async code</li>
                 </ul>
 
-                <BlogTags Tags="@(["C#", "async/await", "Best Practices", "Performance"])"/>
-            </div>
-
-            <BlogSidebar Items="@(
-               [
-                   new BlogSidebarItem("#async-basics", "Basics"),
-                   new BlogSidebarItem("#await-ing", "Awaiting"),
-                   new BlogSidebarItem("#configureawait", "ConfigureAwait"),
-                   new BlogSidebarItem("#exceptions", "Exceptions"),
-                   new BlogSidebarItem("#best-practices", "Best Practices")
-               ])"/>
-        </div>
-    </div>
-</article>
-
+</BlogPostLayout>
