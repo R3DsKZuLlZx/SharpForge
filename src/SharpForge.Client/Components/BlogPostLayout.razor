@@ -1,0 +1,37 @@
+﻿@namespace SharpForge.Client.Components
+
+<PageTitle>@Title - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<article class="blog-post">
+    <BlogHeader
+        Category="@Category"
+        Date="@Date"
+        ReadTime="@ReadTime"
+        Title="@Title"
+        Excerpt="@Excerpt" />
+
+    <div class="container">
+        <div class="post-content-wrapper">
+            <div class="post-body">
+                @ChildContent
+
+                <BlogTags Tags="@Tags" />
+            </div>
+
+            <BlogSidebar Items="@SidebarItems" />
+        </div>
+    </div>
+</article>
+
+@code {
+    [Parameter] public required string Title { get; set; }
+    [Parameter] public required string Category { get; set; }
+    [Parameter] public required string Date { get; set; }
+    [Parameter] public required string ReadTime { get; set; }
+    [Parameter] public required string Excerpt { get; set; }
+    [Parameter] public IEnumerable<string>? Tags { get; set; }
+    [Parameter] public IEnumerable<BlogSidebarItem>? SidebarItems { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}
+

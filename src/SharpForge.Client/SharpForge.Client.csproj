@@ -20,8 +20,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Markdig"/>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly"/>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" PrivateAssets="all"/>
+        <PackageReference Include="YamlDotNet"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="Content\Blog\*.md" />
     </ItemGroup>
 
     <ItemGroup>

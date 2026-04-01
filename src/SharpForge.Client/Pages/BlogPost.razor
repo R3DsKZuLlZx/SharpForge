@@ -1,0 +1,21 @@
+﻿@page "/blog/{Slug}"
+
+@if (_post is null)
+{
+    <NotFound />
+}
+else
+{
+    <BlogPostLayout
+        Title="@_post.Frontmatter.Title"
+        Category="@_post.Frontmatter.Category"
+        Date="@_post.Frontmatter.Date"
+        ReadTime="@_post.Frontmatter.ReadTime"
+        Excerpt="@_post.Frontmatter.Excerpt"
+        Tags="@_post.Frontmatter.Tags"
+        SidebarItems="@_post.Frontmatter.ToSidebarItems()">
+
+        @((MarkupString)_post.HtmlBody)
+
+    </BlogPostLayout>
+}

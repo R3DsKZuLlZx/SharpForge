@@ -1,25 +1,33 @@
-@page "/blog/cicd-dotnet-github-actions"
+﻿---
+title: "CI/CD for .NET with GitHub Actions"
+category: "DevOps"
+date: "December 20, 2025"
+readTime: "10 min read"
+excerpt: "Set up a complete CI/CD pipeline for your .NET applications using GitHub Actions, including testing, building, and deployment."
+tags: ["GitHub Actions", "CI/CD", "DevOps", ".NET"]
+sidebar:
+  - href: "#basic-build-workflow"
+    text: "Basic Build"
+  - href: "#adding-code-coverage"
+    text: "Code Coverage"
+  - href: "#multi-platform-testing"
+    text: "Multi-Platform"
+  - href: "#publishing-nuget-packages"
+    text: "NuGet Publishing"
+  - href: "#docker-build-and-push"
+    text: "Docker Build"
+  - href: "#deploy-to-azure-app-service"
+    text: "Azure Deploy"
+---
 
-<PageTitle>CI/CD for .NET with GitHub Actions - SharpForge</PageTitle>
-<CodeHighlighter />
+GitHub Actions provides a powerful platform for automating your .NET build, test, and deployment workflows. This guide walks you through setting up a complete CI/CD pipeline.
 
-<article class="blog-post">
-    <BlogHeader
-        Category="DevOps"
-        Date="December 20, 2025"
-        ReadTime="10 min read"
-        Title="CI/CD for .NET with GitHub Actions"
-        Excerpt="Set up a complete CI/CD pipeline for your .NET applications using GitHub Actions, including testing, building, and deployment." />
+## Basic Build Workflow
 
-    <div class="container">
-        <div class="post-content-wrapper">
-            <div class="post-body">
-                <p>GitHub Actions provides a powerful platform for automating your .NET build, test, and deployment workflows. This guide walks you through setting up a complete CI/CD pipeline.</p>
+Create a file at `.github/workflows/build.yml`:
 
-                <h2 id="basic-build">Basic Build Workflow</h2>
-                <p>Create a file at <code>.github/workflows/build.yml</code>:</p>
-
-                <pre><code>name: Build and Test
+```yaml
+name: Build and Test
 
 on:
   push:
@@ -46,10 +54,13 @@ jobs:
       run: dotnet build --no-restore --configuration Release
 
     - name: Test
-      run: dotnet test --no-build --configuration Release --verbosity normal</code></pre>
+      run: dotnet test --no-build --configuration Release --verbosity normal
+```
 
-                <h2 id="code-coverage">Adding Code Coverage</h2>
-                <pre><code>    - name: Test with Coverage
+## Adding Code Coverage
+
+```yaml
+    - name: Test with Coverage
       run: |
         dotnet test --no-build --configuration Release \
           --collect:"XPlat Code Coverage" \
@@ -59,10 +70,13 @@ jobs:
       uses: codecov/codecov-action@v3
       with:
         directory: ./coverage
-        fail_ci_if_error: true</code></pre>
+        fail_ci_if_error: true
+```
 
-                <h2 id="multi-platform">Multi-Platform Testing</h2>
-                <pre><code>jobs:
+## Multi-Platform Testing
+
+```yaml
+jobs:
   build:
     runs-on: ${{ matrix.os }}
     strategy:
@@ -82,10 +96,13 @@ jobs:
       run: |
         dotnet restore
         dotnet build --configuration Release
-        dotnet test --configuration Release</code></pre>
+        dotnet test --configuration Release
+```
 
-                <h2 id="nuget">Publishing NuGet Packages</h2>
-                <pre><code>name: Publish NuGet Package
+## Publishing NuGet Packages
+
+```yaml
+name: Publish NuGet Package
 
 on:
   release:
@@ -114,10 +131,13 @@ jobs:
         dotnet nuget push ./nupkg/*.nupkg \
           --api-key ${{ secrets.NUGET_API_KEY }} \
           --source https://api.nuget.org/v3/index.json \
-          --skip-duplicate</code></pre>
+          --skip-duplicate
+```
 
-                <h2 id="docker">Docker Build and Push</h2>
-                <pre><code>name: Docker Build
+## Docker Build and Push
+
+```yaml
+name: Docker Build
 
 on:
   push:
@@ -143,10 +163,13 @@ jobs:
         push: true
         tags: |
           myapp:latest
-          myapp:${{ github.sha }}</code></pre>
+          myapp:${{ github.sha }}
+```
 
-                <h2 id="azure">Deploy to Azure App Service</h2>
-                <pre><code>name: Deploy to Azure
+## Deploy to Azure App Service
+
+```yaml
+name: Deploy to Azure
 
 on:
   push:
@@ -175,19 +198,25 @@ jobs:
       with:
         app-name: 'my-app-name'
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        package: ./publish</code></pre>
+        package: ./publish
+```
 
-                <h2>Caching Dependencies</h2>
-                <pre><code>    - name: Cache NuGet packages
+## Caching Dependencies
+
+```yaml
+    - name: Cache NuGet packages
       uses: actions/cache@v3
       with:
         path: ~/.nuget/packages
         key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
         restore-keys: |
-          ${{ runner.os }}-nuget-</code></pre>
+          ${{ runner.os }}-nuget-
+```
 
-                <h2>Environment Variables and Secrets</h2>
-                <pre><code>jobs:
+## Environment Variables and Secrets
+
+```yaml
+jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: production
@@ -199,10 +228,13 @@ jobs:
     - name: Deploy with secrets
       run: |
         echo "Deploying to ${{ vars.DEPLOY_URL }}"
-        ./deploy.sh --api-key ${{ secrets.API_KEY }}</code></pre>
+        ./deploy.sh --api-key ${{ secrets.API_KEY }}
+```
 
-                <h2>Complete Pipeline Example</h2>
-                <pre><code>name: CI/CD Pipeline
+## Complete Pipeline Example
+
+```yaml
+name: CI/CD Pipeline
 
 on:
   push:
@@ -269,33 +301,18 @@ jobs:
         path: ./publish
 
     - name: Deploy
-      run: echo "Deploying application..."</code></pre>
+      run: echo "Deploying application..."
+```
 
-                <h2>Best Practices</h2>
-                <ul>
-                    <li>Use caching to speed up builds</li>
-                    <li>Run tests in parallel when possible</li>
-                    <li>Use environment-specific secrets</li>
-                    <li>Fail fast on errors</li>
-                    <li>Keep workflows DRY with reusable workflows</li>
-                    <li>Use status badges in your README</li>
-                </ul>
+## Best Practices
 
-                <h2>Conclusion</h2>
-                <p>GitHub Actions provides everything you need for .NET CI/CD. Start simple and gradually add more automation as your project grows.</p>
+- Use caching to speed up builds
+- Run tests in parallel when possible
+- Use environment-specific secrets
+- Fail fast on errors
+- Keep workflows DRY with reusable workflows
+- Use status badges in your README
 
-                <BlogTags Tags="@(["GitHub Actions", "CI/CD", "DevOps", ".NET"])" />
-            </div>
+## Conclusion
 
-            <BlogSidebar Items="@(
-               [
-                   new BlogSidebarItem("#basic-build", "Basic Build"),
-                   new BlogSidebarItem("#code-coverage", "Code Coverage"),
-                   new BlogSidebarItem("#multi-platform", "Multi-Platform"),
-                   new BlogSidebarItem("#nuget", "NuGet Publishing"),
-                   new BlogSidebarItem("#docker", "Docker Build"),
-                   new BlogSidebarItem("#azure", "Azure Deploy")
-               ])"/>
-        </div>
-    </div>
-</article>
+GitHub Actions provides everything you need for .NET CI/CD. Start simple and gradually add more automation as your project grows.
