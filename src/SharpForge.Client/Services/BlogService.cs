@@ -1,12 +1,16 @@
 ﻿using System.Reflection;
+using System.Text;
+using System.Text.Json;
+using System.Text.RegularExpressions;
 using Markdig;
+using Markdig.Helpers;
 using SharpForge.Client.Models;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
 namespace SharpForge.Client.Services;
 
-public class BlogService
+public partial class BlogService
 {
     private static readonly Assembly Assembly = typeof(BlogService).Assembly;
     private readonly MarkdownPipeline _pipeline;
@@ -77,15 +81,18 @@ public class BlogService
             return ("", markdown);
         }
 
-        var endIndex = markdown.IndexOf(delimiter, delimiter.Length, StringComparison.Ordinal);
-        if (endIndex < 0)
+        var match = DelimiterRegex().Match(markdown).NextMatch();
+        if (!match.Success)
         {
             return ("", markdown);
         }
 
-        var yaml = markdown[delimiter.Length..endIndex].Trim();
-        var body = markdown[(endIndex + delimiter.Length)..].TrimStart();
+        var yaml = markdown[delimiter.Length..match.Index].Trim();
+        var body = markdown[(match.Index + delimiter.Length)..].TrimStart();
 
         return (yaml, body);
     }
+
+    [GeneratedRegex(@"^---\s*$", RegexOptions.Multiline)]
+    private static partial Regex DelimiterRegex();
 }
