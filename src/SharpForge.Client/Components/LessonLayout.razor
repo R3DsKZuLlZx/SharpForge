@@ -1,0 +1,97 @@
+﻿@namespace SharpForge.Client.Components
+
+<PageTitle>@_lesson.Title - @_course.Title - SharpForge</PageTitle>
+<CodeHighlighter />
+
+<div class="lesson-layout">
+    <LessonSidebar
+        CourseUrl="@CourseUrl"
+        CourseTitle="@_course.Title"
+        CurrentLesson="@LessonNumber"
+        Lessons="_course.Lessons" />
+
+    <main class="lesson-content">
+        <article class="lesson-article">
+            <LessonHeader
+                LessonNumber="@LessonNumber"
+                Title="@_lesson.Title"
+                Duration="@Duration"
+                Level="@_course.Level" />
+
+            <div class="lesson-body">
+                @ChildContent
+            </div>
+
+            <LessonFooter
+                PreviousUrl="@_previousUrl"
+                PreviousText="@_previousText"
+                NextUrl="@_nextUrl"
+                NextText="@_nextText"
+                ShowHomeIcon="@_showHomeIcon" />
+        </article>
+    </main>
+</div>
+
+@code {
+    /// <summary>The course slug, e.g. "aspnet-core-web-apis".</summary>
+    [Parameter, EditorRequired]
+    public required string CourseSlug { get; set; }
+
+    /// <summary>The 1-based lesson number within the course.</summary>
+    [Parameter, EditorRequired]
+    public int LessonNumber { get; set; }
+
+    /// <summary>Estimated reading/watching duration, e.g. "8 min".</summary>
+    [Parameter]
+    public string Duration { get; set; } = "10 min";
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    private string CourseUrl => $"training/{CourseSlug}";
+
+    private CourseRegistry.CourseMetadata _course = null!;
+    private CourseLessons.LessonInfo _lesson = null!;
+
+    private string _previousUrl = "#";
+    private string _previousText = "Previous Lesson";
+    private string _nextUrl = "#";
+    private string _nextText = "Next Lesson";
+    private bool _showHomeIcon;
+
+    protected override void OnParametersSet()
+    {
+        _course = CourseRegistry.Courses[CourseSlug];
+        _lesson = _course.Lessons.First(l => l.Number == LessonNumber);
+
+        var isFirst = LessonNumber == _course.Lessons[0].Number;
+        var isLast = LessonNumber == _course.Lessons[^1].Number;
+
+        if (isFirst)
+        {
+            _previousUrl = CourseUrl;
+            _previousText = "Course Overview";
+        }
+        else
+        {
+            var prev = _course.Lessons.First(l => l.Number == LessonNumber - 1);
+            _previousUrl = prev.Url;
+            _previousText = "Previous Lesson";
+        }
+
+        if (isLast)
+        {
+            _nextUrl = CourseUrl;
+            _nextText = "Back to Course";
+            _showHomeIcon = true;
+        }
+        else
+        {
+            var next = _course.Lessons.First(l => l.Number == LessonNumber + 1);
+            _nextUrl = next.Url;
+            _nextText = "Next Lesson";
+            _showHomeIcon = false;
+        }
+    }
+}
+

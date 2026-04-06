@@ -1,0 +1,61 @@
+﻿@page "/training/{CourseSlug}/lesson/{LessonNumber:int}"
+@inject LessonService LessonService
+
+@if (_lesson is null)
+{
+    <NotFound />
+}
+else
+{
+    <LessonLayout @key="@($"{CourseSlug}/{LessonNumber}")" CourseSlug="@CourseSlug" LessonNumber="@LessonNumber" Duration="@_lesson.Frontmatter.Duration">
+        <section class="lesson-section">
+            @((MarkupString)_lesson.HtmlBody)
+        </section>
+
+        @if (_lesson.Frontmatter.Takeaways.Count > 0)
+        {
+            <LessonTakeaways>
+                @foreach (var takeaway in _lesson.Frontmatter.Takeaways)
+                {
+                    <LessonTakeaway>@takeaway</LessonTakeaway>
+                }
+            </LessonTakeaways>
+        }
+
+        @if (_lesson.Frontmatter.Exercises.Count > 0)
+        {
+            <LessonExercises>
+                @foreach (var exercise in _lesson.Frontmatter.Exercises)
+                {
+                    <LessonExercise Title="@exercise.Title">
+                        @((MarkupString)exercise.Body)
+                    </LessonExercise>
+                }
+            </LessonExercises>
+        }
+
+        @if (_lesson.Frontmatter.Congratulations is not null)
+        {
+            <LessonCongratulations
+                CourseTitle="@_lesson.Frontmatter.Congratulations.CourseTitle"
+                Topics="@_lesson.Frontmatter.Congratulations.Topics"
+                ClosingMessage="@_lesson.Frontmatter.Congratulations.ClosingMessage" />
+        }
+    </LessonLayout>
+}
+
+@code {
+    [Parameter]
+    public string CourseSlug { get; set; } = "";
+
+    [Parameter]
+    public int LessonNumber { get; set; }
+
+    private LessonContent? _lesson;
+
+    protected override void OnParametersSet()
+    {
+        _lesson = LessonService.GetLesson(CourseSlug, LessonNumber);
+    }
+}
+

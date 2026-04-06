@@ -11,5 +11,6 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddScoped<ThemeService>();
 builder.Services.AddScoped<CourseProgressService>();
 builder.Services.AddSingleton<BlogService>();
+builder.Services.AddSingleton<LessonService>();
 
 await builder.Build().RunAsync();
