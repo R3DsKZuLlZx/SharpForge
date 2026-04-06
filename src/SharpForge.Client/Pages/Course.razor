@@ -1,5 +1,4 @@
 ﻿@page "/training/{Slug}"
-@inject MarkdownService MarkdownService
 
 @if (_course is null)
 {
@@ -51,16 +50,3 @@ else
         </div>
     </section>
 }
-
-@code {
-    [Parameter]
-    public string Slug { get; set; } = "";
-
-    private CourseDetail? _course;
-
-    protected override void OnParametersSet()
-    {
-        _course = MarkdownService.GetCourse(Slug);
-    }
-}
-

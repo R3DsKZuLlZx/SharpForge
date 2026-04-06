@@ -1,5 +1,4 @@
 ﻿@page "/training/{CourseSlug}/lesson/{LessonNumber:int}"
-@inject MarkdownService MarkdownService
 
 @if (_lesson is null)
 {
@@ -43,19 +42,3 @@ else
         }
     </LessonLayout>
 }
-
-@code {
-    [Parameter]
-    public string CourseSlug { get; set; } = "";
-
-    [Parameter]
-    public int LessonNumber { get; set; }
-
-    private LessonContent? _lesson;
-
-    protected override void OnParametersSet()
-    {
-        _lesson = MarkdownService.GetLesson(CourseSlug, LessonNumber);
-    }
-}
-
