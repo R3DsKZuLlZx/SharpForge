@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Globalization;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using Markdig;
 using SharpForge.Client.Models;
@@ -14,6 +15,7 @@ public partial class MarkdownService
     private readonly IDeserializer _yamlDeserializer;
 
     private Dictionary<string, CourseDetail>? _courses;
+    private List<BlogPostFrontmatter>? _blogPosts;
 
     public MarkdownService()
     {
@@ -85,7 +87,7 @@ public partial class MarkdownService
     {
         var resourceName = Assembly
             .GetManifestResourceNames()
-            .FirstOrDefault(n => n.EndsWith($".{slug}.md", StringComparison.OrdinalIgnoreCase));
+            .FirstOrDefault(n => n.EndsWith($".Blog.{slug}.md", StringComparison.OrdinalIgnoreCase));
 
         if (resourceName is null)
         {
@@ -104,6 +106,8 @@ public partial class MarkdownService
             ? new BlogPostFrontmatter()
             : _yamlDeserializer.Deserialize<BlogPostFrontmatter>(yaml);
 
+        frontmatter.Slug = slug;
+
         var html = Markdown.ToHtml(body, _pipeline);
 
         return new BlogPostContent
@@ -111,6 +115,24 @@ public partial class MarkdownService
             Frontmatter = frontmatter,
             HtmlBody = html
         };
+    }
+
+    public IReadOnlyList<BlogPostFrontmatter> GetAllPosts()
+    {
+        EnsureBlogPostsLoaded();
+        return _blogPosts!;
+    }
+
+    public BlogPostFrontmatter? GetFeaturedPost()
+    {
+        EnsureBlogPostsLoaded();
+        return _blogPosts!.FirstOrDefault(p => p.IsFeatured);
+    }
+
+    public IReadOnlyList<BlogPostFrontmatter> GetRegularPosts()
+    {
+        EnsureBlogPostsLoaded();
+        return _blogPosts!.Where(p => !p.IsFeatured).ToList();
     }
 
     private void EnsureCoursesLoaded()
@@ -150,6 +172,55 @@ public partial class MarkdownService
         _courses = courses;
     }
 
+    private void EnsureBlogPostsLoaded()
+    {
+        if (_blogPosts is not null)
+        {
+            return;
+        }
+
+        var posts = new List<BlogPostFrontmatter>();
+        var resourceNames = Assembly.GetManifestResourceNames()
+            .Where(n => BlogResourceRegex().IsMatch(n));
+
+        foreach (var resourceName in resourceNames)
+        {
+            var markdown = ReadResource(resourceName);
+            if (markdown is null)
+            {
+                continue;
+            }
+
+            var (yaml, _) = SplitFrontmatter(markdown);
+            if (string.IsNullOrWhiteSpace(yaml))
+            {
+                continue;
+            }
+
+            var frontmatter = _yamlDeserializer.Deserialize<BlogPostFrontmatter>(yaml);
+
+            var slugMatch = BlogSlugRegex().Match(resourceName);
+            if (slugMatch.Success)
+            {
+                frontmatter.Slug = slugMatch.Groups[1].Value.Replace('_', '-');
+            }
+
+            posts.Add(frontmatter);
+        }
+
+        _blogPosts = posts
+            .OrderByDescending(p => ParseDate(p.Date))
+            .ToList();
+    }
+
+    private static DateTime ParseDate(string dateString)
+    {
+        return DateTime.TryParseExact(dateString, "MMMM d, yyyy",
+            CultureInfo.InvariantCulture, DateTimeStyles.None, out var date)
+            ? date
+            : DateTime.MinValue;
+    }
+
     private static string? ReadResource(string resourceName)
     {
         using var stream = Assembly.GetManifestResourceStream(resourceName);
@@ -185,6 +256,12 @@ public partial class MarkdownService
 
     [GeneratedRegex(@"\.Content\.Courses\.[^.]+\.course\.md$", RegexOptions.IgnoreCase)]
     private static partial Regex CourseResourceRegex();
+
+    [GeneratedRegex(@"\.Content\.Blog\.[^.]+\.md$", RegexOptions.IgnoreCase)]
+    private static partial Regex BlogResourceRegex();
+
+    [GeneratedRegex(@"\.Content\.Blog\.([^.]+)\.md$", RegexOptions.IgnoreCase)]
+    private static partial Regex BlogSlugRegex();
 
     [GeneratedRegex(@"^---\s*$", RegexOptions.Multiline)]
     private static partial Regex DelimiterRegex();
