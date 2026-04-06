@@ -12,5 +12,6 @@ builder.Services.AddScoped<ThemeService>();
 builder.Services.AddScoped<CourseProgressService>();
 builder.Services.AddSingleton<BlogService>();
 builder.Services.AddSingleton<LessonService>();
+builder.Services.AddSingleton<CourseService>();
 
 await builder.Build().RunAsync();

@@ -28,6 +28,7 @@
 
     <ItemGroup>
         <EmbeddedResource Include="Content\Blog\*.md" />
+        <EmbeddedResource Include="Content\Courses\*.md" />
         <EmbeddedResource Include="Content\Lessons\**\*.md" />
     </ItemGroup>
 

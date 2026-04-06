@@ -1,4 +1,5 @@
 ﻿@namespace SharpForge.Client.Components
+@inject CourseService CourseService
 
 <PageTitle>@_lesson.Title - @_course.Title - SharpForge</PageTitle>
 <CodeHighlighter />
@@ -16,7 +17,7 @@
                 LessonNumber="@LessonNumber"
                 Title="@_lesson.Title"
                 Duration="@Duration"
-                Level="@_course.Level" />
+                Level="@_course.CourseLevel" />
 
             <div class="lesson-body">
                 @ChildContent
@@ -61,7 +62,8 @@
 
     protected override void OnParametersSet()
     {
-        _course = CourseDetailRegistry.Courses[CourseSlug];
+        _course = CourseService.GetCourse(CourseSlug)
+                  ?? throw new InvalidOperationException($"Course '{CourseSlug}' not found.");
         _lesson = _course.Lessons.First(l => l.Number == LessonNumber);
 
         var isFirst = LessonNumber == _course.Lessons[0].Number;

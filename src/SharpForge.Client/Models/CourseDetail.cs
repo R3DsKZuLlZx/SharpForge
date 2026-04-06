@@ -2,20 +2,23 @@
 
 public class CourseDetail
 {
-    public required string Slug { get; init; }
-    public required string Title { get; init; }
-    public required string Description { get; init; }
-    public required CourseLevel Level { get; init; }
-    public required string Duration { get; init; }
-    public required string StudentCount { get; init; }
-    public required int ExerciseCount { get; init; }
-    public string ProjectDescription { get; init; } = "";
-    public required string IconSvg { get; init; }
-    public required List<string> LearningOutcomes { get; init; }
-    public required List<string> Prerequisites { get; init; }
-    public required List<CourseLessonDetail> Lessons { get; init; }
-    public int LessonCount => Lessons.Count;
+    public string Slug { get; set; } = "";
+    public string Title { get; set; } = "";
+    public string Description { get; set; } = "";
+    public string Level { get; set; } = "Beginner";
+    public string Duration { get; set; } = "";
+    public string StudentCount { get; set; } = "0";
+    public int ExerciseCount { get; set; }
+    public string ProjectDescription { get; set; } = "";
+    public List<string> Topics { get; set; } = [];
+    public string IconSvg { get; set; } = "";
+    public List<string> LearningOutcomes { get; set; } = [];
+    public List<string> Prerequisites { get; set; } = [];
+    public List<CourseLessonDetail> Lessons { get; set; } = [];
 
+    public CourseLevel CourseLevel => Enum.TryParse<CourseLevel>(Level, ignoreCase: true, out var lvl) ? lvl : CourseLevel.Beginner;
+
+    public int LessonCount => Lessons.Count;
     public string BaseUrl => $"training/{Slug}";
     public string StartUrl => $"{BaseUrl}/lesson/1";
     public string GetLessonUrl(int lessonNumber) => $"{BaseUrl}/lesson/{lessonNumber}";

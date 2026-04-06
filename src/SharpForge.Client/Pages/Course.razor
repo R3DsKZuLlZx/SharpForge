@@ -1,4 +1,5 @@
 ﻿@page "/training/{Slug}"
+@inject CourseService CourseService
 
 @if (_course is null)
 {
@@ -9,7 +10,7 @@ else
     <PageTitle>@_course.Title - SharpForge</PageTitle>
 
     <CourseHero
-        Level="@_course.Level"
+        Level="@_course.CourseLevel"
         Title="@_course.Title"
         Description="@_course.Description"
         LessonCount="@_course.LessonCount"
@@ -59,7 +60,7 @@ else
 
     protected override void OnParametersSet()
     {
-        _course = CourseDetailRegistry.Courses.GetValueOrDefault(Slug);
+        _course = CourseService.GetCourse(Slug);
     }
 }
 

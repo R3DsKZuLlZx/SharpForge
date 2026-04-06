@@ -1,4 +1,5 @@
 ﻿@page "/training"
+@inject CourseService CourseService
 
 <PageTitle>Training - SharpForge</PageTitle>
 
@@ -13,10 +14,10 @@
 <section class="section">
     <div class="container">
         <div class="filter-bar">
-            <button class="filter-btn @(SelectedFilter == "All" ? "active" : "")" @onclick="@(() => SetFilter("All"))">All Levels</button>
-            <button class="filter-btn @(SelectedFilter == "Beginner" ? "active" : "")" @onclick="@(() => SetFilter("Beginner"))">Beginner</button>
-            <button class="filter-btn @(SelectedFilter == "Intermediate" ? "active" : "")" @onclick="@(() => SetFilter("Intermediate"))">Intermediate</button>
-            <button class="filter-btn @(SelectedFilter == "Advanced" ? "active" : "")" @onclick="@(() => SetFilter("Advanced"))">Advanced</button>
+            <button class="filter-btn @(_selectedFilter == "All" ? "active" : "")" @onclick="@(() => SetFilter("All"))">All Levels</button>
+            <button class="filter-btn @(_selectedFilter == "Beginner" ? "active" : "")" @onclick="@(() => SetFilter("Beginner"))">Beginner</button>
+            <button class="filter-btn @(_selectedFilter == "Intermediate" ? "active" : "")" @onclick="@(() => SetFilter("Intermediate"))">Intermediate</button>
+            <button class="filter-btn @(_selectedFilter == "Advanced" ? "active" : "")" @onclick="@(() => SetFilter("Advanced"))">Advanced</button>
         </div>
 
         <div class="courses-grid">
@@ -24,7 +25,7 @@
             {
                 <article class="course-card">
                     <div class="course-header">
-                        <div class="course-level @course.Level.ToLower()">@course.Level</div>
+                        <div class="course-level @course.Level.ToLowerInvariant()">@course.Level</div>
                         <span class="course-duration">@course.Duration</span>
                     </div>
                     <h2>@course.Title</h2>
@@ -37,11 +38,11 @@
                     </div>
                     <div class="course-footer">
                         <div class="course-stats">
-                            <span>@course.Lessons Lessons</span>
+                            <span>@course.LessonCount Lessons</span>
                             <span>•</span>
-                            <span>@course.Exercises Exercises</span>
+                            <span>@course.ExerciseCount Exercises</span>
                         </div>
-                        <a href="@course.Url" class="btn btn-primary">Start Course</a>
+                        <a href="@course.BaseUrl" class="btn btn-primary">Start Course</a>
                     </div>
                 </article>
             }
@@ -57,121 +58,20 @@
 </section>
 
 @code {
-    private string SelectedFilter { get; set; } = "All";
-    
-    private List<Course> Courses { get; set; } = new()
+    private string _selectedFilter = "All";
+    private IReadOnlyList<CourseDetail> _courses = [];
+
+    protected override void OnInitialized()
     {
-        // Beginner Courses
-        new Course
-        {
-            Title = "C# Fundamentals",
-            Description = "Start your C# journey with the basics. Learn about variables, data types, control flow, methods, and object-oriented programming concepts.",
-            Level = "Beginner",
-            Duration = "3 Hours",
-            Lessons = 12,
-            Exercises = 6,
-            Topics = ["Variables", "Control Flow", "Methods", "Classes"],
-            Url = "training/csharp-fundamentals"
-        },
-        new Course
-        {
-            Title = "Getting Started with .NET",
-            Description = "Understand the .NET ecosystem, SDK, CLI tools, and project structure. Learn how to create, build, and run .NET applications.",
-            Level = "Beginner",
-            Duration = "2 Hours",
-            Lessons = 10,
-            Exercises = 4,
-            Topics = [".NET CLI", "Project Structure", "NuGet"],
-            Url = "training/getting-started-dotnet"
-        },
-        // Intermediate Courses
-        new Course
-        {
-            Title = "ASP.NET Core Web APIs",
-            Description = "Build production-ready REST APIs with ASP.NET Core. Learn about routing, middleware, dependency injection, authentication, and more.",
-            Level = "Intermediate",
-            Duration = "3 Hours",
-            Lessons = 18,
-            Exercises = 10,
-            Topics = ["REST APIs", "Middleware", "Authentication", "EF Core"],
-            Url = "training/aspnet-core-web-apis"
-        },
-        new Course
-        {
-            Title = "Blazor WebAssembly",
-            Description = "Create interactive web applications with Blazor WebAssembly. Build SPAs with C# instead of JavaScript.",
-            Level = "Intermediate",
-            Duration = "3 Hours",
-            Lessons = 14,
-            Exercises = 8,
-            Topics = ["Components", "Data Binding", "Routing", "State Management"],
-            Url = "training/blazor-webassembly"
-        },
-        new Course
-        {
-            Title = "Entity Framework Core",
-            Description = "Master database access with Entity Framework Core. Learn about DbContext, migrations, relationships, and performance optimization.",
-            Level = "Intermediate",
-            Duration = "4 Hours",
-            Lessons = 12,
-            Exercises = 6,
-            Topics = ["DbContext", "Migrations", "LINQ", "Performance"],
-            Url = "training/entity-framework-core"
-        },
-        // Advanced Courses
-        new Course
-        {
-            Title = "Design Patterns in C#",
-            Description = "Learn Gang of Four patterns, SOLID principles, and clean architecture. Write maintainable, testable, and scalable code.",
-            Level = "Advanced",
-            Duration = "5 Hours",
-            Lessons = 24,
-            Exercises = 12,
-            Topics = ["SOLID", "Creational Patterns", "Structural Patterns", "Behavioral Patterns"],
-            Url = "training/design-patterns"
-        },
-        new Course
-        {
-            Title = "Async/Await & Concurrency",
-            Description = "Deep dive into asynchronous programming, Task Parallel Library, and concurrency patterns in C#.",
-            Level = "Advanced",
-            Duration = "4 Hours",
-            Lessons = 16,
-            Exercises = 10,
-            Topics = ["async/await", "TPL", "Channels", "Synchronization"],
-            Url = "training/async-concurrency"
-        },
-        new Course
-        {
-            Title = "Microservices with .NET",
-            Description = "Build distributed systems with microservices architecture. Learn about Docker, Kubernetes, message queues, and API gateways.",
-            Level = "Advanced",
-            Duration = "6 Hours",
-            Lessons = 28,
-            Exercises = 15,
-            Topics = ["Docker", "Kubernetes", "RabbitMQ", "gRPC"],
-            Url = "training/microservices"
-        }
-    };
-    
-    private IEnumerable<Course> FilteredCourses => SelectedFilter == "All" 
-        ? Courses 
-        : Courses.Where(c => c.Level == SelectedFilter);
-    
+        _courses = CourseService.GetAllCourses();
+    }
+
+    private IEnumerable<CourseDetail> FilteredCourses => _selectedFilter == "All"
+        ? _courses
+        : _courses.Where(c => c.Level == _selectedFilter);
+
     private void SetFilter(string filter)
     {
-        SelectedFilter = filter;
-    }
-    
-    private class Course
-    {
-        public string Title { get; set; } = "";
-        public string Description { get; set; } = "";
-        public string Level { get; set; } = "";
-        public string Duration { get; set; } = "";
-        public int Lessons { get; set; }
-        public int Exercises { get; set; }
-        public string[] Topics { get; set; } = [];
-        public string Url { get; set; } = "#";
+        _selectedFilter = filter;
     }
 }
