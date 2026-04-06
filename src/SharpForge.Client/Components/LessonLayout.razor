@@ -50,8 +50,8 @@
 
     private string CourseUrl => $"training/{CourseSlug}";
 
-    private CourseRegistry.CourseMetadata _course = null!;
-    private CourseLessons.LessonInfo _lesson = null!;
+    private CourseDetail _course = null!;
+    private CourseLessonDetail _lesson = null!;
 
     private string _previousUrl = "#";
     private string _previousText = "Previous Lesson";
@@ -61,7 +61,7 @@
 
     protected override void OnParametersSet()
     {
-        _course = CourseRegistry.Courses[CourseSlug];
+        _course = CourseDetailRegistry.Courses[CourseSlug];
         _lesson = _course.Lessons.First(l => l.Number == LessonNumber);
 
         var isFirst = LessonNumber == _course.Lessons[0].Number;
@@ -74,8 +74,7 @@
         }
         else
         {
-            var prev = _course.Lessons.First(l => l.Number == LessonNumber - 1);
-            _previousUrl = prev.Url;
+            _previousUrl = _course.GetLessonUrl(LessonNumber - 1);
             _previousText = "Previous Lesson";
         }
 
@@ -87,8 +86,7 @@
         }
         else
         {
-            var next = _course.Lessons.First(l => l.Number == LessonNumber + 1);
-            _nextUrl = next.Url;
+            _nextUrl = _course.GetLessonUrl(LessonNumber + 1);
             _nextText = "Next Lesson";
             _showHomeIcon = false;
         }

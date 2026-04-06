@@ -19,7 +19,7 @@
         @foreach (var lesson in Lessons)
         {
             var isActive = lesson.Number == CurrentLesson;
-            <a href="@lesson.Url" class="lesson-nav-item @(isActive ? "active" : "")" @onclick="CloseSidebar">
+            <a href="@($"{CourseUrl}/lesson/{lesson.Number}")" class="lesson-nav-item @(isActive ? "active" : "")" @onclick="CloseSidebar">
                 <span class="lesson-num">@lesson.Number</span>
                 <span>@lesson.Title</span>
             </a>
@@ -49,7 +49,7 @@
     [Parameter] public string CourseUrl { get; set; } = "#";
     [Parameter] public string CourseTitle { get; set; } = "";
     [Parameter] public int CurrentLesson { get; set; } = 1;
-    [Parameter] public List<CourseLessons.LessonInfo> Lessons { get; set; } = [];
+    [Parameter] public List<CourseLessonDetail> Lessons { get; set; } = [];
 
     private bool _isOpen = false;
 

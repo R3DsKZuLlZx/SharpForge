@@ -1,8 +1,5 @@
 ﻿namespace SharpForge.Client.Data;
 
-/// <summary>
-/// All data needed to render a course overview page.
-/// </summary>
 public class CourseDetail
 {
     public required string Slug { get; init; }
@@ -17,10 +14,11 @@ public class CourseDetail
     public required List<string> LearningOutcomes { get; init; }
     public required List<string> Prerequisites { get; init; }
     public required List<CourseLessonDetail> Lessons { get; init; }
-
-    public string StartUrl => $"training/{Slug}/lesson/1";
     public int LessonCount => Lessons.Count;
+
+    public string BaseUrl => $"training/{Slug}";
+    public string StartUrl => $"{BaseUrl}/lesson/1";
+    public string GetLessonUrl(int lessonNumber) => $"{BaseUrl}/lesson/{lessonNumber}";
 }
 
 public record CourseLessonDetail(int Number, string Title, string Description, string Duration);
-

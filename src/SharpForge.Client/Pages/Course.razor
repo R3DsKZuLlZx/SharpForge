@@ -34,7 +34,7 @@ else
 
                     <CourseCurriculum
                         BaseUrl="@($"training/{_course.Slug}")"
-                        Lessons="@_curriculumLessons" />
+                        Lessons="@_course.Lessons" />
 
                     <CoursePrerequisites Prerequisites="@_course.Prerequisites" />
                 </main>
@@ -56,15 +56,10 @@ else
     public string Slug { get; set; } = "";
 
     private CourseDetail? _course;
-    private List<CourseCurriculum.CourseLessonInfo> _curriculumLessons = [];
 
     protected override void OnParametersSet()
     {
         _course = CourseDetailRegistry.Courses.GetValueOrDefault(Slug);
-
-        _curriculumLessons = _course?.Lessons
-            .Select(l => new CourseCurriculum.CourseLessonInfo(l.Number, l.Title, l.Description, l.Duration))
-            .ToList() ?? [];
     }
 }
 
