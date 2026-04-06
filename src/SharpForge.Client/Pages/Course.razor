@@ -1,5 +1,5 @@
 ﻿@page "/training/{Slug}"
-@inject CourseService CourseService
+@inject MarkdownService MarkdownService
 
 @if (_course is null)
 {
@@ -60,7 +60,7 @@ else
 
     protected override void OnParametersSet()
     {
-        _course = CourseService.GetCourse(Slug);
+        _course = MarkdownService.GetCourse(Slug);
     }
 }
 

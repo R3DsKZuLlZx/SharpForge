@@ -7,7 +7,7 @@ namespace SharpForge.Client.Pages;
 public partial class BlogPost
 {
     [Inject]
-    public required BlogService BlogService { get; set; }
+    public required MarkdownService MarkdownService { get; set; }
 
     [Parameter]
     public string Slug { get; set; } = "";
@@ -16,6 +16,6 @@ public partial class BlogPost
 
     protected override void OnParametersSet()
     {
-        _post = BlogService.GetPost(Slug);
+        _post = MarkdownService.GetPost(Slug);
     }
 }

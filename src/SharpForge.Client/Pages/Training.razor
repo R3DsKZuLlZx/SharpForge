@@ -1,5 +1,5 @@
 ﻿@page "/training"
-@inject CourseService CourseService
+@inject MarkdownService MarkdownService
 
 <PageTitle>Training - SharpForge</PageTitle>
 
@@ -63,7 +63,7 @@
 
     protected override void OnInitialized()
     {
-        _courses = CourseService.GetAllCourses();
+        _courses = MarkdownService.GetAllCourses();
     }
 
     private IEnumerable<CourseDetail> FilteredCourses => _selectedFilter == "All"

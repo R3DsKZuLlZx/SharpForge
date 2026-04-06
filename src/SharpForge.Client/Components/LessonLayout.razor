@@ -1,5 +1,5 @@
 ﻿@namespace SharpForge.Client.Components
-@inject CourseService CourseService
+@inject MarkdownService MarkdownService
 
 <PageTitle>@_lesson.Title - @_course.Title - SharpForge</PageTitle>
 <CodeHighlighter />
@@ -62,7 +62,7 @@
 
     protected override void OnParametersSet()
     {
-        _course = CourseService.GetCourse(CourseSlug)
+        _course = MarkdownService.GetCourse(CourseSlug)
                   ?? throw new InvalidOperationException($"Course '{CourseSlug}' not found.");
         _lesson = _course.Lessons.First(l => l.Number == LessonNumber);
 

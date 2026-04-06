@@ -1,5 +1,5 @@
 ﻿@page "/training/{CourseSlug}/lesson/{LessonNumber:int}"
-@inject LessonService LessonService
+@inject MarkdownService MarkdownService
 
 @if (_lesson is null)
 {
@@ -55,7 +55,7 @@ else
 
     protected override void OnParametersSet()
     {
-        _lesson = LessonService.GetLesson(CourseSlug, LessonNumber);
+        _lesson = MarkdownService.GetLesson(CourseSlug, LessonNumber);
     }
 }
 
