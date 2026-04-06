@@ -1,11 +1,11 @@
-﻿namespace SharpForge.Client.Data;
+﻿namespace SharpForge.Client.Models;
 
 public class CourseDetail
 {
     public required string Slug { get; init; }
     public required string Title { get; init; }
     public required string Description { get; init; }
-    public required string Level { get; init; }
+    public required CourseLevel Level { get; init; }
     public required string Duration { get; init; }
     public required string StudentCount { get; init; }
     public required int ExerciseCount { get; init; }
@@ -20,5 +20,3 @@ public class CourseDetail
     public string StartUrl => $"{BaseUrl}/lesson/1";
     public string GetLessonUrl(int lessonNumber) => $"{BaseUrl}/lesson/{lessonNumber}";
 }
-
-public record CourseLessonDetail(int Number, string Title, string Description, string Duration);

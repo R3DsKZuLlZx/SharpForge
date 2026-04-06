@@ -1,4 +1,6 @@
-﻿namespace SharpForge.Client.Data;
+﻿using SharpForge.Client.Models;
+
+namespace SharpForge.Client.Data;
 
 /// <summary>
 /// Central registry of course detail pages, keyed by slug.
@@ -27,7 +29,7 @@ public static class CourseDetailRegistry
         Slug = "csharp-fundamentals",
         Title = "C# Fundamentals",
         Description = "Master the fundamentals of C# programming. Learn syntax, data types, control flow, object-oriented programming, and build your first applications.",
-        Level = "Beginner",
+        Level = CourseLevel.Beginner,
         Duration = "3 Hours",
         StudentCount = "59",
         ExerciseCount = 24,
@@ -83,7 +85,7 @@ public static class CourseDetailRegistry
         Slug = "getting-started-dotnet",
         Title = "Getting Started with .NET",
         Description = "Learn the fundamentals of the .NET platform. Understand the runtime, SDK, project structure, and build your first applications across web, console, and API projects.",
-        Level = "Beginner",
+        Level = CourseLevel.Beginner,
         Duration = "2 Hours",
         StudentCount = "23",
         ExerciseCount = 20,
@@ -139,7 +141,7 @@ public static class CourseDetailRegistry
         Slug = "aspnet-core-web-apis",
         Title = "ASP.NET Core Web APIs",
         Description = "Build production-ready REST APIs with ASP.NET Core. Master routing, middleware, dependency injection, authentication, Entity Framework Core, and deployment strategies.",
-        Level = "Intermediate",
+        Level = CourseLevel.Intermediate,
         Duration = "3 hours",
         StudentCount = "47",
         ExerciseCount = 10,
@@ -203,7 +205,7 @@ public static class CourseDetailRegistry
         Slug = "blazor-webassembly",
         Title = "Blazor WebAssembly",
         Description = "Create interactive web applications with Blazor WebAssembly. Build single-page applications using C# instead of JavaScript, with components, data binding, routing, and state management.",
-        Level = "Intermediate",
+        Level = CourseLevel.Intermediate,
         Duration = "3 Hours",
         StudentCount = "92",
         ExerciseCount = 8,
@@ -267,7 +269,7 @@ public static class CourseDetailRegistry
         Slug = "entity-framework-core",
         Title = "Entity Framework Core",
         Description = "Master database access with Entity Framework Core. Learn about DbContext, migrations, relationships, LINQ queries, and performance optimization for production applications.",
-        Level = "Intermediate",
+        Level = CourseLevel.Intermediate,
         Duration = "4 Hours",
         StudentCount = "56",
         ExerciseCount = 6,
@@ -328,7 +330,7 @@ public static class CourseDetailRegistry
         Slug = "design-patterns",
         Title = "Design Patterns in C#",
         Description = "Learn Gang of Four patterns, SOLID principles, and clean architecture. Write maintainable, testable, and scalable code that stands the test of time.",
-        Level = "Advanced",
+        Level = CourseLevel.Advanced,
         Duration = "5 Hours",
         StudentCount = "32",
         ExerciseCount = 12,
@@ -401,7 +403,7 @@ public static class CourseDetailRegistry
         Slug = "async-concurrency",
         Title = "Async/Await & Concurrency",
         Description = "Deep dive into asynchronous programming, Task Parallel Library, and concurrency patterns in C#. Master async/await, parallel processing, and thread-safe code.",
-        Level = "Advanced",
+        Level = CourseLevel.Advanced,
         Duration = "4 Hours",
         StudentCount = "21",
         ExerciseCount = 10,
@@ -468,7 +470,7 @@ public static class CourseDetailRegistry
         Slug = "microservices",
         Title = "Microservices with .NET",
         Description = "Build distributed systems with microservices architecture. Learn about Docker, Kubernetes, message queues, API gateways, and service-to-service communication patterns.",
-        Level = "Advanced",
+        Level = CourseLevel.Advanced,
         Duration = "6 Hours",
         StudentCount = "12",
         ExerciseCount = 15,
@@ -543,4 +545,3 @@ public static class CourseDetailRegistry
         ],
     };
 }
-
