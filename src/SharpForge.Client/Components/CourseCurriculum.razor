@@ -19,8 +19,6 @@
 
 @code {
     [Parameter] public string BaseUrl { get; set; } = "";
-    [Parameter] public List<CourseLessonInfo> Lessons { get; set; } = [];
-
-    public record CourseLessonInfo(int Number, string Title, string Description, string Duration);
+    [Parameter] public List<CourseLessonDetail> Lessons { get; set; } = [];
 }
 

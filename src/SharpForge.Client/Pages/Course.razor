@@ -1,0 +1,52 @@
+﻿@page "/courses/{Slug}"
+
+@if (_course is null)
+{
+    <NotFound />
+}
+else
+{
+    <PageTitle>@_course.Title - SharpForge</PageTitle>
+
+    <CourseHero
+        Level="@_course.CourseLevel"
+        Title="@_course.Title"
+        Description="@_course.Description"
+        LessonCount="@_course.LessonCount"
+        Duration="@_course.Duration"
+        StudentCount="@_course.StudentCount"
+        StartUrl="@_course.StartUrl">
+        <IconContent>
+            @((MarkupString)_course.IconSvg)
+        </IconContent>
+    </CourseHero>
+
+    <section class="section course-content">
+        <div class="container">
+            <div class="course-layout">
+                <main class="course-main">
+                    <CourseLearningOutcomes>
+                        @foreach (var outcome in _course.LearningOutcomes)
+                        {
+                            <CourseLearningOutcome Text="@outcome" />
+                        }
+                    </CourseLearningOutcomes>
+
+                    <CourseCurriculum
+                        BaseUrl="@($"courses/{_course.Slug}")"
+                        Lessons="@_course.Lessons" />
+
+                    <CoursePrerequisites Prerequisites="@_course.Prerequisites" />
+                </main>
+
+                <CourseSidebar
+                    CourseId="@_course.Slug"
+                    TotalLessons="@_course.LessonCount"
+                    Duration="@_course.Duration"
+                    ExerciseCount="@_course.ExerciseCount"
+                    ProjectDescription="@_course.ProjectDescription"
+                    StartUrl="@_course.StartUrl" />
+            </div>
+        </div>
+    </section>
+}

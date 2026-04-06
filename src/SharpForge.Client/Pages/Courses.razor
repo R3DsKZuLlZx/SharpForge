@@ -1,0 +1,57 @@
+﻿@page "/courses"
+
+<PageTitle>Courses - SharpForge</PageTitle>
+
+<section class="page-hero">
+    <div class="container">
+        <span class="tag mb-3">Courses</span>
+        <h1>Learn C# from the ground up</h1>
+        <p class="page-description">Comprehensive courses designed to take you from beginner to expert</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="filter-bar">
+            <button class="filter-btn @(_selectedFilter == "All" ? "active" : "")" @onclick="@(() => SetFilter("All"))">All Levels</button>
+            <button class="filter-btn @(_selectedFilter == "Beginner" ? "active" : "")" @onclick="@(() => SetFilter("Beginner"))">Beginner</button>
+            <button class="filter-btn @(_selectedFilter == "Intermediate" ? "active" : "")" @onclick="@(() => SetFilter("Intermediate"))">Intermediate</button>
+            <button class="filter-btn @(_selectedFilter == "Advanced" ? "active" : "")" @onclick="@(() => SetFilter("Advanced"))">Advanced</button>
+        </div>
+
+        <div class="courses-grid">
+            @foreach (var course in FilteredCourses)
+            {
+                <article class="course-card">
+                    <div class="course-header">
+                        <div class="course-level @course.Level.ToLowerInvariant()">@course.Level</div>
+                        <span class="course-duration">@course.Duration</span>
+                    </div>
+                    <h2>@course.Title</h2>
+                    <p>@course.Description</p>
+                    <div class="course-topics">
+                        @foreach (var topic in course.Topics)
+                        {
+                            <span class="topic">@topic</span>
+                        }
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-stats">
+                            <span>@course.LessonCount Lessons</span>
+                            <span>•</span>
+                            <span>@course.ExerciseCount Exercises</span>
+                        </div>
+                        <a href="@course.BaseUrl" class="btn btn-primary">Start Course</a>
+                    </div>
+                </article>
+            }
+        </div>
+        
+        @if (!FilteredCourses.Any())
+        {
+            <div class="no-courses">
+                <p>No courses found for the selected filter.</p>
+            </div>
+        }
+    </div>
+</section>

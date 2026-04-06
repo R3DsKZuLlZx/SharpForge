@@ -39,11 +39,11 @@
     private async Task HandleNextClickAsync()
     {
         // Parse the current URL to get CourseId and LessonNumber
-        // URL format: /training/{courseId}/lesson/{lessonNumber}
+        // URL format: /courses/{courseId}/lesson/{lessonNumber}
         var uri = new Uri(NavigationManager.Uri);
         var segments = uri.AbsolutePath.Trim('/').Split('/');
         
-        if (segments.Length >= 4 && segments[0] == "training" && segments[2] == "lesson")
+        if (segments.Length >= 4 && segments[0] == "courses" && segments[2] == "lesson")
         {
             var courseId = segments[1];
             if (int.TryParse(segments[3], out var lessonNumber))

@@ -11,7 +11,7 @@
             </svg>
             @Duration
         </span>
-        <span class="lesson-level @Level.ToLowerInvariant()">@Level</span>
+        <span class="lesson-level @Level.ToString().ToLowerInvariant()">@Level</span>
     </div>
 </header>
 
@@ -19,6 +19,6 @@
     [Parameter] public int LessonNumber { get; set; }
     [Parameter] public string Title { get; set; } = "";
     [Parameter] public string Duration { get; set; } = "20 min";
-    [Parameter] public string Level { get; set; } = "Beginner";
+    [Parameter] public CourseLevel Level { get; set; } = CourseLevel.Beginner;
 }
 
