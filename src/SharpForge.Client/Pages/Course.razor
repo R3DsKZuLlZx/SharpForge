@@ -1,4 +1,4 @@
-﻿@page "/training/{Slug}"
+﻿@page "/courses/{Slug}"
 
 @if (_course is null)
 {
@@ -33,7 +33,7 @@ else
                     </CourseLearningOutcomes>
 
                     <CourseCurriculum
-                        BaseUrl="@($"training/{_course.Slug}")"
+                        BaseUrl="@($"courses/{_course.Slug}")"
                         Lessons="@_course.Lessons" />
 
                     <CoursePrerequisites Prerequisites="@_course.Prerequisites" />

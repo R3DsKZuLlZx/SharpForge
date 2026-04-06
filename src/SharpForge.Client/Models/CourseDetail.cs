@@ -19,7 +19,7 @@ public class CourseDetail
     public CourseLevel CourseLevel => Enum.TryParse<CourseLevel>(Level, ignoreCase: true, out var lvl) ? lvl : CourseLevel.Beginner;
 
     public int LessonCount => Lessons.Count;
-    public string BaseUrl => $"training/{Slug}";
+    public string BaseUrl => $"courses/{Slug}";
     public string StartUrl => $"{BaseUrl}/lesson/1";
     public string GetLessonUrl(int lessonNumber) => $"{BaseUrl}/lesson/{lessonNumber}";
 }

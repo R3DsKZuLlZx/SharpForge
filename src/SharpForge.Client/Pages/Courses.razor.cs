@@ -4,7 +4,7 @@ using SharpForge.Client.Services;
 
 namespace SharpForge.Client.Pages;
 
-public partial class Training
+public partial class Courses
 {
     [Inject]
     public required MarkdownService MarkdownService { get; set; }
