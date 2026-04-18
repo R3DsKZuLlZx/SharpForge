@@ -55,9 +55,7 @@
                 <!-- Pagination -->
                 <div class="pagination">
                     <button class="pagination-btn" disabled="@(CurrentPage == 1)" @onclick="PreviousPage">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="15 18 9 12 15 6"/>
-                        </svg>
+                        <Icon Name="chevron-left" Size="20" />
                         <span class="pagination-text">Previous</span>
                     </button>
                     <div class="pagination-pages">
@@ -72,9 +70,7 @@
                     </div>
                     <button class="pagination-btn" disabled="@(CurrentPage == TotalPages)" @onclick="NextPage">
                         <span class="pagination-text">Next</span>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="9 18 15 12 9 6"/>
-                        </svg>
+                        <Icon Name="chevron-right" Size="20" />
                     </button>
                 </div>
             </main>
