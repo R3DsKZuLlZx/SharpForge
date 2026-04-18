@@ -1,6 +1,4 @@
-﻿@* Common component for course curriculum section *@
-
-<div class="course-section">
+﻿<div class="course-section">
     <h2>Course Curriculum</h2>
     <div class="lessons-list">
         @foreach (var lesson in Lessons)
@@ -16,9 +14,3 @@
         }
     </div>
 </div>
-
-@code {
-    [Parameter] public string BaseUrl { get; set; } = "";
-    [Parameter] public List<CourseLessonDetail> Lessons { get; set; } = [];
-}
-

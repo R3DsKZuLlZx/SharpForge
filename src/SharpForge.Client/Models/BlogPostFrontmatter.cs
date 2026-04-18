@@ -1,6 +1,4 @@
-﻿using SharpForge.Client.Components;
-
-namespace SharpForge.Client.Models;
+﻿namespace SharpForge.Client.Models;
 
 public class BlogPostFrontmatter
 {

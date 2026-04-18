@@ -1,6 +1,4 @@
-@* Container for tags. Can accept a `Tags` parameter or child `BlogTag` components. *@
 @namespace SharpForge.Client.Components
-@using Microsoft.AspNetCore.Components
 
 <div class="post-tags">
     @if (Tags is not null)
@@ -15,11 +13,3 @@
         @ChildContent
     }
 </div>
-
-@code {
-    [Parameter]
-    public IEnumerable<string>? Tags { get; set; }
-
-    [Parameter]
-    public RenderFragment? ChildContent { get; set; }
-}

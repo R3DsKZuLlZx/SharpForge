@@ -3,11 +3,11 @@ using SharpForge.Client.Models;
 
 namespace SharpForge.Client.Components;
 
-public partial class BlogSidebar
+public partial class CourseCurriculum
 {
     [Parameter]
-    public RenderFragment? ChildContent { get; set; }
+    public string BaseUrl { get; set; } = "";
 
     [Parameter]
-    public IEnumerable<BlogSidebarItem>? Items { get; set; }
+    public List<CourseLessonDetail> Lessons { get; set; } = [];
 }
