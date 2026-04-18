@@ -1,6 +1,4 @@
-﻿@* Common component for lesson header *@
-
-<header class="lesson-header">
+﻿<header class="lesson-header">
     <span class="lesson-number">Lesson @LessonNumber</span>
     <h1>@Title</h1>
     <div class="lesson-meta">
@@ -14,11 +12,3 @@
         <span class="lesson-level @Level.ToString().ToLowerInvariant()">@Level</span>
     </div>
 </header>
-
-@code {
-    [Parameter] public int LessonNumber { get; set; }
-    [Parameter] public string Title { get; set; } = "";
-    [Parameter] public string Duration { get; set; } = "20 min";
-    [Parameter] public CourseLevel Level { get; set; } = CourseLevel.Beginner;
-}
-

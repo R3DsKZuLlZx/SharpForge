@@ -1,12 +1,4 @@
-﻿@* Common component for individual lesson exercise *@
-
-<div class="exercise-box">
+﻿<div class="exercise-box">
     <h4>@Title</h4>
     @ChildContent
 </div>
-
-@code {
-    [Parameter] public string Title { get; set; } = "";
-    [Parameter] public RenderFragment? ChildContent { get; set; }
-}
-

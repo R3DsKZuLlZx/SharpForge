@@ -1,6 +1,4 @@
-﻿@* Common component for lesson sidebar navigation *@
-
-@if (_isOpen)
+﻿@if (_isOpen)
 {
     <div class="lesson-sidebar-overlay show" @onclick="CloseSidebar"></div>
 }
@@ -44,23 +42,3 @@
         </svg>
     }
 </button>
-
-@code {
-    [Parameter] public string CourseUrl { get; set; } = "#";
-    [Parameter] public string CourseTitle { get; set; } = "";
-    [Parameter] public int CurrentLesson { get; set; } = 1;
-    [Parameter] public List<CourseLessonDetail> Lessons { get; set; } = [];
-
-    private bool _isOpen = false;
-
-    private void ToggleSidebar()
-    {
-        _isOpen = !_isOpen;
-    }
-
-    private void CloseSidebar()
-    {
-        _isOpen = false;
-    }
-}
-

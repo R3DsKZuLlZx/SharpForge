@@ -1,13 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
-using SharpForge.Client.Models;
 
 namespace SharpForge.Client.Components;
 
-public partial class BlogSidebar
+public partial class LessonExercises
 {
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
-
-    [Parameter]
-    public IEnumerable<BlogSidebarItem>? Items { get; set; }
 }
