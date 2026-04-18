@@ -1,4 +1,4 @@
-﻿@page "/blog"
+@page "/blog"
 @inject MarkdownService MarkdownService
 
 <PageTitle>Blog - SharpForge</PageTitle>
@@ -46,7 +46,7 @@
                                 </div>
                                 <h3>@post.Title</h3>
                                 <p>@post.Excerpt</p>
-                                <a href="@post.Url" class="post-link">Read More →</a>
+                                <a href="@post.Url" class="post-link">Read More ?</a>
                             </div>
                         </article>
                     }
@@ -55,7 +55,7 @@
                 <!-- Pagination -->
                 <div class="pagination">
                     <button class="pagination-btn" disabled="@(CurrentPage == 1)" @onclick="PreviousPage">
-                        <Icon Name="chevron-left" Size="20" />
+                        <Icon Name="@(IconName.ChevronLeft)" Size="20" />
                         <span class="pagination-text">Previous</span>
                     </button>
                     <div class="pagination-pages">
@@ -70,7 +70,7 @@
                     </div>
                     <button class="pagination-btn" disabled="@(CurrentPage == TotalPages)" @onclick="NextPage">
                         <span class="pagination-text">Next</span>
-                        <Icon Name="chevron-right" Size="20" />
+                        <Icon Name="@(IconName.ChevronRight)" Size="20" />
                     </button>
                 </div>
             </main>

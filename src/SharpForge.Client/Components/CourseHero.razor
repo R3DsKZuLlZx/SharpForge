@@ -1,7 +1,7 @@
 <section class="course-hero">
     <div class="container">
         <a href="courses" class="back-link">
-            <Icon Name="chevron-left" Size="20" />
+            <Icon Name="@(IconName.ChevronLeft)" Size="20" />
             Back to Courses
         </a>
         <div class="course-hero-content">
@@ -11,15 +11,15 @@
                 <p class="course-description">@Description</p>
                 <div class="course-meta">
                     <div class="meta-item">
-                        <Icon Name="bar-chart" Size="20" />
+                        <Icon Name="@(IconName.BarChart)" Size="20" />
                         <span>@LessonCount Lessons</span>
                     </div>
                     <div class="meta-item">
-                        <Icon Name="clock" Size="20" />
+                        <Icon Name="@(IconName.Clock)" Size="20" />
                         <span>@Duration</span>
                     </div>
                     <div class="meta-item">
-                        <Icon Name="users" Size="20" />
+                        <Icon Name="@(IconName.Users)" Size="20" />
                         <span>@StudentCount Students</span>
                     </div>
                 </div>

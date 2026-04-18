@@ -1,4 +1,4 @@
-﻿@if (_isOpen)
+@if (_isOpen)
 {
     <div class="lesson-sidebar-overlay show" @onclick="CloseSidebar"></div>
 }
@@ -6,7 +6,7 @@
 <aside class="lesson-sidebar @(_isOpen ? "open" : "")">
     <div class="sidebar-header">
         <a href="@CourseUrl" class="back-link">
-            <Icon Name="chevron-left" Size="20" />
+            <Icon Name="@(IconName.ChevronLeft)" Size="20" />
             Course Overview
         </a>
         <h3>@CourseTitle</h3>
@@ -26,10 +26,10 @@
 <button class="mobile-lesson-toggle" @onclick="ToggleSidebar" title="Toggle lesson menu">
     @if (_isOpen)
     {
-        <Icon Name="close" />
+        <Icon Name="@(IconName.Close)" />
     }
     else
     {
-        <Icon Name="menu" />
+        <Icon Name="@(IconName.Menu)" />
     }
 </button>

@@ -5,7 +5,7 @@ namespace SharpForge.Client.Components;
 public partial class Icon
 {
     [Parameter, EditorRequired]
-    public string Name { get; set; } = string.Empty;
+    public IconName Name { get; set; }
 
     [Parameter]
     public string? Class { get; set; }

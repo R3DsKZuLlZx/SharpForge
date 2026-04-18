@@ -1,4 +1,4 @@
-﻿@inherits LayoutComponentBase
+@inherits LayoutComponentBase
 @inject ThemeService ThemeService
 
 <div class="layout">
@@ -28,7 +28,7 @@
             <div class="header-actions">
                 <ThemeToggle />
                 <a href="https://github.com/R3DsKZuLlZx/SharpForge" target="_blank" class="github-link" title="View on GitHub">
-                    <Icon Name="github" />
+                    <Icon Name="@(IconName.GitHub)" />
                 </a>
             </div>
             
@@ -98,7 +98,7 @@
 <div id="blazor-error-ui" data-nosnippet>
     An unhandled error has occurred.
     <a href="." class="reload">Reload</a>
-    <span class="dismiss">🗙</span>
+    <span class="dismiss">??</span>
 </div>
 
 @code {

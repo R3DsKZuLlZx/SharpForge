@@ -1,13 +1,13 @@
-﻿@inject ThemeService ThemeService
+@inject ThemeService ThemeService
 @implements IDisposable
 
 <button class="theme-toggle" @onclick="ToggleTheme" title="@(ThemeService.IsDarkMode ? "Switch to light mode" : "Switch to dark mode")">
     @if (ThemeService.IsDarkMode)
     {
-        <Icon Name="sun" Class="theme-icon" />
+        <Icon Name="@(IconName.Sun)" Class="theme-icon" />
     }
     else
     {
-        <Icon Name="moon" Class="theme-icon" />
+        <Icon Name="@(IconName.Moon)" Class="theme-icon" />
     }
 </button>

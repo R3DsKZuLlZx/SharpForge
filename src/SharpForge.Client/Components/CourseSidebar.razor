@@ -1,4 +1,4 @@
-﻿@inject CourseProgressService ProgressService
+@inject CourseProgressService ProgressService
 @implements IDisposable
 
 <aside class="course-sidebar">
@@ -15,26 +15,26 @@
         <h4>Course Includes</h4>
         <ul class="includes-list">
             <li>
-                <Icon Name="video" Size="20" />
+                <Icon Name="@(IconName.Video)" Size="20" />
                 @Duration of content
             </li>
             <li>
-                <Icon Name="document" Size="20" />
+                <Icon Name="@(IconName.Document)" Size="20" />
                 @TotalLessons lessons
             </li>
             <li>
-                <Icon Name="code" Size="20" />
+                <Icon Name="@(IconName.Code)" Size="20" />
                 @ExerciseCount hands-on exercises
             </li>
             @if (!string.IsNullOrEmpty(ProjectDescription))
             {
                 <li>
-                    <Icon Name="package" Size="20" />
+                    <Icon Name="@(IconName.Package)" Size="20" />
                     @ProjectDescription
                 </li>
             }
             <li>
-                <Icon Name="info" Size="20" />
+                <Icon Name="@(IconName.Info)" Size="20" />
                 Lifetime access
             </li>
         </ul>

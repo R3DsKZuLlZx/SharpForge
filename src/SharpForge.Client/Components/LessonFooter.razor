@@ -1,21 +1,21 @@
-﻿@inject CourseProgressService ProgressService
+@inject CourseProgressService ProgressService
 @inject NavigationManager NavigationManager
 
 <footer class="lesson-footer">
     <div class="lesson-nav-buttons">
         <a href="@PreviousUrl" class="btn btn-secondary">
-            <Icon Name="chevron-left" Size="20" />
+            <Icon Name="@(IconName.ChevronLeft)" Size="20" />
             @PreviousText
         </a>
         <button type="button" class="btn btn-primary" @onclick="HandleNextClickAsync">
             @NextText
             @if (ShowHomeIcon)
             {
-                <Icon Name="home" Size="20" />
+                <Icon Name="@(IconName.Home)" Size="20" />
             }
             else
             {
-                <Icon Name="chevron-right" Size="20" />
+                <Icon Name="@(IconName.ChevronRight)" Size="20" />
             }
         </button>
     </div>
