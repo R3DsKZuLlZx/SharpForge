@@ -1,4 +1,4 @@
-﻿@if (_isOpen)
+@if (_isOpen)
 {
     <div class="lesson-sidebar-overlay show" @onclick="CloseSidebar"></div>
 }
@@ -6,9 +6,7 @@
 <aside class="lesson-sidebar @(_isOpen ? "open" : "")">
     <div class="sidebar-header">
         <a href="@CourseUrl" class="back-link">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="15 18 9 12 15 6"/>
-            </svg>
+            <Icon Name="@(IconName.ChevronLeft)" Size="20" />
             Course Overview
         </a>
         <h3>@CourseTitle</h3>
@@ -28,17 +26,10 @@
 <button class="mobile-lesson-toggle" @onclick="ToggleSidebar" title="Toggle lesson menu">
     @if (_isOpen)
     {
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="18" y1="6" x2="6" y2="18"/>
-            <line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
+        <Icon Name="@(IconName.Close)" />
     }
     else
     {
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="3" y1="12" x2="21" y2="12"/>
-            <line x1="3" y1="6" x2="21" y2="6"/>
-            <line x1="3" y1="18" x2="21" y2="18"/>
-        </svg>
+        <Icon Name="@(IconName.Menu)" />
     }
 </button>

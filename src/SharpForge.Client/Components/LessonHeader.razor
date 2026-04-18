@@ -1,12 +1,9 @@
-﻿<header class="lesson-header">
+<header class="lesson-header">
     <span class="lesson-number">Lesson @LessonNumber</span>
     <h1>@Title</h1>
     <div class="lesson-meta">
         <span class="lesson-duration">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"/>
-                <polyline points="12 6 12 12 16 14"/>
-            </svg>
+            <Icon Name="@(IconName.Clock)" Size="16" />
             @Duration
         </span>
         <span class="lesson-level @Level.ToString().ToLowerInvariant()">@Level</span>

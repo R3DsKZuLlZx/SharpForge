@@ -1,4 +1,4 @@
-﻿@page "/blog"
+@page "/blog"
 @inject MarkdownService MarkdownService
 
 <PageTitle>Blog - SharpForge</PageTitle>
@@ -46,7 +46,7 @@
                                 </div>
                                 <h3>@post.Title</h3>
                                 <p>@post.Excerpt</p>
-                                <a href="@post.Url" class="post-link">Read More →</a>
+                                <a href="@post.Url" class="post-link">Read More ?</a>
                             </div>
                         </article>
                     }
@@ -55,9 +55,7 @@
                 <!-- Pagination -->
                 <div class="pagination">
                     <button class="pagination-btn" disabled="@(CurrentPage == 1)" @onclick="PreviousPage">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="15 18 9 12 15 6"/>
-                        </svg>
+                        <Icon Name="@(IconName.ChevronLeft)" Size="20" />
                         <span class="pagination-text">Previous</span>
                     </button>
                     <div class="pagination-pages">
@@ -72,9 +70,7 @@
                     </div>
                     <button class="pagination-btn" disabled="@(CurrentPage == TotalPages)" @onclick="NextPage">
                         <span class="pagination-text">Next</span>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="9 18 15 12 9 6"/>
-                        </svg>
+                        <Icon Name="@(IconName.ChevronRight)" Size="20" />
                     </button>
                 </div>
             </main>
@@ -126,55 +122,3 @@
         </div>
     </div>
 </section>
-
-@code {
-    private int CurrentPage { get; set; } = 1;
-    private const int PageSize = 6;
-    private string? SelectedCategory { get; set; }
-
-    private BlogPostFrontmatter? _featured;
-    private IReadOnlyList<BlogPostFrontmatter> _allPosts = [];
-    private IReadOnlyList<BlogPostFrontmatter> _regularPosts = [];
-
-    protected override void OnInitialized()
-    {
-        _allPosts = MarkdownService.GetAllPosts();
-        _featured = MarkdownService.GetFeaturedPost();
-        _regularPosts = MarkdownService.GetRegularPosts();
-    }
-
-    private int TotalPages => Math.Max(1, (int)Math.Ceiling((double)FilteredPosts.Count() / PageSize));
-
-    private IEnumerable<BlogPostFrontmatter> FilteredPosts => SelectedCategory == null 
-        ? _regularPosts 
-        : _regularPosts.Where(p => p.Category == SelectedCategory);
-
-    private IEnumerable<BlogPostFrontmatter> CurrentPagePosts => FilteredPosts
-        .Skip((CurrentPage - 1) * PageSize)
-        .Take(PageSize);
-
-    private Dictionary<string, int> Categories => _regularPosts
-        .GroupBy(p => p.Category)
-        .ToDictionary(g => g.Key, g => g.Count());
-
-    private void SelectCategory(string? category)
-    {
-        SelectedCategory = category;
-        CurrentPage = 1;
-    }
-
-    private void GoToPage(int page)
-    {
-        CurrentPage = page;
-    }
-
-    private void NextPage()
-    {
-        if (CurrentPage < TotalPages) CurrentPage++;
-    }
-
-    private void PreviousPage()
-    {
-        if (CurrentPage > 1) CurrentPage--;
-    }
-}

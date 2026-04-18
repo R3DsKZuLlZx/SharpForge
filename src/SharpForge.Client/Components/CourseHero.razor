@@ -1,9 +1,7 @@
 <section class="course-hero">
     <div class="container">
         <a href="courses" class="back-link">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="15 18 9 12 15 6"/>
-            </svg>
+            <Icon Name="@(IconName.ChevronLeft)" Size="20" />
             Back to Courses
         </a>
         <div class="course-hero-content">
@@ -13,24 +11,15 @@
                 <p class="course-description">@Description</p>
                 <div class="course-meta">
                     <div class="meta-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 20V10M18 20V4M6 20v-4"/>
-                        </svg>
+                        <Icon Name="@(IconName.BarChart)" Size="20" />
                         <span>@LessonCount Lessons</span>
                     </div>
                     <div class="meta-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"/>
-                            <polyline points="12 6 12 12 16 14"/>
-                        </svg>
+                        <Icon Name="@(IconName.Clock)" Size="20" />
                         <span>@Duration</span>
                     </div>
                     <div class="meta-item">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                            <circle cx="9" cy="7" r="4"/>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-                        </svg>
+                        <Icon Name="@(IconName.Users)" Size="20" />
                         <span>@StudentCount Students</span>
                     </div>
                 </div>

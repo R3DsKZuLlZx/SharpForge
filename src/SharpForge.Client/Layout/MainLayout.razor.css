@@ -89,7 +89,7 @@
     background: var(--hover-bg);
 }
 
-.github-link svg {
+.github-link ::deep svg {
     width: 1.25rem;
     height: 1.25rem;
 }
