@@ -83,7 +83,7 @@ jobs:
         run: tar -czf wwwroot.tar.gz -C release/wwwroot .
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: wwwroot
           path: wwwroot.tar.gz
