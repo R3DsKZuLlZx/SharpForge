@@ -26,7 +26,7 @@
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, #7B68EE 0%, #9945FF 100%);
     --gradient-secondary: linear-gradient(135deg, #6C5CE7 0%, #A29BFE 100%);
-    --gradient-hero: linear-gradient(180deg, rgba(123, 104, 238, 0.15) 0%, transparent 50%);
+    --gradient-hero: linear-gradient(180deg, rgba(123, 104, 238, 0.30) 0%, transparent 60%);
     
     /* Borders & Shadows */
     --border-color: rgba(255, 255, 255, 0.1);
