@@ -63,7 +63,6 @@ SampleMcpServer/
 
 ```csharp
 // Program.cs
-using Huki.Acturis.Modular;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -131,13 +130,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddMcpServer()
-    .WithStdioServerTransport()
+    .WithHttpTransport()
     .WithTools<SampleMcpServer.Tools.SampleTool>();
 
 var app = builder.Build();
 
 // Regular ASP.NET Core endpoints continue to work
 app.MapGet("/api/data", () => "Your normal API");
+
+app.MapMcp();
 
 await app.RunAsync();
 ```
