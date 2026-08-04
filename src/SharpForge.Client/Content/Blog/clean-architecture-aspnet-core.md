@@ -39,7 +39,7 @@ Clean Architecture organizes code into concentric layers, with dependencies poin
 
 Let's create a solution with proper project separation:
 
-```
+```text
 MyApp/
 ├── src/
 │   ├── MyApp.Domain/

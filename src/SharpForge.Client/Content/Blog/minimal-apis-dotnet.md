@@ -16,7 +16,7 @@ sidebar:
     text: "Route Groups"
   - href: "#endpoint-filters"
     text: "Endpoint Filters"
-  - href: "#openapi--swagger"
+  - href: "#openapi-swagger"
     text: "OpenAPI"
 ---
 

@@ -1,0 +1,86 @@
+name: Topic scout
+
+on:
+  schedule:
+    # Mondays at 08:00 UTC — early enough to triage before the week's writing.
+    - cron: '0 8 * * 1'
+  workflow_dispatch:
+    inputs:
+      days:
+        description: 'How many days of feed history to consider'
+        required: false
+        default: '10'
+      min_score:
+        description: 'Minimum relevance score required to file an issue'
+        required: false
+        default: '3'
+      max_issues:
+        description: 'Maximum issues to file in one run'
+        required: false
+        default: '5'
+      dry_run:
+        description: 'Report only, do not file issues'
+        type: boolean
+        required: false
+        default: false
+
+# Least privilege: the scout only needs to read the repo and open issues.
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: topic-scout
+  cancel-in-progress: false
+
+jobs:
+  scout:
+    name: Find blog topics
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Build scout
+        run: dotnet build tools/SharpForge.TopicScout/SharpForge.TopicScout.csproj -c Release --nologo
+
+      - name: Run scout
+        env:
+          # The scout shells out to `gh` for both dedupe and issue creation.
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DAYS: ${{ github.event.inputs.days || '10' }}
+          MIN_SCORE: ${{ github.event.inputs.min_score || '3' }}
+          MAX_ISSUES: ${{ github.event.inputs.max_issues || '5' }}
+        run: |
+          # Scheduled runs file issues; manual runs can opt out with dry_run.
+          EXTRA=""
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            EXTRA="--dry-run"
+          fi
+
+          dotnet run --project tools/SharpForge.TopicScout/SharpForge.TopicScout.csproj \
+            -c Release --no-build -- \
+            --days "$DAYS" \
+            --min-score "$MIN_SCORE" \
+            --max-issues "$MAX_ISSUES" \
+            --create-issues $EXTRA \
+            | tee scout-report.txt
+
+      - name: Publish report to job summary
+        if: always()
+        run: |
+          {
+            echo '## Topic scout report'
+            echo
+            echo '```text'
+            cat scout-report.txt || echo '(no report produced)'
+            echo '```'
+            echo
+            echo 'Triage: [proposed topics](../../issues?q=is%3Aissue+is%3Aopen+label%3A%22topic%3Aproposed%22)'
+          } >> "$GITHUB_STEP_SUMMARY"
+

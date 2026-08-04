@@ -10,17 +10,17 @@ sidebar:
     text: "Overview"
   - href: "#setparametersasync"
     text: "SetParametersAsync"
-  - href: "#oninitialized--oninitializedasync"
+  - href: "#oninitialized-oninitializedasync"
     text: "OnInitialized"
-  - href: "#onparametersset--onparameterssetasync"
+  - href: "#onparametersset-onparameterssetasync"
     text: "OnParametersSet"
-  - href: "#onafterrender--onafterrenderasync"
+  - href: "#onafterrender-onafterrenderasync"
     text: "OnAfterRender"
   - href: "#shouldrender"
     text: "ShouldRender"
   - href: "#statehaschanged"
     text: "StateHasChanged"
-  - href: "#idisposable--iasyncdisposable"
+  - href: "#idisposable-iasyncdisposable"
     text: "IDisposable"
   - href: "#lifecycle-diagram"
     text: "Lifecycle Diagram"
@@ -232,7 +232,7 @@ Clean up resources when the component is removed.
 
 ## Lifecycle Diagram
 
-```
+```text
 Component Created
        ↓
 SetParametersAsync

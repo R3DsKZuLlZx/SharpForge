@@ -106,7 +106,7 @@ ENTRYPOINT ["./MyApp"]
 
 ## .dockerignore
 
-```
+```text
 **/.vs
 **/.vscode
 **/bin
@@ -260,7 +260,7 @@ docker volume prune           # Remove unused volumes
 - Use .dockerignore to exclude unnecessary files
 - Consider Native AOT for smallest images
 
-```
+```text
 # Image size comparison
 mcr.microsoft.com/dotnet/aspnet:10.0         ~220MB
 mcr.microsoft.com/dotnet/aspnet:10.0-alpine  ~110MB

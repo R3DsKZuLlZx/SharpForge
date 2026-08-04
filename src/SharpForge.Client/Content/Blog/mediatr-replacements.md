@@ -10,7 +10,7 @@ sidebar:
     text: "Quick comparison"
   - href: "#wolverine"
     text: "Wolverine example"
-  - href: "#mediatorsourcegenerators"
+  - href: "#mediator.sourcegenerators"
     text: "Mediator.SourceGenerators example"
   - href: "#side-by-side-when-to-use-which"
     text: "Side-by-side"

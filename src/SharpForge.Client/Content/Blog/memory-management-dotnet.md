@@ -6,7 +6,7 @@ readTime: "12 min read"
 excerpt: "Understanding garbage collection, memory allocation, and optimization techniques for high-performance .NET applications."
 tags: ["Memory Management", "Garbage Collection", "Performance", ".NET"]
 sidebar:
-  - href: "#the-net-memory-model"
+  - href: "#the.net-memory-model"
     text: "Memory Model"
   - href: "#garbage-collection-generations"
     text: "GC Generations"
