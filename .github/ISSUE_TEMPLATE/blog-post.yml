@@ -1,0 +1,99 @@
+name: Blog post topic
+description: Propose a topic for a SharpForge blog post
+title: "[topic] "
+labels: ["blog post", "topic:proposed"]
+assignees: ["R3DsKZuLlZx"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this to capture a blog post idea — whether it came from you or from
+        the topic scout. Approved topics are drafted with the `write-blog-post`
+        skill.
+
+        **The angle is the important field.** A topic without one produces a post
+        indistinguishable from every other post on the subject.
+
+  - type: input
+    id: topic
+    attributes:
+      label: Topic
+      description: What is the post about?
+      placeholder: Structured output from local models with Microsoft.Extensions.AI
+    validations:
+      required: true
+
+  - type: textarea
+    id: angle
+    attributes:
+      label: Angle
+      description: >
+        Why this, why now, and what is *your* take? What would make this post
+        non-generic — an opinion, a benchmark, a war story, a contrarian view?
+      placeholder: |
+        Everyone demos this with OpenAI. Nobody covers what breaks when you swap
+        in a local model — schema adherence collapses and you need a retry loop.
+        Show the failure, then the fix.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: Must match the allowed categories in AGENTS.md.
+      options:
+        - AI
+        - Architecture
+        - ASP.NET Core
+        - Best Practices
+        - Blazor
+        - "C#"
+        - DevOps
+        - Entity Framework
+        - Performance
+        - Testing
+    validations:
+      required: true
+
+  - type: dropdown
+    id: post-type
+    attributes:
+      label: Post type
+      description: Used to balance the weekly rotation.
+      options:
+        - News-pegged (tied to a release or spec change)
+        - Deep-dive (one concept, properly)
+        - Practical (build something, show the code)
+        - Opinion / comparison
+      default: 1
+    validations:
+      required: true
+
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources
+      description: >
+        Links backing this up — release notes, specs, issues, benchmarks.
+        Required for news-pegged posts so claims can be verified rather than
+        hallucinated.
+      placeholder: |
+        - https://github.com/dotnet/core/releases/tag/...
+        - https://modelcontextprotocol.io/specification/...
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Anything else — related posts to link, things to avoid, prior art.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before approving
+      options:
+        - label: No existing post already covers this
+        - label: The angle is specific enough to be worth publishing
+

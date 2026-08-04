@@ -12,10 +12,8 @@ sidebar:
     text: "Native MCP Template"
   - href: "#mcp-in-existing-web-api"
     text: "MCP in Web API"
-  - href: "#resources-and-tools"
-    text: "Resources and Tools"
-  - href: "#best-practices"
-    text: "Best Practices"
+  - href: "#conclusion"
+    text: "Conclusion"
 ---
 
 The Model Context Protocol (MCP) enables LLMs like Claude to safely access external data and tools through a standardized interface. .NET provides excellent tooling for building MCP servers, either as standalone services or integrated into existing Web APIs.
@@ -51,7 +49,7 @@ dotnet run
 
 ### Project Structure
 
-```
+```text
 SampleMcpServer/
 ├── .mcp/                # Define your resources here
 ├── Tools/               # Define your tools here

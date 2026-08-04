@@ -6,7 +6,7 @@ readTime: "8 min read"
 excerpt: "Master System.Text.Json and learn when to use Newtonsoft.Json. Covers serialization, deserialization, and custom converters."
 tags: ["JSON", "System.Text.Json", "Serialization", ".NET"]
 sidebar:
-  - href: "#systemtextjson-basics"
+  - href: "#system.text.json-basics"
     text: "System.Text.Json Basics"
   - href: "#common-options"
     text: "Common Options"
@@ -16,7 +16,7 @@ sidebar:
     text: "Polymorphic Serialization"
   - href: "#jsonnode-for-dynamic-json"
     text: "JsonNode"
-  - href: "#when-to-use-newtonsoftjson"
+  - href: "#when-to-use-newtonsoft.json"
     text: "When to Use Newtonsoft"
 ---
 

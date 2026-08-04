@@ -10,7 +10,7 @@ sidebar:
     text: "Performance Improvements"
   - href: "#c-13-language-features"
     text: "C# 13 Language Features"
-  - href: "#aspnet-core-10"
+  - href: "#asp.net-core-10"
     text: "ASP.NET Core 10"
   - href: "#entity-framework-core-10"
     text: "Entity Framework Core 10"
@@ -30,7 +30,7 @@ sidebar:
 
 Native Ahead-of-Time (AOT) compilation has seen major improvements in .NET 10. The compiled binaries are now smaller and faster, making it an even more attractive option for scenarios where startup time and memory usage are critical.
 
-```
+```bash
 // Publishing with Native AOT in .NET 10
 dotnet publish -c Release -r win-x64 /p:PublishAot=true
 

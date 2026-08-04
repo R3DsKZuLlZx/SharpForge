@@ -53,7 +53,7 @@ dotnet ef migrations list
 
 Each migration creates three files:
 
-```
+```text
 Migrations/
 ├── 20251120_InitialCreate.cs          // Up/Down methods
 ├── 20251120_InitialCreate.Designer.cs  // Snapshot metadata

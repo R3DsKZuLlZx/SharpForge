@@ -8,9 +8,9 @@ tags: ["Blazor", "WebAssembly", "Hosting"]
 sidebar:
   - href: "#render-modes"
     text: "Render modes"
-  - href: "#hosting-models---standalone-wasm-vs-web-app"
+  - href: "#hosting-models-standalone-wasm-vs-web-app"
     text: "Hosting models"
-  - href: "#trade-offs--practical-guidance"
+  - href: "#trade-offs-practical-guidance"
     text: "Trade-offs"
   - href: "#small-example-snippets"
     text: "Examples"

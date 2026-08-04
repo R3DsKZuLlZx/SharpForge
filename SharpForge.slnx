@@ -2,4 +2,10 @@
   <Folder Name="/src/">
     <Project Path="src/SharpForge.Client/SharpForge.Client.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SharpForge.Content.Tests/SharpForge.Content.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools/SharpForge.TopicScout/SharpForge.TopicScout.csproj" />
+  </Folder>
 </Solution>
