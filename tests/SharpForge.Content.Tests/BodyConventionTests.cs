@@ -5,7 +5,7 @@ using Markdig.Syntax;
 namespace SharpForge.Content.Tests;
 
 /// <summary>
-/// Validates the Markdown body conventions in AGENTS.md — the things an LLM
+/// Validates the Markdown body conventions in the blog post reference — the things an LLM
 /// gets subtly wrong: unlabelled code fences, HTML entities inside fences,
 /// missing closing sections, and readTime that doesn't match the actual length.
 /// </summary>
@@ -55,7 +55,7 @@ public partial class BodyConventionTests
     [MemberData(nameof(BlogPostLoader.AllPosts), MemberType = typeof(BlogPostLoader))]
     public void Post_CodeBlocksDoNotUseHtmlEntities(BlogPost post)
     {
-        // AGENTS.md: use < and > directly in fenced code blocks.
+        // the blog post reference: use < and > directly in fenced code blocks.
         // LLMs frequently emit &lt;T&gt; for generics, which renders literally.
         var offending = Markdown.Parse(post.Body, Pipeline)
             .Descendants<FencedCodeBlock>()
@@ -72,7 +72,7 @@ public partial class BodyConventionTests
     [MemberData(nameof(BlogPostLoader.AllPosts), MemberType = typeof(BlogPostLoader))]
     public void Post_StartsWithParagraphNotHeading(BlogPost post)
     {
-        // AGENTS.md: opening paragraph comes immediately after frontmatter,
+        // the blog post reference: opening paragraph comes immediately after frontmatter,
         // with no heading before it.
         var firstBlock = Markdown.Parse(post.Body, Pipeline).FirstOrDefault();
 
@@ -118,7 +118,7 @@ public partial class BodyConventionTests
             .ToList();
 
         Assert.True(trailing.Any(t => ValidClosingHeadings.Any(t.Contains)),
-            $"{post.Slug}.md: final sections are [{string.Join(", ", trailing)}]. AGENTS.md requires "
+            $"{post.Slug}.md: final sections are [{string.Join(", ", trailing)}]. The blog post reference requires "
             + $"the post to wrap up with one of: {string.Join(", ", ValidClosingHeadings)}.");
     }
 
@@ -152,12 +152,12 @@ public partial class BodyConventionTests
     [MemberData(nameof(BlogPostLoader.AllPosts), MemberType = typeof(BlogPostLoader))]
     public void Post_IsWithinTargetLength(BlogPost post)
     {
-        // AGENTS.md targets 100-300 lines. Warn generously — this is a
+        // the blog post reference targets 100-300 lines. Warn generously — this is a
         // guardrail against a truncated or runaway generation, not a style rule.
         var lines = post.Body.Split('\n').Length;
 
         Assert.True(lines is >= 50 and <= 500,
-            $"{post.Slug}.md: body is {lines} lines; AGENTS.md targets 100-300. "
+            $"{post.Slug}.md: body is {lines} lines; the blog post reference targets 100-300. "
             + "Check the post isn't truncated or padded.");
     }
 
