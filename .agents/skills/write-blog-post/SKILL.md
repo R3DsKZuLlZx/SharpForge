@@ -57,13 +57,38 @@ not been triaged yet — confirm with the user before writing.
 ls src/SharpForge.Client/Content/Blog/
 ```
 
-- Check no existing post covers this. If one does, consider whether this should
-  be an update to that post instead of a new one.
+- Check whether an existing post already covers this. If one does, apply the
+  **supersede-or-skip** rule below.
 - Confirm the slug is unique and lowercase kebab-case.
 - **Read 2–3 existing posts in the same category, in full.** This is not
   optional — it is how the draft matches the site's voice instead of sounding
   like generic LLM output. Note sentence length, how code is introduced, how
   opinions are phrased.
+
+#### Supersede or skip — never edit
+
+**Published posts are immutable.** Never modify, rewrite or "refresh" an
+existing post in `Content/Blog/`. They are a dated record of what was true when
+written.
+
+When a topic overlaps something already published, there are exactly two
+outcomes:
+
+| Situation | Action |
+|---|---|
+| Something **fundamental** changed — a breaking API, a new major version, advice that is now wrong | Write a **brand-new post** that stands on its own |
+| Anything less — a minor revision, a small correction, a nice-to-have detail | **Write nothing.** Say so and stop. |
+
+There is no third option. If it is not worth a whole new post, it is not worth
+doing — say that plainly rather than producing a thin post to justify the
+ticket.
+
+A superseding post must:
+
+- Stand alone. Assume the reader has not read the older post.
+- Have its own slug and its own date. Never reuse the old slug.
+- Link to the older post where useful, and be explicit about what changed.
+- Never contradict the old post silently — name the change and why it happened.
 
 ### 2. Draft
 
@@ -152,9 +177,12 @@ if longer, it's probably two posts.
 ## Definition of done
 
 - [ ] File at `src/SharpForge.Client/Content/Blog/<slug>.md`, nothing else changed
+- [ ] **No existing post was modified** — new file only
 - [ ] Frontmatter complete; category from the allowed list
 - [ ] Sidebar entries all resolve to real headings
 - [ ] `dotnet test tests/SharpForge.Content.Tests/...` passes
 - [ ] Every technical claim traceable to a source, or flagged to the user
 - [ ] Conventional Commit suggested, e.g. `feat(blog): add post on <topic>`
 
+Alternatively, a valid outcome is **no post at all** — with a clear explanation
+of why the change was not significant enough to warrant one.

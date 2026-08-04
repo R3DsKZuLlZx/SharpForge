@@ -94,6 +94,29 @@ project file changes are needed either.
 Posts are sorted by `date` descending automatically — ordering is derived from
 frontmatter, not from file order or any hand-maintained list.
 
+## Published posts are immutable
+
+**Never edit, rewrite or "refresh" a post in `Content/Blog/`.** Each post is a
+dated record of what was true when it was written.
+
+When new information overlaps an existing post there are exactly two outcomes:
+
+| Situation | Action |
+|---|---|
+| Something **fundamental** changed — a breaking API, a new major version, advice that is now wrong | Write a **brand-new post** that supersedes it |
+| Anything less | **Write nothing** |
+
+There is no "update the old post" option, and no third outcome. If a change
+does not justify a whole new post, it does not justify anything — say so and
+stop, rather than producing a thin post to justify a ticket.
+
+A superseding post must stand alone (assume the reader has not seen the older
+one), use its own slug and date, and be explicit about what changed. It may
+link to the older post; it must never silently contradict it.
+
+Typo fixes and broken-link repairs are maintenance, not content, and are the
+one exception — but they must not change the substance of a post.
+
 ---
 
 ## File naming
@@ -318,7 +341,7 @@ dotnet run --project tools/SharpForge.TopicScout -- --create-issues
 
 | Classification | Meaning |
 |---|---|
-| **DECAY** | Overlaps an existing post — that post may now be out of date |
+| **DECAY** | Overlaps an existing post which may now be misleading. Approve only if it justifies a **new superseding post** — never an edit |
 | **GAP** | Nothing in the back catalogue covers this |
 | **Noise** | Vendor product marketing, release candidates, calls for speakers |
 | **Duplicate** | Already present in the topic queue (read via `gh`) |

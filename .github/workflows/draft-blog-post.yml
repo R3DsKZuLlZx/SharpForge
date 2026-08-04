@@ -106,7 +106,10 @@ jobs:
 
           Requirements:
           - Create exactly one new file: src/SharpForge.Client/Content/Blog/<slug>.md
-          - Change nothing else.
+          - Change nothing else. NEVER modify an existing post — published posts are
+            immutable. If something fundamental has changed, the new post supersedes
+            the old one and must stand alone. If the change is only minor, write
+            nothing and explain why.
           - Do not invent APIs, benchmarks or quotes. Every technical claim must be
             traceable to the sources in the issue. If you cannot verify something,
             leave it out and note it.
@@ -122,15 +125,32 @@ jobs:
           claude -p "$PROMPT" --permission-mode acceptEdits
       # ─────────────────────────────────────────────────────────────────
 
-      - name: Verify exactly one post was added
+      - name: Verify exactly one new post, and nothing else touched
         id: verify
         run: |
+          # Published posts are immutable — a superseding post is a NEW file.
+          # Any modification or deletion of tracked content is a policy breach.
+          MODIFIED=$(git diff --name-only)
+          if [ -n "$MODIFIED" ]; then
+            echo "::error::The agent modified tracked files. Published posts are immutable — a new post must be a new file."
+            echo "$MODIFIED"
+            exit 1
+          fi
+
           git ls-files --others --exclude-standard src/SharpForge.Client/Content/Blog > added.txt
           COUNT=$(wc -l < added.txt)
 
           if [ "$COUNT" -ne 1 ]; then
             echo "::error::Expected exactly 1 new post, found $COUNT."
             cat added.txt
+            exit 1
+          fi
+
+          # Nothing outside Content/Blog should have appeared either.
+          STRAY=$(git ls-files --others --exclude-standard | grep -v '^src/SharpForge.Client/Content/Blog/' || true)
+          if [ -n "$STRAY" ]; then
+            echo "::error::The agent created files outside Content/Blog."
+            echo "$STRAY"
             exit 1
           fi
 

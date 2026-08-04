@@ -80,8 +80,13 @@ public sealed class IssueFiler(string workingDirectory, bool dryRun)
               .AppendLine()
               .AppendLine($"Matched on: {string.Join(", ", c.MatchedTerms.Take(6))}.")
               .AppendLine()
-              .AppendLine("Check whether that post is now out of date. If it is, this may be an " +
-                          "*update* rather than a new post.");
+              .AppendLine("**Published posts are never edited.** Decide between exactly two outcomes:")
+              .AppendLine()
+              .AppendLine($"- Something **fundamental** changed and `{c.MatchedSlug}` is now misleading " +
+                          "→ approve this as a **brand-new post** that supersedes it.")
+              .AppendLine("- The change is minor → **reject this**, and label it `topic:rejected`.")
+              .AppendLine()
+              .AppendLine("There is no \"refresh the old post\" option.");
         }
         else
         {

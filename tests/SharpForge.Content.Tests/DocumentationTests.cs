@@ -71,6 +71,54 @@ public partial class DocumentationTests
             + "put real guidance in .agents/skills/write-blog-post/SKILL.md instead.");
     }
 
+    [Theory]
+    [InlineData("AGENTS.md")]
+    [InlineData(".agents/skills/write-blog-post/SKILL.md")]
+    public void ImmutabilityPolicy_IsStated(string relativePath)
+    {
+        // Published posts are a dated record. Guidance that suggests "updating"
+        // or "refreshing" an existing post has leaked in before — this pins it.
+        var full = Path.Combine(BlogPostLoader.RepositoryRoot,
+            relativePath.Replace('/', Path.DirectorySeparatorChar));
+        var content = File.ReadAllText(full);
+
+        Assert.True(
+            content.Contains("immutable", StringComparison.OrdinalIgnoreCase),
+            $"{relativePath} must state that published posts are immutable.");
+
+        Assert.True(
+            content.Contains("supersede", StringComparison.OrdinalIgnoreCase),
+            $"{relativePath} must describe the supersede-or-skip rule.");
+    }
+
+    [Theory]
+    [InlineData(".agents/skills/write-blog-post/SKILL.md")]
+    [InlineData("tools/SharpForge.TopicScout/Publishing/IssueFiler.cs")]
+    [InlineData(".github/workflows/draft-blog-post.yml")]
+    public void NoGuidanceSuggestsEditingAnExistingPost(string relativePath)
+    {
+        var full = Path.Combine(BlogPostLoader.RepositoryRoot,
+            relativePath.Replace('/', Path.DirectorySeparatorChar));
+        var content = File.ReadAllText(full);
+
+        // Phrasings that previously told agents to revise a published post.
+        string[] banned =
+        [
+            "update to that post",
+            "an *update* rather than a new post",
+            "instead of a new one",
+            "refresh the existing",
+            "rewrite the existing post"
+        ];
+
+        var found = banned.Where(b => content.Contains(b, StringComparison.OrdinalIgnoreCase)).ToList();
+
+        Assert.True(found.Count == 0,
+            $"{relativePath} suggests editing a published post: {string.Join("; ", found)}. "
+            + "Posts are immutable — a significant change warrants a brand-new superseding post, "
+            + "and anything less warrants nothing.");
+    }
+
     [Fact]
     public void IssueForm_CategoryOptions_MatchAllowedCategories()
     {
