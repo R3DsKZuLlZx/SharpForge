@@ -1,0 +1,195 @@
+name: Draft blog post
+
+# Drafts a post when a topic issue is approved, and opens a DRAFT pull request.
+#
+# The human gates are preserved deliberately:
+#   1. a topic only reaches this workflow once *you* label it topic:approved
+#   2. the output is a draft PR that you review and merge — never auto-merged
+#
+# The agent step below is intentionally isolated so it can be swapped for a
+# different provider without touching the surrounding plumbing.
+
+on:
+  issues:
+    types: [labeled]
+  workflow_dispatch:
+    inputs:
+      issue:
+        description: 'Issue number to draft from'
+        required: true
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  # One draft at a time — two agents writing to Content/Blog concurrently would conflict.
+  group: draft-blog-post
+  cancel-in-progress: false
+
+jobs:
+  draft:
+    # Only react to the approval label; ignore every other labelling event.
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      github.event.label.name == 'topic:approved'
+    runs-on: ubuntu-latest
+
+    env:
+      ISSUE: ${{ github.event.inputs.issue || github.event.issue.number }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Preflight — require an agent API key
+        env:
+          AGENT_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -z "$AGENT_KEY" ]; then
+            echo "::error::ANTHROPIC_API_KEY secret is not set. Add it under Settings → Secrets and variables → Actions, or switch this workflow to another agent provider."
+            exit 1
+          fi
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Read the topic brief
+        id: brief
+        run: |
+          gh issue view "$ISSUE" --json number,title,body,labels > brief.json
+
+          # Refuse to draft anything that has not been triaged.
+          if ! jq -e '.labels[] | select(.name == "topic:approved")' brief.json > /dev/null; then
+            echo "::error::Issue #$ISSUE is not labelled topic:approved — refusing to draft."
+            exit 1
+          fi
+
+          {
+            echo "title<<EOF"
+            jq -r .title brief.json
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Record pre-draft state
+        run: git ls-files src/SharpForge.Client/Content/Blog > before.txt
+
+      # ─────────────────────────────────────────────────────────────────
+      # AGENT STEP — swap this for a different provider if you move away
+      # from Claude. Everything before and after is provider-agnostic.
+      # ─────────────────────────────────────────────────────────────────
+      - name: Install agent CLI
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Draft the post
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          PROMPT=$(cat <<'EOF'
+          Draft a new SharpForge blog post.
+
+          Follow .agents/skills/write-blog-post/SKILL.md exactly. AGENTS.md is the
+          specification for frontmatter, categories, anchors and tone.
+
+          The topic brief is GitHub issue #ISSUE_NUMBER. Read it with:
+            gh issue view ISSUE_NUMBER
+
+          Requirements:
+          - Create exactly one new file: src/SharpForge.Client/Content/Blog/<slug>.md
+          - Change nothing else.
+          - Do not invent APIs, benchmarks or quotes. Every technical claim must be
+            traceable to the sources in the issue. If you cannot verify something,
+            leave it out and note it.
+          - Run the validation suite and iterate until it passes:
+              dotnet test tests/SharpForge.Content.Tests/SharpForge.Content.Tests.csproj
+          - Do not commit, push, or open a pull request. The workflow handles that.
+          EOF
+          )
+          PROMPT="${PROMPT//ISSUE_NUMBER/$ISSUE}"
+
+          # NOTE: verify these flags against the CLI's current documentation —
+          # headless invocation options change between versions.
+          claude -p "$PROMPT" --permission-mode acceptEdits
+      # ─────────────────────────────────────────────────────────────────
+
+      - name: Verify exactly one post was added
+        id: verify
+        run: |
+          git ls-files --others --exclude-standard src/SharpForge.Client/Content/Blog > added.txt
+          COUNT=$(wc -l < added.txt)
+
+          if [ "$COUNT" -ne 1 ]; then
+            echo "::error::Expected exactly 1 new post, found $COUNT."
+            cat added.txt
+            exit 1
+          fi
+
+          SLUG=$(basename "$(cat added.txt)" .md)
+          echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
+          echo "Drafted: $SLUG"
+
+      - name: Validate content
+        id: validate
+        continue-on-error: true
+        run: dotnet test tests/SharpForge.Content.Tests/SharpForge.Content.Tests.csproj --nologo
+
+      - name: Open draft pull request
+        env:
+          SLUG: ${{ steps.verify.outputs.slug }}
+          TITLE: ${{ steps.brief.outputs.title }}
+          VALIDATION: ${{ steps.validate.outcome }}
+        run: |
+          BRANCH="blog/$SLUG"
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add src/SharpForge.Client/Content/Blog
+          git commit -m "feat(blog): add post on $SLUG (#$ISSUE)"
+          git push origin "$BRANCH"
+
+          if [ "$VALIDATION" = "success" ]; then
+            STATUS="✅ Content validation passed."
+          else
+            STATUS="❌ **Content validation FAILED** — do not merge until fixed."
+          fi
+
+          gh pr create \
+            --draft \
+            --base main \
+            --head "$BRANCH" \
+            --title "feat(blog): $TITLE" \
+            --body "$(cat <<EOF
+          Drafted automatically from #$ISSUE by the \`write-blog-post\` skill.
+
+          $STATUS
+
+          ## Review checklist
+
+          - [ ] Every technical claim is verified against the sources in #$ISSUE
+          - [ ] No invented APIs, benchmarks or quotes
+          - [ ] The angle is present and specific — not a generic explainer
+          - [ ] Voice matches existing posts in this category
+          - [ ] Code examples would actually compile
+
+          > 🤖 An agent wrote this. The validation suite proves it is *well-formed*,
+          > not that it is *correct* or *worth reading*. Read it properly before merging.
+
+          Closes #$ISSUE
+          EOF
+          )"
+
+      - name: Mark the issue as drafting
+        run: |
+          gh issue comment "$ISSUE" --body "🤖 A draft post has been opened for this topic. Review the pull request before merging."
+          gh issue edit "$ISSUE" --remove-label "topic:approved" --add-label "topic:drafting"
+

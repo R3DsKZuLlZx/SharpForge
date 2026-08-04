@@ -256,10 +256,25 @@ category, post type and sources.
 | `blog post` | Any blog topic issue |
 | `topic:proposed` | Awaiting triage — **not** ready to draft |
 | `topic:approved` | Triaged and queued for drafting |
+| `topic:drafting` | A draft PR is open for this topic |
 | `topic:rejected` | Declined — the scout must never re-propose this |
 | `topic:published` | Written and shipped |
 | `source:manual` | Captured by a human |
 | `source:scout` | Surfaced by the automated topic scout |
+
+### Lifecycle
+
+```text
+scout / you                you                    agent                 you
+  ─────────►  proposed  ─────────►  approved  ─────────►  drafting  ─────────►  published
+                                                   │                      │
+                                          draft PR opened          PR reviewed + merged
+```
+
+Labelling an issue `topic:approved` triggers
+`.github/workflows/draft-blog-post.yml`, which runs the `write-blog-post` skill
+and opens a **draft** pull request. Two human gates remain deliberately in
+place: you decide what gets approved, and you review the PR before it merges.
 
 ### Rules
 
@@ -355,6 +370,34 @@ Available skills:
 
 When adding a skill, write the real content once in `.agents/skills/` and add
 wrappers for each tool. Never duplicate the instructions.
+
+### Automated drafting
+
+`.github/workflows/draft-blog-post.yml` runs the `write-blog-post` skill when an
+issue is labelled `topic:approved`, then opens a draft PR.
+
+**Setup required before it will run:**
+
+1. Add an `ANTHROPIC_API_KEY` repository secret
+   (Settings → Secrets and variables → Actions). The workflow fails fast with a
+   clear message if it is missing.
+2. Enable Settings → Actions → General → **Allow GitHub Actions to create and
+   approve pull requests**. Without it, `gh pr create` is rejected.
+
+**Guardrails built in:**
+
+- Refuses to run unless the issue carries `topic:approved`.
+- Fails if the agent adds anything other than exactly one file under
+  `Content/Blog/` — no drive-by edits to the rest of the repo.
+- Always opens a **draft** PR, never auto-merges.
+- Runs the validation suite and states the result prominently in the PR body.
+- `concurrency` prevents two drafts racing on the same directory.
+
+The agent invocation is isolated in a single clearly-marked step so it can be
+swapped for a different provider without touching the surrounding plumbing.
+
+> The validation suite proves a post is *well-formed*, not that it is *correct*.
+> The PR review is where accuracy is checked — that gate is the point.
 
 ---
 
