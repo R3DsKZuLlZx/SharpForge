@@ -41,12 +41,13 @@ jobs:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - name: Preflight — require an agent API key
+      - name: Preflight — require agent credentials
         env:
-          AGENT_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
-          if [ -z "$AGENT_KEY" ]; then
-            echo "::error::ANTHROPIC_API_KEY secret is not set. Add it under Settings → Secrets and variables → Actions, or switch this workflow to another agent provider."
+          if [ -z "$OAUTH_TOKEN" ] && [ -z "$API_KEY" ]; then
+            echo "::error::No agent credentials. Set CLAUDE_CODE_OAUTH_TOKEN (Claude Pro/Max — run 'claude setup-token') or ANTHROPIC_API_KEY under Settings → Secrets and variables → Actions. See docs/automation.md."
             exit 1
           fi
 
@@ -67,22 +68,22 @@ jobs:
       - name: Read the topic brief
         id: brief
         run: |
-          gh issue view "$ISSUE" --json number,title,body,labels > brief.json
+          # Scratch files go in RUNNER_TEMP, not the checkout — the verify step
+          # fails on any untracked file outside Content/Blog.
+          BRIEF="$RUNNER_TEMP/brief.json"
+          gh issue view "$ISSUE" --json number,title,body,labels > "$BRIEF"
 
           # Refuse to draft anything that has not been triaged.
-          if ! jq -e '.labels[] | select(.name == "topic:approved")' brief.json > /dev/null; then
+          if ! jq -e '.labels[] | select(.name == "topic:approved")' "$BRIEF" > /dev/null; then
             echo "::error::Issue #$ISSUE is not labelled topic:approved — refusing to draft."
             exit 1
           fi
 
           {
             echo "title<<EOF"
-            jq -r .title brief.json
+            jq -r .title "$BRIEF"
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
-
-      - name: Record pre-draft state
-        run: git ls-files src/SharpForge.Client/Content/Blog > before.txt
 
       # ─────────────────────────────────────────────────────────────────
       # AGENT STEP — swap this for a different provider if you move away
@@ -93,8 +94,20 @@ jobs:
 
       - name: Draft the post
         env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
+          # Prefer the subscription token. The CLI gives ANTHROPIC_API_KEY
+          # precedence when both are present, so drop it rather than silently
+          # billing API credit; likewise drop an empty token.
+          if [ -n "$CLAUDE_CODE_OAUTH_TOKEN" ]; then
+            unset ANTHROPIC_API_KEY
+            echo "Authenticating with CLAUDE_CODE_OAUTH_TOKEN (subscription)."
+          else
+            unset CLAUDE_CODE_OAUTH_TOKEN
+            echo "Authenticating with ANTHROPIC_API_KEY (API credit)."
+          fi
+
           PROMPT=$(cat <<'EOF'
           Draft a new SharpForge blog post.
 
@@ -120,9 +133,13 @@ jobs:
           )
           PROMPT="${PROMPT//ISSUE_NUMBER/$ISSUE}"
 
-          # NOTE: verify these flags against the CLI's current documentation —
-          # headless invocation options change between versions.
-          claude -p "$PROMPT" --permission-mode acceptEdits
+          # acceptEdits auto-approves file edits only. In headless mode any other
+          # tool call that needs approval is denied, so the two commands the
+          # prompt requires must be allowed explicitly.
+          claude -p "$PROMPT" \
+            --permission-mode acceptEdits \
+            --allowedTools "Read" "Glob" "Grep" "Edit" "Write" \
+              "Bash(gh issue view *)" "Bash(dotnet test *)"
       # ─────────────────────────────────────────────────────────────────
 
       - name: Verify exactly one new post, and nothing else touched
@@ -137,12 +154,13 @@ jobs:
             exit 1
           fi
 
-          git ls-files --others --exclude-standard src/SharpForge.Client/Content/Blog > added.txt
-          COUNT=$(wc -l < added.txt)
+          ADDED="$RUNNER_TEMP/added.txt"
+          git ls-files --others --exclude-standard src/SharpForge.Client/Content/Blog > "$ADDED"
+          COUNT=$(wc -l < "$ADDED")
 
           if [ "$COUNT" -ne 1 ]; then
             echo "::error::Expected exactly 1 new post, found $COUNT."
-            cat added.txt
+            cat "$ADDED"
             exit 1
           fi
 
@@ -154,7 +172,7 @@ jobs:
             exit 1
           fi
 
-          SLUG=$(basename "$(cat added.txt)" .md)
+          SLUG=$(basename "$(cat "$ADDED")" .md)
           echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
           echo "Drafted: $SLUG"
 
