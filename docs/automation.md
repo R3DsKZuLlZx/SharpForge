@@ -77,7 +77,14 @@ issue is labelled `topic:approved`, then opens a draft PR.
 
    A Claude Pro subscription does **not** include API credit — the two are
    billed separately. The workflow fails fast with a clear message if neither
-   secret is present.
+   secret is present. If both are set, the OAuth token wins and the API key is
+   not passed to the agent, so nothing is billed to API credit by accident.
+
+   `claude setup-token` prints a long-lived token tied to your account — treat
+   it like a password, and re-run it to rotate. Drafting runs share your
+   subscription's usage limits with interactive use; on Pro a run can stop
+   part-way if you are already near the limit. Re-run it from the Actions tab
+   (`workflow_dispatch` with the issue number) once usage resets.
 
 2. Enable Settings → Actions → General → **Allow GitHub Actions to create and
    approve pull requests**. Without it, `gh pr create` is rejected.
