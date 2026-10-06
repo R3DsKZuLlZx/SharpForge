@@ -134,11 +134,12 @@ jobs:
           PROMPT="${PROMPT//ISSUE_NUMBER/$ISSUE}"
 
           # acceptEdits auto-approves file edits only. In headless mode any other
-          # tool call that needs approval is denied, so the two commands the
-          # prompt requires must be allowed explicitly.
+          # tool call that needs approval is denied, so everything the prompt
+          # requires must be allowed explicitly — including WebFetch, or the
+          # agent cannot read the source URLs in the brief.
           claude -p "$PROMPT" \
             --permission-mode acceptEdits \
-            --allowedTools "Read" "Glob" "Grep" "Edit" "Write" \
+            --allowedTools "Read" "Glob" "Grep" "Edit" "Write" "WebFetch" \
               "Bash(gh issue view *)" "Bash(dotnet test *)"
       # ─────────────────────────────────────────────────────────────────
 
