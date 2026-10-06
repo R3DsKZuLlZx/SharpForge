@@ -11,7 +11,8 @@ The full instructions for this skill live in
 Read that file and follow it. It is shared by all agents so the behaviour is
 identical regardless of which tool is driving.
 
-The specification it refers to is [`AGENTS.md`](../../../AGENTS.md).
+The specification it refers to is
+[`.agents/skills/write-blog-post/reference.md`](../../../.agents/skills/write-blog-post/reference.md).
 
 Do not duplicate guidance into this file — update the shared skill instead.
 

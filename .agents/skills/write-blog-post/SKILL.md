@@ -7,10 +7,11 @@ description: Draft a new SharpForge blog post from a topic brief, matching the s
 
 Drafts a new post into `src/SharpForge.Client/Content/Blog/<slug>.md`.
 
-**[`AGENTS.md`](../../../AGENTS.md) is the specification.** It defines the
-frontmatter schema, allowed categories, anchor rules, body conventions and tone.
-Read it first. This skill covers *process* — what to do before and after
-writing — and the quality bar that automated checks can't enforce.
+**[`reference.md`](./reference.md) is the specification.** It defines the
+frontmatter schema, allowed categories, anchor rules, body conventions, tone and
+exactly what CI enforces. Read it before drafting. This file covers *process* —
+what to do before and after writing — and the quality bar that automated checks
+cannot enforce.
 
 ---
 
@@ -34,7 +35,7 @@ instead, the same fields apply.
 |---|---|---|
 | Topic | yes | What the post is about |
 | **Angle** | yes | The opinion or insight. "Why this, why now, what do *we* think?" |
-| Category | yes | Must be in the AGENTS.md allowed list |
+| Category | yes | Must be in the `reference.md` allowed list |
 | Post type | yes | News-pegged / deep-dive / practical / opinion |
 | Sources | if news-pegged | Release notes, specs, issues — real URLs |
 
@@ -69,30 +70,24 @@ ls src/SharpForge.Client/Content/Blog/
 
 **Published posts are immutable.** Never modify, rewrite or "refresh" an
 existing post in `Content/Blog/`. They are a dated record of what was true when
-written.
-
-When a topic overlaps something already published, there are exactly two
-outcomes:
+written. When a topic overlaps something already published there are exactly two
+outcomes — there is no third:
 
 | Situation | Action |
 |---|---|
-| Something **fundamental** changed — a breaking API, a new major version, advice that is now wrong | Write a **brand-new post** that stands on its own |
+| Something **fundamental** changed — a breaking API, a new major version, advice that is now wrong | Write a **brand-new post** that supersedes it |
 | Anything less — a minor revision, a small correction, a nice-to-have detail | **Write nothing.** Say so and stop. |
 
-There is no third option. If it is not worth a whole new post, it is not worth
-doing — say that plainly rather than producing a thin post to justify the
-ticket.
+If it is not worth a whole new post, it is not worth doing — say that plainly
+rather than producing a thin post to justify the ticket.
 
-A superseding post must:
-
-- Stand alone. Assume the reader has not read the older post.
-- Have its own slug and its own date. Never reuse the old slug.
-- Link to the older post where useful, and be explicit about what changed.
-- Never contradict the old post silently — name the change and why it happened.
+A superseding post must stand alone (assume the reader has not read the older
+one), use its own slug and its own date, and name what changed and why. It may
+link to the older post; it must never silently contradict it.
 
 ### 2. Draft
 
-Follow the AGENTS.md body conventions. Structure:
+Follow the body conventions in [`reference.md`](./reference.md). Structure:
 
 1. Opening paragraph — no heading, states the problem and the take
 2. `## ` sections, `### ` subsections
@@ -135,16 +130,12 @@ Reference the issue in the commit: `feat(blog): add post on <topic> (#<number>)`
 
 ---
 
-## Hard rules (these fail CI)
+## Hard rules
 
-- Exactly **one** post site-wide may have `category: "Featured"`.
-- Every code fence needs a language. Use `text` for directory trees, ASCII
-  diagrams and console output.
-- Use `<` and `>` literally in fences — never `&lt;` / `&gt;`.
-- 3–5 tags. Excerpt 40–300 characters.
-- `date` format `"Month Day, Year"`; `readTime` format `"X min read"`.
-- No `# ` H1 in the body — the title is rendered from frontmatter.
-- Body opens with a paragraph, not a heading.
+These fail CI. They are specified once, in [`reference.md`](./reference.md) —
+frontmatter fields and formats, the allowed category list, the one-Featured-post
+rule, fence languages, and the body structure rules. Do not restate them here;
+check them there.
 
 ---
 
